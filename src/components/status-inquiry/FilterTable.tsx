@@ -41,7 +41,8 @@ export default function FilterTable({
 
   // 진행상태 데이터 api 호출
   const { data } = useQuery({
-    queryKey: ["search-statistics"],
+    // 홈 통계 조회("search-statistics")와 캐시가 섞이지 않도록 별도 키 사용
+    queryKey: ["search-proc-stat-cd"],
     queryFn: async () => await getStatusCdData(),
     select: (response) => response?.data?.commCodeList || [],
     enabled: true,

@@ -1,5 +1,6 @@
 import axios from "axios";
-import { appURI } from "@constants/env";
+import { appURI, isDemoMode } from "@constants/env";
+import { mockAdapter } from "@/mocks/adapter";
 // import { useUnauthorizedHandler } from "@hooks/useUnauthorizedHandler";
 // import { toastState } from "@stores";
 // import { useSetAtom } from "jotai";
@@ -16,6 +17,11 @@ export const axiosBasicInstance = axios.create({
   baseURL: appURI,
   withCredentials: true,
 });
+
+// 데모 모드: 실제 서버 대신 목업 어댑터가 응답 (화면 코드는 동일하게 동작)
+if (isDemoMode) {
+  axiosBasicInstance.defaults.adapter = mockAdapter;
+}
 
 // 요청 인터셉터
 axiosBasicInstance.interceptors.request.use(

@@ -263,7 +263,7 @@ export default function DrawerContent({
             />
             :
             <ImageWithAuth
-              src={`${appURI}/api${imgSrc}`}
+              src={imgSrc ? `${appURI}/api${imgSrc}` : ""}
               alt={`${profileData} 프로필 이미지`}
               width={48}
               height={48}

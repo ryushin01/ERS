@@ -125,8 +125,7 @@ export default function HeaderRightArea() {
     queryKey: ["search-profile"],
     queryFn: async () => await getProfileData(),
     select: (response) => response.data,
-    // 금융기관일때만 프로필 조회 (데모 모드는 API 없이 기본 프로필 이미지 사용)
-    enabled: !isDemoMode && authInfo?.membGbCd === MEMB_GB_CD.FINANCIAL,
+    enabled: authInfo?.membGbCd === MEMB_GB_CD.FINANCIAL, // 금융기관일때만 프로필 조회
   });
 
   /* 금융기관 의뢰번호 조회 api 호출 */
@@ -254,7 +253,7 @@ export default function HeaderRightArea() {
             >
               {!profileDataLoading && (
                 <ImageWithAuth
-                  src={`${appURI}/api${imgSrc}`}
+                  src={imgSrc ? `${appURI}/api${imgSrc}` : ""}
                   alt={`${authInfo.membNm} 프로필 이미지`}
                   width={28}
                   height={28}
