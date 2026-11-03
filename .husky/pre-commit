@@ -3,3 +3,6 @@ pnpm exec lint-staged
 
 # 타입 오류는 고친 파일 밖에서도 생길 수 있어 프로젝트 전체를 검사합니다.
 pnpm typecheck
+
+# 단위 테스트(Vitest). 몇 초 안에 끝납니다.
+pnpm test --silent

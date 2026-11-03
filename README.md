@@ -101,12 +101,22 @@ pnpm run dev
 | `pnpm run lint` | ESLint 검사 |
 | `pnpm run lint:fix` | ESLint 자동 수정 (import 순서 정렬 포함) |
 | `pnpm run typecheck` | TypeScript 타입 검사 (`tsc --noEmit`) |
+| `pnpm test` | 단위 테스트 (Vitest) |
+| `pnpm run test:watch` | 단위 테스트 감시 모드 (파일을 저장하면 다시 실행) |
 
 ### import 순서와 커밋 전 검사
 
 - import 순서는 ESLint 규칙(`eslint-plugin-simple-import-sort`)으로 정렬합니다. 순서는 `react` → `next` → 외부 패키지 → 내부 alias(`@components`, `@hooks` 등) → 상대 경로 → `import type` → CSS 순이고, 그룹 사이에는 빈 줄을 하나 둡니다.
 - `tsconfig.json`에 alias를 추가하면 `eslint.config.mjs`의 `INTERNAL_ALIASES`에도 추가합니다. 그래야 외부 scoped 패키지(`@tanstack/...`)와 구분됩니다.
-- 커밋할 때 husky의 pre-commit 훅이 스테이징된 파일에 `eslint --fix`(lint-staged)를 실행하고, 이어서 프로젝트 전체 타입 검사를 실행합니다. 훅은 `pnpm install` 시 자동으로 등록됩니다.
+- 커밋할 때 husky의 pre-commit 훅이 스테이징된 파일에 `eslint --fix`(lint-staged)를 실행하고, 이어서 프로젝트 전체 타입 검사와 단위 테스트를 실행합니다. 훅은 `pnpm install` 시 자동으로 등록됩니다.
+
+### 단위 테스트
+
+- Vitest + React Testing Library(jsdom)를 사용합니다. 설정은 `vitest.config.mts`, `vitest.setup.ts`입니다.
+- 테스트 파일은 대상 파일 옆에 `*.test.ts(x)`로 둡니다. 예: `src/utils/pathUtil.ts` → `src/utils/pathUtil.test.ts`
+- tsconfig의 alias를 그대로 쓸 수 있습니다(`vite-tsconfig-paths`).
+- 서버 코드(`middleware.ts` 등)를 테스트할 때는 파일 맨 위에 `// @vitest-environment node`를 적습니다.
+- 날짜 유틸이 한국 시간 기준이라, 테스트는 시간대를 `Asia/Seoul`로 고정해서 실행합니다.
 
 ### Docker
 
@@ -126,7 +136,7 @@ docker compose -f docker/production/docker-compose.yml up --build
 
 ### 기술 스택
 
-![My Skills](https://skillicons.dev/icons?i=react,nextjs,tailwind,js,ts,pnpm,docker)
+![My Skills](https://skillicons.dev/icons?i=react,nextjs,tailwind,js,ts,pnpm,docker,vitest)
 
 ### 프로젝트 구조
 
@@ -224,4 +234,4 @@ docker compose -f docker/production/docker-compose.yml up --build
 
 ## 향후 과제
 
-![My Skills](https://skillicons.dev/icons?i=cypress,docker,jest,regex,sass)
+![My Skills](https://skillicons.dev/icons?i=cypress,docker,regex,sass)
