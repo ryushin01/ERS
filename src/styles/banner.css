@@ -1,0 +1,188 @@
+@media screen and (min-width: 1367px) {
+    ._banner-container {
+        @apply flex justify-between flex-grow pt-12 px-[60px] pb-[122px] bg-[url(/images/desktop-banner-image.png)] bg-cover bg-no-repeat border-none rounded-t-3xl text-koser-grayscale-0 bg-koser-main-100;
+
+        /* 배너 왼쪽 영역 */
+
+        ._banner-left-content {
+            @apply flex flex-col justify-center;
+
+            ._banner-button {
+                @apply w-[163px] mt-7 bg-koser-grayscale-0 rounded-md text-koser-main-100;
+            }
+
+            ._banner-text {
+                @apply flex gap-2;
+            }
+        }
+
+        /* 배너 오른쪽 영역 */
+
+        ._banner-right-content {
+            @apply flex justify-around gap-3 items-center;
+
+            /* 오늘 실행 건수 */
+
+            ._todays-counts {
+                @apply flex items-center justify-center gap-4 px-10 py-8 relative;
+
+                ._content-text {
+                    @apply flex flex-col text-koser-grayscale-0 whitespace-nowrap;
+                }
+
+                ._todays-image {
+                    @apply min-w-[70px] min-h-[70px] flex items-center justify-center rounded-full bg-koser-main-30;
+                }
+            }
+
+            /* 진행중 & 접수완료 건수 */
+
+            ._each-counts {
+                @apply flex items-center justify-center gap-x-2 px-10 py-8 relative;
+
+                ._each-wrapper {
+                    @apply flex items-center gap-x-5;
+                }
+
+                ._content-text {
+                    @apply flex flex-col min-w-16 w-auto text-koser-grayscale-0;
+                }
+
+                ._notice-image {
+                    @apply min-w-[70px] min-h-[70px] flex items-center justify-center rounded-full bg-koser-secondary-red-10;
+                }
+
+                ._check-image {
+                    @apply min-w-[70px] min-h-[70px] flex items-center justify-center rounded-full bg-koser-secondary-yellow-10;
+                }
+            }
+        }
+    }
+}
+
+/* ✅ 태블릿 (768px ~ 1366px) */
+@media screen and (min-width: 768px) and (max-width: 1366px) {
+    ._banner-container {
+        @apply grid w-full h-full p-10 pb-14 bg-[url(/images/mobile-banner-image.png)] bg-cover bg-no-repeat border-none  text-koser-grayscale-0 bg-koser-main-100;
+
+        /* 배너 왼쪽 영역 */
+
+        ._banner-left-content {
+            @apply flex flex-col items-start pb-8;
+
+            ._banner-button {
+                @apply bg-koser-grayscale-0 rounded-md text-koser-main-100 mt-5 mb-2;
+            }
+
+            ._banner-text {
+                @apply flex flex-col;
+            }
+        }
+
+        /* 배너 오른쪽 영역 */
+
+        ._banner-right-content {
+            @apply flex flex-col gap-y-3 mb-16;
+
+            ._todays-image {
+                @apply min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full bg-koser-main-30;
+            }
+
+            /* 오늘 실행 건수 */
+
+            ._todays-counts {
+                @apply flex items-center gap-x-3 relative py-4 px-8;
+
+                ._content-text {
+                    @apply flex justify-between items-center w-full text-koser-grayscale-0;
+                }
+            }
+
+            /* 진행중 & 접수완료 건수 */
+
+            ._each-counts {
+                @apply flex justify-between items-center gap-x-3 relative py-4 px-8;
+
+                ._each-wrapper {
+                    @apply flex items-center gap-x-3;
+                }
+
+                ._content-text {
+                    @apply flex flex-col text-koser-grayscale-0 text-balance;
+                }
+            }
+
+            ._notice-image {
+                @apply min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full bg-koser-secondary-red-10;
+            }
+
+            ._check-image {
+                @apply min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full bg-koser-secondary-yellow-10;
+            }
+        }
+    }
+}
+
+/* ✅ 모바일 (320px ~ 768px) */
+@media screen and (min-width: 320px) and (max-width: 768px) {
+    ._banner-container {
+        @apply w-full h-full pt-10 px-6 pb-14 bg-[url(/images/mobile-banner-image.png)] bg-cover bg-no-repeat border-none text-koser-grayscale-0 bg-koser-main-100;
+        /* grid-template-columns: 1fr; */
+
+        /* 배너 왼쪽 영역 */
+
+        ._banner-left-content {
+            @apply flex flex-col items-start pb-8;
+
+            ._banner-button {
+                @apply bg-koser-grayscale-0 rounded-md text-koser-main-100 mt-5 mb-1;
+            }
+
+            ._banner-text {
+                @apply flex flex-col;
+            }
+        }
+
+        /* 배너 오른쪽 영역 */
+
+        ._banner-right-content {
+            @apply flex flex-col gap-y-3 mb-16;
+
+            ._todays-image {
+                @apply min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full bg-koser-main-30;
+            }
+
+            /* 오늘 실행 건수 */
+
+            ._todays-counts {
+                @apply flex items-center gap-x-3 relative py-4 px-8;
+
+                ._content-text {
+                    @apply flex justify-between items-center w-full text-koser-grayscale-0;
+                }
+            }
+
+            /* 진행중 & 접수완료 건수 */
+
+            ._each-counts {
+                @apply flex justify-between items-center gap-x-3 relative py-4 px-8;
+
+                ._each-wrapper {
+                    @apply flex items-center gap-x-3;
+                }
+
+                ._content-text {
+                    @apply flex flex-col text-koser-grayscale-0 text-balance;
+                }
+            }
+
+            ._notice-image {
+                @apply min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full bg-koser-secondary-red-10;
+            }
+
+            ._check-image {
+                @apply min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full bg-koser-secondary-yellow-10;
+            }
+        }
+    }
+}

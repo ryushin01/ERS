@@ -1,0 +1,17 @@
+._responsive-grid-system {
+    @apply flex flex-wrap w-full h-full;
+
+    & > div {
+        @apply px-2 md:px-3 xl:px-4 transition-all;
+    }
+
+    &._without-padding {
+        & > div {
+            @apply p-0;
+        }
+    }
+
+    ._empty-box {
+        @apply flex justify-center items-center relative w-full h-[68vh] rounded-xl border border-koser-grayscale-40 text-koser-grayscale-80;
+    }
+}

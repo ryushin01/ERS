@@ -1,0 +1,51 @@
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { LOGIN_PATH, FI_PATH, FI_HOME, AD_PATH, AD_ASSIGN, LA_PATH } from "@constants/path";
+import { PUBLIC_FILES_REG_EXP } from "@constants/reg-exp";
+
+/**
+ * @name middleware
+ * @version 1.0.0
+ * @author 류창선 <ryushin0167@gmail.com>
+ */
+export function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  const membGbCd = request.cookies.get("membGbCd");
+  const isLogin: boolean = !!membGbCd?.value;
+  const isFinancial = membGbCd?.value === "00";
+  const isAdmin = membGbCd?.value === "20";
+  // 경로 중간에 키워드가 포함된 경우(예: /foo/financial)를 제외하기 위해 접두 경로로 판정
+  const isUnder = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
+  const isFinancialPage = isUnder(FI_PATH);
+  const isAdminPage = isUnder(AD_PATH);
+  const isMemberPage = [FI_PATH, AD_PATH, LA_PATH].some(isUnder);
+  const isValidPublicFiles = request.nextUrl.pathname.match(PUBLIC_FILES_REG_EXP);
+
+  // 정적 파일 정상 유무 확인
+  if (isValidPublicFiles) {
+    return NextResponse.next();
+  }
+
+  // 금융기관 로그인 상태에서 금융기관 권한 외 접근 시
+  if (isFinancial && !isFinancialPage) {
+    return NextResponse.redirect(new URL(FI_HOME, request.url));
+  }
+
+  // 관리자 로그인 상태에서 관리자 권한 외 접근 시
+  if (isAdmin && !isAdminPage) {
+    return NextResponse.redirect(new URL(AD_ASSIGN, request.url));
+  }
+
+  // 미 로그인 상태에서 권한 페이지 접근 시
+  if (!isLogin && isMemberPage) {
+    return NextResponse.redirect(new URL(LOGIN_PATH, request.url));
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+  ],
+};

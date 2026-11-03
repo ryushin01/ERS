@@ -1,0 +1,19 @@
+._main {
+    @apply flex flex-col flex-1;
+    min-height: calc(100vh - 100px - 92px);
+}
+
+._contents-section {
+    @apply flex-1 -mt-12 bg-koser-grayscale-0 border rounded-3xl;
+}
+
+/* NOTE: 모바일 ~ 태블릿 해상도 */
+@media screen and (min-width: 320px) and (max-width: 1366px) {
+    ._main {
+        @apply -mt-8 -mx-4;
+    }
+
+    ._contents-section {
+        @apply -mt-8 px-2 rounded-b-none;
+    }
+}

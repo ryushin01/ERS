@@ -1,0 +1,21 @@
+{
+  "name": "koser",
+  "short_name": "koser",
+  "description": "부동산 전자등기 의뢰부터 처리 현황 조회까지, 온라인으로 한눈에 쉽고 빠르게 관리하세요.",
+  "icons": [
+    {
+      "src": "/images/logo/logo-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/logo/logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#fff",
+  "start_url": "/"
+}

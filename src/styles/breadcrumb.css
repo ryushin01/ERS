@@ -1,0 +1,38 @@
+._breadcrumb {
+    @apply flex items-center;
+
+    li:not(:first-child) {
+        a {
+            @apply pl-2 gap-x-2;
+        }
+    }
+
+    li:first-child {
+        a {
+            @apply gap-x-1;
+
+            img {
+                @apply hidden;
+            }
+        }
+    }
+
+    li:last-child {
+        a {
+            span {
+                @apply font-semibold;
+            }
+        }
+    }
+
+    a {
+        @apply _flex-center;
+    }
+}
+
+/* NOTE: 모바일 ~ 태블릿 해상도 */
+@media screen and (min-width: 320px) and (max-width: 1366px) {
+    ._breadcrumb {
+        @apply hidden;
+    }
+}
