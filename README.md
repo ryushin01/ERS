@@ -116,7 +116,7 @@ pnpm run dev
 - 테스트 파일은 대상 파일 옆에 `*.test.ts(x)`로 둡니다. 예: `src/utils/pathUtil.ts` → `src/utils/pathUtil.test.ts`
 - tsconfig의 alias를 그대로 쓸 수 있습니다(`vite-tsconfig-paths`).
 - 서버 코드(`middleware.ts` 등)를 테스트할 때는 파일 맨 위에 `// @vitest-environment node`를 적습니다.
-- 날짜 유틸이 한국 시간 기준이라, 테스트는 시간대를 `Asia/Seoul`로 고정해서 실행합니다.
+- 테스트는 실행하는 PC의 시간대와 상관없이 같은 결과가 나오도록 작성합니다. 날짜 유틸은 테스트 안에서 여러 시간대(`process.env.TZ`)로 바꿔 가며 확인합니다.
 
 ### Docker
 

@@ -51,15 +51,28 @@ describe("오늘 날짜 기준 함수", () => {
   });
 
   it("getTodayAddDays는 오늘에서 며칠 뒤 날짜를 돌려준다", () => {
+    // 로컬 시간 2026-11-03 정오 (실행하는 PC의 시간대와 상관없이 같은 로컬 날짜)
+    vi.setSystemTime(new Date(2026, 10, 3, 12));
     expect(getDateString(getTodayAddDays(3))).toBe("20261106");
     expect(getDateString(getTodayAddDays())).toBe("20261103");
   });
 });
 
 describe("날짜 변환 함수", () => {
-  it("stringToDate는 YYYYMMDD를 Date로 바꾼다", () => {
-    expect(getDateString(stringToDate("20231223"))).toBe("20231223");
+  it("stringToDate는 YYYYMMDD를 그 날짜의 로컬 자정으로 바꾼다", () => {
+    const date = stringToDate("20231223");
+    expect([date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours()]).toEqual([
+      2023, 12, 23, 0,
+    ]);
+    expect(getDateString(date)).toBe("20231223");
   });
+
+  it.each(["", "2023-12-23", "2023122", "abcdefgh"])(
+    "stringToDate는 형식이 맞지 않으면(%s) Invalid Date",
+    (input) => {
+      expect(getDateString(stringToDate(input))).toBe("");
+    },
+  );
 
   it("formatStringToDate는 구분자를 넣는다", () => {
     expect(formatStringToDate("20231223", "-")).toBe("2023-12-23");
@@ -81,5 +94,37 @@ describe("날짜 변환 함수", () => {
     [new Date(2026, 10, 7), "토"],
   ])("getDay(%s) → %s", (date, expected) => {
     expect(getDay(date)).toBe(expected);
+  });
+});
+
+// 재발 방지: 이전에는 "YYYY-MM-DD"를 UTC 자정으로 해석해서, UTC보다 늦은 시간대에서 하루 전 날짜·요일이 나왔습니다.
+// Node는 실행 중에 process.env.TZ를 바꾸면 그 시간대를 바로 적용합니다.
+describe.each([
+  "Asia/Seoul", // UTC+9
+  "UTC",
+  "America/New_York", // UTC-5
+  "Pacific/Honolulu", // UTC-10
+  "Pacific/Kiritimati", // UTC+14
+])("시간대 %s", (timeZone) => {
+  const originalTimeZone = process.env.TZ;
+
+  beforeEach(() => {
+    process.env.TZ = timeZone;
+  });
+
+  afterEach(() => {
+    // undefined를 대입하면 문자열 "undefined"가 들어가므로, 원래 없던 값은 지웁니다.
+    if (originalTimeZone === undefined) delete process.env.TZ;
+    else process.env.TZ = originalTimeZone;
+  });
+
+  it("stringToDate 결과를 다시 문자열로 바꾸면 같은 날짜", () => {
+    expect(getDateString(stringToDate("20231223"))).toBe("20231223");
+    expect(getDateString(stringToDate("20240101"))).toBe("20240101");
+  });
+
+  it("getDay는 같은 요일을 돌려준다", () => {
+    expect(getDay("20261103")).toBe("화");
+    expect(getDay("2026-11-08")).toBe("일");
   });
 });

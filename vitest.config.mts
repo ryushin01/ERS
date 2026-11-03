@@ -10,8 +10,6 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
     include: ["src/**/*.test.{ts,tsx}"],
-    // 날짜 유틸이 한국 시간 기준이라, 실행하는 PC의 시간대와 상관없이 결과가 같도록 고정합니다.
-    env: { TZ: "Asia/Seoul" },
     restoreMocks: true,
   },
 });

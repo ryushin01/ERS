@@ -37,23 +37,30 @@ function getCompareWithToday(
 
 function getDay(date: string | Date) {
   const dayList = ["일", "월", "화", "수", "목", "금", "토"];
-  let formatDate;
-  if (typeof date === "string" && date.length === 8) {
-    formatDate = new Date(stringToDate(date));
-    return dayList[formatDate.getDay()];
-  }
-  formatDate = typeof date === "string" ? new Date(date) : date;
+
+  if (typeof date !== "string") return dayList[date.getDay()];
+
+  // YYYYMMDD, YYYY-MM-DD는 로컬 날짜로 해석합니다. (new Date("YYYY-MM-DD")는 UTC 자정이라 시간대에 따라 하루 전이 됨)
+  const compactDate = date.replaceAll("-", "");
+  const formatDate = /^\d{8}$/.test(compactDate) ? stringToDate(compactDate) : new Date(date);
 
   return dayList[formatDate.getDay()];
 }
 
-/* input : 20231223('-'없는 string) */
+/**
+ * @name stringToDate
+ * @description YYYYMMDD 문자열을 그 날짜의 로컬 자정 Date로 바꿉니다. (예: "20231223")
+ *              new Date("2023-12-23")은 UTC 자정으로 해석되어, UTC보다 늦은 시간대(미국 등)에서는 하루 전 날짜가 됩니다.
+ *              형식이 맞지 않으면 Invalid Date를 돌려줍니다.
+ */
 function stringToDate(date: string) {
-  const formateDate = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(
-    6,
-    8,
-  )}`;
-  return new Date(formateDate);
+  if (!/^\d{8}$/.test(date)) return new Date(NaN);
+
+  const year = Number(date.slice(0, 4));
+  const month = Number(date.slice(4, 6));
+  const day = Number(date.slice(6, 8));
+
+  return new Date(year, month - 1, day);
 }
 
 function formatStringToDate(date: string, sign: string) {
