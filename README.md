@@ -4,7 +4,7 @@
 > 진행이 중단된 프로토타입을 **포트폴리오용 데모**로 정리해 공개한 저장소입니다.
 > 실제 서비스의 고객사 정보·연락처·로고·샘플 문서는 제거하거나 예시 값으로 바꾸었고, 화면의 모든 데이터는 가상 데이터입니다.
 
-> 개발 후 반드시 lint 실행(`pnpm lint`)을 통해 `No ESLint warnings or errors` 문구 출력이 확인된 상태에서 소스 코드를 저장소로 올립니다.
+> 커밋할 때 lint(import 정렬 포함)·타입 검사·단위 테스트가 자동으로 실행되며, 하나라도 실패하면 커밋되지 않습니다. ([import 순서와 커밋 전 검사](#import-순서와-커밋-전-검사) 참고)
 ***
 
 ## 데모 바로 보기
@@ -58,7 +58,7 @@
 |--------|------------|--------------------------------------------------------------|---------------|
 | v1.0.0 | 2025.4.11. | - 프로덕션 레벨 배포                                                 | N/A           |
 | v1.0.1 | 2025.5.14. | - 파비콘, 앱 로고 교체                                               | N/A           |
-| -      | 2026.11.3. | - 코드 정리(타입·버그·Lint)<br>- 포트폴리오 데모 모드·목업 데이터<br>- 공개용 정보 정리 | 라이브러리 버전 변경 없음 |
+| -      | 2026.11.3. | - 코드 정리(타입·버그·Lint)<br>- 포트폴리오 데모 모드·목업 데이터<br>- 공개용 정보 정리<br>- 미사용 코드·의존성 정리, 중복 컴포넌트 통합<br>- import 순서 자동화, 커밋 전 검사(husky)<br>- Vitest 단위 테스트 | 기존 라이브러리 버전 변경 없음 (개발 도구만 추가) |
 
 ***
 
@@ -142,6 +142,7 @@ docker compose -f docker/production/docker-compose.yml up --build
 
 ```
 📦 project
+├── 🗂️ .husky                                 // 커밋 전 검사 훅 (pre-commit)
 ├── 🗂️ docker                                 // 개발·운영 Dockerfile, docker-compose
 ├── 🗂️ public
 │ ├── 🗂️ icons                                // svg 아이콘
@@ -178,7 +179,6 @@ docker compose -f docker/production/docker-compose.yml up --build
 │ │
 │ ├── 🗂️ components                           // 공통 컴포넌트
 │ ├── 🗂️ constants                            // 공통 상수값 (경로, API 경로, 코드, 환경 변수, 데모 모드 설정)
-│ ├── 🗂️ data                                 // 샘플 데이터
 │ ├── 🗂️ hooks                                // 공통 커스텀 훅
 │ ├── 🗂️ mocks                                // 데모 모드 목업 데이터(data.ts)와 axios 어댑터(adapter.ts)
 │ ├── 🗂️ services                             // 각종 API 요청 (공통 axios 인스턴스·인터셉터)
@@ -187,11 +187,19 @@ docker compose -f docker/production/docker-compose.yml up --build
 │ ├── 🗂️ types                                // 공용 타입 (common, file, home, assign)
 │ ├── 🗂️ utils                                // 공통 유틸리티 함수
 │ └── 📄 middleware.ts                        // 사용자 유형(membGbCd)별 접근 경로 제어
+│
+├── 📄 eslint.config.mjs                      // ESLint 설정 (import 정렬 규칙 포함)
+├── 📄 vitest.config.mts                      // 단위 테스트 설정
+└── 📄 vitest.setup.ts                        // 단위 테스트 공통 준비 (jest-dom matcher 등)
+
+* 단위 테스트 파일(*.test.ts, *.test.tsx)은 대상 파일과 같은 폴더에 둡니다.
 ```
 
 ***
 
 ## 부가 설정
+
+> 이 저장소에는 Prettier 설정 파일이 없습니다. 아래처럼 IDE에서 Prettier를 켜면 기본값(한 줄 80자 등)으로 파일 전체가 다시 정렬될 수 있으니, 팀에서 설정을 정한 뒤 사용하세요. import 순서는 Prettier와 상관없이 ESLint가 정렬합니다.
 
 ### ![My Skills](https://skillicons.dev/icons?i=idea)
 
