@@ -74,11 +74,83 @@ export type MockRegistration = {
   lotnumAddr: string;
   bldg: string;
   unit: string;
+  /* 관리자 화면용 */
+  clientNm: string;
+  clientMembNo: string;
+  bndNm: string;
+  bndBizNo: string;
+  bndMembNm: string;
+  bndMembHpno: string;
+  mtchDtm: string;
+  acptRptDtm: string;
+  unqRgstrNo: string;
+  rgstrAcptYn: string;
+  realeCd: string;
+  lotnumAddrCd: string;
+  judtCourtCd: string;
+  regrCd: string;
+  mngrDlvrCnts: string;
+  statHistList: MockStatusHistory[];
 };
 
-const HAS_LAWYER = (statCd: string) => statCd >= PROC_STAT_CD.MATCH;
+export type MockStatusHistory = {
+  statNm: string;
+  procRsnCnts: string;
+  crtMembNm: string;
+  crtDtm: string;
+};
+
+const HAS_LAWYER = (statCd: string) =>
+  ([PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION, PROC_STAT_CD.REVIEWING, PROC_STAT_CD.RETURN, PROC_STAT_CD.COMPLET] as string[]).includes(statCd);
 const HAS_RECEIPT = (statCd: string) =>
   ([PROC_STAT_CD.REVIEWING, PROC_STAT_CD.RETURN, PROC_STAT_CD.COMPLET] as string[]).includes(statCd);
+
+/* 현재 상태까지의 진행 이력 (최근 이력이 앞) */
+const STATUS_FLOW: Record<string, string[]> = {
+  [PROC_STAT_CD.REQUEST]: [PROC_STAT_CD.REQUEST],
+  [PROC_STAT_CD.SUPPLEMENT]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.SUPPLEMENT],
+  [PROC_STAT_CD.MATCH]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.MATCH],
+  [PROC_STAT_CD.EXECUTION]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION],
+  [PROC_STAT_CD.REVIEWING]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION, PROC_STAT_CD.REVIEWING],
+  [PROC_STAT_CD.RETURN]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION, PROC_STAT_CD.REVIEWING, PROC_STAT_CD.RETURN],
+  [PROC_STAT_CD.COMPLET]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION, PROC_STAT_CD.REVIEWING, PROC_STAT_CD.COMPLET],
+  [PROC_STAT_CD.CANCEL]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.CANCEL],
+  [PROC_STAT_CD.HOLD]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.HOLD],
+};
+
+const HISTORY_ACTOR: Record<string, string> = {
+  [PROC_STAT_CD.REQUEST]: "데모 금융기관",
+  [PROC_STAT_CD.EXECUTION]: "데모 금융기관",
+  [PROC_STAT_CD.HOLD]: "데모 금융기관",
+  [PROC_STAT_CD.REVIEWING]: "데모 법무법인",
+};
+
+const HISTORY_REASON: Record<string, string> = {
+  [PROC_STAT_CD.SUPPLEMENT]: "등기자료 이미지 불량",
+  [PROC_STAT_CD.RETURN]: "접수증 이미지 불량",
+  [PROC_STAT_CD.CANCEL]: "고객 요청",
+};
+
+const createStatusHistory = (statCd: string, crtOffset: number): MockStatusHistory[] =>
+  (STATUS_FLOW[statCd] ?? [statCd])
+    .map((code, step) => ({
+      statNm: statNm(code),
+      procRsnCnts: HISTORY_REASON[code] ?? "",
+      crtMembNm: HISTORY_ACTOR[code] ?? "관리자",
+      crtDtm: dateFromToday(Math.min(crtOffset + step, 0)),
+    }))
+    .reverse();
+
+/* 상태를 바꾸고 이력을 남깁니다. (데모 중 관리자·금융기관의 처리 결과 반영) */
+export const changeStatus = (
+  target: MockRegistration,
+  statCd: string,
+  { procRsnCnts = "", crtMembNm = "관리자" }: { procRsnCnts?: string; crtMembNm?: string } = {},
+) => {
+  target.statCd = statCd;
+  target.statNm = statNm(statCd);
+  target.statHistList.unshift({ statNm: statNm(statCd), procRsnCnts, crtMembNm, crtDtm: dateFromToday(0) });
+};
 
 export const REGISTRATIONS: MockRegistration[] = STATUS_SEQUENCE.map((statCd, i) => {
   const address = ADDRESSES[i % ADDRESSES.length];
@@ -108,8 +180,50 @@ export const REGISTRATIONS: MockRegistration[] = STATUS_SEQUENCE.map((statCd, i)
         ? "등기자료 이미지가 흐릿합니다. 계약서 전체 페이지를 다시 촬영하여 제출해 주세요."
         : "",
     ...address,
+    clientNm: "데모 금융기관",
+    clientMembNo: "DEMO",
+    bndNm: "데모 금융기관",
+    bndBizNo: "000-00-00001",
+    bndMembNm: "데모 금융기관",
+    bndMembHpno: "02-000-0000",
+    mtchDtm: HAS_LAWYER(statCd) ? dateFromToday(crtOffset + 1) : "",
+    acptRptDtm: HAS_RECEIPT(statCd) ? dateFromToday(Math.min(crtOffset + 4, 0)) : "",
+    unqRgstrNo: HAS_LAWYER(statCd) ? `1101-2026-${String(100000 + i * 731).slice(0, 6)}` : "",
+    rgstrAcptYn: HAS_RECEIPT(statCd) ? "Y" : "N",
+    realeCd: "00",
+    lotnumAddrCd: "01",
+    judtCourtCd: HAS_RECEIPT(statCd) ? "01" : "",
+    regrCd: HAS_RECEIPT(statCd) ? "01" : "",
+    mngrDlvrCnts: "",
+    statHistList: createStatusHistory(statCd, crtOffset),
   };
 });
+
+/*
+ * 데모 중 변경(배정·승인·진행보류 등)을 sessionStorage에 저장해, 새로고침이나 사용자 유형 전환 후에도 유지합니다.
+ * 브라우저 탭을 닫으면 초기 데이터로 돌아갑니다.
+ */
+const DEMO_STATE_KEY = "koser-demo-registrations";
+
+export const saveDemoState = () => {
+  try {
+    sessionStorage.setItem(DEMO_STATE_KEY, JSON.stringify(REGISTRATIONS));
+  } catch {
+    // 저장소를 쓸 수 없는 환경(시크릿 모드 등)에서는 메모리에만 유지
+  }
+};
+
+const restoreDemoState = () => {
+  if (typeof window === "undefined") return;
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(DEMO_STATE_KEY) ?? "null");
+    if (Array.isArray(saved) && saved.length > 0) REGISTRATIONS.splice(0, REGISTRATIONS.length, ...saved);
+  } catch {
+    // 저장된 값이 손상되었으면 초기 데이터 사용
+  }
+};
+
+restoreDemoState();
 
 /* 의뢰목록 탭 (00:미배정, 01:배정완료, 02:진행보류, 03:진행취소) */
 export const REQUEST_TAB_STATUS: Record<string, string[]> = {
@@ -174,3 +288,55 @@ export const createDocumentSvg = (title: string, requestNo: string, page: number
   ${Array.from({ length: 14 }, (_, i) => `<rect x="70" y="${210 + i * 36}" width="${460 - (i % 3) * 70}" height="12" rx="6" fill="#ededed"/>`).join("")}
   <text x="300" y="760" font-size="20" text-anchor="middle" fill="#bdbdbd" font-family="sans-serif">SAMPLE · 포트폴리오 데모용 가상 문서</text>
 </svg>`;
+
+/* 공통 코드 (code·codeNm은 가상의 값) */
+const commCode = (grpCd: string, names: string[]) =>
+  names.map((codeNm, i) => ({ grpCd, code: String(i).padStart(2, "0"), codeNm }));
+
+export const COMMON_CODES: Record<string, { grpCd: string; code: string; codeNm: string }[]> = {
+  PROC_STAT_CD: PROC_STAT_CODE_LIST,
+  REALE_CD: commCode("REALE_CD", ["아파트", "오피스텔", "연립·다세대", "단독주택"]),
+  SPPL_REQ_GB_CD: commCode("SPPL_REQ_GB_CD", ["등기자료 이미지 불량", "필수 서류 누락", "기타"]),
+  PROC_CLS_GB_CD: commCode("PROC_CLS_GB_CD", ["대출 취소", "고객 요청", "기타"]),
+  RTUN_GB_CD: commCode("RTUN_GB_CD", ["접수증 이미지 불량", "접수번호 불일치", "기타"]),
+  JUDT_COURT_CD: commCode("JUDT_COURT_CD", ["서울중앙지방법원", "수원지방법원 성남지원", "인천지방법원"]),
+  REGR_CD: commCode("REGR_CD", ["중부등기소", "성남등기소", "인천지방법원 등기과"]),
+};
+
+/* 회원 목록 (00: 금융기관, 10: 법무대리인) */
+export const MEMBERS: Record<string, { membNo: string; membNm: string; bizNo: string; bizNm: string }[]> = {
+  "00": [
+    { membNo: "DEMO", membNm: "데모 금융기관", bizNo: "000-00-00001", bizNm: "데모 금융기관" },
+    { membNo: "DEMO2", membNm: "샘플 금융기관", bizNo: "000-00-00002", bizNm: "샘플 금융기관" },
+  ],
+  "10": [
+    { membNo: "LAW1", membNm: "데모 법무법인", bizNo: "000-00-00011", bizNm: "데모 법무법인" },
+    { membNo: "LAW2", membNm: "샘플 법무사사무소", bizNo: "000-00-00012", bizNm: "샘플 법무사사무소" },
+  ],
+};
+
+/* 데모 중 새로 등록하는 의뢰 (기존 의뢰 형식을 복사해 만듭니다) */
+export const createRegistration = (fields: Partial<MockRegistration> & { rqstNo: string }): MockRegistration => {
+  const base = REGISTRATIONS[0];
+  const registration: MockRegistration = {
+    ...base,
+    statCd: PROC_STAT_CD.REQUEST,
+    statNm: statNm(PROC_STAT_CD.REQUEST),
+    crtDtm: dateFromToday(0),
+    acptNo: "",
+    lgagMembNm: "",
+    lgagMembHpno: "",
+    procRsnCnts: "",
+    mtchDtm: "",
+    acptRptDtm: "",
+    unqRgstrNo: "",
+    rgstrAcptYn: "N",
+    judtCourtCd: "",
+    regrCd: "",
+    ...fields,
+    statHistList: [],
+  };
+  changeStatus(registration, registration.statCd);
+  REGISTRATIONS.unshift(registration);
+  return registration;
+};

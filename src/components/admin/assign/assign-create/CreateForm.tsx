@@ -51,6 +51,12 @@ export default function CreateForm() {
     useFileUpload();
   const authInfo = useAtomValue(authAtom);
   const openToast = useSetAtom(toastState);
+  // 로그인 정보는 sessionStorage에 있어 서버 렌더링 결과와 다르므로, 마운트 후에만 표시 (hydration 불일치 방지)
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   const [realeCd, setRealeCd] = useState([{ grpCd: "", code: "", codeNm: "" }]);
   const [bankList, setBankList] = useState([
     {
@@ -359,6 +365,9 @@ export default function CreateForm() {
 
   /* 등기고유번호 조회 완료시 setUnqRgstrNo 데이터 set */
   useEffect(() => {
+    // 조회 전(데이터 없음)에는 입력값을 덮어쓰지 않음 (undefined가 들어가면 controlled input 경고 발생)
+    if (!unqRgstrNoData) return;
+
     if (unqRgstrNoData?.code === "99") {
       openToast({
         message: unqRgstrNoData?.msg,
@@ -999,7 +1008,7 @@ export default function CreateForm() {
                       <Typography kind="title-small">제출 담당자</Typography>
                     </th>
                     <td colSpan={2}>
-                      <Typography kind="title-small">{authInfo?.membNm}</Typography>
+                      <Typography kind="title-small">{isClient ? authInfo?.membNm : ""}</Typography>
                     </td>
                     <td colSpan={3}></td>
                   </tr>

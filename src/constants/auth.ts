@@ -30,7 +30,7 @@ export const MEMB_GB_CD = {
 
 export type MembGbCd = (typeof MEMB_GB_CD)[keyof typeof MEMB_GB_CD];
 
-/* 데모 모드 로그인 시 사용할 금융기관 사용자 정보 (토큰 없음) */
+/* 데모 모드 로그인 시 사용할 사용자 정보 (토큰 없음) */
 export const DEMO_FINANCIAL_AUTH = {
   lognYn: true,
   resCd: "00",
@@ -43,4 +43,12 @@ export const DEMO_FINANCIAL_AUTH = {
   statNm: "",
   accessToken: "",
   refreshToken: "",
+};
+
+export const DEMO_ADMIN_AUTH = {
+  ...DEMO_FINANCIAL_AUTH,
+  membNo: "DEMO-ADMIN",
+  membNm: "데모 관리자",
+  membGbCd: MEMB_GB_CD.ADMIN,
+  membGbNm: "관리자",
 };

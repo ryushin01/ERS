@@ -3,12 +3,17 @@ import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { PROC_STAT_CD } from "@constants/code";
 
 import {
+  changeStatus,
+  COMMON_CODES,
   createDocumentSvg,
+  createRegistration,
   dateFromToday,
+  MEMBERS,
+  MockRegistration,
   NOTICES,
-  PROC_STAT_CODE_LIST,
   REGISTRATIONS,
   REQUEST_TAB_STATUS,
+  saveDemoState,
 } from "./data";
 
 /**
@@ -40,6 +45,40 @@ const paginate = <T,>(list: T[], params: URLSearchParams) => {
 const findRegistration = (rqstNo: string | null) =>
   REGISTRATIONS.find((item) => item.rqstNo === rqstNo);
 
+/* 의뢰일 순(00) 또는 대출실행일 순(01), 최신이 앞 */
+const sortBy = (list: MockRegistration[], sortOrder: string | null) => {
+  const key = sortOrder === "01" ? "execDt" : "crtDtm";
+  return [...list].sort((a, b) => b[key].localeCompare(a[key]));
+};
+
+/* 관리자 등기관리 탭 건수 */
+const registrationStatistics = () => {
+  const count = (statCd: string) => REGISTRATIONS.filter((item) => item.statCd === statCd).length;
+  return {
+    total: REGISTRATIONS.length,
+    rqst: count(PROC_STAT_CD.REQUEST) + count(PROC_STAT_CD.SUPPLEMENT),
+    mtchCmpt: count(PROC_STAT_CD.MATCH),
+    loanExec: count(PROC_STAT_CD.EXECUTION),
+    rqstProg: count(PROC_STAT_CD.REVIEWING),
+    rqstRtun: count(PROC_STAT_CD.RETURN),
+    rqstCmpt: count(PROC_STAT_CD.COMPLET),
+    progHold: count(PROC_STAT_CD.HOLD),
+    progCncl: count(PROC_STAT_CD.CANCEL),
+  };
+};
+
+/* 등기관리 상세의 문서 목록 */
+const documentList = (item: MockRegistration) => [
+  { kind: "등기자료", crtMembNm: item.clientNm, crtDtm: item.crtDtm },
+  ...(item.acptNo ? [{ kind: "등기접수증", crtMembNm: item.lgagMembNm || "데모 법무법인", crtDtm: item.acptRptDtm }] : []),
+];
+
+/* 새 의뢰번호: 기존 의뢰번호 중 가장 큰 번호 + 1 */
+const nextRequestNo = () => {
+  const max = Math.max(...REGISTRATIONS.map((item) => Number(item.rqstNo.replace(/\D/g, "")) || 0));
+  return `DEMO-${String(max + 1).padStart(6, "0")}`;
+};
+
 /* 미리보기 이미지 경로 (ImageWithAuth가 `${appURI}/api${src}`로 요청) */
 const imageSrc = (rqstNo: string, attcFilCd: string, idx: number) =>
   `/files/preview/${rqstNo}/${attcFilCd}/${idx}`;
@@ -50,7 +89,7 @@ const routes: Route[] = [
     method: "get",
     pattern: /^\/api\/comm\/code\/([A-Z_]+)$/,
     handler: (_p, m) =>
-      ok({ commCodeList: m[1] === "PROC_STAT_CD" ? PROC_STAT_CODE_LIST : [] }),
+      ok({ commCodeList: COMMON_CODES[m[1]] ?? [] }),
   },
   {
     method: "patch",
@@ -140,10 +179,7 @@ const routes: Route[] = [
     pattern: /^\/api\/client\/registration\/hold$/,
     handler: (_p, _m, body) => {
       const target = findRegistration(String(body.rqstNo ?? ""));
-      if (target) {
-        target.statCd = PROC_STAT_CD.HOLD;
-        target.statNm = "진행보류";
-      }
+      if (target) changeStatus(target, PROC_STAT_CD.HOLD, { crtMembNm: target.clientNm });
       return ok();
     },
   },
@@ -186,6 +222,215 @@ const routes: Route[] = [
         totalElements,
         totalPages,
       });
+    },
+  },
+
+  /* 공통 - 의뢰번호 발급 */
+  {
+    method: "get",
+    pattern: /^\/api\/comm\/sequence$/,
+    handler: () => ok(nextRequestNo()),
+  },
+
+  /* 인터넷등기소 - 등기고유번호 조회 (가상 번호) */
+  {
+    method: "get",
+    pattern: /^\/api\/api\/iros\/unqrgstrno$/,
+    handler: (params) =>
+      params.get("rdnmAddr") ? ok(`1101-2026-${String(Date.now()).slice(-6)}`) : { code: "99", msg: "주소를 입력해 주세요.", data: "" },
+  },
+
+  /* 관리자 - 배정관리 */
+  {
+    method: "get",
+    pattern: /^\/api\/admin\/match\/list$/,
+    handler: (params) => {
+      const statuses = REQUEST_TAB_STATUS[params.get("tabSelection") ?? "00"] ?? [];
+      const searchRqstNo = params.get("searchRqstNo") ?? "";
+      const filtered = sortBy(
+        REGISTRATIONS.filter((item) => statuses.includes(item.statCd) && item.rqstNo.includes(searchRqstNo)),
+        params.get("sortOrder"),
+      );
+      const { items, totalElements, totalPages } = paginate(filtered, params);
+      return ok({
+        mtchList: items.map(({ statNm, statCd, rqstNo, execDt, clientNm, clientMembNo, bndNm, bndBizNo, dbtrNm, crtDtm, mtchDtm }) => ({
+          statNm, statCd, rqstNo, execDt, clientNm, clientMembNo, bndNm, bndBizNo, dbtrNm, crtDtm, mtchDtm,
+        })),
+        totalElements,
+        totalPages,
+        unMtchCnt: REGISTRATIONS.filter((item) => REQUEST_TAB_STATUS["00"].includes(item.statCd)).length,
+      });
+    },
+  },
+  {
+    method: "get",
+    pattern: /^\/api\/admin\/match\/members\/(\d+)$/,
+    handler: (_p, m) => ok(MEMBERS[m[1]] ?? []),
+  },
+  {
+    method: "get",
+    pattern: /^\/api\/admin\/match\/([^/]+)$/,
+    handler: (_p, m) => ok(findRegistration(m[1]) ?? null),
+  },
+  {
+    // 전자등기 신규 등록 (multipart: req JSON + 파일)
+    method: "post",
+    pattern: /^\/api\/admin\/match$/,
+    handler: (_p, _m, body) => {
+      const lawyer = MEMBERS["10"].find((member) => member.membNo === body.lgagMembNo);
+      const bank = MEMBERS["00"].find((member) => member.bizNo === body.bndBizNo) ?? MEMBERS["00"][0];
+      createRegistration({
+        rqstNo: String(body.rqstNo || nextRequestNo()),
+        execDt: String(body.execDt ?? dateFromToday(0)),
+        seDt: String(body.seDt ?? ""),
+        dbtrNm: String(body.dbtrNm ?? ""),
+        bndMaxAmt: Number(body.bndMaxAmt) || 0,
+        rdnmAddr: String(body.rdnmAddr ?? ""),
+        lotnumAddr: String(body.lotnumAddr ?? ""),
+        bldg: String(body.bldg ?? ""),
+        unit: String(body.unit ?? ""),
+        unqRgstrNo: String(body.unqRgstrNo ?? ""),
+        clientNm: bank.bizNm,
+        bndNm: bank.bizNm,
+        bndBizNo: bank.bizNo,
+        bndMembNm: bank.membNm,
+        ...(lawyer
+          ? { statCd: PROC_STAT_CD.MATCH, lgagMembNm: lawyer.membNm, lgagMembHpno: "010-0000-0000", mtchDtm: dateFromToday(0) }
+          : {}),
+      });
+      return ok(null, "등록이 완료되었습니다.");
+    },
+  },
+  {
+    // 배정하기 (multipart: req JSON + 파일)
+    method: "patch",
+    pattern: /^\/api\/admin\/match$/,
+    handler: (_p, _m, body) => {
+      const target = findRegistration(String(body.rqstNo ?? ""));
+      const lawyer = MEMBERS["10"].find((member) => member.membNo === body.lgagMembNo) ?? MEMBERS["10"][0];
+      if (target) {
+        Object.assign(target, {
+          dbtrNm: String(body.dbtrNm || target.dbtrNm),
+          bndMaxAmt: Number(body.bndMaxAmt) || target.bndMaxAmt,
+          unqRgstrNo: String(body.unqRgstrNo || target.unqRgstrNo),
+          lgagMembNm: lawyer.membNm,
+          lgagMembHpno: "010-0000-0000",
+          mtchDtm: dateFromToday(0),
+        });
+        changeStatus(target, PROC_STAT_CD.MATCH);
+      }
+      return ok(null, "배정이 완료되었습니다.");
+    },
+  },
+
+  /* 관리자 - 등기관리 */
+  {
+    method: "get",
+    pattern: /^\/api\/admin\/registration\/list$/,
+    handler: (params) => {
+      const tab = params.get("tabSelection") ?? "";
+      const rqstNo = params.get("searchRqstNo") ?? "";
+      const fromDate = params.get("fromDate") ?? "";
+      const toDate = params.get("toDate") ?? "";
+      const dateKey = params.get("searchType") === "RQST" ? "crtDtm" : "execDt";
+      const filtered = sortBy(
+        REGISTRATIONS.filter(
+          (item) =>
+            (!tab || item.statCd === tab) &&
+            item.rqstNo.includes(rqstNo) &&
+            (!fromDate || item[dateKey] >= fromDate) &&
+            (!toDate || item[dateKey] <= toDate),
+        ),
+        params.get("sortOrder"),
+      );
+      const { items, totalElements, totalPages } = paginate(filtered, params);
+      return ok({
+        rgstrMngrList: items.map(({ statNm, statCd, execDt, acptRptDtm, rqstNo, bndMembNm, dbtrNm, lgagMembNm }) => ({
+          statNm, statCd, execDt, acptRptDtm, rqstNo, bndMembNm, dbtrNm, lgagMembNm,
+        })),
+        totalElements,
+        totalPages,
+        rgstrStatistics: registrationStatistics(),
+      });
+    },
+  },
+  {
+    method: "get",
+    pattern: /^\/api\/admin\/registration\/detail$/,
+    handler: (params) => {
+      const item = findRegistration(params.get("rqstno"));
+      return ok(item ? { ...item, docList: documentList(item) } : null);
+    },
+  },
+  {
+    method: "get",
+    pattern: /^\/api\/admin\/registration\/(data|accept)$/,
+    handler: (params) => ok(findRegistration(params.get("rqstno")) ?? null),
+  },
+  {
+    // 접수정보 등록 팝업 (등록된 접수증 이미지 포함)
+    method: "get",
+    pattern: /^\/api\/admin\/registration\/info$/,
+    handler: (params) => {
+      const item = findRegistration(params.get("rqstno"));
+      if (!item) return ok(null);
+      return ok({
+        ...item,
+        fileList: item.acptNo
+          ? [{ seq: item.rqstNo, filIdx: "1", src: imageSrc(item.rqstNo, "02", 1), attcFilNm: "등기접수증_1.svg", filSize: 24000 }]
+          : [],
+      });
+    },
+  },
+  {
+    method: "get",
+    pattern: /^\/api\/admin\/registration\/search$/,
+    handler: (params) => ok(findRegistration(params.get("rqstno"))?.rqstNo ?? null),
+  },
+  {
+    // 접수정보 등록 (multipart: reqVo JSON + 접수증 파일)
+    method: "post",
+    pattern: /^\/api\/admin\/registration\/accept$/,
+    handler: (_p, _m, body) => {
+      const target = findRegistration(String(body.rqstNo ?? ""));
+      if (target) {
+        Object.assign(target, {
+          acptNo: String(body.acptNo || target.acptNo || "10999"),
+          judtCourtCd: String(body.judtCourtCd ?? ""),
+          regrCd: String(body.regrCd ?? ""),
+          judtCourtNm: COMMON_CODES.JUDT_COURT_CD.find((code) => code.code === body.judtCourtCd)?.codeNm ?? target.judtCourtNm,
+          regrNm: COMMON_CODES.REGR_CD.find((code) => code.code === body.regrCd)?.codeNm ?? target.regrNm,
+          mngrDlvrCnts: String(body.mngrDlvrCnts ?? ""),
+          acptRptDtm: dateFromToday(0),
+          rgstrAcptYn: "Y",
+        });
+        changeStatus(target, PROC_STAT_CD.REVIEWING, { crtMembNm: target.lgagMembNm || "관리자" });
+      }
+      return ok(null, "접수정보가 등록되었습니다.");
+    },
+  },
+  {
+    method: "patch",
+    pattern: /^\/api\/admin\/registration\/approval$/,
+    handler: (_p, _m, body) => {
+      const target = findRegistration(String(body.rqstNo ?? ""));
+      if (target) changeStatus(target, PROC_STAT_CD.COMPLET);
+      return ok(null, "승인이 완료되었습니다.");
+    },
+  },
+  {
+    // 보완요청(supplementation)·진행취소(cancel)·반려(reject)
+    method: "patch",
+    pattern: /^\/api\/admin\/registration\/(supplementation|cancel|reject)$/,
+    handler: (_p, m, body) => {
+      const statCd = { supplementation: PROC_STAT_CD.SUPPLEMENT, cancel: PROC_STAT_CD.CANCEL, reject: PROC_STAT_CD.RETURN }[m[1]]!;
+      const target = findRegistration(String(body.rqstNo ?? ""));
+      if (target) {
+        const procRsnCnts = String(body.procRsnCnts ?? "");
+        if (statCd === PROC_STAT_CD.SUPPLEMENT) target.procRsnCnts = procRsnCnts;
+        changeStatus(target, statCd, { procRsnCnts });
+      }
+      return ok();
     },
   },
 
@@ -239,7 +484,11 @@ const parseRequest = (config: InternalAxiosRequestConfig) => {
   return { path, params };
 };
 
+/* JSON 문자열 또는 multipart(FormData의 req·reqVo JSON 필드) 요청 본문을 객체로 바꿉니다. */
 const parseBody = (data: unknown): Body => {
+  if (typeof FormData !== "undefined" && data instanceof FormData) {
+    return parseBody(data.get("req") ?? data.get("reqVo") ?? "");
+  }
   if (typeof data === "string") {
     try {
       return JSON.parse(data);
@@ -259,8 +508,11 @@ export const mockAdapter = (config: InternalAxiosRequestConfig): Promise<AxiosRe
       for (const route of routes) {
         const match = route.method === method ? path.match(route.pattern) : null;
         if (match) {
+          const data = route.handler(params, match, parseBody(config.data));
+          // 조회가 아닌 요청(등록·수정·상태 변경)은 결과를 저장해 새로고침 후에도 유지
+          if (method !== "get") saveDemoState();
           resolve({
-            data: route.handler(params, match, parseBody(config.data)),
+            data,
             status: 200,
             statusText: "OK",
             headers: {},

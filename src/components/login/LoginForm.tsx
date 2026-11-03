@@ -10,7 +10,7 @@ import Cookies from "js-cookie";
 import { Button } from "@components/button";
 import { Loading } from "@components/common";
 import { Checkbox, Form, InputField, Radio } from "@components/form";
-import { AUTH_LIST, DEMO_FINANCIAL_AUTH } from "@constants/auth";
+import { AUTH_LIST, DEMO_ADMIN_AUTH, DEMO_FINANCIAL_AUTH, MEMB_GB_CD } from "@constants/auth";
 import { isDemoMode } from "@constants/env";
 import { ID_INPUT, ID_SAVER, PASSWORD_INPUT } from "@constants/input";
 import { AD_ASSIGN, FI_HOME } from "@constants/path";
@@ -149,11 +149,21 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
   const submitLoginForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // 데모 모드: 입력값·API 확인 없이 금융기관 사용자로 로그인 처리 후 홈으로 이동
+    // 데모 모드: 입력값·API 확인 없이, 선택한 사용자 유형(금융기관·관리자)으로 로그인 처리 후 유형별 홈으로 이동
     if (isDemoMode) {
-      saveAuthInfo(DEMO_FINANCIAL_AUTH);
-      Cookies.set("membGbCd", DEMO_FINANCIAL_AUTH.membGbCd);
-      router.push(FI_HOME);
+      if (radioValue === MEMB_GB_CD.LAWYER) {
+        openToast({
+          message: "법무대리인 서비스는 준비 중입니다.",
+          position: isDesktop ? "top" : "bottom",
+        });
+        return;
+      }
+
+      const isAdmin = radioValue === MEMB_GB_CD.ADMIN;
+      const demoAuth = isAdmin ? DEMO_ADMIN_AUTH : DEMO_FINANCIAL_AUTH;
+      saveAuthInfo(demoAuth);
+      Cookies.set("membGbCd", demoAuth.membGbCd);
+      router.push(isAdmin ? AD_ASSIGN : FI_HOME);
       return;
     }
 

@@ -1,3 +1,4 @@
+import Main from "@components/admin/member/Main";
 import { CommonLayout } from "@components/layout";
 import { AD_MEMBER_CREATE_METADATA } from "@constants/metadata";
 
@@ -11,9 +12,7 @@ export const metadata: Metadata = {
 export default async function Create() {
   return (
     <CommonLayout>
-      <div>
-        회원 등록
-      </div>
+      <Main />
     </CommonLayout>
   );
 }

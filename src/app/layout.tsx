@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
-    images: [OG_IMAGE],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: `${TITLE} 화면 미리보기` }],
   },
   icons: {
     icon: FAVICON,

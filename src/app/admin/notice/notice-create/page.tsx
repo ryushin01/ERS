@@ -1,3 +1,4 @@
+import Main from "@components/admin/notice/Main";
 import { CommonLayout } from "@components/layout";
 import { AD_NOTICE_CREATE_METADATA } from "@constants/metadata";
 
@@ -11,9 +12,7 @@ export const metadata: Metadata = {
 export default async function Create() {
   return (
     <CommonLayout>
-      <div>
-        공지관리
-      </div>
+      <Main />
     </CommonLayout>
   );
 }

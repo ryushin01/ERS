@@ -1,3 +1,4 @@
+import Main from "@components/admin/member/Main";
 import { CommonLayout } from "@components/layout";
 import { AD_MEMBER_DETAIL_METADATA } from "@constants/metadata";
 
@@ -11,9 +12,7 @@ export const metadata: Metadata = {
 export default async function Detail() {
   return (
     <CommonLayout>
-      <div>
-        회원관리 상세
-      </div>
+      <Main />
     </CommonLayout>
   );
 }
