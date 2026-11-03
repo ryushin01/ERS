@@ -31,7 +31,7 @@ import type { AssignCreateForm } from "@types";
 import EmptyBox from "./EmptyBox";
 import ResponsiveSwiper from "./ResponsiveSwiper";
 import "@styles/responsive-table.css";
-import { useAtomValue } from "jotai/index";
+import { useAtomValue } from "jotai";
 
 type PostcodeProps = {
   roadAddress: string;
