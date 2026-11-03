@@ -2,7 +2,6 @@ import { Accordion, AccordionHeader } from "@components/accordion";
 import type { AttachedFile } from "@types";
 
 // mock-up data
-// import { ACCORDION_DATA_LIST } from "@data/sample-accordion-data";
 type dataProps = {
   data: boardList[];
 };

@@ -30,7 +30,6 @@ type InputFieldProps = {
   inputSize?: "sm" | "md" | "lg";
   className?: string;
   readOnly?: boolean;
-  // ref?: React.Ref<HTMLInputElement>;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "size">;
 
 /**
@@ -64,7 +63,6 @@ export default function InputField({
   required,
   disabled,
   onChange,
-  // onClick,
   onFocus,
   onBlur,
   placeholder,
@@ -84,10 +82,6 @@ InputFieldProps) {
   const [isHideText, setIsHideText] = useState(true);
   const hasIcon = icon ? true : false; // icon 있으면 true 없으면 false
 
-  // const handleClick () => {
-  //   setValue("");
-  //   // onClick();
-  // }
 
   /* TODO : password가 아닌 다른걸로 분기처리 방법 찾아보기. input+button 조합 password 아닌것도 있을수있음. 
   button/icon >> button type(button/reset) | src(토글이면 이미지 두개) | alt */
@@ -182,7 +176,6 @@ InputFieldProps) {
       labelText={labelText}
       hasIcon={hasButton}
       isError={isError}
-      // styleClass={setSize}
     >
       <div className={inputWithLabelText}>
         <Input
@@ -200,7 +193,6 @@ InputFieldProps) {
           onFocus={onFocus}
           defaultValue={coreValue!}
           value={value}
-          // ref={ref}
         />
         <button
           onClick={() => setCoreValue("")}
@@ -246,7 +238,6 @@ InputFieldProps) {
           onFocus={onFocus}
           defaultValue={defaultValue!}
           value={value}
-          // ref={ref}
         />
         {icon && iconPosition === "right" && (
           <span className="pl-2">{icon}</span>

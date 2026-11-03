@@ -5,8 +5,6 @@ import { ATTC_FIL_CD, REALE_CD } from "@constants/code";
 import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE } from "@constants/file";
 import { Loading } from "@components/common";
 import { Grid, GridItem } from "@components/layout";
-// import { Form } from "@components/form";
-// import { Button } from "@components/button";
 import { useQuery } from "@tanstack/react-query";
 import { getSupplimentData } from "@services/adminAssign";
 import { getMemberListData } from "@services/assignDetail";
@@ -22,6 +20,14 @@ interface DefineProps {
   isDesktop?: boolean;
   rqstNo: string;
 }
+
+/* 배정등록 상세정보 기본값 (렌더링마다 새 객체가 생기지 않도록 컴포넌트 밖에 선언) */
+const EMPTY_SPPL_DATA = {
+  rqstNo: "",
+  execDt: "",
+  bndNm: "",
+  bndBizNo: "",
+};
 
 export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
   const openToast = useSetAtom(toastState);
@@ -46,12 +52,7 @@ export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
 
   /* 배정등록 상세정보 조회 api */
   const {
-    data: spplData = {
-      rqstNo: "",
-      execDt: "",
-      bndNm: "",
-      bndBizNo: "",
-    },
+    data: spplData = EMPTY_SPPL_DATA,
     isLoading: spplDataLoading,
   } = useQuery({
     queryKey: ["search-sppldata"],
@@ -71,7 +72,6 @@ export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
   /* 부동산구분코드 조회 api */
   const {
     data: realeCdData,
-    // isLoading: realeCdDataLoading,
   } = useQuery({
     queryKey: ["search-realecode"],
     queryFn: async () => await getCommonCodeList(REALE_CD),
@@ -87,13 +87,8 @@ export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
 
   /* 회원 목록 조회 api */
   const {
-    data: memberListData = {
-      membNo: "",
-      membNm: "",
-      bizNo: "",
-      bizNm: "",
-    },
-    // isLoading: realeCdDataLoading,
+    // 기본값(객체 리터럴)을 주면 데이터가 없는 동안 렌더링마다 새 객체가 되어 아래 이펙트가 무한 반복되므로 주지 않음
+    data: memberListData,
   } = useQuery({
     queryKey: ["search-memberlist"],
     queryFn: async () => await getMemberListData("10"),
@@ -212,7 +207,6 @@ export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
               accept=".jpg, .jpeg, .png"
               multiple
               onChange={handleFileChange}
-              // onChange={isUploadDisabled ? undefined : handleFileChange}
             />
           </div>
         </GridItem>

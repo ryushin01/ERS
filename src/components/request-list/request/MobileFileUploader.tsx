@@ -313,7 +313,6 @@ export default function MobileFileUploader({
   };
 
   const {
-    // data: postData,
     mutate: mutatePostRequestData,
     isPending,
   } = useMutation({

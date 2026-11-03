@@ -39,14 +39,3 @@ export const postCreateAssign = (form: FormData) =>
     baseURL: adminURI,
     headers: { "Content-Type": "multipart/form-data" },
   });
-
-// axiosBasicInstance.post(`${API_ADMIN_MATCH}`, form, {
-//   baseURL: adminURI,
-//   headers: { "Content-Type": "multipart/form-data" },
-// });
-
-// export const postCreateAssign = (form: FormData) =>
-//   axiosBasicInstance.post(`${API_ADMIN_MATCH}`, form, {
-//     baseURL: adminURI,
-//     headers: { "Content-Type": "multipart/form-data" },
-//   });

@@ -6,16 +6,6 @@ const nextConfig: NextConfig = {
   devIndicators: {
     appIsrStatus: false,
   },
-  webpack: (config, options) => {
-    config.cache = false;
-
-    config.module.rules.push({
-      test: /\.temp\.tsx?$/,
-      use: "ignore-loader",
-    });
-
-    return config;
-  },
   // membGbCd (사용자 구분 코드)
   // 00 : 금융기관
   // 10 : 법무대리인

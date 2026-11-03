@@ -4,7 +4,10 @@ export const DESCRIPTION = "부동산 전자등기 의뢰부터 처리 현황 �
 
 export const FAVICON = "/logo.svg";
 
-export const OG_IMAGE = "/og_images.png";
+export const OG_IMAGE = "/og_image.png";
+
+/* 공유 미리보기(OG) 이미지 등 절대 URL 생성 기준 주소. 배포 시 NEXT_PUBLIC_SITE_URL로 지정 */
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:4000";
 
 export const FI_HOME_METADATA = {
   TITLE: "홈 - 전자등기 관리 시스템",

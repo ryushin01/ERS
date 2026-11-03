@@ -375,7 +375,6 @@ export default function CreateForm() {
   /* ---- 등기 고유 번호 조회 끝 ---- */
 
   const {
-    // data,
     mutate: mutatePostCreateAssign,
     isPending: postCreateAssignLoading,
   } = useMutation({
@@ -437,12 +436,8 @@ export default function CreateForm() {
 
   /* 회원 목록 조회(금융기관) api */
   const {
-    data: bankListData = {
-      membNo: "",
-      membNm: "",
-      bizNo: "",
-      bizNm: "",
-    },
+    // 기본값(객체 리터럴)을 주면 데이터가 없는 동안 렌더링마다 새 객체가 되어 아래 이펙트가 무한 반복되므로 주지 않음
+    data: bankListData,
   } = useQuery({
     queryKey: ["search-bank-list"],
     queryFn: async () => await getMemberListData("00"),
@@ -452,13 +447,8 @@ export default function CreateForm() {
 
   /* 회원 목록 조회(법무대리인) api */
   const {
-    data: memberListData = {
-      membNo: "",
-      membNm: "",
-      bizNo: "",
-      bizNm: "",
-    },
-    // isLoading: realeCdDataLoading,
+    // 기본값(객체 리터럴)을 주면 데이터가 없는 동안 렌더링마다 새 객체가 되어 아래 이펙트가 무한 반복되므로 주지 않음
+    data: memberListData,
   } = useQuery({
     queryKey: ["search-memberlist"],
     queryFn: async () => await getMemberListData("10"),
@@ -504,30 +494,6 @@ export default function CreateForm() {
       }
     })();
 
-    // if (
-    //   !execDate &&
-    //   !selectBank &&
-    //   !dbtrNM &&
-    //   !isValidAddrForm &&
-    //   !unqRgstrNo &&
-    //   !price &&
-    //   !contractDate
-    // ) {
-    //   setExecDtError(true); // 대출실행일 인풋 에러
-    //   setSelectBankError(true); // 채권자 인풋 에러
-    //   setIsDbtrNMError(true); // 채무자 인풋 에러
-    //   setAddrError(true); // 담보목적물(주소) 인풋 에러
-    //   setUnqRgstrNoError(true); // 고유번호 인풋 에러
-    //   setIsPricesError(true); // 채권최고액 인풋 에러
-    //   setIsContractDateError(true); // 설정약정일 인풋 에러
-    //
-    //   openToast({
-    //     message: "필수 정보를 전부 입력해 주세요.",
-    //     position: "top",
-    //   });
-    //
-    //   return;
-    // }
 
     let hasError = false;
 
@@ -764,7 +730,6 @@ export default function CreateForm() {
                         htmlFor="dbtr-nm"
                         type="text"
                         inputSize="sm"
-                        // required={true}
                         placeholder="채무자 입력"
                         onChange={(e) => handleCahngeDbtrNm(e)}
                         isError={isDbtrNMError}
@@ -810,7 +775,6 @@ export default function CreateForm() {
                               size="sm"
                               color="main100"
                               onClick={() => openSearchAddressModal()}
-                              // type="submit"
                             >
                               주소 검색
                             </Button>
@@ -890,9 +854,6 @@ export default function CreateForm() {
                               inputSize="sm"
                               placeholder=""
                               isError={addrError}
-                              // onChange={addressFormMonitor}
-                              // required={true}
-                              // disabled={true}
                             />
                             <Typography
                               kind="body-medium"
@@ -913,9 +874,6 @@ export default function CreateForm() {
                               inputSize="sm"
                               placeholder=""
                               isError={addrError}
-                              // onChange={addressFormMonitor}
-                              // required={true}
-                              // disabled={true}
                             />
                             <Typography
                               kind="body-medium"

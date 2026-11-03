@@ -27,7 +27,6 @@ type LabelProps = {
 export default function Label({
   htmlFor,
   labelText,
-  // isPassword,
   hasIcon,
   children,
   isError,

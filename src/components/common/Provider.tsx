@@ -108,10 +108,7 @@ export default function Provider({ children }: { children: ReactNode }) {
       {children}
 
       {/* 3. TanStack Query 전용 개발자 도구를 추가합니다. 이 도구는 기본적으로 개발 환경에서 노출, 프로덕션 환경에서 미노출됩니다. 또한, initialIsOpen 값을 true로 주면 개발자 도구가 열린 상태로 화면이 렌더링 됩니다. */}
-      <ReactQueryDevtools
-        // TODO: UI 작업 이후 주석 해제
-        // initialIsOpen={false}
-      />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

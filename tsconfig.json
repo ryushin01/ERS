@@ -60,15 +60,6 @@
       "@common": [
         "public/icons/common"
       ],
-      "@images": [
-        "public/images"
-      ],
-      "@images/*": [
-        "public/images/*"
-      ],
-      "@json/*": [
-        "public/json/*"
-      ],
       "@/*": [
         "src/*"
       ],
@@ -102,12 +93,6 @@
       "@utils/*": [
         "src/utils/*"
       ],
-      "@libs": [
-        "src/libs"
-      ],
-      "@libs/*": [
-        "src/libs/*"
-      ],
       "@services": [
         "src/services"
       ],
@@ -131,12 +116,6 @@
       ],
       "@types/*": [
         "src/types/*"
-      ],
-      "@data": [
-        "src/data"
-      ],
-      "@data/*": [
-        "src/data/*"
       ]
     }
   },

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { LOGIN_PATH, FI_PATH, FI_HOME, AD_PATH, AD_ASSIGN, LA_PATH } from "@constants/path";
 import { PUBLIC_FILES_REG_EXP } from "@constants/reg-exp";
+import { isPathUnder } from "@utils/pathUtil";
 
 /**
  * @name middleware
@@ -14,11 +15,9 @@ export function middleware(request: NextRequest) {
   const isLogin: boolean = !!membGbCd?.value;
   const isFinancial = membGbCd?.value === "00";
   const isAdmin = membGbCd?.value === "20";
-  // 경로 중간에 키워드가 포함된 경우(예: /foo/financial)를 제외하기 위해 접두 경로로 판정
-  const isUnder = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
-  const isFinancialPage = isUnder(FI_PATH);
-  const isAdminPage = isUnder(AD_PATH);
-  const isMemberPage = [FI_PATH, AD_PATH, LA_PATH].some(isUnder);
+  const isFinancialPage = isPathUnder(pathname, FI_PATH);
+  const isAdminPage = isPathUnder(pathname, AD_PATH);
+  const isMemberPage = [FI_PATH, AD_PATH, LA_PATH].some((path) => isPathUnder(pathname, path));
   const isValidPublicFiles = request.nextUrl.pathname.match(PUBLIC_FILES_REG_EXP);
 
   // 정적 파일 정상 유무 확인

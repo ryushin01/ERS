@@ -52,7 +52,6 @@ export default function LoginPasswordField({
   required,
   disabled,
   onChange,
-  // onClick,
   onFocus,
   onBlur,
   placeholder,

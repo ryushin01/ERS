@@ -1,10 +1,9 @@
 import { FormEvent, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { LogoutIcon } from "@icons14";
 import { MenuIcon } from "@icons24";
 import { MEMB_GB_CD, MembGbCd } from "@constants/auth";
-import { appURI, isDemoMode } from "@constants/env";
+import { appURI } from "@constants/env";
 import { AD_REGISTRATION, STATUS_INQUIRY } from "@constants/path";
 import { DownArrowIcon, UpArrowIcon } from "@icons32";
 import { AccountLayer, ImageWithAuth } from "@components/common";
@@ -12,10 +11,8 @@ import { Button, IconButton } from "@components/button";
 import { Form, SearchInput } from "@components/form";
 import { Drawer } from "@components/drawer";
 import { Typography } from "@components/common";
-import { useDisclosure, useResponsive } from "@hooks";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { postLogout } from "@services/login";
-import { axiosBasicInstance } from "@services";
+import { useDisclosure, useLogout, useResponsive } from "@hooks";
+import { useQuery } from "@tanstack/react-query";
 import { authAtom, toastState } from "@stores";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
@@ -23,7 +20,6 @@ import {
   getSearchAdminRgstData,
   getSearchBankRgstData,
 } from "@services/home";
-import Cookies from "js-cookie";
 
 /**
  * @name HeaderRightArea
@@ -41,14 +37,11 @@ import Cookies from "js-cookie";
  */
 
 export default function HeaderRightArea() {
-  const router = useRouter();
   const authInfo = useAtomValue(authAtom);
   const openToast = useSetAtom(toastState);
   const { isDesktop } = useResponsive();
   const [searchRqstNo, setSearchRqstNo] = useState("");
   const [imgSrc, setImgSrc] = useState("");
-  // const [rqstNo, setRqstNo] = useState("");
-  // const [execDt, setExecDt] = useState("");
 
   const {
     isOpen: isDropdownOpen,
@@ -71,54 +64,8 @@ export default function HeaderRightArea() {
   // 사용자 구분 코드 (00 : 금융기관 / 10 : 법무 대리인 / 20 : 관리자)
   const level: MembGbCd = authInfo.membGbCd as MembGbCd;
 
-  /* 로그아웃 api 호출 */
-  const { mutate: logoutSend } = useMutation({
-    mutationKey: ["log-out"],
-    mutationFn: async () => await postLogout(),
-    onSuccess: (res) => {
-      if (res.data.code === "00") {
-        // 1. 세션스토리지 'auth' 삭제
-        sessionStorage.removeItem("auth");
-
-        // 2. 쿠키의 사용자 유형 삭제
-        Cookies.remove("membGbCd");
-
-        // 3. 인터셉터 Authorization 헤더를 비우도록 처리
-        axiosBasicInstance.interceptors.request.use((config) => {
-          if (config.headers) {
-            delete config.headers.Authorization;
-          }
-          return config;
-        });
-
-        // 4. 1초 후 로그인 페이지 이동
-        setTimeout(() => {
-          router.push("/");
-        }, 1000);
-      } else {
-        // 5. 로그아웃실패시 토스트 팝업 노출 (모바일은 하단에 pc는 상단에 토스트팝업 노출)
-        openToast({
-          message: "로그아웃에 실패하였습니다.\n다시 시도해 주세요.",
-          position: isDesktop ? "top" : "bottom",
-        });
-      }
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const handleLogout = () => {
-    // 데모 모드: 로그아웃 API 없이 로그인 정보만 지우고 로그인 화면으로 이동
-    if (isDemoMode) {
-      sessionStorage.removeItem("auth");
-      Cookies.remove("membGbCd");
-      router.push("/");
-      return;
-    }
-
-    logoutSend();
-  };
+  /* 로그아웃 */
+  const handleLogout = useLogout({ toastPosition: isDesktop ? "top" : "bottom" });
 
   /* 프로필 조회 api 호출 */
   const { data: profileData, isLoading: profileDataLoading } = useQuery({
@@ -130,9 +77,7 @@ export default function HeaderRightArea() {
 
   /* 금융기관 의뢰번호 조회 api 호출 */
   const {
-    //data: searchBnkRqstNo,
     refetch: getSearchBnkRqstNo,
-    // isLoading: searchBnkRgstrNoLoading,
   } = useQuery({
     queryKey: ["search-bank-rgstr", searchRqstNo],
     queryFn: async () => {
@@ -150,9 +95,7 @@ export default function HeaderRightArea() {
 
   /* 관리자 의뢰번호 조회 api 호출 */
   const {
-    //data: searchAdmRqstNo,
     refetch: getSearchAdmRqstNo,
-    // isLoading: searchAdmRgstrNoLoading,
   } = useQuery({
     queryKey: ["search-admin-rgstr", searchRqstNo],
     queryFn: async () => {

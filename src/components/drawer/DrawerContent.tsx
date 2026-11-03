@@ -1,25 +1,21 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { LogoutIcon } from "@icons14";
 import { DefaultProfile } from "@common";
 import { CHANGE_PASSWORD_INPUT } from "@constants/input";
 import { MEMB_GB_CD } from "@constants/auth";
 import { ImageWithAuth, Typography } from "@components/common";
-import { appURI, isDemoMode } from "@constants/env";
+import { appURI } from "@constants/env";
 import { Button } from "@components/button";
 import { Form, InputField } from "@components/form";
 import { Modal } from "@components/modal";
-import { useResponsive } from "@hooks";
+import { useLogout, useResponsive } from "@hooks";
 import { useMutation } from "@tanstack/react-query";
 import { authAtom, toastState } from "@stores";
 import { useAtomValue, useSetAtom } from "jotai";
-import { postLogout } from "@services/login";
 import { patchChangePassword } from "@services/changePassword";
-import { axiosBasicInstance } from "@services";
-import Cookies from "js-cookie";
 
 type DrawerContentProps = {
   level: string;
@@ -58,7 +54,6 @@ export default function DrawerContent({
                                         profileData,
                                         imgSrc,
                                       }: DrawerContentProps) {
-  const router = useRouter();
   const openToast = useSetAtom(toastState);
   const { isDesktop } = useResponsive();
   const authInfo = useAtomValue(authAtom);
@@ -77,60 +72,8 @@ export default function DrawerContent({
   /* 토스트팝업 포지션 */
   const toastPosition = isDesktop ? "top" : "bottom";
 
-  /* 로그아웃 api 호출 */
-  const { mutate: logoutSend } = useMutation({
-    mutationKey: ["log-out"],
-    mutationFn: async () => await postLogout(),
-    onSuccess: (res) => {
-      if (res.data.code === "00") {
-        // 1. 세션스토리지 'auth' 삭제
-        sessionStorage.removeItem("auth");
-
-        // 2. 쿠키의 사용자 유형 삭제
-        Cookies.remove("membGbCd");
-
-        // 3. 인터셉터 Authorization 헤더를 비우도록 처리
-        axiosBasicInstance.interceptors.request.use((config) => {
-          if (config.headers) {
-            delete config.headers.Authorization; // 헤더에서 Authorization 제거
-          }
-          return config;
-        });
-
-        // 4. 로그아웃 상태 변경
-        setIsLogout(true);
-
-        // 5. 1초 후 로그인 페이지 이동
-        setTimeout(() => {
-          router.push("/");
-        }, 1000);
-      } else {
-        // 6. 로그아웃실패시 토스트 팝업 노출
-        // 모바일은 하단에 pc는 상단에 토스트팝업 노출
-        openToast({
-          message: "로그아웃에 실패하였습니다.\n다시 시도해 주세요.",
-          position: toastPosition,
-        });
-      }
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  /* 로그아웃 api 호출 함수 */
-  const handleLogout = () => {
-    // 데모 모드: 로그아웃 API 없이 로그인 정보만 지우고 로그인 화면으로 이동
-    if (isDemoMode) {
-      sessionStorage.removeItem("auth");
-      Cookies.remove("membGbCd");
-      setIsLogout(true);
-      router.push("/");
-      return;
-    }
-
-    logoutSend();
-  };
+  /* 로그아웃 (완료 시 기본 프로필 이미지로 전환) */
+  const handleLogout = useLogout({ onLoggedOut: () => setIsLogout(true), toastPosition });
 
   /* form set 함수 */
   const resetForm = () => {
@@ -191,24 +134,6 @@ export default function DrawerContent({
   });
 
   /* 비밀번호 form set */
-  // const typingMonitor = (e: ChangeEvent<HTMLFormElement>) => {
-  //   let isValid = false;
-
-  //   if (form.pwd === "" || form.newPwd === "" || form.reNewPwd === "") {
-  //     isValid = true;
-  //   }
-
-  //   setIsDisabled(isValid);
-
-  //   const { name, value } = e.target;
-
-  //   const filteredValue = value.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/g, "");
-
-  //   setForm({
-  //     ...form,
-  //     [name]: filteredValue,
-  //   });
-  // };
 
   /* 비밀번호 input change - 한글입력제어추가 */
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -307,13 +232,11 @@ export default function DrawerContent({
             onSubmit={handleChangePassword}
             legendText="비밀번호 변경 양식"
             isHiddenLegend={true}
-            // onChange={typingMonitor}
             className="_change-password-form"
           >
             <div>
               <InputField
                 name="pwd"
-                // defaultValue={form.pwd}
                 value={form.pwd}
                 htmlFor={CHANGE_PASSWORD_INPUT.currentLabelText}
                 labelText={CHANGE_PASSWORD_INPUT.currentLabelText}
@@ -325,13 +248,11 @@ export default function DrawerContent({
                 isError={pwdError}
                 onFocus={() => setPwdError(false)}
                 onChange={handleInputChange}
-                // disabled={true}
               />
             </div>
             <div>
               <InputField
                 name="newPwd"
-                // defaultValue={form.newPwd}
                 value={form.newPwd}
                 htmlFor={CHANGE_PASSWORD_INPUT.newLabelText}
                 labelText={CHANGE_PASSWORD_INPUT.newLabelText}
@@ -343,11 +264,9 @@ export default function DrawerContent({
                 isError={newPwdError}
                 onFocus={() => setNewPwdError(false)}
                 onChange={handleInputChange}
-                // disabled={true}
               />
               <InputField
                 name="reNewPwd"
-                // defaultValue={form.reNewPwd}
                 value={form.reNewPwd}
                 htmlFor=""
                 labelText=""
@@ -359,7 +278,6 @@ export default function DrawerContent({
                 isError={reNewPwdError}
                 onFocus={() => setReNewPwdError(false)}
                 onChange={handleInputChange}
-                // disabled={true}
               />
             </div>
             <Button

@@ -1,32 +1,27 @@
 import Image from "next/image";
-import { CancelIcon, LeftArrowIcon, RightArrowIcon } from "@icons24";
 import { appURI } from "@constants/env";
-import { Frame, ImageWithAuth, Loading } from "@components/common";
+import ImageWithAuth from "@components/common/ImageWithAuth";
+import SwiperGallery from "@components/common/SwiperGallery";
 import { ResponsiveType, SwiperImage } from "@types";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Controller, Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "@styles/responsive-swiper.css";
+
+/* source - api: 서버에 저장된 이미지 / prop: 이번에 새로 추가한 이미지(미리보기 URL) */
+type MergedImage = SwiperImage & { source: "api" | "prop" };
 
 type ResponsiveSwiperProps = {
   className?: string;
   requestNo?: string;
   imageList?: MergedImage[];
   imageLoading?: boolean;
-  isDesktop?: boolean;
   handleFileDelete?: (i: number) => void;
   apiImageLength?: number;
 };
 
-type MergedImage = SwiperImage & { source: "api" | "prop" };
-
 /**
  * @name ResponsiveSwiper
- * @version 1.0.0
+ * @version 1.1.0
  * @author 류창선 <ryushin0167@gmail.com>
- * @description 부모 컴포넌트가 클라이언트 컴포넌트이어야 합니다.
+ * @description 관리자 - 배정 상세에서 서버 이미지와 새로 추가한 이미지를 함께 보여줍니다.
+ *              새로 추가한 이미지만 개별 삭제할 수 있습니다.
  */
 export default function ResponsiveSwiper({
                                            className = "",
@@ -35,100 +30,35 @@ export default function ResponsiveSwiper({
                                            imageLoading,
                                            isDesktop,
                                            handleFileDelete,
-                                           apiImageLength,
+                                           apiImageLength = 0,
                                          }: ResponsiveSwiperProps & ResponsiveType) {
+  const slides = imageList.map(({ seq, filIdx, src, attcFilNm, source }, index) => {
+    const alt = `의뢰번호 ${requestNo}의 등기자료 ${index + 1}번 이미지`;
+    const imageProps = {
+      width: isDesktop ? 400 : 250,
+      height: isDesktop ? 600 : 340,
+    };
+
+    return {
+      key: `${seq}_${filIdx}_${attcFilNm}`,
+      content:
+        source === "prop" ? (
+          <Image src={src} alt={alt} {...imageProps} />
+        ) : (
+          <ImageWithAuth src={`${appURI}/api${src}`} alt={alt} {...imageProps} />
+        ),
+      // 새로 추가한 이미지의 인덱스는 서버 이미지 개수만큼 뒤에서 시작
+      onDelete:
+        source === "prop" ? () => handleFileDelete?.(index - apiImageLength) : undefined,
+    };
+  });
+
   return (
-    <>
-      {imageLoading && <Loading />}
-      <div className="_responsive-swiper-wrapper">
-        <Swiper
-          className={`_responsive-swiper ${className}`}
-          // 사용 모듈 정의
-          modules={[Controller, Navigation, Pagination]}
-          // swiper-wrapper 태그 정의
-          wrapperTag="ul"
-          // 한 번에 노출할 슬라이드 개수 정의
-          slidesPerView={"auto"}
-          // 페이지네이션
-          pagination={{
-            type: isDesktop ? "fraction" : "progressbar",
-          }}
-          navigation={{
-            prevEl: "._btn-prev",
-            nextEl: "._btn-next",
-          }}
-        >
-          {imageList.map((image: MergedImage, index: number) => {
-            const { seq, filIdx, src, attcFilNm, source } = image;
-
-            return (
-              <SwiperSlide tag="li" key={`${seq}_${filIdx}_${attcFilNm}`}>
-                <Frame>
-                  {source === "prop" ? (
-                    <Image
-                      src={`${src}`}
-                      alt={`의뢰번호 ${requestNo}의 등기자료 ${
-                        index + 1
-                      }번 이미지`}
-                      width={isDesktop ? 400 : 250}
-                      height={isDesktop ? 600 : 340}
-                    />
-                  ) : (
-                    <ImageWithAuth
-                      src={`${appURI}/api${src}`}
-                      alt={`의뢰번호 ${requestNo}의 등기자료 ${
-                        index + 1
-                      }번 이미지`}
-                      width={isDesktop ? 400 : 250}
-                      height={isDesktop ? 600 : 340}
-                    />
-                  )}
-                </Frame>
-
-                {source === "prop" && (
-                  <button
-                    type="button"
-                    className="absolute top-0 right-0 rounded bg-koser-grayscale-0/30"
-                    onClick={() => handleFileDelete?.(index - apiImageLength!)}
-                  >
-                    <Image
-                      src={CancelIcon}
-                      alt="이미지 개별 삭제 아이콘"
-                      width={36}
-                      height={36}
-                    />
-                  </button>
-                )}
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-
-        <button
-          type="button"
-          className="_btn-prev"
-          aria-label="이전 슬라이드 보기"
-        >
-          <Image
-            src={LeftArrowIcon}
-            alt="좌측 화살표 아이콘"
-            width={24}
-            height={24}
-          />
-        </button>
-        <button
-          type="button"
-          className="_btn-next"
-          aria-label="다음 슬라이드 보기"
-        >
-          <Image
-            src={RightArrowIcon}
-            alt="우측 화살표 아이콘"
-            width={24}
-            height={24}
-          />
-        </button>
-      </div>
-    </>
+    <SwiperGallery
+      slides={slides}
+      className={className}
+      paginationType={isDesktop ? "fraction" : "progressbar"}
+      isLoading={imageLoading}
+    />
   );
 }

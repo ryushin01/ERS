@@ -137,10 +137,8 @@ export default function Main() {
                   defaultValue={searchRqstNo}
                   type="number"
                   inputSize="md"
-                  // required={true}
                   placeholder={REQUEST_NUMBER_INPUT.placeHolder}
                   isError={false}
-                  // disabled={true}
                 />
               </div>
               <div className="w-[136px]">

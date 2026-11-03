@@ -535,7 +535,6 @@ export default function RegistrationInformation({
                       type="text"
                       name="acptNo"
                       defaultValue={acceptNo || ""}
-                      //required={true}
                       placeholder={"접수번호를 입력해 주세요"}
                       isError={isError && !acceptNo}
                       inputSize="sm"

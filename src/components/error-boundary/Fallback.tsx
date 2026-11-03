@@ -8,7 +8,6 @@ import { FallbackProps } from "react-error-boundary";
  */
 const Fallback = ({ resetErrorBoundary }: FallbackProps) => {
   // const status = error.response?.status || "500";
-  // console.log("🔴 상태 코드:", status);
 
   return (
     <Error onReset={resetErrorBoundary} />

@@ -5,7 +5,6 @@ import { Grid, GridItem } from "@components/layout";
 import { Button } from "@components/button";
 import { Modal } from "@components/modal";
 import { useDisclosure } from "@hooks";
-// import { ResponsiveType } from "@types";
 import RegistrationDataDetail from "./RegistrationDataDetail";
 import RegistrationReceiptDetail from "./RegistrationReceiptDetail";
 import Detail from "@components/request-list/Detail";

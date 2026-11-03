@@ -708,7 +708,6 @@ export default function Table({
     setRequestData(formData!);
 
     // 6. API 호출
-    // patchAccignmentsubmit();
   };
 
   useEffect(() => {
@@ -742,9 +741,8 @@ export default function Table({
       src: string,
       name: string,
     ): Promise<File | null> => {
-      // ❌ 특정 경로일 경우 fetch 안 하도록
+      // 서버 이미지 경로(/files/images/)는 다시 받지 않음
       if (src.includes("/files/images/")) {
-        // console.warn("⚠️ fetch 생략됨:", src);
         return null;
       }
 
@@ -829,11 +827,9 @@ export default function Table({
                     htmlFor="dbtr-nm"
                     type="text"
                     inputSize="sm"
-                    // required={true}
                     placeholder="채무자 입력"
                     onChange={(e) => handleCahngeDbtrNm(e)}
                     isError={isDbtrNMError}
-                    // disabled={true}
                   />
                 </td>
               </tr>
@@ -881,7 +877,6 @@ export default function Table({
                           size="sm"
                           color="main100"
                           onClick={() => openSearchAddressModal()}
-                          // type="submit"
                         >
                           주소 검색
                         </Button>
@@ -902,9 +897,6 @@ export default function Table({
                           placeholder=""
                           isError={addrError}
                           readOnly={true}
-                          // disabled={true}
-                          // onChange={addressFormMonitor}
-                          // required={true}
                         />
                       </span>
                       <span className="flex items-center gap-x-2 mb-2 w-[500px] [&>span:first-child]:min-w-24">
@@ -923,9 +915,6 @@ export default function Table({
                           placeholder=""
                           isError={addrError}
                           readOnly={true}
-                          // disabled={true}
-                          // onChange={addressFormMonitor}
-                          // required={true}
                         />
                       </span>
                       <span className="flex items-center gap-x-2 mb-2 [&>span:first-child]:min-w-24">
@@ -967,9 +956,6 @@ export default function Table({
                               inputSize="sm"
                               placeholder=""
                               isError={addrError}
-                              // onChange={addressFormMonitor}
-                              // required={true}
-                              // disabled={true}
                             />
                             <Typography
                               kind="body-medium"
@@ -990,9 +976,6 @@ export default function Table({
                               inputSize="sm"
                               placeholder=""
                               isError={addrError}
-                              // onChange={addressFormMonitor}
-                              // required={true}
-                              // disabled={true}
                             />
                             <Typography
                               kind="body-medium"
@@ -1034,8 +1017,6 @@ export default function Table({
                       inputSize="sm"
                       placeholder=""
                       isError={unqRgstrNoError}
-                      // disabled={true}
-                      // required={true}
                     />
                   </span>
                 </td>
@@ -1137,7 +1118,6 @@ export default function Table({
             placeholder="법무대리인에게 전달사항이 있는 경우 작성해 주세요"
             defaultValue={""}
             onChange={(e) => setLgagDlvrCnts(e.target.value)}
-            // disabled={true}
           />
         </div>
         {isOpenSearchAddressModal && (
@@ -1158,7 +1138,6 @@ export default function Table({
             className="justify-center gap-x-3 [&>button]:w-1/3"
           >
             <Button
-              // type="submit"
               shape="solid"
               size="lg"
               color="main100"
@@ -1224,7 +1203,6 @@ export default function Table({
                   type="text"
                   name="procRsnCnts"
                   defaultValue={form.procRsnCnts}
-                  // required={true}
                   placeholder={"사유를 입력해 주세요"}
                   isError={spplError}
                   inputSize="md"
@@ -1301,7 +1279,6 @@ export default function Table({
                   type="text"
                   name="procRsnCnts"
                   defaultValue={form.procRsnCnts}
-                  // required={true}
                   placeholder={"사유를 입력해 주세요"}
                   isError={cnclError}
                   onChange={() => setCnclError(false)}

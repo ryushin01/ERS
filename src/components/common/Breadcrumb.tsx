@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { RightArrowIcon } from "@icons14";
 import { Typography } from "@components/common";
+import { AD_PATH } from "@constants/path";
+import { isPathUnder } from "@utils/pathUtil";
 import "@styles/breadcrumb.css";
 
 type PathListProps = {
@@ -54,7 +56,7 @@ export default function Breadcrumb() {
             <Link href={pathArray.length - 1 !== index ? `/${location}` : ""}>
               <Image src={RightArrowIcon} alt="우측 화살표 아이콘" width={14} height={14} />
               <Typography
-                kind="body-medium">{pathname.includes("admin") ? AD_PATH_LIST[path] : FI_PATH_LIST[path]}</Typography>
+                kind="body-medium">{isPathUnder(pathname, AD_PATH) ? AD_PATH_LIST[path] : FI_PATH_LIST[path]}</Typography>
             </Link>
           </li>
         );

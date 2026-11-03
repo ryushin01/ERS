@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { FI_HOME, AD_ASSIGN } from "@constants/path";
+import { FI_HOME, AD_ASSIGN, AD_PATH } from "@constants/path";
+import { isPathUnder } from "@utils/pathUtil";
 import { Typography } from "@components/common";
 import { Button } from "@components/button";
 import { useResponsive } from "@hooks";
@@ -54,7 +55,7 @@ const Error = ({ onReset }: ErrorProps) => {
             shape="outline"
             size={isMobile ? "sm" : "lg"}
             color="grayscale"
-            onClick={pathname.includes("admin") ? goToADHome : goToFIHome}
+            onClick={isPathUnder(pathname, AD_PATH) ? goToADHome : goToFIHome}
           >
             홈으로 이동하기
           </Button>

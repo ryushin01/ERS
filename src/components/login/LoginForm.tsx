@@ -59,7 +59,6 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
 
   /* 로그인 api 호출 */
   const {
-    // data: loginData,
     mutate: loginDataSend,
     isPending: loginDataLoading,
   } = useMutation({
@@ -212,7 +211,6 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
           isError={idError}
           onFocus={() => setIdError(false)}
           inputSize={isDesktop ? "lg" : "md"}
-          // disabled={true}
         />
         <LoginPasswordField
           type="password"
@@ -234,7 +232,6 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
           isError={pwdError}
           onFocus={() => setPwdError(false)}
           inputSize={isDesktop ? "lg" : "md"}
-          // disabled={true}
         />
         <div className="_login-checkbox-wrapper">
           <Checkbox
@@ -246,12 +243,10 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
           />
         </div>
         <Button
-          // TODO: 로직 개발 시 submit 주석 해제
           type="submit"
           shape="solid"
           size="lg"
           color="main100"
-          // onClick={() => {}}
         >
           로그인
         </Button>

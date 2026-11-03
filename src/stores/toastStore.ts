@@ -21,11 +21,16 @@ interface ToastItems {
 /* toast-popup open 여부 */
 interface ToastStatus extends ToastItems {
   isOpen: boolean;
+  id: number;
 }
+
+/* 토스트팝업 노출 시간 */
+const TOAST_DURATION_MS = 3000;
 
 /* atom 초기값 설정 */
 const toastAtom = atom<ToastStatus>({
   isOpen: false,
+  id: 0,
   message: "",
   position: "top",
   afterFunc: null,
@@ -35,13 +40,18 @@ const toastAtom = atom<ToastStatus>({
 const toastState = atom(
   (get) => get(toastAtom),
   (get, set, state: ToastItems) => {
+    const id = get(toastAtom).id + 1;
+
+    set(toastAtom, { ...state, isOpen: true, id });
+
     /* 3초 후 토스트팝업 사라짐 */
     setTimeout(() => {
-      set(toastAtom, { ...state, isOpen: false });
+      // 그 사이 새 토스트가 떴다면 새 토스트는 닫지 않음 (새 토스트는 자기 타이머로 닫힘)
+      if (get(toastAtom).id === id) {
+        set(toastAtom, { ...get(toastAtom), isOpen: false });
+      }
       state.afterFunc?.();
-    }, 3000);
-
-    set(toastAtom, { ...state, isOpen: true });
+    }, TOAST_DURATION_MS);
   },
 );
 

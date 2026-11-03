@@ -4,8 +4,6 @@ export const adminURI = process.env.NEXT_PUBLIC_ADMIN_URI;
 
 export const apiURI = process.env.NEXT_PUBLIC_API_URI;
 
-export const fakeURI = process.env.NEXT_PUBLIC_FAKE_URI;
-
 /**
  * 포트폴리오(데모) 모드
  * - 기본 활성화: 백엔드 없이 로그인 버튼만 누르면 금융기관 화면으로 진입합니다.

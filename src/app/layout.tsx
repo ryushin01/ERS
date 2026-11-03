@@ -1,13 +1,19 @@
 import React, { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
-import { TITLE, DESCRIPTION, FAVICON } from "@constants/metadata";
+import { TITLE, DESCRIPTION, FAVICON, OG_IMAGE, SITE_URL } from "@constants/metadata";
 import Provider from "@components/common/Provider";
 import ToastPopup from "@components/common/ToastPopup";
 import "@styles/globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: TITLE,
   description: DESCRIPTION,
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [OG_IMAGE],
+  },
   icons: {
     icon: FAVICON,
   },

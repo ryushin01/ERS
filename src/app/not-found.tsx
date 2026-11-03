@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FI_HOME, AD_ASSIGN } from "@constants/path";
+import { FI_HOME, AD_ASSIGN, AD_PATH } from "@constants/path";
+import { isPathUnder } from "@utils/pathUtil";
 import { Typography } from "@components/common";
 import { Button } from "@components/button";
 import { useResponsive } from "@hooks";
@@ -44,9 +45,7 @@ export default function NotFound() {
           {/*<Button*/}
           {/*  type="button"*/}
           {/*  shape="outline"*/}
-          {/*  size={isMobile ? "sm" : "lg"}*/}
           {/*  color="grayscale"*/}
-          {/*  onClick={() => router.back()}*/}
           {/*>*/}
           {/*  이전 페이지로 돌아가기*/}
           {/*</Button>*/}
@@ -56,7 +55,7 @@ export default function NotFound() {
             shape="solid"
             size={isMobile ? "sm" : "lg"}
             color="main100"
-            onClick={prevPath?.includes("admin") ? goToADHome : goToFIHome}
+            onClick={isPathUnder(prevPath, AD_PATH) ? goToADHome : goToFIHome}
           >
             홈으로 이동하기
           </Button>

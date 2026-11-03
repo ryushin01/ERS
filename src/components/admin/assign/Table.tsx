@@ -8,7 +8,7 @@ import { Button } from "@components/button";
 import { Modal } from "@components/modal";
 import { useDisclosure } from "@hooks";
 import type { AssignListItem } from "@types";
-import RegistrationDataDetail from "./RegistrationDataDetail";
+import RegistrationDataDetail from "@components/admin/registration/RegistrationDataDetail";
 import "@styles/responsive-table.css";
 
 interface DefineProps {
