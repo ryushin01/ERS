@@ -1,5 +1,7 @@
 import React, { ReactNode } from "react";
+
 import Typography from "./Typography";
+
 import "@styles/badge.css";
 
 type BadgeProps = {

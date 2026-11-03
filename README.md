@@ -99,6 +99,14 @@ pnpm run dev
 | `pnpm run dev` | 개발 서버 (HTTPS, 4000번 포트, 로컬 인증서 자동 생성) |
 | `pnpm run build` | 프로덕션 빌드 (`output: "standalone"`) |
 | `pnpm run lint` | ESLint 검사 |
+| `pnpm run lint:fix` | ESLint 자동 수정 (import 순서 정렬 포함) |
+| `pnpm run typecheck` | TypeScript 타입 검사 (`tsc --noEmit`) |
+
+### import 순서와 커밋 전 검사
+
+- import 순서는 ESLint 규칙(`eslint-plugin-simple-import-sort`)으로 정렬합니다. 순서는 `react` → `next` → 외부 패키지 → 내부 alias(`@components`, `@hooks` 등) → 상대 경로 → `import type` → CSS 순이고, 그룹 사이에는 빈 줄을 하나 둡니다.
+- `tsconfig.json`에 alias를 추가하면 `eslint.config.mjs`의 `INTERNAL_ALIASES`에도 추가합니다. 그래야 외부 scoped 패키지(`@tanstack/...`)와 구분됩니다.
+- 커밋할 때 husky의 pre-commit 훅이 스테이징된 파일에 `eslint --fix`(lint-staged)를 실행하고, 이어서 프로젝트 전체 타입 검사를 실행합니다. 훅은 `pnpm install` 시 자동으로 등록됩니다.
 
 ### Docker
 

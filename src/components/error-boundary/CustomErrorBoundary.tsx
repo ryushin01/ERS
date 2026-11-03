@@ -2,10 +2,11 @@
 
 import { ReactNode, Suspense } from "react";
 import { usePathname } from "next/navigation";
-import { Loading } from "@components/common";
-import { Fallback } from "@components/error-boundary";
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
+
+import { Loading } from "@components/common";
+import { Fallback } from "@components/error-boundary";
 
 type CustomErrorBoundaryProps = {
   element: ReactNode;

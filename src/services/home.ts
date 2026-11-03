@@ -1,10 +1,10 @@
-import { adminURI } from "@/constants/env";
 import {
-  API_CLIENT_HOME,
-  API_AUTH,
-  API_CLIENT_REGISTRATION,
   API_ADMIN_REGISTRATION,
+  API_AUTH,
+  API_CLIENT_HOME,
+  API_CLIENT_REGISTRATION,
 } from "@constants/api-path";
+import { adminURI } from "@constants/env";
 import { axiosBasicInstance } from "@services";
 
 /* 프로필조회 */

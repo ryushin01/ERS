@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes } from "react";
+
 import "@styles/input.css";
 
 type InputProps = {

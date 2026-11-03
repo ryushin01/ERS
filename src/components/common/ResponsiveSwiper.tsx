@@ -1,7 +1,9 @@
-import { appURI } from "@constants/env";
-import { getRegistrationImages } from "@/services/file";
 import { useQuery } from "@tanstack/react-query";
+
+import { appURI } from "@constants/env";
+import { getRegistrationImages } from "@services/file";
 import { ResponsiveType, SwiperImage } from "@types";
+
 import ImageWithAuth from "./ImageWithAuth";
 import SwiperGallery from "./SwiperGallery";
 

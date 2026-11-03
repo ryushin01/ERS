@@ -1,8 +1,10 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+
 import { Breadcrumb, Typography } from "@components/common";
 import { useResponsive } from "@hooks";
+
 import DesktopFileUploader from "./DesktopFileUploader";
 import MobileFileUploader from "./MobileFileUploader";
 

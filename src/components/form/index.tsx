@@ -14,11 +14,11 @@ import TextArea from "./TextArea";
 export {
   Checkbox,
   CurrencyFormat,
+  ErrorMessage,
   Form,
   Input,
   InputField,
   InputMessage,
-  ErrorMessage,
   Label,
   Radio,
   SearchInput,

@@ -6,7 +6,9 @@
 
 import { ReactNode, useEffect } from "react";
 import ReactDOM from "react-dom";
+
 import { ModalHeader } from "@components/modal";
+
 import "@styles/modal.css";
 
 type ModalProps = {

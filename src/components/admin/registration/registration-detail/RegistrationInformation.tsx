@@ -1,29 +1,31 @@
 "use client";
 
-import { FormEvent, useEffect, useState, useRef } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { PlusIcon } from "@icons14";
-import { CancelIcon } from "@icons18";
-import { PROC_STAT_CD, JUDT_COURT_CD, REGR_CD } from "@constants/code";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+
+import { Button } from "@components/button";
+import { Loading, Typography } from "@components/common";
+import { Form, InputField, Label, Select, TextArea } from "@components/form";
+import { JUDT_COURT_CD, PROC_STAT_CD, REGR_CD } from "@constants/code";
 import {
   FILE_MAXIMUM_NUMBER,
   FILE_MAXIMUM_SIZE,
   FILE_MAXIMUM_SIZE_STRING,
 } from "@constants/file";
-import { Loading, Typography } from "@components/common";
-import { Form, InputField, Label, Select, TextArea } from "@components/form";
-import { Button } from "@components/button";
-import { ResponsiveType, UpdateFileData, CodeOption, FileData } from "@types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { PlusIcon } from "@icons14";
+import { CancelIcon } from "@icons18";
+import { getCommonCodeList } from "@services/common";
 import {
   getRegistrationInformationData,
   postRegistrationAccept,
 } from "@services/registrationManagement";
-import { getCommonCodeList } from "@services/common";
 import { toastState } from "@stores";
-import { useSetAtom } from "jotai";
+import { CodeOption, FileData, ResponsiveType, UpdateFileData } from "@types";
 import { getCodeList } from "@utils/codeUtil";
 import { checkFileSize } from "@utils/fileUtil";
+
 import "@styles/responsive-table.css";
 
 type RegistrationInformationlProps = {

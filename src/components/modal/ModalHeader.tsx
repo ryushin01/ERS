@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { CancelIcon } from "@icons36";
+
 import { Typography } from "@components/common";
+import { CancelIcon } from "@icons36";
 
 type ModalHeaderProps = {
   title: string;

@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { LOGIN_PATH, FI_PATH, FI_HOME, AD_PATH, AD_ASSIGN, LA_PATH } from "@constants/path";
+
+import { AD_ASSIGN, AD_PATH, FI_HOME, FI_PATH, LA_PATH, LOGIN_PATH } from "@constants/path";
 import { PUBLIC_FILES_REG_EXP } from "@constants/reg-exp";
 import { isPathUnder } from "@utils/pathUtil";
+
+import type { NextRequest } from "next/server";
 
 /**
  * @name middleware

@@ -1,11 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FI_HOME, AD_ASSIGN, AD_PATH } from "@constants/path";
-import { isPathUnder } from "@utils/pathUtil";
-import { Typography } from "@components/common";
+
 import { Button } from "@components/button";
+import { Typography } from "@components/common";
+import { AD_ASSIGN, AD_PATH, FI_HOME } from "@constants/path";
 import { useResponsive } from "@hooks";
+import { isPathUnder } from "@utils/pathUtil";
 
 export default function NotFound() {
   const router = useRouter();

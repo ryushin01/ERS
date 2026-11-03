@@ -1,5 +1,7 @@
 import Image from "next/image";
+
 import { Spinner } from "@common";
+
 import "@styles/spinner.css";
 
 export default function Loading() {

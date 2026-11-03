@@ -1,11 +1,11 @@
 import Drawer from "./Drawer";
-import DrawerHeader from "./DrawerHeader";
 import DrawerContent from "./DrawerContent";
 import DrawerFooter from "./DrawerFooter";
+import DrawerHeader from "./DrawerHeader";
 
 export {
   Drawer,
-  DrawerHeader,
   DrawerContent,
   DrawerFooter,
+  DrawerHeader,
 };

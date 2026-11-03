@@ -1,5 +1,6 @@
-import type { InfoRow } from "@components/common/InfoTableSection";
 import { getDetailAddress, getManagerInfo } from "@utils/stringUtil";
+
+import type { InfoRow } from "@components/common/InfoTableSection";
 
 /* 등기자료·등기접수증 상세 API 응답 중 화면에서 사용하는 필드 */
 export type RegistrationDetailData = {

@@ -1,8 +1,10 @@
-import { Grid, GridItem } from "@components/layout";
 import { ResponsiveSwiper } from "@components/common";
+import { Grid, GridItem } from "@components/layout";
 import { ATTC_FIL_CD } from "@constants/code";
 import { ResponsiveType } from "@types";
+
 import Table from "./Table";
+
 import "@styles/responsive-table.css";
 
 export type RegistrationAcceptanceProps = {

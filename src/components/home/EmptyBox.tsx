@@ -1,5 +1,5 @@
-import { useResponsive } from "@hooks";
 import { Typography } from "@components/common";
+import { useResponsive } from "@hooks";
 
 type EmptyBoxProps = {
   element: string;

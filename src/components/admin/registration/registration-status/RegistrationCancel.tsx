@@ -1,21 +1,23 @@
 "use client";
 
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+
+import { Button } from "@components/button";
+import { Loading, Typography } from "@components/common";
+import { Form, InputField, Label, Select } from "@components/form";
 import { PROC_CLS_GB_CD } from "@constants/code";
 import { CANCEL_PROGRESS_INFORMATION_LIST } from "@constants/information";
 import { AD_REGISTRATION } from "@constants/path";
-import { Loading, Typography } from "@components/common";
-import { Form, InputField, Label, Select } from "@components/form";
-import { Button } from "@components/button";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { patchRegiCancel } from "@services/assignDetail";
-import { toastState } from "@stores";
-import { useSetAtom } from "jotai";
-import { getCodeList } from "@utils/codeUtil";
 import { getCommonCodeList } from "@services/common";
+import { toastState } from "@stores";
+import { getCodeList } from "@utils/codeUtil";
 
 import type { CodeOption } from "@types";
+
 import "@styles/responsive-table.css";
 
 type RegistrationCancelProps = {

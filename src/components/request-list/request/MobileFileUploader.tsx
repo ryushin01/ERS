@@ -1,25 +1,28 @@
 import { FormEvent, MouseEvent, useCallback, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { PlusMainIcon } from "@icons20";
-import { BackIcon } from "@icons24";
-import { CameraIcon } from "@icons50";
-import { FI_REQUEST_LIST } from "@constants/path";
-import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
-import { DatePicker, Loading, Typography } from "@components/common";
-import { Button } from "@components/button";
-import { Form, Label } from "@components/form";
-import { useDatePicker, useDisclosure } from "@hooks";
-import { getTodayAddDays, stringToDate } from "@utils/dateUtil";
-import { getRegistrationImages } from "@services/file";
-import { postRequestData, patchRequestData } from "@services/request";
-import { toastState } from "@stores";
-import { ResponsiveType } from "@types";
+import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSetAtom } from "jotai";
 import Webcam from "react-webcam";
+
+import { Button } from "@components/button";
+import { DatePicker, Loading, Typography } from "@components/common";
+import { Form, Label } from "@components/form";
+import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
+import { FI_REQUEST_LIST } from "@constants/path";
+import { useDatePicker, useDisclosure } from "@hooks";
+import { PlusMainIcon } from "@icons20";
+import { BackIcon } from "@icons24";
+import { CameraIcon } from "@icons50";
+import { getRegistrationImages } from "@services/file";
+import { patchRequestData, postRequestData } from "@services/request";
+import { toastState } from "@stores";
+import { ResponsiveType } from "@types";
+import { getTodayAddDays, stringToDate } from "@utils/dateUtil";
+
 import FileIndicator from "./FileIndicator";
 import MobileFileListItem from "./MobileFileListItem";
+
 import "@styles/file-uploader.css";
 
 type MobileFileUploaderProps = {

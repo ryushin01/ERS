@@ -1,22 +1,24 @@
 "use client";
 
-import { FormEvent, useEffect, ChangeEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
-import { AUTH_LIST, DEMO_FINANCIAL_AUTH } from "@constants/auth";
-import { isDemoMode } from "@constants/env";
-import { AD_ASSIGN, FI_HOME } from "@constants/path";
-import { ID_INPUT, ID_SAVER, PASSWORD_INPUT } from "@constants/input";
-import { Checkbox, Form, InputField, Radio } from "@components/form";
-import { Button } from "@components/button";
-import { Loading } from "@components/common";
-import { postLoginData } from "@services/login";
-import { useRadio } from "@hooks";
-import { ResponsiveType } from "@types";
+import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { authAtom, toastState } from "@stores";
 import { useAtom, useSetAtom } from "jotai";
 import Cookies from "js-cookie";
+
+import { Button } from "@components/button";
+import { Loading } from "@components/common";
+import { Checkbox, Form, InputField, Radio } from "@components/form";
+import { AUTH_LIST, DEMO_FINANCIAL_AUTH } from "@constants/auth";
+import { isDemoMode } from "@constants/env";
+import { ID_INPUT, ID_SAVER, PASSWORD_INPUT } from "@constants/input";
+import { AD_ASSIGN, FI_HOME } from "@constants/path";
+import { useRadio } from "@hooks";
+import { postLoginData } from "@services/login";
+import { authAtom, toastState } from "@stores";
+import { ResponsiveType } from "@types";
+
 import LoginPasswordField from "./LoginPasswordField";
 
 /**

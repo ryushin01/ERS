@@ -1,16 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+
 import { Loading, Pagination } from "@components/common";
+import { Select } from "@components/form";
 import { Grid, GridItem } from "@components/layout";
 import { NUMERIC_SORT_OPTION, PERIOD_SORT_OPTION } from "@constants/option";
-import { Select } from "@components/form";
-import NotAllottedTable from "./NotAllottedTable";
-import { useQuery } from "@tanstack/react-query";
-import { getSupplimentListData } from "@services/adminAssign";
 import { useResponsive } from "@hooks";
+import { getSupplimentListData } from "@services/adminAssign";
 import { toastState } from "@stores";
-import { useSetAtom } from "jotai";
+
+import NotAllottedTable from "./NotAllottedTable";
 import Table from "./Table";
 
 interface ListProps {

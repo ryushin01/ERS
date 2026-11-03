@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+
 import { TabGroup, Typography } from "@components/common";
 import { useResponsive } from "@hooks";
+
 import List from "./List";
 
 /**

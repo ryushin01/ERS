@@ -1,11 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { AD_ASSIGN_DETAIL } from "@constants/path";
-import { PROC_STAT_CD } from "@/constants/code";
-import { Typography } from "@components/common";
+
 import { Button } from "@components/button";
+import { Typography } from "@components/common";
+import { PROC_STAT_CD } from "@constants/code";
+import { AD_ASSIGN_DETAIL } from "@constants/path";
+
 import type { AssignListItem } from "@types";
+
 import "@styles/responsive-table.css";
 
 interface DefineProps {

@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
-import { AD_MEMBER_CREATE_METADATA } from "@constants/metadata";
 import { CommonLayout } from "@components/layout";
+import { AD_MEMBER_CREATE_METADATA } from "@constants/metadata";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: AD_MEMBER_CREATE_METADATA.TITLE,

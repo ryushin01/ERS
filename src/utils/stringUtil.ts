@@ -50,4 +50,4 @@ function formatNumberComma(num: number | null | undefined) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export { getManagerInfo, getDetailAddress, formatNumberComma };
+export { formatNumberComma, getDetailAddress, getManagerInfo };

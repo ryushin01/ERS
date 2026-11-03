@@ -1,11 +1,13 @@
 import { Dispatch, useState } from "react";
 import Image from "next/image";
+
 import {
   LeftArrowDoubleIcon,
   LeftArrowIcon,
   RightArrowDoubleIcon,
   RightIcon,
 } from "@icons20";
+
 import "@styles/pagination.css";
 
 type PaginationProps = {

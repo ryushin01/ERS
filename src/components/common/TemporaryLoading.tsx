@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { AlertCircleIcon } from "@icons36";
+
 import { Typography } from "@components/common";
+import { AlertCircleIcon } from "@icons36";
 
 export default function Loading() {
   return (

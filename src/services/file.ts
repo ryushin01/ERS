@@ -1,5 +1,5 @@
-import { axiosBasicInstance } from "@services";
 import { API_FILES } from "@constants/api-path";
+import { axiosBasicInstance } from "@services";
 
 export const getFileDownLoad = ({
   seq,

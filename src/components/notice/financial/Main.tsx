@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+
 import {
   Breadcrumb,
   Loading,
@@ -9,7 +11,7 @@ import {
 } from "@components/common";
 import { useResponsive } from "@hooks";
 import { getNoticeBoardList } from "@services/home";
-import { useMutation } from "@tanstack/react-query";
+
 import List from "./List";
 
 export default function Main() {

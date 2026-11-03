@@ -1,8 +1,10 @@
 import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes } from "react";
 import Image from "next/image";
-import { searchIcon } from "@icons";
+
 import { SEARCH_INPUT } from "@constants/input";
 import { useResponsive } from "@hooks";
+import { searchIcon } from "@icons";
+
 import "@styles/input.css";
 
 type SearchInputProps = {

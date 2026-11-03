@@ -1,20 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ATTC_FIL_CD, REALE_CD } from "@constants/code";
-import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE } from "@constants/file";
+import { useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+
 import { Loading } from "@components/common";
 import { Grid, GridItem } from "@components/layout";
-import { useQuery } from "@tanstack/react-query";
+import { ATTC_FIL_CD, REALE_CD } from "@constants/code";
+import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE } from "@constants/file";
+import { useFileUpload } from "@hooks";
 import { getSupplimentData } from "@services/adminAssign";
 import { getMemberListData } from "@services/assignDetail";
 import { getCommonCodeList } from "@services/common";
 import { getRegistrationImages } from "@services/file";
-import { useFileUpload } from "@hooks";
 import { toastState } from "@stores";
-import { useSetAtom } from "jotai";
-import Table from "./Table";
+
 import ResponsiveSwiper from "./ResponsiveSwiper";
+import Table from "./Table";
 
 interface DefineProps {
   isDesktop?: boolean;

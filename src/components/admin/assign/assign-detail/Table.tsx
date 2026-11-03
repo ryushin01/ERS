@@ -2,16 +2,12 @@
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LAND_LOT_OPTION } from "@constants/option";
-import {
-  SUPPLEMENT_REQUEST_INFORMATION_LIST,
-  CANCEL_PROGRESS_INFORMATION_LIST,
-} from "@constants/information";
-import { AD_ASSIGN } from "@constants/path";
-import { PROC_CLS_GB_CD, SPPL_REQ_GB_CD } from "@constants/code";
-import { FILE_MAXIMUM_NUMBER } from "@constants/file";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useAtomValue, useSetAtom } from "jotai";
+import DaumPostcode from "react-daum-postcode";
+
+import { Button } from "@components/button";
 import { DatePicker, Loading, Typography } from "@components/common";
-import { Grid, GridItem } from "@components/layout";
 import {
   CurrencyFormat,
   Form,
@@ -21,9 +17,17 @@ import {
   Select,
   TextArea,
 } from "@components/form";
-import { Button } from "@components/button";
+import { Grid, GridItem } from "@components/layout";
 import { Modal } from "@components/modal";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { PROC_CLS_GB_CD, SPPL_REQ_GB_CD } from "@constants/code";
+import { FILE_MAXIMUM_NUMBER } from "@constants/file";
+import {
+  CANCEL_PROGRESS_INFORMATION_LIST,
+  SUPPLEMENT_REQUEST_INFORMATION_LIST,
+} from "@constants/information";
+import { LAND_LOT_OPTION } from "@constants/option";
+import { AD_ASSIGN } from "@constants/path";
+import { useDatePicker, useDisclosure, useRadio } from "@hooks";
 import {
   getUnqRgsrtNo,
   patchAccignmentForm,
@@ -31,12 +35,11 @@ import {
   patchRegiSupplement,
 } from "@services/assignDetail";
 import { getCommonCodeList } from "@services/common";
-import { getDateString } from "@utils/dateUtil";
-import { useDatePicker, useDisclosure, useRadio } from "@hooks";
 import { authAtom, toastState } from "@stores";
-import { useAtomValue, useSetAtom } from "jotai";
-import DaumPostcode from "react-daum-postcode";
+import { getDateString } from "@utils/dateUtil";
+
 import type { AssignDetailForm } from "@types";
+
 import "@styles/responsive-table.css";
 
 interface PostcodeData {

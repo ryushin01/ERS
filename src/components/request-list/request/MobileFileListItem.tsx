@@ -1,8 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
+
 import { ImageWithAuth } from "@components/common";
 import { appURI } from "@constants/env";
 import { CancelWhiteIcon } from "@icons14";
+
 import { FileProps } from "./MobileFileUploader";
 
 type MobileFileListItemProps = {

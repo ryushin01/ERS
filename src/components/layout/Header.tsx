@@ -1,11 +1,13 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
-import { KoserLogo } from "@logos";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import { AD_ASSIGN, AD_PATH, FI_HOME, FI_PATH } from "@constants/path";
+import { KoserLogo } from "@logos";
 import { isPathUnder } from "@utils/pathUtil";
+
 import HeaderRightArea from "./HeaderRightArea";
 
 /**

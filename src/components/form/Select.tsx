@@ -1,4 +1,5 @@
 import { DetailedHTMLProps, InputHTMLAttributes } from "react";
+
 import "@styles/select.css";
 
 type SelectOption = {

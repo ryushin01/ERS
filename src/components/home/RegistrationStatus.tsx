@@ -1,6 +1,8 @@
 import { Typography } from "@components/common";
 import { useResponsive } from "@hooks";
+
 import type { HomeRegistration } from "@types";
+
 import "@styles/responsive-table.css";
 
 type RegiStratusListProps = {

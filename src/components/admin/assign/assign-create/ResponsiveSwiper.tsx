@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import SwiperGallery from "@components/common/SwiperGallery";
 
 type ImageListProps = {

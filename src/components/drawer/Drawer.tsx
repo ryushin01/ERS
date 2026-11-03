@@ -1,4 +1,5 @@
-import { DrawerHeader, DrawerContent, DrawerFooter } from "@components/drawer";
+import { DrawerContent, DrawerFooter, DrawerHeader } from "@components/drawer";
+
 import "@styles/drawer.css";
 
 type DrawerProps = {

@@ -2,12 +2,13 @@
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AD_ASSIGN } from "@constants/path";
-import { LAND_LOT_OPTION } from "@constants/option";
-import { REALE_CD } from "@constants/code";
-import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
+import DaumPostcode from "react-daum-postcode";
+
+import { Button } from "@components/button";
 import { DatePicker, Loading, Typography } from "@components/common";
-import { Grid, GridItem } from "@components/layout";
 import {
   CurrencyFormat,
   Form,
@@ -17,21 +18,24 @@ import {
   Select,
   TextArea,
 } from "@components/form";
-import { Button } from "@components/button";
+import { Grid, GridItem } from "@components/layout";
 import { Modal } from "@components/modal";
+import { REALE_CD } from "@constants/code";
+import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
+import { LAND_LOT_OPTION } from "@constants/option";
+import { AD_ASSIGN } from "@constants/path";
 import { useDatePicker, useDisclosure, useFileUpload, useRadio } from "@hooks";
-import { getCommonCodeList } from "@services/common";
 import { getRqstNoData, postCreateAssign } from "@services/adminAssign";
 import { getMemberListData, getUnqRgsrtNo } from "@services/assignDetail";
+import { getCommonCodeList } from "@services/common";
 import { authAtom, toastState } from "@stores";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useSetAtom } from "jotai";
-import DaumPostcode from "react-daum-postcode";
-import type { AssignCreateForm } from "@types";
+
 import EmptyBox from "./EmptyBox";
 import ResponsiveSwiper from "./ResponsiveSwiper";
+
+import type { AssignCreateForm } from "@types";
+
 import "@styles/responsive-table.css";
-import { useAtomValue } from "jotai";
 
 type PostcodeProps = {
   roadAddress: string;

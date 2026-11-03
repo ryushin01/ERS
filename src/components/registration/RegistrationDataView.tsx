@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
+
 import InfoTableSection from "@components/common/InfoTableSection";
 import { formatNumberComma } from "@utils/stringUtil";
+
 import {
   DetailVariant,
   getAddressRows,

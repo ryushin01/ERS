@@ -1,13 +1,14 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
-import { FI_MENU_LIST, AD_MENU_LIST } from "@constants/menu";
-import { AD_PATH } from "@constants/path";
-import { isPathUnder } from "@utils/pathUtil";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import { Typography } from "@components/common";
+import { AD_MENU_LIST, FI_MENU_LIST } from "@constants/menu";
+import { AD_PATH } from "@constants/path";
 import { useResponsive } from "@hooks";
+import { isPathUnder } from "@utils/pathUtil";
 
 /**
  * @name Gnb

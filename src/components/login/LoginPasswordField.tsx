@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
-import { Label, Input, InputMessage, ErrorMessage } from "@components/form";
+
+import { ErrorMessage, Input, InputMessage, Label } from "@components/form";
 
 type passwordFieldProps = {
   htmlFor?: string;

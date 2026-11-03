@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { ATTC_FIL_CD } from "@constants/code";
+
+import RegistrationDataDetail from "@components/admin/registration/RegistrationDataDetail";
+import { Button } from "@components/button";
 import { ResponsiveSwiper, Typography } from "@components/common";
 import { Grid, GridItem } from "@components/layout";
-import { Button } from "@components/button";
 import { Modal } from "@components/modal";
+import { ATTC_FIL_CD } from "@constants/code";
 import { useDisclosure } from "@hooks";
+
 import type { AssignListItem } from "@types";
-import RegistrationDataDetail from "@components/admin/registration/RegistrationDataDetail";
+
 import "@styles/responsive-table.css";
 
 interface DefineProps {

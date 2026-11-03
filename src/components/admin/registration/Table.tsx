@@ -1,22 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  AD_ASSIGN_DETAIL,
-  AD_REGISTRATION_DETAIL,
-  AD_REGISTRATION_ACCEPTANCE,
-} from "@constants/path";
-import { ATTC_FIL_CD, PROC_STAT_CD } from "@constants/code";
+import { useRouter } from "next/navigation";
+
+import { Button } from "@components/button";
 import { ResponsiveSwiper, Typography } from "@components/common";
 import { Grid, GridItem } from "@components/layout";
-import { Button } from "@components/button";
 import { Modal } from "@components/modal";
+import { ATTC_FIL_CD, PROC_STAT_CD } from "@constants/code";
+import {
+  AD_ASSIGN_DETAIL,
+  AD_REGISTRATION_ACCEPTANCE,
+  AD_REGISTRATION_DETAIL,
+} from "@constants/path";
 import { useDisclosure } from "@hooks";
 import { ResponsiveType } from "@types";
+
 import RegistrationDataDetail from "./RegistrationDataDetail";
 import RegistrationReceiptDetail from "./RegistrationReceiptDetail";
+
 import "@styles/responsive-table.css";
 
 type RegistrationListDataProps = {

@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
-import { FI_REQUEST_METADATA } from "@constants/metadata";
-import { CommonLayout } from "@components/layout";
 import { CustomErrorBoundary } from "@components/error-boundary";
+import { CommonLayout } from "@components/layout";
 import Main from "@components/request-list/request/Main";
+import { FI_REQUEST_METADATA } from "@constants/metadata";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: FI_REQUEST_METADATA.TITLE,

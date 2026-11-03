@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { appURI, isDemoMode } from "@constants/env";
 import { mockAdapter } from "@/mocks/adapter";
 

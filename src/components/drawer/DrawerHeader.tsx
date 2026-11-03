@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { CancelIcon } from "@icons24";
+
 import { IconButton } from "@components/button";
+import { CancelIcon } from "@icons24";
 
 type DrawerHeaderProps = {
   onClose: () => void;

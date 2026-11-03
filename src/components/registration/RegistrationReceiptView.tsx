@@ -1,4 +1,5 @@
 import InfoTableSection from "@components/common/InfoTableSection";
+
 import {
   DetailVariant,
   getAddressRows,

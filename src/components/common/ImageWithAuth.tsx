@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image, { ImageProps } from "next/image";
+
 import { DefaultProfile } from "@common";
 import { axiosBasicInstance } from "@services";
 

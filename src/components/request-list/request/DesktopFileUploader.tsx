@@ -1,34 +1,38 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { PlusWhiteIcon } from "@icons20";
-import { FI_REQUEST_LIST } from "@constants/path";
+import { useRouter } from "next/navigation";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { Upload } from "antd";
+import { UploadChangeParam } from "antd/es/upload";
+import { useSetAtom } from "jotai";
+
+import { Button } from "@components/button";
+import { DatePicker, Loading, Typography } from "@components/common";
+import { Form, Label } from "@components/form";
+import { ATTC_FIL_CD } from "@constants/code";
 import {
   FILE_MAXIMUM_NUMBER,
   FILE_MAXIMUM_SIZE,
   FILE_MAXIMUM_SIZE_STRING,
 } from "@constants/file";
-import { DatePicker, Loading, Typography } from "@components/common";
-import { Form, Label } from "@components/form";
-import { Button } from "@components/button";
+import { FI_REQUEST_LIST } from "@constants/path";
 import { useDatePicker } from "@hooks";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { checkUploadFileSize } from "@utils/fileUtil";
-import { getDateString, getTodayAddDays, stringToDate } from "@utils/dateUtil";
+import { PlusWhiteIcon } from "@icons20";
+import { getRegistrationImages } from "@services/file";
+import { patchRequestData, postRequestData } from "@services/request";
 import { toastState } from "@stores";
-import { postRequestData, patchRequestData } from "@services/request";
-import { getRegistrationImages } from "@/services/file";
-import { useSetAtom } from "jotai";
-import type { UploadProps } from "antd";
-import { Upload } from "antd";
-import type { UpdateFileData, FileData } from "@types";
-import FileIndicator from "./FileIndicator";
+import { getDateString, getTodayAddDays, stringToDate } from "@utils/dateUtil";
+import { checkUploadFileSize } from "@utils/fileUtil";
+
 import DesktopFileList from "./DesktopFileList";
+import FileIndicator from "./FileIndicator";
+
+import type { FileData, UpdateFileData } from "@types";
+import type { UploadProps } from "antd";
+
 import "@styles/file-uploader.css";
-import { UploadChangeParam } from "antd/es/upload";
-import { ATTC_FIL_CD } from "@constants/code";
 
 type requestProps = {
   requestNo: string | null;

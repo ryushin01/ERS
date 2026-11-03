@@ -2,20 +2,21 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import Image from "next/image";
-import { LogoutIcon } from "@icons14";
+import { useMutation } from "@tanstack/react-query";
+import { useAtomValue, useSetAtom } from "jotai";
+
 import { DefaultProfile } from "@common";
-import { CHANGE_PASSWORD_INPUT } from "@constants/input";
-import { MEMB_GB_CD } from "@constants/auth";
-import { ImageWithAuth, Typography } from "@components/common";
-import { appURI } from "@constants/env";
 import { Button } from "@components/button";
+import { ImageWithAuth, Typography } from "@components/common";
 import { Form, InputField } from "@components/form";
 import { Modal } from "@components/modal";
+import { MEMB_GB_CD } from "@constants/auth";
+import { appURI } from "@constants/env";
+import { CHANGE_PASSWORD_INPUT } from "@constants/input";
 import { useLogout, useResponsive } from "@hooks";
-import { useMutation } from "@tanstack/react-query";
-import { authAtom, toastState } from "@stores";
-import { useAtomValue, useSetAtom } from "jotai";
+import { LogoutIcon } from "@icons14";
 import { patchChangePassword } from "@services/changePassword";
+import { authAtom, toastState } from "@stores";
 
 type DrawerContentProps = {
   level: string;

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { getRegistrationAcceptData } from "@services/request";
+
 import RegistrationReceiptView from "@components/registration/RegistrationReceiptView";
+import { getRegistrationAcceptData } from "@services/request";
 import { ResponsiveType } from "@types";
 
 type RegistrationReceiptDataProps = {

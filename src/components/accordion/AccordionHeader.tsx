@@ -1,5 +1,6 @@
 import { Typography } from "@components/common";
 import { useResponsive } from "@hooks";
+
 import "@styles/accordion.css";
 
 /**

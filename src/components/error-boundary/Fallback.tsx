@@ -1,5 +1,6 @@
-import { Error } from "@components/error-boundary";
 import { FallbackProps } from "react-error-boundary";
+
+import { Error } from "@components/error-boundary";
 
 /**
  * @name Fallback

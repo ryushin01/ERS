@@ -1,25 +1,28 @@
 "use client";
 
-import { ATTC_FIL_CD } from "@constants/code";
-import { Grid, GridItem } from "@components/layout";
-import { Loading, ResponsiveSwiper, Typography } from "@components/common";
-import { Button } from "@components/button";
-import { Modal } from "@components/modal";
-import { useDisclosure } from "@hooks";
-import { ResponsiveType } from "@types";
 import { useQuery } from "@tanstack/react-query";
-import { getRegistrationDetailData } from "@services/registrationManagement";
+
+import RegistrationCancel from "@components/admin/registration/registration-status/RegistrationCancel";
 import RegistrationDataDetail from "@components/admin/registration/RegistrationDataDetail";
 import RegistrationReceiptDetail from "@components/admin/registration/RegistrationReceiptDetail";
-import RegistrationCancel from "@components/admin/registration/registration-status/RegistrationCancel";
-import "@styles/responsive-table.css";
+import { Button } from "@components/button";
+import { Loading, ResponsiveSwiper, Typography } from "@components/common";
+import { Grid, GridItem } from "@components/layout";
+import { Modal } from "@components/modal";
+import { ATTC_FIL_CD } from "@constants/code";
+import { useDisclosure } from "@hooks";
+import { getRegistrationDetailData } from "@services/registrationManagement";
+import { ResponsiveType } from "@types";
+import { getCompareWithToday } from "@utils/dateUtil";
 import {
+  formatNumberComma,
   getDetailAddress,
   getManagerInfo,
-  formatNumberComma,
 } from "@utils/stringUtil";
-import { getCompareWithToday } from "@utils/dateUtil";
+
 import RegistrationInformation from "./RegistrationInformation";
+
+import "@styles/responsive-table.css";
 
 type RegistrationDetailProps = {
   requestNo: string;

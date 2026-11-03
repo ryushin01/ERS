@@ -1,4 +1,4 @@
-import { API_COMM_CODE, API_CLIENT_REGISTRATION } from "@constants/api-path";
+import { API_CLIENT_REGISTRATION, API_COMM_CODE } from "@constants/api-path";
 import { axiosBasicInstance } from "@services";
 
 /* 등기현황 진행상태 조회 */

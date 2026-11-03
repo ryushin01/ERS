@@ -1,5 +1,5 @@
-import { adminURI } from "@/constants/env";
 import { API_ADMIN_MATCH, API_COMM_SEQUENCE } from "@constants/api-path";
+import { adminURI } from "@constants/env";
 import { axiosBasicInstance } from "@services";
 
 /* 배정관리 목록 조회 */

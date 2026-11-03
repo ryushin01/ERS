@@ -1,18 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+
+import { Loading, PageIndicator, Pagination } from "@components/common";
 import {
+  PAGE_COUNT_MOBILE,
+  PAGE_COUNT_PC,
   PAGE_LIMIT_ADMIN,
   PAGE_LIMIT_MOBILE,
-  PAGE_COUNT_PC,
-  PAGE_COUNT_MOBILE,
 } from "@constants/page";
-import { Loading, PageIndicator, Pagination } from "@components/common";
-import { ResponsiveType } from "@types";
 import { getStasusListData } from "@services/statusInquiry";
-import { useQuery } from "@tanstack/react-query";
 import { toastState } from "@stores";
-import { useSetAtom } from "jotai";
+import { ResponsiveType } from "@types";
+
 import FilterTable from "./FilterTable";
 import Table from "./Table";
 

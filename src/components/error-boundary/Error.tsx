@@ -1,11 +1,12 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
-import { FI_HOME, AD_ASSIGN, AD_PATH } from "@constants/path";
-import { isPathUnder } from "@utils/pathUtil";
-import { Typography } from "@components/common";
+import { usePathname, useRouter } from "next/navigation";
+
 import { Button } from "@components/button";
+import { Typography } from "@components/common";
+import { AD_ASSIGN, AD_PATH, FI_HOME } from "@constants/path";
 import { useResponsive } from "@hooks";
+import { isPathUnder } from "@utils/pathUtil";
 
 type ErrorProps = {
   onReset?: () => void;

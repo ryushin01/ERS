@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+
 import "@styles/responsive-grid-system.css";
 
 type GridProps = {

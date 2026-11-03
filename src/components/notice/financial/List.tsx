@@ -1,4 +1,5 @@
 import { Accordion, AccordionHeader } from "@components/accordion";
+
 import type { AttachedFile } from "@types";
 
 // mock-up data

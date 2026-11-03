@@ -1,8 +1,11 @@
 import Image from "next/image";
-import { AlertTriangleIcon20 } from "@icons20";
+
 import { Typography } from "@components/common";
 import { useResponsive } from "@hooks";
+import { AlertTriangleIcon20 } from "@icons20";
+
 import type { HomeNotice } from "@types";
+
 import "@styles/responsive-table.css";
 
 type NoticeListProps = {

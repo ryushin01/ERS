@@ -1,16 +1,19 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { NarrowRightIcon } from "@icons20";
-import { FI_NOTICE, FI_STATUS_INQUIRY } from "@constants/path";
+import { useRouter } from "next/navigation";
+
+import { Button } from "@components/button";
 import { Typography } from "@components/common";
 import { Grid, GridItem } from "@components/layout";
-import { Button } from "@components/button";
-import type { HomeRegistrationListResponse, HomeNoticeListResponse } from "@types";
-import RegistrationStratus from "./RegistrationStatus";
+import { FI_NOTICE, FI_STATUS_INQUIRY } from "@constants/path";
+import { NarrowRightIcon } from "@icons20";
+
 import Announcement from "./Announcement";
 import EmptyBox from "./EmptyBox";
+import RegistrationStratus from "./RegistrationStatus";
+
+import type { HomeNoticeListResponse, HomeRegistrationListResponse } from "@types";
 
 type ContentsProps = {
   isDesktop: boolean;

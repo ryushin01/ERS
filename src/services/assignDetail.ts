@@ -1,9 +1,9 @@
-import { adminURI, apiURI } from "@constants/env";
 import {
-  API_ADMIN_REGISTRATION,
   API_ADMIN_MATCH,
+  API_ADMIN_REGISTRATION,
   API_API_IROS,
 } from "@constants/api-path";
+import { adminURI, apiURI } from "@constants/env";
 import { axiosBasicInstance } from "@services";
 
 /* 배정관리 - 회원 구분에 따른 회원목록 조회 */

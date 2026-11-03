@@ -1,9 +1,9 @@
+import {
+  API_CLIENT_REGISTRATION,
+  API_CLIENT_REQUEST,
+} from "@constants/api-path";
 import { PAGE_LIMIT_PC } from "@constants/page";
 import { axiosBasicInstance } from "@services";
-import {
-  API_CLIENT_REQUEST,
-  API_CLIENT_REGISTRATION,
-} from "@constants/api-path";
 
 /* 금융기관 - 전자등기 의뢰목록 조회 */
 export const getRequestListData = ({

@@ -1,15 +1,18 @@
 "use client";
 
 import { Dispatch, useState } from "react";
-import { ResponsiveSwiper, Typography } from "@components/common";
-import { ATTC_FIL_CD, PROC_STAT_CD } from "@constants/code";
-import { Grid, GridItem } from "@components/layout";
+
 import { Button } from "@components/button";
+import { ResponsiveSwiper, Typography } from "@components/common";
+import { Grid, GridItem } from "@components/layout";
 import { Modal } from "@components/modal";
-import { useDisclosure } from "@hooks";
 import RegistrationDataDetail from "@components/status-inquiry/RegistrationDataDetail";
+import { ATTC_FIL_CD, PROC_STAT_CD } from "@constants/code";
+import { useDisclosure } from "@hooks";
 import { ResponsiveType } from "@types";
+
 import Detail from "./Detail";
+
 import "@styles/responsive-table.css";
 
 type RequestListDataProps = {

@@ -1,4 +1,5 @@
-import { FormEvent, ChangeEvent, ReactNode } from "react";
+import { ChangeEvent, FormEvent, ReactNode } from "react";
+
 import "@styles/form.css";
 
 type FormProps = {

@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { appURI } from "@constants/env";
+
 import ImageWithAuth from "@components/common/ImageWithAuth";
 import SwiperGallery from "@components/common/SwiperGallery";
+import { appURI } from "@constants/env";
 import { ResponsiveType, SwiperImage } from "@types";
 
 /* source - api: 서버에 저장된 이미지 / prop: 이번에 새로 추가한 이미지(미리보기 URL) */

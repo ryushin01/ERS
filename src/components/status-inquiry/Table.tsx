@@ -1,13 +1,16 @@
 import { Dispatch, useState } from "react";
-import { ATTC_FIL_CD, PROC_STAT_CD } from "@constants/code";
+
+import { Button } from "@components/button";
 import { ResponsiveSwiper, Typography } from "@components/common";
 import { Grid, GridItem } from "@components/layout";
-import { Button } from "@components/button";
 import { Modal } from "@components/modal";
+import Detail from "@components/request-list/Detail";
+import { ATTC_FIL_CD, PROC_STAT_CD } from "@constants/code";
 import { useDisclosure } from "@hooks";
+
 import RegistrationDataDetail from "./RegistrationDataDetail";
 import RegistrationReceiptDetail from "./RegistrationReceiptDetail";
-import Detail from "@components/request-list/Detail";
+
 import "@styles/responsive-table.css";
 
 type contentsProps = {

@@ -1,4 +1,5 @@
 import { Fragment, ReactNode } from "react";
+
 import Typography from "./Typography";
 
 export type InfoCell = {

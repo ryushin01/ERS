@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+
 import { Button } from "@components/button";
+import RegistrationDataView from "@components/registration/RegistrationDataView";
 import { PROC_STAT_CD } from "@constants/code";
-import { ResponsiveType } from "@types";
 import {
   getRegistrationInfoData,
   patchRegistrationHold,
 } from "@services/request";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import RegistrationDataView from "@components/registration/RegistrationDataView";
-import { getCompareWithToday } from "@utils/dateUtil";
 import { toastState } from "@stores";
-import { useSetAtom } from "jotai";
+import { ResponsiveType } from "@types";
+import { getCompareWithToday } from "@utils/dateUtil";
 
 type RegistrationDataProps = {
   requestNo: string;

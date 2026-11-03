@@ -1,17 +1,19 @@
 "use client";
 
-import { Dispatch, useState, useEffect } from "react";
-import { Loading, Pagination } from "@components/common";
-import { Grid, GridItem } from "@components/layout";
-import { Select } from "@components/form";
-import { TabCountData } from "@components/admin/registration/Main";
-import { NUMERIC_SORT_OPTION, PERIOD_SORT_OPTION } from "@constants/option";
-import { PAGE_LIMIT_ADMIN, PAGE_COUNT_PC } from "@constants/page";
-import { ResponsiveType } from "@types";
+import { Dispatch, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+
+import { TabCountData } from "@components/admin/registration/Main";
+import { Loading, Pagination } from "@components/common";
+import { Select } from "@components/form";
+import { Grid, GridItem } from "@components/layout";
+import { NUMERIC_SORT_OPTION, PERIOD_SORT_OPTION } from "@constants/option";
+import { PAGE_COUNT_PC, PAGE_LIMIT_ADMIN } from "@constants/page";
 import { getRegistrationListData } from "@services/registrationManagement";
 import { toastState } from "@stores";
-import { useSetAtom } from "jotai";
+import { ResponsiveType } from "@types";
+
 import FilterTable from "./FilterTable";
 import Table from "./Table";
 

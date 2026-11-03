@@ -1,7 +1,7 @@
+import { API_ADMIN_REGISTRATION } from "@constants/api-path";
 import { adminURI } from "@constants/env";
 import { PAGE_LIMIT_ADMIN } from "@constants/page";
 import { axiosBasicInstance } from "@services";
-import { API_ADMIN_REGISTRATION } from "@constants/api-path";
 
 /* 관리자 - 등기관리 목록 조회 */
 export const getRegistrationListData = ({

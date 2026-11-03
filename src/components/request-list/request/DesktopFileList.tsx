@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { CancelIcon } from "@icons18";
-import { FILE_MAXIMUM_NUMBER } from "@constants/file";
+
 import { Typography } from "@components/common";
+import { FILE_MAXIMUM_NUMBER } from "@constants/file";
+import { CancelIcon } from "@icons18";
 import { formatBytes, formatMegaBytes } from "@utils/fileUtil";
+
 import type { FileData } from "@types";
 
 type DesktopFileListItemProps = {

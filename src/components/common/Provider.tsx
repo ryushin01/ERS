@@ -1,18 +1,19 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
-  QueryClient,
-  QueryClientProvider,
   MutationCache,
   QueryCache,
+  QueryClient,
+  QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { toastState } from "@stores";
-import { ApiError } from "@services";
 import { useSetAtom } from "jotai";
 import Cookies from "js-cookie";
+
+import { ApiError } from "@services";
+import { toastState } from "@stores";
 
 /**
  * @name Provider

@@ -1,12 +1,14 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
-import { RightArrowIcon } from "@icons14";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import { Typography } from "@components/common";
 import { AD_PATH } from "@constants/path";
+import { RightArrowIcon } from "@icons14";
 import { isPathUnder } from "@utils/pathUtil";
+
 import "@styles/breadcrumb.css";
 
 type PathListProps = {

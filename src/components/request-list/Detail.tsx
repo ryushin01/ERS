@@ -2,17 +2,18 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FI_REQUEST } from "@constants/path";
-import { PROC_STAT_CD } from "@constants/code";
-import { Typography } from "@components/common";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+
 import { Button } from "@components/button";
+import { Typography } from "@components/common";
 import { Loading } from "@components/common";
+import { PROC_STAT_CD } from "@constants/code";
+import { FI_REQUEST } from "@constants/path";
 import { getRequestInfoData, patchRegistrationHold } from "@services/request";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { toastState } from "@stores";
 import { ResponsiveType } from "@types";
 import { getManagerInfo } from "@utils/stringUtil";
-import { toastState } from "@stores";
-import { useSetAtom } from "jotai";
 
 type DetailDataProps = {
   requestNo: string;

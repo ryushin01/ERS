@@ -1,7 +1,9 @@
-import type { Metadata } from "next";
-import { FI_HOME_METADATA } from "@constants/metadata";
 import { LoginLayout } from "@components/layout";
 import LoginSection from "@components/login/LoginSection";
+import { FI_HOME_METADATA } from "@constants/metadata";
+
+import type { Metadata } from "next";
+
 import "@styles/login.css";
 
 export const metadata: Metadata = {

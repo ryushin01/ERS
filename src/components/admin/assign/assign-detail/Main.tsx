@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+
 import { Breadcrumb, Typography } from "@components/common";
 import { useResponsive } from "@hooks";
+
 import DetailForm from "./DetailForm";
 
 export default function Main() {

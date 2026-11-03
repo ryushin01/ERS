@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
-import { FI_HOME_METADATA } from "@constants/metadata";
-import { CommonLayout, Footer } from "@components/layout";
 import Main from "@components/home/Main";
+import { CommonLayout, Footer } from "@components/layout";
+import { FI_HOME_METADATA } from "@constants/metadata";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: FI_HOME_METADATA.TITLE,

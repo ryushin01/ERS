@@ -1,12 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { FI_REQUEST } from "@constants/path";
-import { FileAttachmentIcon, AlertCircleIcon, CheckCircleIcon } from "@icons36";
-import { Typography } from "@components/common";
+import { useRouter } from "next/navigation";
+
 import { Button } from "@components/button";
+import { Typography } from "@components/common";
+import { FI_REQUEST } from "@constants/path";
 import { useResponsive } from "@hooks";
+import { AlertCircleIcon, CheckCircleIcon, FileAttachmentIcon } from "@icons36";
+
 import "@styles/banner.css";
 
 type BannerProps = {

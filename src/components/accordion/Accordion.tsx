@@ -1,13 +1,16 @@
 import { useState } from "react";
 import Image from "next/image";
-import { AlertTriangleIcon14 } from "@icons14";
-import { AlertTriangleIcon20 } from "@icons20";
-import { UpArrowIcon, DownArrowIcon } from "@icons24";
+import { useMutation } from "@tanstack/react-query";
+
 import { Typography } from "@components/common";
 import { useResponsive } from "@hooks";
-import { useMutation } from "@tanstack/react-query";
+import { AlertTriangleIcon14 } from "@icons14";
+import { AlertTriangleIcon20 } from "@icons20";
+import { DownArrowIcon, UpArrowIcon } from "@icons24";
 import { getFileDownLoad } from "@services/file";
+
 import type { AttachedFile } from "@types";
+
 import "@styles/accordion.css";
 
 type AccordionProps = {

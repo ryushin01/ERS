@@ -2,23 +2,25 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AD_REGISTRATION } from "@constants/path";
-import { Loading, Typography } from "@components/common";
-import { Button } from "@components/button";
-import { Modal } from "@components/modal";
-import { RegistrationAcceptanceProps } from "@components/admin/registration/registration-acceptance/List";
-import { useDisclosure } from "@hooks";
-import { ResponsiveType } from "@types";
-import { toastState } from "@stores";
-import { useSetAtom } from "jotai";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
+
+import { RegistrationAcceptanceProps } from "@components/admin/registration/registration-acceptance/List";
+import RegistrationInformation from "@components/admin/registration/registration-detail/RegistrationInformation";
+import RegistrationRejection from "@components/admin/registration/registration-status/RegistrationRejection";
+import { Button } from "@components/button";
+import { Loading, Typography } from "@components/common";
+import { Modal } from "@components/modal";
+import { AD_REGISTRATION } from "@constants/path";
+import { useDisclosure } from "@hooks";
 import {
   getRegistrationAcceptData,
   patchRegistrationApproval,
 } from "@services/registrationManagement";
+import { toastState } from "@stores";
+import { ResponsiveType } from "@types";
 import { getDetailAddress, getManagerInfo } from "@utils/stringUtil";
-import RegistrationRejection from "@/components/admin/registration/registration-status/RegistrationRejection";
-import RegistrationInformation from "@components/admin/registration/registration-detail/RegistrationInformation";
+
 import "@styles/responsive-table.css";
 
 export default function Table({

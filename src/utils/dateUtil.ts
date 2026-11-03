@@ -82,11 +82,11 @@ function getTodayAddDays(days: number = 0) {
 
 export {
   checkIsToday,
+  formatStringToDate,
+  getCompareWithToday,
+  getDateString,
   getDay,
   getKoreaDate,
-  stringToDate,
-  getCompareWithToday,
-  formatStringToDate,
-  getDateString,
   getTodayAddDays,
+  stringToDate,
 };

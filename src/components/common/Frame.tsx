@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+
 import "@styles/frame.css";
 
 type FrameProps = {

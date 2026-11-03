@@ -1,8 +1,11 @@
 import React, { ReactNode } from "react";
-import type { Metadata, Viewport } from "next";
-import { TITLE, DESCRIPTION, FAVICON, OG_IMAGE, SITE_URL } from "@constants/metadata";
+
 import Provider from "@components/common/Provider";
 import ToastPopup from "@components/common/ToastPopup";
+import { DESCRIPTION, FAVICON, OG_IMAGE, SITE_URL, TITLE } from "@constants/metadata";
+
+import type { Metadata, Viewport } from "next";
+
 import "@styles/globals.css";
 
 export const metadata: Metadata = {

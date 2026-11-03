@@ -1,18 +1,22 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
+
 import { Loading } from "@components/common";
 import { useResponsive } from "@hooks";
-import { useAtomValue } from "jotai";
-import { authAtom } from "@/stores";
-import { useQuery } from "@tanstack/react-query";
 import {
-  getStatisticsData,
-  getRegistrationListData,
   getHomeNoticeListData,
+  getRegistrationListData,
+  getStatisticsData,
 } from "@services/home";
-import type { HomeStatisticsResponse, HomeRegistrationListResponse, HomeNoticeListResponse } from "@types";
+import { authAtom } from "@stores";
+
 import Banner from "./Banner";
 import Contents from "./Contents";
+
+import type { HomeNoticeListResponse, HomeRegistrationListResponse, HomeStatisticsResponse } from "@types";
+
 import "@styles/home.css";
 
 export default function Main() {

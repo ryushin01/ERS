@@ -1,7 +1,8 @@
 import { ChangeEvent, useState } from "react";
+import { useSetAtom } from "jotai";
+
 import { FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
 import { toastState } from "@stores";
-import { useSetAtom } from "jotai";
 
 /**
  * @name useFileUpload

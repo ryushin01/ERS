@@ -1,6 +1,8 @@
 import { ReactNode, useState } from "react";
+
 import { Badge, Typography } from "@components/common";
 import { ResponsiveType } from "@types";
+
 import "@styles/tab.css";
 
 type TabItem = {

@@ -1,11 +1,14 @@
 import { ReactNode } from "react";
 import Image from "next/image";
+import { Controller, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 import { LeftArrowIcon, RightArrowIcon } from "@icons24";
 import { CancelIcon } from "@icons36";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Controller, Navigation, Pagination } from "swiper/modules";
+
 import Frame from "./Frame";
 import Loading from "./Loading";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";

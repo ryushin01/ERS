@@ -2,6 +2,7 @@
 
 import { Typography } from "@components/common";
 import { useResponsive } from "@hooks";
+
 import List from "./List";
 
 export default function Main() {
