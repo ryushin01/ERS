@@ -3,9 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: true,
-  devIndicators: {
-    appIsrStatus: false,
-  },
   // membGbCd (사용자 구분 코드)
   // 00 : 금융기관
   // 10 : 법무대리인

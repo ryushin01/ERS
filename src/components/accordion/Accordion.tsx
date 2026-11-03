@@ -61,8 +61,9 @@ export default function Accordion({
             : "downloaded-file.pdf");
 
         // 바이너리 데이터가 있는 경우 Blob 객체로 처리
+        const contentType = res.headers["content-type"];
         const fileBlob = new Blob([res.data], {
-          type: res.headers["content-type"] || "application/octet-stream", // 파일 형식 지정
+          type: typeof contentType === "string" && contentType ? contentType : "application/octet-stream", // 파일 형식 지정
         });
 
         // Blob URL 생성
