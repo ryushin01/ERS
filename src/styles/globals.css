@@ -52,7 +52,7 @@
             @apply flex justify-between items-center w-full px-[52px] transition-all;
 
             & > h1 {
-                @apply relative w-[196px] h-10 object-cover;
+                @apply relative w-[254px] h-8;
             }
 
             ._header-right-area {
@@ -202,10 +202,10 @@
                 @apply px-4;
 
                 & > h1 {
-                    @apply w-[120px] h-[13px];
+                    @apply w-[159px] h-5;
 
                     &._login {
-                        @apply w-[148px] h-4;
+                        @apply w-[191px] h-6;
                     }
                 }
 
