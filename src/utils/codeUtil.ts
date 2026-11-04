@@ -38,3 +38,19 @@ export function getBankOptions(data: unknown): SelectOption[] {
     label: item.bizNm,
   }));
 }
+
+/* 사유 코드에서 "기타"(직접 입력)를 뜻하는 코드 */
+export const ETC_REASON_CODE = "99";
+
+/**
+ * @name getReasonText
+ * @description 사유 선택 상자에서 고른 값을 서버로 보낼 사유 문구로 바꿉니다.
+ *              - 기타(99): 직접 입력한 문구 (앞뒤 공백 제거)
+ *              - 그 외: 고른 코드의 이름
+ *              선택하지 않았거나, 기타인데 입력이 비어 있거나, 목록에 없는 코드면 null을 돌려줍니다.
+ */
+export function getReasonText(code: string, options: SelectOption[], etcText: string) {
+  if (!code) return null;
+  if (code === ETC_REASON_CODE) return etcText.trim() || null;
+  return options.find((option) => option.value === code)?.label ?? null;
+}

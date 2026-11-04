@@ -93,7 +93,9 @@ export default function DrawerContent({
   /* 비밀번호변경 api 호출 */
   const { mutate: changePassword } = useMutation({
     mutationKey: ["log-in"],
-    mutationFn: async () => await patchChangePassword(form),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (payload: Parameters<typeof patchChangePassword>[0]) =>
+      await patchChangePassword(payload),
     onSuccess: (res) => {
       if (res.data.code === "00") {
         // 1. 변경성공 토스트 팝업 노출
@@ -170,7 +172,7 @@ export default function DrawerContent({
   /* 비밀번호변경 api 호출 함수 */
   const handleChangePassword = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    changePassword();
+    changePassword(form);
   };
 
   return (

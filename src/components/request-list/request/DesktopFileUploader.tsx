@@ -38,7 +38,6 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
   const openToast = useSetAtom(toastState);
   const router = useRouter();
   const [fileList, setFileList] = useState<FileData[]>([]);
-  const [requestData, setRequestData] = useState<FormData>(new FormData());
   const { Dragger } = Upload;
   const { ...datePickerProps } = useDatePicker();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -57,7 +56,8 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
   /* 등기자료 신규 등록 */
   const { mutate: mutatePostRequestData, isPending: postRequestDataLoading } = useMutation({
     mutationKey: ["request-upload"],
-    mutationFn: async () => await postRequestData(requestData),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (data: FormData) => await postRequestData(data),
     onSuccess: (response) => {
       if (response.data.code === "00") {
         handleSuccess();
@@ -72,7 +72,8 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
   /* 등기자료 수정 */
   const { mutate: mutatePatchRequestData, isPending: patchRequestDataLoading } = useMutation({
     mutationKey: ["request-update"],
-    mutationFn: async () => await patchRequestData(requestData),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (data: FormData) => await patchRequestData(data),
     onSuccess: (response) => {
       if (response.data.code === "00") {
         handleSuccess();
@@ -202,13 +203,11 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
       };
       formData.append("rqstCrtReq", JSON.stringify(requestData));
 
-      setRequestData(formData);
-      mutatePatchRequestData();
+      mutatePatchRequestData(formData);
     } else {
       //전자등기 의뢰 신규 등록 처리
       formData.append("execDt", getDateString(datePickerProps.startDate));
-      setRequestData(formData);
-      mutatePostRequestData();
+      mutatePostRequestData(formData);
     }
     setIsButtonDisabled(true);
   };

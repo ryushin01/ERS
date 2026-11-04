@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { getBankOptions, getCodeList, getMemberOptions } from "./codeUtil";
+import { getBankOptions, getCodeList, getMemberOptions, getReasonText } from "./codeUtil";
 
 describe("선택 상자 옵션 변환", () => {
   it("getCodeList: 공통 코드 → { value: code, label: codeNm }", () => {
@@ -29,5 +29,29 @@ describe("선택 상자 옵션 변환", () => {
 
   it.each([undefined, null])("getCodeList는 %o이면 빈 배열", (data) => {
     expect(getCodeList(data)).toEqual([]);
+  });
+});
+
+describe("getReasonText (사유 선택 → 보낼 사유 문구)", () => {
+  const options = [
+    { value: "00", label: "접수증 이미지 불량" },
+    { value: "99", label: "기타" },
+  ];
+
+  it("코드를 고르면 그 코드의 이름", () => {
+    expect(getReasonText("00", options, "")).toBe("접수증 이미지 불량");
+  });
+
+  it("기타(99)는 직접 입력한 문구 (앞뒤 공백 제거)", () => {
+    expect(getReasonText("99", options, "  서류 원본 불일치 ")).toBe("서류 원본 불일치");
+  });
+
+  it.each([
+    ["", ""],
+    ["99", ""],
+    ["99", "   "],
+    ["55", ""],
+  ])("보낼 사유가 없으면 null (코드 %j, 입력 %j)", (code, etc) => {
+    expect(getReasonText(code, options, etc)).toBeNull();
   });
 });

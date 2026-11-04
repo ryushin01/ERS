@@ -209,7 +209,9 @@ export default function Table({
 
   const { mutate: regiSupplement } = useMutation({
     mutationKey: ["registration-supplement", requstNo],
-    mutationFn: async () => await patchRegiSupplement(form),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (payload: Parameters<typeof patchRegiSupplement>[0]) =>
+      await patchRegiSupplement(payload),
     onSuccess: (res) => {
       if (res.code === "00") {
         // 1. 셀렉트 초기화 & 모달 닫기
@@ -235,7 +237,9 @@ export default function Table({
   /* 진행취소 진행 요청 api */
   const { mutate: regiCancel } = useMutation({
     mutationKey: ["registration-cancel", requstNo],
-    mutationFn: async () => await patchRegiCancel(form),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (payload: Parameters<typeof patchRegiCancel>[0]) =>
+      await patchRegiCancel(payload),
     onSuccess: (res) => {
       if (res.code === "00") {
         // 1. 셀렉트 초기화 & 모달 닫기
@@ -261,7 +265,8 @@ export default function Table({
   /* 배정하기 진행요청 api */
   const { mutate: patchAccignmentsubmit } = useMutation({
     mutationKey: ["registration-accignment"],
-    mutationFn: async () => await patchAccignmentForm(requestData!),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (data: FormData) => await patchAccignmentForm(data),
     onSuccess: (res) => {
       if (res.data.code === "00") {
         // 1. 토스트팝업 노출 & 배정관리 페이지로 이동
@@ -359,7 +364,7 @@ export default function Table({
 
     // 보완요청 api 호출
     if (!supplementLock.lock()) return; // 중복 제출 방지
-    regiSupplement();
+    regiSupplement(form);
   };
   /* ----- [보완요청 끝] ----- */
 
@@ -439,7 +444,7 @@ export default function Table({
 
     // 진행취소 요청 api 호출
     if (!cancelLock.lock()) return; // 중복 제출 방지
-    regiCancel();
+    regiCancel(form);
   };
   /* ----- [진행취소 끝] ----- */
 
@@ -638,7 +643,7 @@ export default function Table({
     if (requestData && requestData.has("req")) {
       // 6. API 호출 (연속 클릭으로 requestData가 여러 번 바뀌어도 한 번만 전송)
       if (!assignLock.lock()) return;
-      patchAccignmentsubmit();
+      patchAccignmentsubmit(requestData);
     }
     // 제출용 requestData가 만들어졌을 때만 검증 후 API를 호출합니다.
     // eslint-disable-next-line react-hooks/exhaustive-deps

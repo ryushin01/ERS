@@ -48,7 +48,6 @@ export default function MobileFileUploader({
   const [isLoading, setIsLoading] = useState(false);
   const [existingImageList, setIsExistingImageList] = useState({});
   const [isProcessingSubmit, setIsProcessingSubmit] = useState(false);
-  const [requestData, setRequestData] = useState<FormData>(new FormData());
   const webcamRef = useRef<Webcam>(null);
   const { ...datePickerProps } = useDatePicker();
   const openToast = useSetAtom(toastState);
@@ -288,31 +287,26 @@ export default function MobileFileUploader({
 
       formData.append("rqstCrtReq", JSON.stringify(requestData));
 
-      // 4. FormData 저장
-      setRequestData(formData);
-
-      // 5. 제출하기 버튼 비활성화
+      // 4. 제출하기 버튼 비활성화
       setIsProcessingSubmit(true);
 
-      // 6. 데이터 페칭 함수 호출
-      mutatePatchRequestData();
+      // 5. 데이터 페칭 함수 호출
+      mutatePatchRequestData(formData);
     } else {
       formData.append("execDt", getDateString(datePickerProps.startDate));
 
-      // 4. FormData 저장
-      setRequestData(formData);
-
-      // 5. 제출하기 버튼 비활성화
+      // 4. 제출하기 버튼 비활성화
       setIsProcessingSubmit(true);
 
-      // 6. 데이터 페칭 함수 호출
-      mutatePostRequestData();
+      // 5. 데이터 페칭 함수 호출
+      mutatePostRequestData(formData);
     }
   };
 
   const { mutate: mutatePostRequestData, isPending } = useMutation({
     mutationKey: ["mobile-file-upload"],
-    mutationFn: async () => await postRequestData(requestData),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (data: FormData) => await postRequestData(data),
     onSuccess: (response) => {
       if (response.data.code === "00") {
         successToFetching();
@@ -326,7 +320,8 @@ export default function MobileFileUploader({
 
   const { mutate: mutatePatchRequestData, isPending: patchRequestDataLoading } = useMutation({
     mutationKey: ["request-update"],
-    mutationFn: async () => await patchRequestData(requestData),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (data: FormData) => await patchRequestData(data),
     onSuccess: (response) => {
       if (response.data.code === "00") {
         successToFetching();

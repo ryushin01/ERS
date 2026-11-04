@@ -61,7 +61,6 @@ export default function CreateForm() {
       bizNm: "",
     },
   ]);
-  const [requestData, setRequestData] = useState<FormData>(new FormData());
   const [price, setPrice] = useState("");
   const [radioValue, handleRadio] = useRadio("01");
   const [unqRgstrNo, setUnqRgstrNo] = useState("");
@@ -300,7 +299,8 @@ export default function CreateForm() {
 
   const { mutate: mutatePostCreateAssign, isPending: postCreateAssignLoading } = useMutation({
     mutationKey: ["post-create-assign"],
-    mutationFn: async () => await postCreateAssign(requestData),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (data: FormData) => await postCreateAssign(data),
     onSuccess: (response) => {
       // 배정 성공 시
       if (response.data.code === "00") {
@@ -493,11 +493,10 @@ export default function CreateForm() {
     });
 
     // 4. formData 상태 저장
-    setRequestData(formData);
 
     // 5. 데이터 페칭
     if (!submitLock.lock()) return; // 이미 제출 중이거나 등록 완료
-    mutatePostCreateAssign();
+    mutatePostCreateAssign(formData);
   };
 
   useEffect(() => {

@@ -382,12 +382,18 @@ export const createDocumentSvg = (title: string, requestNo: string, page: number
 const commCode = (grpCd: string, names: string[]) =>
   names.map((codeNm, i) => ({ grpCd, code: String(i).padStart(2, "0"), codeNm }));
 
+/* 사유 코드: 마지막 "기타"는 실제 코드 체계처럼 "99" (화면은 99일 때 직접 입력칸을 보여 줌) */
+const reasonCode = (grpCd: string, names: string[]) => [
+  ...commCode(grpCd, names),
+  { grpCd, code: "99", codeNm: "기타" },
+];
+
 export const COMMON_CODES: Record<string, { grpCd: string; code: string; codeNm: string }[]> = {
   PROC_STAT_CD: PROC_STAT_CODE_LIST,
   REALE_CD: commCode("REALE_CD", ["아파트", "오피스텔", "연립·다세대", "단독주택"]),
-  SPPL_REQ_GB_CD: commCode("SPPL_REQ_GB_CD", ["등기자료 이미지 불량", "필수 서류 누락", "기타"]),
-  PROC_CLS_GB_CD: commCode("PROC_CLS_GB_CD", ["대출 취소", "고객 요청", "기타"]),
-  RTUN_GB_CD: commCode("RTUN_GB_CD", ["접수증 이미지 불량", "접수번호 불일치", "기타"]),
+  SPPL_REQ_GB_CD: reasonCode("SPPL_REQ_GB_CD", ["등기자료 이미지 불량", "필수 서류 누락"]),
+  PROC_CLS_GB_CD: reasonCode("PROC_CLS_GB_CD", ["대출 취소", "고객 요청"]),
+  RTUN_GB_CD: reasonCode("RTUN_GB_CD", ["접수증 이미지 불량", "접수번호 불일치"]),
   // 관할법원과 등기소는 실제 코드 체계처럼 계층 구조: 등기소 코드는 관할법원 코드로 시작
   JUDT_COURT_CD: [
     { grpCd: "JUDT_COURT_CD", code: "01", codeNm: "서울중앙지방법원" },

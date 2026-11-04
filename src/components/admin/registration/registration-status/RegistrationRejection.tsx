@@ -11,10 +11,11 @@ import { Form, InputField, Label, Select } from "@components/form";
 import { RTUN_GB_CD } from "@constants/code";
 import { REJECTION_INFORMATION_LIST } from "@constants/information";
 import { AD_REGISTRATION } from "@constants/path";
+import { useSubmitLock } from "@hooks";
 import { getCommonCodeList } from "@services/common";
 import { patchRegistrationReject } from "@services/registrationManagement";
 import { toastState } from "@stores";
-import { getCodeList } from "@utils/codeUtil";
+import { ETC_REASON_CODE, getCodeList, getReasonText } from "@utils/codeUtil";
 
 import type { CodeOption } from "@types";
 
@@ -35,11 +36,8 @@ export default function RegistrationRejection({
   const [rejectCodeList, setRejectCodeList] = useState<CodeOption[]>([]);
   const [rejecReason, setRejecReson] = useState("");
   const [isError, setIslError] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [form, setForm] = useState({
-    rqstNo: requestNo,
-    procRsnCnts: "",
-  });
+  // 중복 제출 방지 (실패 시에만 다시 제출 가능)
+  const submitLock = useSubmitLock();
 
   /* 반려사유 코드 조회 */
   const { data: rejectCodeData } = useQuery({
@@ -52,7 +50,9 @@ export default function RegistrationRejection({
   /* 반려 처리 */
   const { mutate: registratioinReject, isPending: registrationRejectPending } = useMutation({
     mutationKey: ["registration-reject"],
-    mutationFn: async () => await patchRegistrationReject(form),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (payload: { rqstNo: string; procRsnCnts: string }) =>
+      await patchRegistrationReject(payload),
     onSuccess: (res) => {
       if (res.code === "00") {
         openToast({
@@ -64,37 +64,32 @@ export default function RegistrationRejection({
           router.push(AD_REGISTRATION);
         }, 3000);
       } else {
+        submitLock.unlock();
       }
     },
     onError: (error) => {
       console.error(error);
-      setIsButtonDisabled(false);
+      submitLock.unlock();
     },
   });
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if ((selectRejection === "" || selectRejection === "99") && rejecReason.trim() === "") {
+
+    // 고른 사유(기타면 직접 입력한 문구)를 보낼 사유로 변환
+    const procRsnCnts = getReasonText(selectRejection, rejectCodeList, rejecReason);
+    if (!procRsnCnts) {
       setIslError(true);
       openToast({
         message: "반려 사유를 입력해 주세요.",
         position: "top",
       });
       return;
-    } else if (selectRejection !== "99") {
-      const selectedLabel = rejectCodeList.filter((item) =>
-        item.value === selectRejection ? item.label : "",
-      );
-
-      setForm({ rqstNo: requestNo, procRsnCnts: selectedLabel[0]?.label });
-      setIslError(false);
-    } else {
-      setForm({ rqstNo: requestNo, procRsnCnts: rejecReason });
-      setIslError(false);
     }
+    setIslError(false);
 
-    setIsButtonDisabled(true);
-    registratioinReject();
+    if (!submitLock.lock()) return;
+    registratioinReject({ rqstNo: requestNo, procRsnCnts });
   };
 
   /* 반려사유 코드리스트 세팅 */
@@ -127,17 +122,17 @@ export default function RegistrationRejection({
             required={true}
           />
 
-          {/* TODO: 기타 선택 시 InputField 노출 필요 */}
+          {/* 기타(99)를 고르면 사유 직접 입력 */}
           <InputField
             type="text"
             name="rejectEtc"
-            className={selectRejection === "99" ? "" : "_hidden"}
+            className={selectRejection === ETC_REASON_CODE ? "" : "_hidden"}
             defaultValue={""}
-            required={selectRejection === "99"}
+            required={selectRejection === ETC_REASON_CODE}
             placeholder={"사유를 입력해 주세요"}
-            isError={isError && !rejecReason}
+            isError={isError && selectRejection === ETC_REASON_CODE && !rejecReason.trim()}
             inputSize="md"
-            onBlur={(e) => setRejecReson(e.target.value)}
+            onChange={(e) => setRejecReson(e.target.value)}
           />
         </div>
 
@@ -159,7 +154,13 @@ export default function RegistrationRejection({
           <Button shape="solid" size="md" color="grayscale" onClick={closeRejectionModal}>
             취소
           </Button>
-          <Button type="submit" shape="solid" size="md" color="main100" disabled={isButtonDisabled}>
+          <Button
+            type="submit"
+            shape="solid"
+            size="md"
+            color="main100"
+            disabled={submitLock.isLocked}
+          >
             반려하기
           </Button>
         </div>

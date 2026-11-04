@@ -116,6 +116,12 @@ describe("의뢰 목업 데이터 (REGISTRATIONS)", async () => {
     }
   });
 
+  it("사유 코드의 '기타'는 99다 (화면이 99일 때 직접 입력칸을 보여 줌)", () => {
+    for (const group of ["SPPL_REQ_GB_CD", "PROC_CLS_GB_CD", "RTUN_GB_CD"]) {
+      expect(COMMON_CODES[group].find((c) => c.codeNm === "기타")?.code, group).toBe("99");
+    }
+  });
+
   it("의뢰목록 탭은 모든 진행상태를 빠짐없이, 겹치지 않게 나눈다", () => {
     const statuses = Object.values(REQUEST_TAB_STATUS).flat();
     expect(new Set(statuses).size).toBe(statuses.length);

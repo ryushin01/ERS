@@ -37,7 +37,6 @@ export default function RegistrationInformation({
   const openToast = useSetAtom(toastState);
   const [isError, setIsError] = useState(false);
   const [fileList, setFileList] = useState<FileData[]>([]);
-  const [requestData, setRequestData] = useState<FormData>(new FormData());
   const [selectJudtCourt, setSelectJudtCourt] = useState("");
   const [selectRegistryOffice, setSelectRegistryOffice] = useState("");
   const [acceptNo, setAcceptNo] = useState("");
@@ -76,7 +75,8 @@ export default function RegistrationInformation({
   const { mutate: mutatePostRegistrationAccept, isPending: postRegistrationAcceptLoading } =
     useMutation({
       mutationKey: ["request-upload"],
-      mutationFn: async () => await postRegistrationAccept(requestData),
+      // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+      mutationFn: async (data: FormData) => await postRegistrationAccept(data),
       onSuccess: (response) => {
         if (response.data.code === "00") {
           handleSuccess();
@@ -243,10 +243,9 @@ export default function RegistrationInformation({
     };
 
     formData.append("reqVo", JSON.stringify(requestData));
-    setRequestData(formData);
 
     setIsButtonDisabled(true);
-    mutatePostRegistrationAccept();
+    mutatePostRegistrationAccept(formData);
   };
 
   /* 등기의뢰 등록 또는 수정 후 성공 처리 */

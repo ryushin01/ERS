@@ -62,7 +62,9 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
   /* 로그인 api 호출 */
   const { mutate: loginDataSend, isPending: loginDataLoading } = useMutation({
     mutationKey: ["log-in"],
-    mutationFn: async () => await postLoginData(form),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (payload: Parameters<typeof postLoginData>[0]) =>
+      await postLoginData(payload),
     onSuccess: (res) => {
       if (res.data.code === "00") {
         // 1. authAtom에 저장 (세션스토리지에도 'auth'로 함께 저장됨)
@@ -167,7 +169,7 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
       return; // checkValidation 통과 안되면 return
     }
 
-    loginDataSend();
+    loginDataSend(form);
   };
 
   return (

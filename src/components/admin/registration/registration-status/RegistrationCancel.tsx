@@ -11,10 +11,11 @@ import { Form, InputField, Label, Select } from "@components/form";
 import { PROC_CLS_GB_CD } from "@constants/code";
 import { CANCEL_PROGRESS_INFORMATION_LIST } from "@constants/information";
 import { AD_REGISTRATION } from "@constants/path";
+import { useSubmitLock } from "@hooks";
 import { patchRegiCancel } from "@services/assignDetail";
 import { getCommonCodeList } from "@services/common";
 import { toastState } from "@stores";
-import { getCodeList } from "@utils/codeUtil";
+import { ETC_REASON_CODE, getCodeList, getReasonText } from "@utils/codeUtil";
 
 import type { CodeOption } from "@types";
 
@@ -35,11 +36,8 @@ export default function RegistrationCancel({
   const [cancelReason, setCancelReason] = useState("");
   const [cnclError, setCnclError] = useState(false);
   const [cancelCodeList, setCancelCodeList] = useState<CodeOption[]>([]);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [form, setForm] = useState({
-    rqstNo: requstNo,
-    procRsnCnts: "",
-  });
+  // 중복 제출 방지 (실패 시에만 다시 제출 가능)
+  const submitLock = useSubmitLock();
 
   /* 진행취소 사유 코드 조회 */
   const { data: cancelCodeData, isLoading: procCancelCdLoading } = useQuery({
@@ -60,37 +58,29 @@ export default function RegistrationCancel({
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (
-      (selectCancelProgress === "" || selectCancelProgress === "99") &&
-      cancelReason.trim() === ""
-    ) {
+    // 고른 사유(기타면 직접 입력한 문구)를 보낼 사유로 변환
+    const procRsnCnts = getReasonText(selectCancelProgress, cancelCodeList, cancelReason);
+    if (!procRsnCnts) {
       setCnclError(true);
       openToast({
         message: "진행취소 사유를 입력해 주세요.",
         position: "top",
       });
       return;
-    } else if (selectCancelProgress !== "99") {
-      const selectedLabel = cancelCodeList.filter((item) =>
-        item.value === selectCancelProgress ? item.label : "",
-      );
-
-      setForm({ rqstNo: requstNo, procRsnCnts: selectedLabel[0]?.label });
-      setCnclError(false);
-    } else {
-      setForm({ rqstNo: requstNo, procRsnCnts: cancelReason });
-      setCnclError(false);
     }
+    setCnclError(false);
 
-    setIsButtonDisabled(true);
+    if (!submitLock.lock()) return;
     // 진행취소 요청 api 호출
-    regiCancel();
+    regiCancel({ rqstNo: requstNo, procRsnCnts });
   };
 
   /* 진행취소 처리 */
   const { mutate: regiCancel, isPending: registrationCancelPending } = useMutation({
     mutationKey: ["registration-cancel"],
-    mutationFn: async () => await patchRegiCancel(form),
+    // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
+    mutationFn: async (payload: { rqstNo: string; procRsnCnts: string }) =>
+      await patchRegiCancel(payload),
     onSuccess: (res) => {
       if (res.code === "00") {
         // 토스트팝업 노출 & 등기관리 페이지로 이동
@@ -103,11 +93,12 @@ export default function RegistrationCancel({
           router.push(AD_REGISTRATION);
         }, 3000);
       } else {
+        submitLock.unlock();
       }
     },
     onError: (error) => {
       console.error(error);
-      setIsButtonDisabled(false);
+      submitLock.unlock();
     },
   });
 
@@ -134,16 +125,17 @@ export default function RegistrationCancel({
             required={true}
           />
 
+          {/* 기타(99)를 고르면 사유 직접 입력 */}
           <InputField
             type="text"
             name="rejectEtc"
-            className={selectCancelProgress === "99" ? "" : "_hidden"}
+            className={selectCancelProgress === ETC_REASON_CODE ? "" : "_hidden"}
             defaultValue={""}
-            required={selectCancelProgress === "99"}
+            required={selectCancelProgress === ETC_REASON_CODE}
             placeholder={"사유를 입력해 주세요"}
-            isError={cnclError && !selectCancelProgress}
+            isError={cnclError && selectCancelProgress === ETC_REASON_CODE && !cancelReason.trim()}
             inputSize="md"
-            onBlur={(e) => setCancelReason(e.target.value)}
+            onChange={(e) => setCancelReason(e.target.value)}
           />
         </div>
 
@@ -165,7 +157,13 @@ export default function RegistrationCancel({
           <Button shape="solid" size="md" color="grayscale" onClick={closeCancelProgressModal}>
             취소
           </Button>
-          <Button type="submit" shape="solid" size="md" color="main100" disabled={isButtonDisabled}>
+          <Button
+            type="submit"
+            shape="solid"
+            size="md"
+            color="main100"
+            disabled={submitLock.isLocked}
+          >
             진행 취소하기
           </Button>
         </div>
