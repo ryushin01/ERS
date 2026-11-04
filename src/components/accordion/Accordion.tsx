@@ -116,7 +116,7 @@ export default function Accordion({
               className={`_id ${
                 isDesktop
                   ? "after-none"
-                  : "relative pr-2 mr-2 after:absolute after:right-0 after:top-[5px] after:bg-koser-grayscale-40 after:w-[1px] after:h-[10px]"
+                  : "relative pr-2 mr-2 after:absolute after:right-0 after:top-[5px] after:bg-ers-grayscale-40 after:w-[1px] after:h-[10px]"
               } `}
             >
               {id}
@@ -124,7 +124,7 @@ export default function Accordion({
             <Typography
               kind={isDesktop ? "title-medium" : "body-medium"}
               className={`_title ${
-                isUrgent ? "flex gap-x-[6px] text-koser-secondary-red-50" : ""
+                isUrgent ? "flex gap-x-[6px] text-ers-secondary-red-50" : ""
               }`}
             >
               {!isDesktop && isUrgent && (
@@ -152,7 +152,7 @@ export default function Accordion({
               className={`_author ${
                 isDesktop
                   ? "after-none"
-                  : "relative pr-2 mr-2 after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:bg-koser-grayscale-40 after:w-[1px] after:h-[10px]"
+                  : "relative pr-2 mr-2 after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:bg-ers-grayscale-40 after:w-[1px] after:h-[10px]"
               }`}
             >
               {author}
@@ -179,7 +179,7 @@ export default function Accordion({
       <div className="_accordion-content flex flex-col">
         {fileInfoList.length === 0 ? null : (
           <p
-            className={`flex flex-col items-start gap-1 mb-6 text-koser-main-100 underline ${
+            className={`flex flex-col items-start gap-1 mb-6 text-ers-main-100 underline ${
               isDesktop ? "text-lg leading-[26px]" : "text-sm"
             }`}
           >

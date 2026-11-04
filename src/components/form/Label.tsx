@@ -59,7 +59,7 @@ export default function Label({
             </Typography>
           )}
           {labelText && required && (
-            <span className="text-koser-secondary-red-50 pl-1">*</span>
+            <span className="text-ers-secondary-red-50 pl-1">*</span>
           )}
           {children}
         </label>
@@ -75,7 +75,7 @@ export default function Label({
               </Typography>
             )}
             {labelText && required && (
-              <span className="text-koser-secondary-red-50 pl-1">*</span>
+              <span className="text-ers-secondary-red-50 pl-1">*</span>
             )}
           </label>
           {children}

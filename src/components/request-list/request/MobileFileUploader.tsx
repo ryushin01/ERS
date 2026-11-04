@@ -411,7 +411,7 @@ export default function MobileFileUploader({
                 className="_take-picture-button"
               >
                 <Image src={PlusMainIcon} alt="사진 촬영 더하기 아이콘" width={20} height={20} />
-                <Typography kind="body-medium" isBold={true} className="text-koser-main-100">사진 촬영</Typography>
+                <Typography kind="body-medium" isBold={true} className="text-ers-main-100">사진 촬영</Typography>
               </button>
             </li>
 

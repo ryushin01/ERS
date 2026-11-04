@@ -1,3 +1,3 @@
-import KoserLogo from "./Logo.svg";
+import ErsLogo from "./Logo.svg";
 
-export { KoserLogo };
+export { ErsLogo };

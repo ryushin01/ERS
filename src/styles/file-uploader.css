@@ -14,10 +14,10 @@
 
 ._desktop-file-uploader-wrapper {
     ._desktop-file-uploader {
-        @apply p-10 border border-koser-grayscale-40 rounded-2xl bg-koser-grayscale-0;
+        @apply p-10 border border-ers-grayscale-40 rounded-2xl bg-ers-grayscale-0;
 
         .ant-upload-drag {
-            @apply py-[60px] border border-solid border-koser-grayscale-40 bg-koser-grayscale-10;
+            @apply py-[60px] border border-solid border-ers-grayscale-40 bg-ers-grayscale-10;
 
             .ant-upload {
                 @apply p-0;
@@ -78,10 +78,10 @@
     }
 
     ._desktop-file-list-wrapper {
-        @apply overflow-hidden mt-8 rounded-xl border border-koser-grayscale-40;
+        @apply overflow-hidden mt-8 rounded-xl border border-ers-grayscale-40;
 
         & > div:first-child {
-            @apply px-4 py-3 bg-koser-main-10;
+            @apply px-4 py-3 bg-ers-main-10;
         }
     }
 
@@ -92,7 +92,7 @@
             @apply flex items-center gap-x-[6px] py-3 px-4;
 
             &:hover {
-                @apply bg-koser-grayscale-10;
+                @apply bg-ers-grayscale-10;
             }
 
             button {
@@ -138,13 +138,13 @@
     }
 
     ._mobile-file-list {
-        @apply grid grid-cols-3 gap-4 -mx-4 py-6 px-4 bg-koser-grayscale-0 border-t border-b border-koser-grayscale-40;
+        @apply grid grid-cols-3 gap-4 -mx-4 py-6 px-4 bg-ers-grayscale-0 border-t border-b border-ers-grayscale-40;
 
         li {
-            @apply relative overflow-hidden aspect-square rounded border border-koser-grayscale-40;
+            @apply relative overflow-hidden aspect-square rounded border border-ers-grayscale-40;
 
             &:first-child {
-                @apply border-koser-main-100;
+                @apply border-ers-main-100;
             }
 
             ._take-picture-button {
@@ -155,7 +155,7 @@
                 @apply _flex-center absolute top-0 right-0 z-10 w-[30px] h-[30px];
 
                 & > span {
-                    @apply p-[2px] rounded-[3px] bg-koser-grayscale-100/30;
+                    @apply p-[2px] rounded-[3px] bg-ers-grayscale-100/30;
                 }
             }
 
@@ -183,11 +183,11 @@
 }
 
 ._camera-backdrop {
-    @apply fixed inset-0 z-100 bg-koser-grayscale-0;
+    @apply fixed inset-0 z-100 bg-ers-grayscale-0;
 }
 
 ._camera {
-    @apply _flex-center flex-col fixed inset-0 z-1000 gap-y-8 bg-koser-grayscale-80;
+    @apply _flex-center flex-col fixed inset-0 z-1000 gap-y-8 bg-ers-grayscale-80;
 
     ._camera-inner-wrapper {
         @apply _flex-center overflow-hidden p-6;

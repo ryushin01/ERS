@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        koser: {
+        ers: {
           main: {
             "100": "#113662",
             "90": "#2b4e78",

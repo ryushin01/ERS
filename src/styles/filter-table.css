@@ -1,5 +1,5 @@
 ._filter-table-wrapper {
-    @apply overflow-hidden mb-6 rounded-xl border border-koser-grayscale-40 bg-koser-grayscale-0;
+    @apply overflow-hidden mb-6 rounded-xl border border-ers-grayscale-40 bg-ers-grayscale-0;
 
     ._button-wrap {
         @apply _flex-center gap-x-3 w-[18%] py-[10px] mx-auto;

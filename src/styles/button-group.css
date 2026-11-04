@@ -5,14 +5,14 @@
         @apply relative rounded-none;
 
         &:focus {
-            @apply bg-koser-grayscale-0;
+            @apply bg-ers-grayscale-0;
         }
 
         &[aria-selected="true"] {
-            @apply text-koser-main-100;
+            @apply text-ers-main-100;
 
             &::after {
-                @apply absolute -inset-px border border-koser-main-100;
+                @apply absolute -inset-px border border-ers-main-100;
                 content: "";
             }
 
@@ -34,7 +34,7 @@
         }
 
         /*&[aria-selected="true"] {*/
-        /*    @apply -ml-1 border-koser-main-100 text-koser-main-100;*/
+        /*    @apply -ml-1 border-ers-main-100 text-ers-main-100;*/
 
         /*    & + button {*/
         /*        @apply border-l-0;*/

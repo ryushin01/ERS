@@ -161,7 +161,7 @@ export default function RegistrationCancel({
               <li key={id}>
                 <Typography
                   kind="body-medium"
-                  className="text-koser-grayscale-90"
+                  className="text-ers-grayscale-90"
                 >
                   {content}
                 </Typography>

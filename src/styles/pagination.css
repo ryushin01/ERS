@@ -10,7 +10,7 @@
     @apply _flex-center w-8 h-8;
 
     &[aria-current="page"] {
-        @apply bg-koser-grayscale-50 text-koser-grayscale-0 rounded-md;
+        @apply bg-ers-grayscale-50 text-ers-grayscale-0 rounded-md;
     }
 }
 

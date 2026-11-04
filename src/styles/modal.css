@@ -1,6 +1,6 @@
 /* modal */
 ._modal-backdrop {
-    @apply fixed inset-0 z-10 bg-koser-grayscale-100/50;
+    @apply fixed inset-0 z-10 bg-ers-grayscale-100/50;
 }
 
 ._modal-container {
@@ -11,7 +11,7 @@
         max-height: inherit;
 
         ._modal-header {
-            @apply relative px-8 py-4 mx-8 border-b border-koser-main-100 text-center;
+            @apply relative px-8 py-4 mx-8 border-b border-ers-main-100 text-center;
 
             button {
                 @apply absolute right-0 top-1/2 -translate-y-1/2;

@@ -2,7 +2,7 @@
     @apply flex items-center justify-center w-full px-4;
 
     &._disabled {
-        @apply bg-koser-grayscale-30 text-koser-grayscale-60 cursor-not-allowed;
+        @apply bg-ers-grayscale-30 text-ers-grayscale-60 cursor-not-allowed;
     }
 
     span {

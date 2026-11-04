@@ -68,7 +68,7 @@ export default function SwiperGallery({
               {onDelete && (
                 <button
                   type="button"
-                  className="absolute top-0 right-0 rounded bg-koser-grayscale-0/30"
+                  className="absolute top-0 right-0 rounded bg-ers-grayscale-0/30"
                   onClick={onDelete}
                 >
                   <Image src={CancelIcon} alt="이미지 개별 삭제 아이콘" width={36} height={36} />

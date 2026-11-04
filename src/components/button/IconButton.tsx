@@ -35,7 +35,7 @@ export default function IconButton({
 
   const className = `_icon-button ${
     disabled ? "_disabled" : ""
-  } ${buttonSize} ${"focus:opacity-30 active:bg-koser-primary-50"}`;
+  } ${buttonSize} ${"focus:opacity-30 active:bg-ers-primary-50"}`;
 
   return (
     <button

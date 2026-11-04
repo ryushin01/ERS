@@ -49,7 +49,7 @@
 }
 
 ._accordion-header {
-    @apply border-t border-t-koser-main-100 bg-koser-main-10;
+    @apply border-t border-t-ers-main-100 bg-ers-main-10;
 
     ._accordion-text {
         ._top-titles,
@@ -71,10 +71,10 @@
     @apply flex flex-col;
 
     ._accordion-trigger {
-        @apply relative border-b border-b-koser-grayscale-40 bg-koser-grayscale-0 text-koser-grayscale-100 transition-all;
+        @apply relative border-b border-b-ers-grayscale-40 bg-ers-grayscale-0 text-ers-grayscale-100 transition-all;
 
         ._date-text {
-            @apply text-koser-grayscale-80;
+            @apply text-ers-grayscale-80;
         }
     }
 
@@ -88,7 +88,7 @@
         }
 
         ._accordion-content {
-            @apply h-auto py-8 bg-koser-grayscale-10 border-b border-koser-grayscale-40;
+            @apply h-auto py-8 bg-ers-grayscale-10 border-b border-ers-grayscale-40;
         }
     }
 }
@@ -108,7 +108,7 @@
     }
 
     ._mb-accordion-header {
-        @apply w-full h-px bg-koser-main-100;
+        @apply w-full h-px bg-ers-main-100;
     }
 
     ._mobile-accordion-texts {

@@ -75,78 +75,78 @@ export default function Button({
   /* 솔리드 버튼 color switch */
   switch (color) {
     case "main100":
-      solidButtonColor = "bg-koser-main-100 text-koser-grayscale-0";
+      solidButtonColor = "bg-ers-main-100 text-ers-grayscale-0";
       break;
     case "main70":
-      solidButtonColor = "bg-koser-main-70 text-koser-grayscale-0";
+      solidButtonColor = "bg-ers-main-70 text-ers-grayscale-0";
       break;
     case "main60":
-      solidButtonColor = "bg-koser-main-60 text-koser-grayscale-0";
+      solidButtonColor = "bg-ers-main-60 text-ers-grayscale-0";
       break;
     case "main5":
-      solidButtonColor = "bg-koser-main-5 text-koser-main-100";
+      solidButtonColor = "bg-ers-main-5 text-ers-main-100";
       break;
     case "grayscale":
-      solidButtonColor = "bg-koser-grayscale-60 text-koser-grayscale-0";
+      solidButtonColor = "bg-ers-grayscale-60 text-ers-grayscale-0";
       break;
     case "bluegray":
-      solidButtonColor = "bg-koser-secondary-bluegray-50 text-koser-grayscale-0";
+      solidButtonColor = "bg-ers-secondary-bluegray-50 text-ers-grayscale-0";
       break;
     default:
-      solidButtonColor = "bg-koser-main-100 text-koser-grayscale-0";
+      solidButtonColor = "bg-ers-main-100 text-ers-grayscale-0";
   }
 
   /* 솔리드 버튼 호버 color switch */
   switch (color) {
     case "main100":
       solidButtonActionColor =
-        "hover:bg-koser-main-90 text-koser-grayscale-0 focus:bg-koser-main-70 text-koser-grayscale-0 active:bg-koser-main-70 text-koser-grayscale-0";
+        "hover:bg-ers-main-90 text-ers-grayscale-0 focus:bg-ers-main-70 text-ers-grayscale-0 active:bg-ers-main-70 text-ers-grayscale-0";
       break;
     case "main60":
       solidButtonActionColor =
-        "hover:bg-koser-main-50 text-koser-grayscale-0 focus:bg-koser-main-40 text-koser-grayscale-0 active:bg-koser-main-40 text-koser-grayscale-0";
+        "hover:bg-ers-main-50 text-ers-grayscale-0 focus:bg-ers-main-40 text-ers-grayscale-0 active:bg-ers-main-40 text-ers-grayscale-0";
       break;
     case "main5":
       solidButtonActionColor =
-        "hover:bg-koser-main-15 text-koser-main-100 focus:bg-koser-main-30 text-koser-main-100 active:bg-koser-main-30 text-koser-main-100";
+        "hover:bg-ers-main-15 text-ers-main-100 focus:bg-ers-main-30 text-ers-main-100 active:bg-ers-main-30 text-ers-main-100";
       break;
     case "grayscale":
       solidButtonActionColor =
-        "hover:bg-koser-grayscale-50 text-koser-grayscale-0 focus:bg-koser-grayscale-40 text-koser-grayscale-0 active:bg-koser-grayscale-40 text-koser-grayscale-0";
+        "hover:bg-ers-grayscale-50 text-ers-grayscale-0 focus:bg-ers-grayscale-40 text-ers-grayscale-0 active:bg-ers-grayscale-40 text-ers-grayscale-0";
       break;
     default:
       solidButtonActionColor =
-        "hover:bg-koser-main-90 text-koser-grayscale-0 focus:bg-koser-main-70 text-koser-grayscale-0 active:bg-koser-main-70 text-koser-grayscale-0";
+        "hover:bg-ers-main-90 text-ers-grayscale-0 focus:bg-ers-main-70 text-ers-grayscale-0 active:bg-ers-main-70 text-ers-grayscale-0";
   }
 
   /* 아웃라인버튼 color switch */
   switch (color) {
     case "main5":
       outlineButtonColor =
-        "bg-koser-main-5 border border-koser-main-100 text-koser-main-100";
+        "bg-ers-main-5 border border-ers-main-100 text-ers-main-100";
       break;
     case "grayscale":
       outlineButtonColor =
-        "bg-koser-grayscale-0 border border-koser-grayscale-40 text-koser-grayscale-90";
+        "bg-ers-grayscale-0 border border-ers-grayscale-40 text-ers-grayscale-90";
       break;
     default:
       outlineButtonColor =
-        "bg-koser-grayscale-0 border border-koser-grayscale-40 text-koser-grayscale-90";
+        "bg-ers-grayscale-0 border border-ers-grayscale-40 text-ers-grayscale-90";
   }
 
   /* 아웃라인 버튼 호버 color switch */
   switch (color) {
     case "main5":
       outlineButtonActionColor =
-        "hover:bg-koser-main-15 border-koser-main-100 text-koser-main-100 focus:bg-koser-main-30 border-koser-main-100 text-koser-main-100 active:bg-koser-main-30 border-koser-main-100 text-koser-main-100";
+        "hover:bg-ers-main-15 border-ers-main-100 text-ers-main-100 focus:bg-ers-main-30 border-ers-main-100 text-ers-main-100 active:bg-ers-main-30 border-ers-main-100 text-ers-main-100";
       break;
     case "grayscale":
       outlineButtonActionColor =
-        "hover:bg-koser-grayscale-10 border-grayscale-40 text-grayscale-90 focus:bg-koser-grayscale-20 border-koser-grayscale-40 text-grayscale-90 active:bg-grayscale-20 border-grayscale-40 text-koser-grayscale-90";
+        "hover:bg-ers-grayscale-10 border-grayscale-40 text-grayscale-90 focus:bg-ers-grayscale-20 border-ers-grayscale-40 text-grayscale-90 active:bg-grayscale-20 border-grayscale-40 text-ers-grayscale-90";
       break;
     default:
       outlineButtonActionColor =
-        "hover:bg-koser-grayscale-10 border-grayscale-40 text-grayscale-90 focus:bg-koser-grayscale-20 border-koser-grayscale-40 text-grayscale-90 active:bg-grayscale-20 border-grayscale-40 text-koser-grayscale-90";
+        "hover:bg-ers-grayscale-10 border-grayscale-40 text-grayscale-90 focus:bg-ers-grayscale-20 border-ers-grayscale-40 text-grayscale-90 active:bg-grayscale-20 border-grayscale-40 text-ers-grayscale-90";
   }
 
   /* 보더 radius */
@@ -157,7 +157,7 @@ export default function Button({
     disabled
       ? "_disabled"
       : isNone
-        ? "bg-koser-grayscale-0 border-none outline-none text-koser-grayscale-90 hover:bg-koser-grayscale-10 text-koser-grayscale-90 focus:bg-koser-grayscale-20 text-koser-grayscale-90 active:bg-koser-grayscale-20 text-koser-grayscale-90"
+        ? "bg-ers-grayscale-0 border-none outline-none text-ers-grayscale-90 hover:bg-ers-grayscale-10 text-ers-grayscale-90 focus:bg-ers-grayscale-20 text-ers-grayscale-90 active:bg-ers-grayscale-20 text-ers-grayscale-90"
         : isSolid
           ? `${solidButtonColor}`
           : `${outlineButtonColor}`

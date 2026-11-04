@@ -12,11 +12,11 @@
             }
 
             input {
-                @apply flex w-full h-full py-2.5 pl-10 pr-4 border border-koser-grayscale-40 outline-none rounded-md text-koser-grayscale-100 text-sm;
+                @apply flex w-full h-full py-2.5 pl-10 pr-4 border border-ers-grayscale-40 outline-none rounded-md text-ers-grayscale-100 text-sm;
 
                 &:focus,
                 &:active {
-                    @apply border-koser-main-100 text-koser-grayscale-100;
+                    @apply border-ers-main-100 text-ers-grayscale-100;
                 }
             }
         }
@@ -24,7 +24,7 @@
 
     &._disabled {
         .react-datepicker__input-container input {
-            @apply bg-koser-grayscale-30 border-koser-grayscale-50 text-koser-grayscale-60;
+            @apply bg-ers-grayscale-30 border-ers-grayscale-50 text-ers-grayscale-60;
         }
     }
 
@@ -32,7 +32,7 @@
         .react-datepicker-wrapper {
             .react-datepicker__input-container {
                 input {
-                    @apply border-koser-secondary-red-50 text-koser-secondary-red-50;
+                    @apply border-ers-secondary-red-50 text-ers-secondary-red-50;
                 }
             }
         }

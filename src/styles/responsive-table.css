@@ -1,5 +1,5 @@
 ._responsive-table-inner-wrapper {
-    @apply overflow-hidden border border-koser-grayscale-40;
+    @apply overflow-hidden border border-ers-grayscale-40;
 
     /* 반응형 테이블 공통 스타일링 */
 
@@ -19,27 +19,27 @@
         }
 
         ._status {
-            @apply text-koser-main-100;
+            @apply text-ers-main-100;
 
             &._supplement {
-                @apply text-koser-secondary-yellow-50;
+                @apply text-ers-secondary-yellow-50;
             }
         }
 
         a:hover,
         a:focus {
-            @apply text-koser-main-70;
+            @apply text-ers-main-70;
         }
 
         a:active {
-            @apply text-koser-main-80;
+            @apply text-ers-main-80;
         }
     }
 
     &._admin {
         tr {
             td {
-                @apply bg-koser-grayscale-0;
+                @apply bg-ers-grayscale-0;
             }
         }
     }
@@ -55,7 +55,7 @@
             tr {
                 th,
                 td {
-                    @apply overflow-hidden px-4 py-[10px] border-r border-b border-koser-grayscale-40 text-ellipsis whitespace-nowrap;
+                    @apply overflow-hidden px-4 py-[10px] border-r border-b border-ers-grayscale-40 text-ellipsis whitespace-nowrap;
 
                     span {
                         @apply align-middle;
@@ -70,7 +70,7 @@
 
             thead {
                 tr {
-                    @apply bg-koser-main-10;
+                    @apply bg-ers-main-10;
 
                     th {
                         @apply py-4;
@@ -80,11 +80,11 @@
 
             tbody {
                 tr:nth-child(odd) {
-                    @apply bg-koser-grayscale-0;
+                    @apply bg-ers-grayscale-0;
                 }
 
                 tr:nth-child(even) {
-                    @apply bg-koser-grayscale-10;
+                    @apply bg-ers-grayscale-10;
                 }
 
                 tr:last-child {
@@ -112,7 +112,7 @@
 
                 tr._emergency {
                     th {
-                        @apply text-koser-secondary-red-50;
+                        @apply text-ers-secondary-red-50;
                     }
                 }
             }
@@ -189,7 +189,7 @@
                     }
 
                     th {
-                        @apply bg-koser-main-0;
+                        @apply bg-ers-main-0;
 
                     }
                 }
@@ -197,7 +197,7 @@
                 tr:not(:last-child) {
                     th,
                     td {
-                        @apply border-b border-koser-grayscale-40;
+                        @apply border-b border-ers-grayscale-40;
                     }
                 }
             }
@@ -210,15 +210,15 @@
                 tr {
                     th,
                     td {
-                        @apply border-b border-koser-grayscale-40;
+                        @apply border-b border-ers-grayscale-40;
                     }
 
                     th {
-                        @apply w-[136px] bg-koser-grayscale-10 text-center;
+                        @apply w-[136px] bg-ers-grayscale-10 text-center;
                     }
 
                     td {
-                        @apply bg-koser-grayscale-0;
+                        @apply bg-ers-grayscale-0;
                     }
                 }
 
@@ -274,11 +274,11 @@
                 tbody {
                     tr {
                         th {
-                            @apply bg-koser-main-0;
+                            @apply bg-ers-main-0;
                         }
 
                         td {
-                            @apply bg-koser-grayscale-0;
+                            @apply bg-ers-grayscale-0;
                         }
                     }
                 }
@@ -313,11 +313,11 @@
             ._responsive-table {
                 tr {
                     th {
-                        @apply bg-koser-main-0;
+                        @apply bg-ers-main-0;
                     }
 
                     td {
-                        @apply bg-koser-grayscale-0;
+                        @apply bg-ers-grayscale-0;
                     }
                 }
 
@@ -333,7 +333,7 @@
 
 @media screen and (max-width: 1280px) {
     ._responsive-table-outer-wrapper {
-        @apply py-9 pb-10 px-4 mt-6 -mx-4 border-t border-koser-grayscale-40 bg-koser-grayscale-0;
+        @apply py-9 pb-10 px-4 mt-6 -mx-4 border-t border-ers-grayscale-40 bg-ers-grayscale-0;
     }
 
     ._responsive-table-inner-wrapper {
@@ -347,7 +347,7 @@
         /* thead 존재 테이블 */
 
         &._has-thead {
-            @apply border-0 border-t border-b border-koser-main-100 rounded-none;
+            @apply border-0 border-t border-b border-ers-main-100 rounded-none;
 
             ._responsive-table {
                 thead,
@@ -390,7 +390,7 @@
 
                         th:nth-child(5),
                         td:nth-child(5) {
-                            @apply border-b-koser-grayscale-60;
+                            @apply border-b-ers-grayscale-60;
                         }
                     }
                 }
@@ -417,7 +417,7 @@
                         td:nth-child(5),
                         th:nth-child(6),
                         td:nth-child(6) {
-                            @apply border-b-koser-grayscale-60;
+                            @apply border-b-ers-grayscale-60;
                         }
                     }
                 }
@@ -478,7 +478,7 @@
                         td:nth-child(6),
                         th:nth-child(7),
                         td:nth-child(7) {
-                            @apply border-b-koser-grayscale-60;
+                            @apply border-b-ers-grayscale-60;
                         }
                     }
                 }
@@ -514,7 +514,7 @@
                         tr {
                             th,
                             td {
-                                @apply bg-koser-grayscale-20;
+                                @apply bg-ers-grayscale-20;
                             }
 
                             th {

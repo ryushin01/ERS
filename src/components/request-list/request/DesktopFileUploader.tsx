@@ -302,7 +302,7 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
             <Dragger {...props}>
               <Typography
                 kind="title-large"
-                className="text-koser-grayscale-90"
+                className="text-ers-grayscale-90"
               >
                 이곳에 파일을 끌어다 놓거나, 파일 선택 버튼으로 업로드하세요.{" "}
                 <br />* 업로드 가능한 파일 형식: jpg, jpeg, png

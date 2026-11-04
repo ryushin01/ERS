@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { AD_ASSIGN, AD_PATH, FI_HOME, FI_PATH } from "@constants/path";
-import { KoserLogo } from "@logos";
+import { ErsLogo } from "@logos";
 import { isPathUnder } from "@utils/pathUtil";
 
 import HeaderRightArea from "./HeaderRightArea";
@@ -31,7 +31,7 @@ export default function Header() {
       <div className="_header-inner-wrap">
         <h1 className={pathname === "/" ? "_login" : ""}>
           <Link href={homePath}>
-            <Image src={KoserLogo} alt="전자등기 관리 시스템 로고" fill />
+            <Image src={ErsLogo} alt="전자등기 관리 시스템 로고" fill />
           </Link>
         </h1>
 

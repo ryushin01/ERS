@@ -4,7 +4,7 @@
 }
 
 ._contents-section {
-    @apply flex-1 -mt-12 bg-koser-grayscale-0 border rounded-3xl;
+    @apply flex-1 -mt-12 bg-ers-grayscale-0 border rounded-3xl;
 }
 
 /* NOTE: 모바일 ~ 태블릿 해상도 */

@@ -2,7 +2,7 @@
     @apply absolute top-[calc(100%+15px)] -right-5 z-1;
 
     ._account-layer {
-        @apply _flex-center flex-col relative z-10 p-6 rounded-xl border border-koser-grayscale-40 bg-koser-grayscale-0;
+        @apply _flex-center flex-col relative z-10 p-6 rounded-xl border border-ers-grayscale-40 bg-ers-grayscale-0;
 
         ._drawer-content {
             @apply _flex-center flex-col gap-y-5 w-full;
@@ -13,7 +13,7 @@
         }
 
         ._drawer-footer {
-            @apply _flex-center flex-col mt-6 px-12 py-5 rounded-xl bg-koser-main-0 text-center;
+            @apply _flex-center flex-col mt-6 px-12 py-5 rounded-xl bg-ers-main-0 text-center;
 
             a {
                 @apply mt-[6px] mb-3;
@@ -37,6 +37,6 @@
     }
 
     &::after {
-        @apply w-2 h-2 absolute z-10 -top-[2px] rotate-45 bg-koser-grayscale-0;
+        @apply w-2 h-2 absolute z-10 -top-[2px] rotate-45 bg-ers-grayscale-0;
     }
 }

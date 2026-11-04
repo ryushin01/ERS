@@ -2,10 +2,10 @@
     @apply flex flex-col flex-1;
 
     main {
-        @apply _flex-center flex-1 bg-koser-grayscale-20;
+        @apply _flex-center flex-1 bg-ers-grayscale-20;
 
         ._login-inner-wrapper {
-            @apply flex flex-col w-[640px] my-10 px-[90px] py-[60px] items-center rounded-3xl bg-koser-grayscale-0;
+            @apply flex flex-col w-[640px] my-10 px-[90px] py-[60px] items-center rounded-3xl bg-ers-grayscale-0;
             box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.06);
 
             ._login-section {
@@ -36,14 +36,14 @@
                 }
 
                 ._login-notice {
-                    @apply px-8 py-6 rounded-xl bg-koser-main-0;
+                    @apply px-8 py-6 rounded-xl bg-ers-main-0;
 
                     div {
                         @apply flex flex-col gap-y-[6px] mt-3;
 
                         a,
                         span {
-                            @apply text-sm text-koser-grayscale-90;
+                            @apply text-sm text-ers-grayscale-90;
                         }
                     }
                 }

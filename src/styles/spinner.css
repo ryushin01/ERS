@@ -2,7 +2,7 @@
     @apply relative z-10000;
 
     ._spinner-backdrop {
-        @apply fixed inset-0 z-1 bg-koser-grayscale-100/50;
+        @apply fixed inset-0 z-1 bg-ers-grayscale-100/50;
     }
 
     ._spinner-container {

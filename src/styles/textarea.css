@@ -2,36 +2,36 @@
     @apply w-full h-full relative;
 
     ._count {
-        @apply absolute bottom-[-28px] right-0 text-koser-grayscale-80;
+        @apply absolute bottom-[-28px] right-0 text-ers-grayscale-80;
 
         ._count-text {
             &._active {
-                @apply text-koser-main-100;
+                @apply text-ers-main-100;
             }
         }
     }
 
     ._text-area {
-        @apply w-full h-full bg-koser-grayscale-0 border border-koser-grayscale-40 outline-none rounded-md resize-none;
+        @apply w-full h-full bg-ers-grayscale-0 border border-ers-grayscale-40 outline-none rounded-md resize-none;
 
         &:focus {
-            @apply border-koser-main-100;
+            @apply border-ers-main-100;
         }
 
         &:active {
-            @apply text-koser-grayscale-100;
+            @apply text-ers-grayscale-100;
         }
 
         &:disabled {
-            @apply bg-koser-grayscale-30 border-koser-grayscale-50 text-koser-grayscale-60 pointer-events-none;
+            @apply bg-ers-grayscale-30 border-ers-grayscale-50 text-ers-grayscale-60 pointer-events-none;
         }
     }
 
     ._text-area._error {
-        @apply border-koser-secondary-red-50 text-koser-secondary-red-50;
+        @apply border-ers-secondary-red-50 text-ers-secondary-red-50;
     }
 
     ._text-area._error ~ ._count ._count-text {
-        @apply text-koser-secondary-red-50;
+        @apply text-ers-secondary-red-50;
     }
 }

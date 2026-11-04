@@ -6,31 +6,31 @@ select {
 }
 
 ._select-label {
-    @apply flex w-full outline-none text-koser-grayscale-80;
+    @apply flex w-full outline-none text-ers-grayscale-80;
 
     select {
-        @apply w-full pl-4 pr-8 outline-none border border-koser-grayscale-40 rounded-lg bg-[url(/icons/20/down-icon20.svg)] bg-no-repeat bg-koser-grayscale-0 truncate;
+        @apply w-full pl-4 pr-8 outline-none border border-ers-grayscale-40 rounded-lg bg-[url(/icons/20/down-icon20.svg)] bg-no-repeat bg-ers-grayscale-0 truncate;
         background-position: center right 16px;
 
         &:focus,
         &:active {
-            @apply border-koser-main-100 text-koser-grayscale-100;
+            @apply border-ers-main-100 text-ers-grayscale-100;
         }
 
         &[disabled] {
-            @apply bg-koser-grayscale-30 border-koser-grayscale-50 text-koser-grayscale-60 cursor-not-allowed;
+            @apply bg-ers-grayscale-30 border-ers-grayscale-50 text-ers-grayscale-60 cursor-not-allowed;
         }
     }
 
     &._error {
         select {
-            @apply border-koser-secondary-red-50 text-koser-secondary-red-50;
+            @apply border-ers-secondary-red-50 text-ers-secondary-red-50;
         }
     }
 
     &._border-none {
         select {
-            @apply p-0 border-none bg-transparent bg-right text-koser-grayscale-100;
+            @apply p-0 border-none bg-transparent bg-right text-ers-grayscale-100;
         }
     }
 

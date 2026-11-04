@@ -31,13 +31,13 @@ export default function FileIndicator({
         <Typography
           kind={isDesktop ? "headline-small" : "body-large"}
           isBold={true}
-          className="ml-2 text-koser-main-100"
+          className="ml-2 text-ers-main-100"
         >
           {count}
         </Typography>
         <Typography
           kind={isDesktop ? "headline-small" : "body-large"}
-          className="text-koser-grayscale-80"
+          className="text-ers-grayscale-80"
         >
           /{total}
         </Typography>

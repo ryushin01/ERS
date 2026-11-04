@@ -795,7 +795,7 @@ export default function CreateForm() {
                           <span className="flex items-center gap-x-2 mb-2 w-[500px] [&>span:first-child]:min-w-24">
                             <Typography
                               kind="body-medium"
-                              className="text-koser-grayscale-80"
+                              className="text-ers-grayscale-80"
                             >
                               지번 주소
                             </Typography>
@@ -813,7 +813,7 @@ export default function CreateForm() {
                           <span className="flex items-center gap-x-2 mb-2 w-[500px] [&>span:first-child]:min-w-24">
                             <Typography
                               kind="body-medium"
-                              className="text-koser-grayscale-80"
+                              className="text-ers-grayscale-80"
                             >
                               도로명 주소
                             </Typography>
@@ -831,7 +831,7 @@ export default function CreateForm() {
                           <span className="flex items-center gap-x-2 mb-2 [&>span:first-child]:min-w-24">
                             <Typography
                               kind="body-medium"
-                              className="text-koser-grayscale-80"
+                              className="text-ers-grayscale-80"
                             >
                               상세 주소
                             </Typography>
@@ -870,7 +870,7 @@ export default function CreateForm() {
                             />
                             <Typography
                               kind="body-medium"
-                              className="text-koser-grayscale-80"
+                              className="text-ers-grayscale-80"
                             >
                               동
                             </Typography>
@@ -890,7 +890,7 @@ export default function CreateForm() {
                             />
                             <Typography
                               kind="body-medium"
-                              className="text-koser-grayscale-80"
+                              className="text-ers-grayscale-80"
                             >
                               호
                             </Typography>
@@ -1017,7 +1017,7 @@ export default function CreateForm() {
               </div>
 
               <div
-                className="h-32 [&>label>textarea]:p-4 [&>label>textarea]:rounded-lg [&>label>textarea]:text-base [&>label>textarea]:text-koser-grayscale-80">
+                className="h-32 [&>label>textarea]:p-4 [&>label>textarea]:rounded-lg [&>label>textarea]:text-base [&>label>textarea]:text-ers-grayscale-80">
                 <TextArea
                   name="lgagDlvrCnts"
                   isError={false}

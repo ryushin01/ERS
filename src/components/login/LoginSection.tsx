@@ -15,7 +15,7 @@ export default function LoginSection() {
         as="h2"
         kind={isDesktop ? "headline-large" : "headline-small"}
         isBold={true}
-        className="text-koser-main-100"
+        className="text-ers-main-100"
       >전자등기 관리 시스템</Typography>
       <LoginForm isDesktop={isDesktop} />
       <LoginNotice isDesktop={isDesktop} />

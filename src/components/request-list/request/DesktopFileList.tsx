@@ -31,7 +31,7 @@ export default function DesktopFileList({
       {fileList.length > 0 && (
         <div className="_desktop-file-list-wrapper">
           <div>
-            <Typography kind="body-medium" className="text-koser-grayscale-80">
+            <Typography kind="body-medium" className="text-ers-grayscale-80">
               전체 사용량: {getTotalFileSize(fileList)} / {FILE_MAXIMUM_NUMBER}
               .00 MB
             </Typography>

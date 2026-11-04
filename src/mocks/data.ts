@@ -203,7 +203,7 @@ export const REGISTRATIONS: MockRegistration[] = STATUS_SEQUENCE.map((statCd, i)
  * 데모 중 변경(배정·승인·진행보류 등)을 sessionStorage에 저장해, 새로고침이나 사용자 유형 전환 후에도 유지합니다.
  * 브라우저 탭을 닫으면 초기 데이터로 돌아갑니다.
  */
-const DEMO_STATE_KEY = "koser-demo-registrations";
+const DEMO_STATE_KEY = "ers-demo-registrations";
 
 export const saveDemoState = () => {
   try {

@@ -332,7 +332,7 @@ export default function RegistrationInformation({
             <Typography
               kind="title-medium"
               isBold={true}
-              className="text-koser-secondary-red-50"
+              className="text-ers-secondary-red-50"
             >
               반려사유
             </Typography>

@@ -15,7 +15,7 @@
     html,
     body {
         font-family: "pretendard", system-ui, Arial, sans-serif;
-        @apply text-koser-grayscale-100;
+        @apply text-ers-grayscale-100;
     }
 
     a[href=""] {
@@ -46,7 +46,7 @@
     }
 
     ._header {
-        @apply sticky top-0 z-100 flex items-center h-[100px] border-b border-b-koser-grayscale-20 bg-koser-grayscale-0 transition-all;
+        @apply sticky top-0 z-100 flex items-center h-[100px] border-b border-b-ers-grayscale-20 bg-ers-grayscale-0 transition-all;
 
         ._header-inner-wrap {
             @apply flex justify-between items-center w-full px-[52px] transition-all;
@@ -72,7 +72,7 @@
             @apply min-w-[230px];
 
             li {
-                @apply rounded-xl text-koser-grayscale-90;
+                @apply rounded-xl text-ers-grayscale-90;
 
                 a,
                 button {
@@ -84,7 +84,7 @@
                 }
 
                 &:hover {
-                    @apply bg-koser-main-100 text-koser-grayscale-0;
+                    @apply bg-ers-main-100 text-ers-grayscale-0;
 
                     img {
                         filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(75deg) brightness(106%) contrast(101%);
@@ -93,12 +93,12 @@
 
                 &:focus,
                 &:active {
-                    @apply bg-koser-main-60 text-koser-grayscale-0;
+                    @apply bg-ers-main-60 text-ers-grayscale-0;
                 }
             }
 
             ._selected {
-                @apply bg-koser-main-80 text-koser-grayscale-0;
+                @apply bg-ers-main-80 text-ers-grayscale-0;
 
                 span {
                     @apply font-semibold;
@@ -115,7 +115,7 @@
         @apply flex flex-col flex-1;
 
         main {
-            @apply flex-1 bg-koser-grayscale-20;
+            @apply flex-1 bg-ers-grayscale-20;
 
             ._main-inner-wrapper {
                 @apply px-[52px] pt-8;
@@ -130,7 +130,7 @@
 
         ._title {
             &._point {
-                @apply text-koser-secondary-red-50;
+                @apply text-ers-secondary-red-50;
             }
 
             & + div {
@@ -139,7 +139,7 @@
         }
 
         ._notice {
-            @apply px-4 py-3 rounded-lg border border-koser-grayscale-40;
+            @apply px-4 py-3 rounded-lg border border-ers-grayscale-40;
         }
 
         ._button-wrap {
@@ -152,10 +152,10 @@
     }
 
     ._footer {
-        @apply _flex-center sticky bottom-0 z-1 h-[60px] pl-[262px] bg-koser-grayscale-20;
+        @apply _flex-center sticky bottom-0 z-1 h-[60px] pl-[262px] bg-ers-grayscale-20;
 
         span {
-            @apply text-koser-grayscale-70;
+            @apply text-ers-grayscale-70;
         }
     }
 
@@ -227,18 +227,18 @@
         }
 
         ._gnb {
-            @apply top-auto right-0 px-[10px] py-2 bg-koser-main-80;
+            @apply top-auto right-0 px-[10px] py-2 bg-ers-main-80;
 
             ul {
                 @apply flex min-w-full;
 
                 li {
-                    @apply flex-1 text-koser-grayscale-0/60;
+                    @apply flex-1 text-ers-grayscale-0/60;
 
                     &:hover,
                     &:focus,
                     &:active {
-                        @apply bg-transparent text-koser-grayscale-0/60;
+                        @apply bg-transparent text-ers-grayscale-0/60;
                     }
 
                     a {
@@ -255,11 +255,11 @@
                 }
 
                 ._selected {
-                    @apply bg-transparent rounded-none text-koser-grayscale-0;
+                    @apply bg-transparent rounded-none text-ers-grayscale-0;
 
                     a {
                         ._menu-item-inner-wrapper {
-                            @apply bg-koser-grayscale-0/10;
+                            @apply bg-ers-grayscale-0/10;
 
                             img {
                                 @apply opacity-100;
@@ -347,7 +347,7 @@
             padding-left: 16px;
 
             &::before {
-                @apply bg-koser-grayscale-90;
+                @apply bg-ers-grayscale-90;
                 content: "";
                 display: block;
                 width: 3px;
@@ -394,13 +394,13 @@
 
             ._label {
                 ._text-area {
-                    @apply h-[152px] p-4 rounded-lg border border-koser-grayscale-40;
+                    @apply h-[152px] p-4 rounded-lg border border-ers-grayscale-40;
                 }
             }
         }
 
         p:not(._count) {
-            @apply overflow-hidden px-4 py-3 rounded-lg border border-koser-grayscale-40;
+            @apply overflow-hidden px-4 py-3 rounded-lg border border-ers-grayscale-40;
         }
 
         ._responsive-table {
@@ -411,7 +411,7 @@
     }
 
     ._file-uploader {
-        @apply _flex-center px-4 py-2 rounded-md bg-koser-main-60 text-koser-grayscale-0 text-sm whitespace-nowrap hover:bg-koser-main-90 focus:bg-koser-main-70 active:bg-koser-main-70 cursor-pointer;
+        @apply _flex-center px-4 py-2 rounded-md bg-ers-main-60 text-ers-grayscale-0 text-sm whitespace-nowrap hover:bg-ers-main-90 focus:bg-ers-main-70 active:bg-ers-main-70 cursor-pointer;
     }
 }
 

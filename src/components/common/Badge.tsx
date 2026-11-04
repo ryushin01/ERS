@@ -25,24 +25,24 @@ const getClassName = (colorType: string, type: string) => {
   if (type === "number") {
     switch (colorType) {
       case "active":
-        return "_badge bg-koser-main-100 text-koser-grayscale-0 rounded-full min-w-7";
+        return "_badge bg-ers-main-100 text-ers-grayscale-0 rounded-full min-w-7";
 
       case "default":
-        return "_badge bg-koser-grayscale-40 text-koser-grayscale-80 rounded-full min-w-7";
+        return "_badge bg-ers-grayscale-40 text-ers-grayscale-80 rounded-full min-w-7";
 
       default:
-        return "_badge bg-koser-grayscale-40 text-koser-grayscale-80 rounded-full min-w-7";
+        return "_badge bg-ers-grayscale-40 text-ers-grayscale-80 rounded-full min-w-7";
     }
   } else if (type === "text") {
     switch (colorType) {
       case "active":
-        return "_badge bg-koser-main-100 text-koser-grayscale-0 rounded-md min-w-8";
+        return "_badge bg-ers-main-100 text-ers-grayscale-0 rounded-md min-w-8";
 
       case "default":
-        return "_badge bg-koser-main-10 text-koser-main-100 rounded-md min-w-8";
+        return "_badge bg-ers-main-10 text-ers-main-100 rounded-md min-w-8";
 
       default:
-        return "_badge bg-koser-main-10 text-koser-main-100 rounded-md min-w-8";
+        return "_badge bg-ers-main-10 text-ers-main-100 rounded-md min-w-8";
     }
   }
 };

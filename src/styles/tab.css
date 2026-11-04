@@ -12,11 +12,11 @@
             @apply _flex-center gap-[10px] w-full py-3;
 
             &:hover {
-                @apply bg-koser-grayscale-10 text-koser-main-100;
+                @apply bg-ers-grayscale-10 text-ers-main-100;
             }
 
             &:focus {
-                @apply bg-koser-main-5 text-koser-main-100;
+                @apply bg-ers-main-5 text-ers-main-100;
             }
 
             ._badge {
@@ -25,11 +25,11 @@
         }
 
         ._tab-border {
-            @apply absolute bottom-0 left-0 w-full h-1 border-b-2 border-koser-grayscale-40 transition-all;
+            @apply absolute bottom-0 left-0 w-full h-1 border-b-2 border-ers-grayscale-40 transition-all;
         }
 
         .active {
-            @apply border-b-4 border-koser-main-100;
+            @apply border-b-4 border-ers-main-100;
         }
     }
 }

@@ -64,7 +64,7 @@ export default function Banner({
       </div>
       <div className="_banner-right-content">
         <div
-          className={`_todays-counts  after:absolute after:top-0 after:left-0 after:w-full after:h-full after:rounded-2xl after:bg-koser-grayscale-100 after:opacity-10`}
+          className={`_todays-counts  after:absolute after:top-0 after:left-0 after:w-full after:h-full after:rounded-2xl after:bg-ers-grayscale-100 after:opacity-10`}
         >
           <div className="_todays-image">
             <Image
@@ -91,7 +91,7 @@ export default function Banner({
         </div>
 
         <div
-          className={`_each-counts after:absolute after:top-0 after:left-0 after:w-full after:h-full after:rounded-2xl after:bg-koser-grayscale-100 after:opacity-10`}
+          className={`_each-counts after:absolute after:top-0 after:left-0 after:w-full after:h-full after:rounded-2xl after:bg-ers-grayscale-100 after:opacity-10`}
         >
           <div className="_each-wrapper">
             <div className="_notice-image">
