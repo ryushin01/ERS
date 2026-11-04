@@ -12,13 +12,13 @@ export const getRequestListData = ({
   page: number;
   size: number;
 }) =>
-  axiosBasicInstance.get(
-    `${API_CLIENT_REQUEST}/list?tabSelection=${tabSelection}&pageNum=${page}&pageSize=${size}`,
-  );
+  axiosBasicInstance.get(`${API_CLIENT_REQUEST}/list`, {
+    params: { tabSelection, pageNum: page, pageSize: size },
+  });
 
 /* 금융기관 - 등기자료(보완필요) 팝업 조회 */
 export const getRequestInfoData = (rqstno: string) =>
-  axiosBasicInstance.get(`${API_CLIENT_REQUEST}/info?rqstno=${rqstno}`);
+  axiosBasicInstance.get(`${API_CLIENT_REQUEST}/info`, { params: { rqstno } });
 
 /* 금융기관 - 등기자료 진행보류 처리 */
 export const patchRegistrationHold = (rqstNo: string) =>
@@ -28,11 +28,11 @@ export const patchRegistrationHold = (rqstNo: string) =>
 
 /* 금융기관 - 등기자료 팝업 조회 */
 export const getRegistrationInfoData = (rqstno: string) =>
-  axiosBasicInstance.get(`${API_CLIENT_REGISTRATION}/data?rqstno=${rqstno}`);
+  axiosBasicInstance.get(`${API_CLIENT_REGISTRATION}/data`, { params: { rqstno } });
 
 /* 금융기관 - 등기접수증 팝업 조회 */
 export const getRegistrationAcceptData = (rqstno: string) =>
-  axiosBasicInstance.get(`${API_CLIENT_REGISTRATION}/accept?rqstno=${rqstno}`);
+  axiosBasicInstance.get(`${API_CLIENT_REGISTRATION}/accept`, { params: { rqstno } });
 
 /* 금융기관 - 파일 업로드 및 제출하기 */
 export const postRequestData = (form: FormData) =>

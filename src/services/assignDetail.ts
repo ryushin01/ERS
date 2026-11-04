@@ -50,7 +50,7 @@ export const getUnqRgsrtNo = ({
   bldg: string;
   unit: string;
 }) =>
-  axiosBasicInstance(
-    `${API_API_IROS}/unqrgstrno?rdnmAddr=${rdnmAddr}&lotnumAddrCd=${lotnumAddrCd}&bldg=${bldg}&unit=${unit}`,
-    { baseURL: apiURI },
-  ).then((response) => response.data);
+  axiosBasicInstance(`${API_API_IROS}/unqrgstrno`, {
+    baseURL: apiURI,
+    params: { rdnmAddr, lotnumAddrCd, bldg, unit },
+  }).then((response) => response.data);

@@ -16,20 +16,22 @@ export const getSupplimentListData = ({
   pageNum: number;
   pageSize: number;
 }) =>
-  axiosBasicInstance(
-    `${API_ADMIN_MATCH}/list?searchRqstNo=${searchRqstNo}&tabSelection=${tabSelection}&sortOrder=${sortOrder}&pageNum=${pageNum}&pageSize=${pageSize}`,
-    { baseURL: adminURI },
-  ).then((response) => response.data);
+  axiosBasicInstance(`${API_ADMIN_MATCH}/list`, {
+    baseURL: adminURI,
+    params: { searchRqstNo, tabSelection, sortOrder, pageNum, pageSize },
+  }).then((response) => response.data);
 
 /* 배정 등록정보 조회 */
 export const getSupplimentData = (rqstNo: string) =>
-  axiosBasicInstance(`${API_ADMIN_MATCH}/${rqstNo}`, {
+  axiosBasicInstance(`${API_ADMIN_MATCH}/${encodeURIComponent(rqstNo)}`, {
     baseURL: adminURI,
   }).then((response) => response.data);
 
 // 전자등기 신규등록 > 의뢰번호 조회
 export const getRqstNoData = () =>
-  axiosBasicInstance(`${API_COMM_SEQUENCE}?sequence=RQST_NO`).then((response) => response.data);
+  axiosBasicInstance(API_COMM_SEQUENCE, { params: { sequence: "RQST_NO" } }).then(
+    (response) => response.data,
+  );
 
 // 배정 신규등록
 export const postCreateAssign = (form: FormData) =>

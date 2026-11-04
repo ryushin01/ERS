@@ -27,6 +27,16 @@ export const getStasusListData = ({
   toDate: string;
   dbtrNm: string;
 }) =>
-  axiosBasicInstance(
-    `${API_CLIENT_REGISTRATION}/list?pageNum=${page}&pageSize=${size}&rqstNo=${rqstNo}&statCd=${statCd}&acptNo=${acptNo}&searchType=${searchType}&fromDate=${fromDate}&toDate=${toDate}&dbtrNm=${dbtrNm}`,
-  ).then((response) => response.data);
+  axiosBasicInstance(`${API_CLIENT_REGISTRATION}/list`, {
+    params: {
+      pageNum: page,
+      pageSize: size,
+      rqstNo,
+      statCd,
+      acptNo,
+      searchType,
+      fromDate,
+      toDate,
+      dbtrNm,
+    },
+  }).then((response) => response.data);

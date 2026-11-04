@@ -589,7 +589,10 @@ const parseRequest = (config: InternalAxiosRequestConfig) => {
   const pathWithQuery = apiIndex >= 0 ? raw.slice(apiIndex) : raw;
   const [path, query = ""] = pathWithQuery.split("?");
   const params = new URLSearchParams(query);
-  Object.entries(config.params ?? {}).forEach(([key, value]) => params.set(key, String(value)));
+  // axios와 같이 null·undefined 값은 쿼리에서 제외
+  Object.entries(config.params ?? {}).forEach(([key, value]) => {
+    if (value !== null && value !== undefined) params.set(key, String(value));
+  });
   return { path, params };
 };
 

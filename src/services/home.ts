@@ -25,16 +25,17 @@ export const getHomeNoticeListData = () =>
 
 /* 공지사항리스트조회 */
 export const getNoticeBoardList = ({ page, size }: { page: number; size: number }) =>
-  axiosBasicInstance.get(`/api/client/board/list?pageNum=${page}&pageSize=${size}`);
+  axiosBasicInstance.get(`/api/client/board/list`, { params: { pageNum: page, pageSize: size } });
 
 /* 금융기관 - 의뢰번호 조회 */
 export const getSearchBankRgstData = (rqstno: string) =>
-  axiosBasicInstance(`${API_CLIENT_REGISTRATION}/search?rqstno=${rqstno}`).then(
+  axiosBasicInstance(`${API_CLIENT_REGISTRATION}/search`, { params: { rqstno } }).then(
     (response) => response.data,
   );
 
 /* 관리자 - 의뢰번호 조회 */
 export const getSearchAdminRgstData = (rqstno: string) =>
-  axiosBasicInstance(`${API_ADMIN_REGISTRATION}/search?rqstno=${rqstno}`, {
+  axiosBasicInstance(`${API_ADMIN_REGISTRATION}/search`, {
     baseURL: adminURI,
+    params: { rqstno },
   }).then((response) => response.data);

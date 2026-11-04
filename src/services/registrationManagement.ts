@@ -23,33 +23,46 @@ export const getRegistrationListData = ({
   page: number;
   size: number;
 }) =>
-  axiosBasicInstance.get(
-    `${API_ADMIN_REGISTRATION}/list?tabSelection=${tabSelection}&searchRqstNo=${rqstNo}&searchType=${searchType}&fromDate=${fromDate}&toDate=${toDate}&sortOrder=${sortOrder}&pageNum=${page}&pageSize=${size}`,
-    { baseURL: adminURI },
-  );
+  axiosBasicInstance.get(`${API_ADMIN_REGISTRATION}/list`, {
+    baseURL: adminURI,
+    params: {
+      tabSelection,
+      searchRqstNo: rqstNo,
+      searchType,
+      fromDate,
+      toDate,
+      sortOrder,
+      pageNum: page,
+      pageSize: size,
+    },
+  });
 
 /* 관리자 - 등기관리 상세 조회 */
 export const getRegistrationDetailData = (rqstno: string) =>
-  axiosBasicInstance.get(`${API_ADMIN_REGISTRATION}/detail?rqstno=${rqstno}`, {
+  axiosBasicInstance.get(`${API_ADMIN_REGISTRATION}/detail`, {
     baseURL: adminURI,
+    params: { rqstno },
   });
 
 /* 관리자 - 등기자료 팝업 조회 */
 export const getRegistrationData = (rqstno: string) =>
-  axiosBasicInstance.get(`${API_ADMIN_REGISTRATION}/data?rqstno=${rqstno}`, {
+  axiosBasicInstance.get(`${API_ADMIN_REGISTRATION}/data`, {
     baseURL: adminURI,
+    params: { rqstno },
   });
 
 /* 관리자 - 등기접수증 팝업 조회 */
 export const getRegistrationAcceptData = (rqstno: string) =>
-  axiosBasicInstance.get(`${API_ADMIN_REGISTRATION}/accept?rqstno=${rqstno}`, {
+  axiosBasicInstance.get(`${API_ADMIN_REGISTRATION}/accept`, {
     baseURL: adminURI,
+    params: { rqstno },
   });
 
 /* 관리자 - 등기접수등록 팝업 조회 */
 export const getRegistrationInformationData = (rqstno: string) =>
-  axiosBasicInstance.get(`${API_ADMIN_REGISTRATION}/info?rqstno=${rqstno}`, {
+  axiosBasicInstance.get(`${API_ADMIN_REGISTRATION}/info`, {
     baseURL: adminURI,
+    params: { rqstno },
   });
 
 /* 관리자 - 접수정보 등록 */
