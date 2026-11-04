@@ -1,0 +1,16 @@
+# 이미지 빌드에 필요 없는 파일 (빌드 컨텍스트 크기와 캐시 무효화를 줄임)
+.git
+.github
+.husky
+.idea
+*.iml
+.next
+node_modules
+coverage
+playwright-report
+test-results
+certificates
+**/*.test.ts
+**/*.test.tsx
+e2e
+README.md

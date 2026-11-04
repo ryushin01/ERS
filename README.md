@@ -1,5 +1,7 @@
 # ERS - 전자등기 관리 시스템
 
+[![CI](https://github.com/ryushin01/ERS/actions/workflows/ci.yml/badge.svg)](https://github.com/ryushin01/ERS/actions/workflows/ci.yml)
+
 > **ERS**는 **E**lectronic **R**egistration **S**ystem(전자등기 관리 시스템)의 줄임말입니다.
 
 > 금융기관·관리자용 부동산 전자등기 관리 웹 애플리케이션의 프론트엔드입니다.
@@ -124,6 +126,15 @@ pnpm run dev
 - `tsconfig.json`에 alias를 추가하면 `eslint.config.mjs`의 `INTERNAL_ALIASES`에도 추가합니다. 그래야 외부 scoped 패키지(`@tanstack/...`)와 구분됩니다.
 - 커밋할 때 husky의 pre-commit 훅이 스테이징된 파일에 `eslint --fix`(lint-staged)를 실행하고, 이어서 프로젝트 전체 타입 검사와 단위 테스트를 실행합니다. 훅은 `pnpm install` 시 자동으로 등록됩니다.
 
+### CI (GitHub Actions)
+
+`main`에 푸시하거나 PR을 올리면 `.github/workflows/ci.yml`이 실행됩니다.
+
+| 작업 | 내용 |
+|---|---|
+| Lint · Typecheck · Test · Build | `.nvmrc`의 Node 22와 `packageManager`의 pnpm으로 lint, 타입 검사, 단위 테스트, 빌드 |
+| Docker image | 운영용 Dockerfile로 이미지를 빌드하고, 컨테이너를 실행해 3000번 포트 응답 확인 |
+
 ### 단위 테스트
 
 - Vitest + React Testing Library(jsdom)를 사용합니다. 설정은 `vitest.config.mts`, `vitest.setup.ts`입니다.
@@ -142,7 +153,8 @@ docker compose -f docker/development/docker-compose.yml up --build
 docker compose -f docker/production/docker-compose.yml up --build
 ```
 
-> Dockerfile은 빌드 시 `.env.development` / `.env.production`을 복사하므로, Docker로 빌드하려면 해당 파일을 먼저 만들어야 합니다. 컨테이너는 standalone 빌드 결과물을 `node server.js`로 실행합니다.
+> 베이스 이미지는 `node:22-alpine`입니다(`.nvmrc`와 같은 Node 22 LTS).
+> Dockerfile은 빌드 시 `.env.development` / `.env.production`을 복사하므로, Docker로 빌드하려면 해당 파일을 먼저 만들어야 합니다(데모 모드는 빈 파일이면 됩니다). 컨테이너는 standalone 빌드 결과물을 `node server.js`로 실행합니다.
 
 ***
 
@@ -157,6 +169,7 @@ docker compose -f docker/production/docker-compose.yml up --build
 ```
 📦 project
 ├── 🗂️ .husky                                 // 커밋 전 검사 훅 (pre-commit)
+├── 🗂️ .github/workflows                      // CI (lint·타입 검사·테스트·빌드, Docker 이미지 빌드)
 ├── 🗂️ docker                                 // 개발·운영 Dockerfile, docker-compose
 ├── 🗂️ public
 │ ├── 🗂️ icons                                // svg 아이콘

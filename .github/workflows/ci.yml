@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# 같은 브랜치에 새 커밋이 올라오면 이전 실행은 취소
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Lint · Typecheck · Test · Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # pnpm 버전은 package.json의 packageManager를 따름
+      - uses: pnpm/action-setup@v4
+
+      # Node 버전은 .nvmrc를 따름 (Docker 이미지와 같은 Node 22)
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      # 데모 모드(기본값)로 빌드하므로 API 주소 환경 변수는 필요 없음
+      - run: pnpm build
+
+  docker:
+    name: Docker image (production)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Dockerfile이 .env.production을 복사하므로 빈 파일을 만듦 (데모 모드는 환경 변수 없이 동작)
+      - run: touch .env.production
+
+      - name: Build image
+        run: docker build -f docker/production/Dockerfile -t ers:ci .
+
+      - name: Run container and check response
+        run: |
+          docker run -d --name ers -p 3000:3000 ers:ci
+          for i in $(seq 1 30); do
+            if curl -fsS -o /dev/null http://localhost:3000/; then
+              echo "Container is serving on port 3000"
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs ers
+          exit 1
