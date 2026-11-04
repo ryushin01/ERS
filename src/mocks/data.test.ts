@@ -96,6 +96,26 @@ describe("의뢰 목업 데이터 (REGISTRATIONS)", async () => {
     }
   });
 
+  it("관할법원·등기소 이름은 코드와 같고, 등기소는 해당 법원 관할이다", () => {
+    const name = (group: string, code: string) =>
+      COMMON_CODES[group].find((c) => c.code === code)?.codeNm;
+    for (const item of REGISTRATIONS.filter((r) => r.judtCourtCd)) {
+      expect(item.judtCourtNm, item.rqstNo).toBe(name("JUDT_COURT_CD", item.judtCourtCd));
+      expect(item.regrNm, item.rqstNo).toBe(name("REGR_CD", item.regrCd));
+      expect(item.regrCd.startsWith(item.judtCourtCd), item.rqstNo).toBe(true);
+    }
+  });
+
+  it("모든 등기소 코드는 실제 있는 관할법원 코드로 시작한다", () => {
+    const courts = COMMON_CODES.JUDT_COURT_CD.map((c) => c.code);
+    for (const { code, codeNm } of COMMON_CODES.REGR_CD) {
+      expect(
+        courts.some((court) => code.startsWith(court)),
+        codeNm,
+      ).toBe(true);
+    }
+  });
+
   it("의뢰목록 탭은 모든 진행상태를 빠짐없이, 겹치지 않게 나눈다", () => {
     const statuses = Object.values(REQUEST_TAB_STATUS).flat();
     expect(new Set(statuses).size).toBe(statuses.length);

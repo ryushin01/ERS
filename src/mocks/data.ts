@@ -272,8 +272,8 @@ export const REGISTRATIONS: MockRegistration[] = STATUS_SEQUENCE.map((statCd, i)
     rgstrAcptYn: HAS_RECEIPT(statCd) ? "Y" : "N",
     realeCd: "00",
     lotnumAddrCd: "01",
-    judtCourtCd: HAS_RECEIPT(statCd) ? "01" : "",
-    regrCd: HAS_RECEIPT(statCd) ? "01" : "",
+    judtCourtCd: HAS_RECEIPT(statCd) ? "01" : "", // 서울중앙지방법원
+    regrCd: HAS_RECEIPT(statCd) ? "0101" : "", // 서울중앙지방법원(01) 관할 중부등기소
     mngrDlvrCnts: "",
     statHistList: createStatusHistory(statCd, crtOffset),
   };
@@ -388,12 +388,19 @@ export const COMMON_CODES: Record<string, { grpCd: string; code: string; codeNm:
   SPPL_REQ_GB_CD: commCode("SPPL_REQ_GB_CD", ["등기자료 이미지 불량", "필수 서류 누락", "기타"]),
   PROC_CLS_GB_CD: commCode("PROC_CLS_GB_CD", ["대출 취소", "고객 요청", "기타"]),
   RTUN_GB_CD: commCode("RTUN_GB_CD", ["접수증 이미지 불량", "접수번호 불일치", "기타"]),
-  JUDT_COURT_CD: commCode("JUDT_COURT_CD", [
-    "서울중앙지방법원",
-    "수원지방법원 성남지원",
-    "인천지방법원",
-  ]),
-  REGR_CD: commCode("REGR_CD", ["중부등기소", "성남등기소", "인천지방법원 등기과"]),
+  // 관할법원과 등기소는 실제 코드 체계처럼 계층 구조: 등기소 코드는 관할법원 코드로 시작
+  JUDT_COURT_CD: [
+    { grpCd: "JUDT_COURT_CD", code: "01", codeNm: "서울중앙지방법원" },
+    { grpCd: "JUDT_COURT_CD", code: "02", codeNm: "수원지방법원 성남지원" },
+    { grpCd: "JUDT_COURT_CD", code: "03", codeNm: "인천지방법원" },
+  ],
+  REGR_CD: [
+    { grpCd: "REGR_CD", code: "0101", codeNm: "중부등기소" },
+    { grpCd: "REGR_CD", code: "0102", codeNm: "서울중앙지방법원 등기국" },
+    { grpCd: "REGR_CD", code: "0201", codeNm: "성남등기소" },
+    { grpCd: "REGR_CD", code: "0202", codeNm: "분당등기소" },
+    { grpCd: "REGR_CD", code: "0301", codeNm: "인천지방법원 등기과" },
+  ],
 };
 
 /* 회원 목록 (00: 금융기관, 10: 법무대리인) */
