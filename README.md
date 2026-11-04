@@ -149,13 +149,15 @@ pnpm run dev
 | API 요청 | `services/services.test.ts` | services가 만드는 요청(메서드·주소·쿼리·본문). 검색어에 `&`·`#` 같은 문자가 있어도 그대로 전달되는지 |
 | 데모 데이터 | `mocks/data.test.ts`, `mocks/adapter.test.ts` | 목업 데이터가 업무 규칙과 맞는지, 목업 API의 응답·상태 변경 |
 | 화면 통합 | `components/**/Main.test.tsx` | 화면을 실제 데이터 흐름(TanStack Query → services → 목업 API)으로 렌더링해 목록·건수가 데이터와 같은지 |
-| 폼 → 요청 내용 | `CreateForm`·`DetailForm`·`DesktopFileUploader`·`RegistrationInformation` 테스트 | 폼에 입력하고 제출했을 때 서버로 가는 요청(JSON·첨부 파일)이 입력값과 정확히 같은지, 연속 클릭에도 한 번만 전송되는지 |
+| 폼 → 요청 내용 | `CreateForm`·`DetailForm`·`DesktopFileUploader`·`RegistrationInformation`·`ReasonModals`(반려·진행취소) 테스트 | 폼에 입력하고 제출했을 때 서버로 가는 요청(JSON·첨부 파일)이 입력값과 정확히 같은지, 연속 클릭에도 한 번만 전송되는지 |
 | 속성 기반 | `utils/amountUtil.test.ts`, `utils/dateUtil.test.ts` | [fast-check](https://fast-check.dev)로 임의 입력 수천 건을 생성해 금액·날짜 변환 규칙이 항상 지켜지는지 (예: 금액 표시 → 숫자 변환 시 원래 값, 모든 시간대에서 같은 날짜) |
 
 - 화면 통합 테스트는 `src/test/renderWithProviders.tsx`(QueryClient·jotai Provider, PC 화면 `matchMedia`)를 쓰고, `next/navigation`은 테스트 파일에서 `vi.mock`으로 대신합니다.
 - tsconfig의 alias를 그대로 쓸 수 있습니다(`vite-tsconfig-paths`).
 - 서버 코드(`middleware.ts` 등)를 테스트할 때는 파일 맨 위에 `// @vitest-environment node`를 적습니다.
 - 금액 입력은 `utils/amountUtil`로 처리합니다: 원 단위 정수만(부호·소수점·문자 무시), 최대 15자리, 0원은 제출 불가. 저장 요청 버튼은 `useSubmitLock`으로 중복 제출을 막습니다.
+- 저장 요청은 보낼 데이터를 `mutate(데이터)`로 직접 넘깁니다. (상태를 바꾼 직후 `mutate()`를 호출하고 `mutationFn`이 상태를 읽으면, 실행 시점에 따라 이전 값이 전송될 수 있음)
+- 처리 사유(반려·진행취소·보완요청)에서 "기타"는 코드 `99`이고, 직접 입력한 문구를 보냅니다(`codeUtil.getReasonText`).
 - 테스트는 실행하는 PC의 시간대와 상관없이 같은 결과가 나오도록 작성합니다. 날짜 유틸은 테스트 안에서 여러 시간대(`process.env.TZ`)로 바꿔 가며 확인합니다.
 
 ### Docker
