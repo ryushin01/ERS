@@ -107,7 +107,8 @@
         ._datepicker {
             @apply mt-5;
 
-            input {
+            /* 기본 DatePicker 규칙(datepicker.css)보다 우선순위를 높여, CSS 로드 순서와 관계없이 큰 입력칸을 적용 */
+            .react-datepicker__input-container input {
                 @apply py-4 pr-4 pl-12 text-lg leading-[26px];
             }
         }

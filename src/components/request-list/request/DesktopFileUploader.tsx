@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Upload } from "antd";
-import { UploadChangeParam } from "antd/es/upload";
 import { useSetAtom } from "jotai";
 
 import { Button } from "@components/button";
@@ -27,6 +26,7 @@ import FileIndicator from "./FileIndicator";
 
 import type { FileData, UpdateFileData } from "@types";
 import type { UploadProps } from "antd";
+import type { UploadChangeParam } from "antd/es/upload";
 
 import "@styles/file-uploader.css";
 
