@@ -116,6 +116,8 @@ pnpm run dev
 | `pnpm run build` | 프로덕션 빌드 (`output: "standalone"`) |
 | `pnpm run lint` | ESLint 검사 |
 | `pnpm run lint:fix` | ESLint 자동 수정 (import 순서 정렬 포함) |
+| `pnpm run format` | Prettier로 전체 파일 서식 정리 |
+| `pnpm run format:check` | 서식이 맞는지만 확인 (CI에서 실행) |
 | `pnpm run typecheck` | TypeScript 타입 검사 (`tsc --noEmit`) |
 | `pnpm test` | 단위 테스트 (Vitest) |
 | `pnpm run test:watch` | 단위 테스트 감시 모드 (파일을 저장하면 다시 실행) |
@@ -124,7 +126,7 @@ pnpm run dev
 
 - import 순서는 ESLint 규칙(`eslint-plugin-simple-import-sort`)으로 정렬합니다. 순서는 `react` → `next` → 외부 패키지 → 내부 alias(`@components`, `@hooks` 등) → 상대 경로 → `import type` → CSS 순이고, 그룹 사이에는 빈 줄을 하나 둡니다.
 - `tsconfig.json`에 alias를 추가하면 `eslint.config.mjs`의 `INTERNAL_ALIASES`에도 추가합니다. 그래야 외부 scoped 패키지(`@tanstack/...`)와 구분됩니다.
-- 커밋할 때 husky의 pre-commit 훅이 스테이징된 파일에 `eslint --fix`(lint-staged)를 실행하고, 이어서 프로젝트 전체 타입 검사와 단위 테스트를 실행합니다. 훅은 `pnpm install` 시 자동으로 등록됩니다.
+- 커밋할 때 husky의 pre-commit 훅이 스테이징된 파일에 `eslint --fix`와 `prettier --write`(lint-staged)를 실행하고, 이어서 프로젝트 전체 타입 검사와 단위 테스트를 실행합니다. 훅은 `pnpm install` 시 자동으로 등록됩니다.
 
 ### CI (GitHub Actions)
 
@@ -132,7 +134,7 @@ pnpm run dev
 
 | 작업 | 내용 |
 |---|---|
-| Lint · Typecheck · Test · Build | `.nvmrc`의 Node 22와 `packageManager`의 pnpm으로 lint, 타입 검사, 단위 테스트, 빌드 |
+| Lint · Typecheck · Test · Build | `.nvmrc`의 Node 22와 `packageManager`의 pnpm으로 lint, 서식 검사, 타입 검사, 단위 테스트, 빌드 |
 | Docker image | 운영용 Dockerfile로 이미지를 빌드하고, 컨테이너를 실행해 3000번 포트 응답 확인 |
 
 ### 단위 테스트
@@ -226,7 +228,8 @@ docker compose -f docker/production/docker-compose.yml up --build
 
 ## 부가 설정
 
-> 이 저장소에는 Prettier 설정 파일이 없습니다. 아래처럼 IDE에서 Prettier를 켜면 기본값(한 줄 80자 등)으로 파일 전체가 다시 정렬될 수 있으니, 팀에서 설정을 정한 뒤 사용하세요. import 순서는 Prettier와 상관없이 ESLint가 정렬합니다.
+> 코드 서식은 저장소의 Prettier 설정(`.prettierrc.json`)을 따릅니다: 큰따옴표, 세미콜론, 한 줄 100자, CSS는 4칸 들여쓰기. 문서(`*.md`)는 제외합니다(`.prettierignore`).
+> 커밋할 때 lint-staged가 자동으로 정리하므로, 아래 IDE 설정은 저장할 때도 바로 맞추고 싶을 때만 켜면 됩니다. IDE는 프로젝트의 Prettier 패키지(`node_modules/prettier`)와 설정 파일을 쓰도록 지정하세요. import 순서는 ESLint가 정렬합니다.
 
 ### ![My Skills](https://skillicons.dev/icons?i=idea)
 
