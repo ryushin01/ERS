@@ -33,3 +33,8 @@ pnpm-debug.log*
 *.iml
 .vscode/
 .DS_Store
+
+# Storybook 빌드 결과물 (pnpm build-storybook, 배포 시 빌드)
+public/storybook/
+storybook-static/
+*storybook.log

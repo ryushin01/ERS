@@ -32,7 +32,16 @@ const INTERNAL_ALIASES = [
 ];
 
 const eslintConfig = [
-  { ignores: [".next/**", "out/**", "node_modules/**", "next-env.d.ts"] },
+  {
+    ignores: [
+      ".next/**",
+      "out/**",
+      "node_modules/**",
+      "next-env.d.ts",
+      "public/storybook/**",
+      "storybook-static/**",
+    ],
+  },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     // import 순서 자동 정렬. `pnpm lint:fix`로 자동 수정되고, 커밋할 때 lint-staged가 실행합니다.

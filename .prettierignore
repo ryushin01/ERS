@@ -4,6 +4,8 @@ out/
 node_modules/
 next-env.d.ts
 coverage/
+public/storybook/
+storybook-static/
 
 # 패키지 매니저가 관리하는 파일
 pnpm-lock.yaml
