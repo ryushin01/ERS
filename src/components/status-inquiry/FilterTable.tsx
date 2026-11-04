@@ -11,6 +11,7 @@ import { PERIOD_OPTION } from "@constants/option";
 import { PERIOD_LIST } from "@constants/period";
 import { useDatePicker } from "@hooks";
 import { getStatusCdData } from "@services/statusInquiry";
+import { getCodeList } from "@utils/codeUtil";
 import { getDateString } from "@utils/dateUtil";
 
 import "@styles/filter-table.css";
@@ -46,14 +47,7 @@ export default function FilterTable({ isDesktop, setFilters, rqstNo }: definePro
     enabled: true,
   });
 
-  const transformStatusData = (data: { code: string; codeNm: string }[]) => {
-    return (data || []).map((item) => ({
-      value: item.code,
-      label: item.codeNm,
-    }));
-  };
-
-  const STATUS_OPTION = [{ value: "", label: "전체" }, ...transformStatusData(data)];
+  const STATUS_OPTION = [{ value: "", label: "전체" }, ...getCodeList(data)];
 
   useEffect(() => {
     if (rqstNo) {

@@ -4,7 +4,6 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAtomValue, useSetAtom } from "jotai";
-import DaumPostcode from "react-daum-postcode";
 
 import { Button } from "@components/button";
 import { DatePicker, Loading, Typography } from "@components/common";
@@ -28,19 +27,15 @@ import {
 } from "@services/assignDetail";
 import { getCommonCodeList } from "@services/common";
 import { authAtom, toastState } from "@stores";
+import { isAddressFormComplete } from "@utils/addressUtil";
+import { getCodeList, getMemberOptions } from "@utils/codeUtil";
 import { getDateString } from "@utils/dateUtil";
+
+import AddressSearchModal from "../AddressSearchModal";
 
 import type { AssignDetailForm } from "@types";
 
 import "@styles/responsive-table.css";
-
-interface PostcodeData {
-  roadAddress: string;
-  buildingName: string;
-  jibunAddress: string;
-  autoJibunAddress: string;
-  // 필요한 속성들 추가
-}
 
 interface DefineProps {
   requstNo: string;
@@ -279,21 +274,6 @@ export default function Table({
     },
   });
 
-  /* 보완요청/진행취소/부동산코드 셀렉트 api 데이터 구조 변환 */
-  const transformStatusData = (data: { code: string; codeNm: string }[]) => {
-    return (data || []).map((item) => ({
-      value: item.code,
-      label: item.codeNm,
-    }));
-  };
-  /* 법무대리인 셀렉트 api 데이터 구조 변환 */
-  const transformListData = (data: { membNo: string; membNm: string }[]) => {
-    return (data || []).map((item) => ({
-      value: item.membNo,
-      label: item.membNm,
-    }));
-  };
-
   /* ----- [보완요청 시작] ----- */
   /* 1. 보완요청 버튼 클릭시 api 호출 모달오픈 */
   const searchSpplReqCd = () => {
@@ -304,7 +284,7 @@ export default function Table({
   };
 
   /* 2. 보완요청 셀렉트 option data */
-  const SUPPLEMENT_REQUEST_OPTION = transformStatusData(spplReqCdData?.data?.commCodeList);
+  const SUPPLEMENT_REQUEST_OPTION = getCodeList(spplReqCdData?.data?.commCodeList);
 
   /* 3. 보완요청 셀렉트박스 onChange */
   const handleSupplementChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -386,7 +366,7 @@ export default function Table({
   };
 
   /* 2. 진행취소 셀렉트 option data */
-  const CANCEL_PROGRESS_OPTION = transformStatusData(procCancelCdData?.data?.commCodeList);
+  const CANCEL_PROGRESS_OPTION = getCodeList(procCancelCdData?.data?.commCodeList);
 
   /* 3. 진행취소 셀렉트박스 onChange */
   const handleCancelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -456,7 +436,7 @@ export default function Table({
   /* ----- [진행취소 끝] ----- */
 
   /* 부동산구분코드 option data */
-  const REAL_ESTATE_OPTION = transformStatusData(realeGbCd) || [];
+  const REAL_ESTATE_OPTION = getCodeList(realeGbCd);
 
   // selectedRealEstate 초기값 "00"
   const [selectedRealEstate, setSelectedRealEstate] = useState("00");
@@ -470,7 +450,7 @@ export default function Table({
   };
 
   /* 법무대리인 리스트 option data */
-  const LAWYER_LIST_OPTION = Array.isArray(membList) ? transformListData(membList) : []; // membList가 배열인지 확인한 후 호출
+  const LAWYER_LIST_OPTION = getMemberOptions(membList);
   const [selectLawyer, setSelectedLawyer] = useState(
     LAWYER_LIST_OPTION.length > 0 ? LAWYER_LIST_OPTION[0].value : "",
   );
@@ -487,23 +467,10 @@ export default function Table({
     setAddrError(false); // 주소 조회 인풋 에러 해제
   };
 
-  /* 1. 주소검색 api 호출 */
-  const handleComplete = (data: PostcodeData) => {
-    const roadAddress = `${data?.roadAddress} (${data?.buildingName ?? ""})`; // 도로명 주소
-    const rdnmAddress = `${!!data?.autoJibunAddress ? data?.autoJibunAddress : data.jibunAddress}`; // 지번 주소
-
-    setAddrForm((prevForm) => {
-      if (prevForm.roadAddr !== roadAddress || prevForm.rdnmAddr !== rdnmAddress) {
-        return {
-          ...prevForm,
-          rdnmAddr: roadAddress,
-          roadAddr: rdnmAddress,
-        };
-      }
-      return prevForm;
-    });
+  /* 1. 주소검색 모달에서 고른 주소 반영 (모달은 AddressSearchModal이 닫음) */
+  const handleSelectAddress = (address: { roadAddr: string; rdnmAddr: string }) => {
+    setAddrForm((prevForm) => ({ ...prevForm, ...address }));
     setAddrError(false); // 주소 조회 인풋 에러 해제
-    closeopenSearchAddressModal(); // 모달 닫기
   };
   /* ---- 주소검색 끝 ---- */
 
@@ -514,20 +481,7 @@ export default function Table({
     setUnqRgstrNoError(false);
 
     /* lotnumAddrCd에 따라 데이터 체크 */
-    const isValidAddrForm = (() => {
-      switch (addrForm.lotnumAddrCd) {
-        case "01":
-          return Object.values(addrForm).every((value) => value !== "");
-        case "02":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.bldg !== "";
-        case "03":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.unit !== "";
-        case "04":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "";
-        default:
-          return false;
-      }
-    })();
+    const isValidAddrForm = isAddressFormComplete(addrForm);
 
     if (!isValidAddrForm) {
       setAddrError(true); // 고유번호조회 인풋 에러
@@ -579,20 +533,7 @@ export default function Table({
 
   const handleAssignmentForm = async () => {
     /* lotnumAddrCd에 따라 데이터 체크 */
-    const isValidAddrForm = (() => {
-      switch (addrForm.lotnumAddrCd) {
-        case "01":
-          return Object.values(addrForm).every((value) => value !== "");
-        case "02":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.bldg !== "";
-        case "03":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.unit !== "";
-        case "04":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "";
-        default:
-          return false;
-      }
-    })();
+    const isValidAddrForm = isAddressFormComplete(addrForm);
 
     let hasError = false;
 
@@ -1025,9 +966,10 @@ export default function Table({
           />
         </div>
         {isOpenSearchAddressModal && (
-          <Modal title="주소검색" size="md" onClose={closeopenSearchAddressModal}>
-            <DaumPostcode onComplete={handleComplete} />
-          </Modal>
+          <AddressSearchModal
+            onSelect={handleSelectAddress}
+            onClose={closeopenSearchAddressModal}
+          />
         )}
 
         <Grid className="_without-padding flex mt-16 [&>div]:flex">

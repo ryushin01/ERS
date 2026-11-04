@@ -5,13 +5,11 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSetAtom } from "jotai";
 import { useAtomValue } from "jotai";
-import DaumPostcode from "react-daum-postcode";
 
 import { Button } from "@components/button";
 import { DatePicker, Loading, Typography } from "@components/common";
 import { CurrencyFormat, Form, InputField, Label, Radio, Select, TextArea } from "@components/form";
 import { Grid, GridItem } from "@components/layout";
-import { Modal } from "@components/modal";
 import { REALE_CD } from "@constants/code";
 import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
 import { LAND_LOT_OPTION } from "@constants/option";
@@ -21,20 +19,16 @@ import { getRqstNoData, postCreateAssign } from "@services/adminAssign";
 import { getMemberListData, getUnqRgsrtNo } from "@services/assignDetail";
 import { getCommonCodeList } from "@services/common";
 import { authAtom, toastState } from "@stores";
+import { isAddressFormComplete } from "@utils/addressUtil";
+import { getBankOptions, getCodeList, getMemberOptions } from "@utils/codeUtil";
 
+import AddressSearchModal from "../AddressSearchModal";
 import EmptyBox from "./EmptyBox";
 import ResponsiveSwiper from "./ResponsiveSwiper";
 
 import type { AssignCreateForm } from "@types";
 
 import "@styles/responsive-table.css";
-
-type PostcodeProps = {
-  roadAddress: string;
-  buildingName: string;
-  jibunAddress: string;
-  autoJibunAddress: string;
-};
 
 export default function CreateForm() {
   const router = useRouter();
@@ -132,7 +126,8 @@ export default function CreateForm() {
     queryKey: ["search-canclecode"],
     queryFn: async () =>
       await getUnqRgsrtNo({
-        rdnmAddr: addrForm.roadAddr,
+        // 도로명 주소로 조회 (addrForm.roadAddr에는 지번 주소가 들어 있음)
+        rdnmAddr: addrForm.rdnmAddr,
         lotnumAddrCd: addrForm.lotnumAddrCd,
         bldg: addrForm.bldg,
         unit: addrForm.unit,
@@ -176,14 +171,8 @@ export default function CreateForm() {
 
   // 3. 채권자 저장
   // 3.1. 채권자 셀렉트 api 데이터 구조 변환
-  const transformBankListData = (data: { bizNo: string; bizNm: string }[]) => {
-    return (data || []).map((item) => ({
-      value: item.bizNo,
-      label: item.bizNm,
-    }));
-  };
   // 3.2. 채권자 리스트 option data
-  const BANK_LIST_OPTION = Array.isArray(bankList) ? transformBankListData(bankList) : [];
+  const BANK_LIST_OPTION = getBankOptions(bankList);
   const [selectBank, setSelectedBank] = useState(
     BANK_LIST_OPTION.length > 0 ? BANK_LIST_OPTION[0].value : "",
   );
@@ -196,14 +185,8 @@ export default function CreateForm() {
 
   // 4. 부동산 저장
   // 4.1. 부동산코드 셀렉트 api 데이터 구조 변환
-  const transformStatusData = (data: { code: string; codeNm: string }[]) => {
-    return (data || []).map((item) => ({
-      value: item.code,
-      label: item.codeNm,
-    }));
-  };
   // 4.2. 부동산구분코드 option data
-  const REAL_ESTATE_OPTION = transformStatusData(realeCd) || [];
+  const REAL_ESTATE_OPTION = getCodeList(realeCd);
 
   // 5. 채권최고액 저장
   const thousandSeparator = (event: ChangeEvent<HTMLInputElement>) => {
@@ -244,39 +227,17 @@ export default function CreateForm() {
     setIsContractDateError(false); // 필수 인풋 에러 해제
   };
 
-  /* 법무대리인 셀렉트 api 데이터 구조 변환 */
-  const transformListData = (data: { membNo: string; membNm: string }[]) => {
-    return (data || []).map((item) => ({
-      value: item.membNo,
-      label: item.membNm,
-    }));
-  };
-
   /* 법무대리인 리스트 option data */
-  const LAWYER_LIST_OPTION = Array.isArray(membList) ? transformListData(membList) : []; // membList가 배열인지 확인한 후 호출
+  const LAWYER_LIST_OPTION = getMemberOptions(membList);
   const [selectLawyer, setSelectedLawyer] = useState(
     LAWYER_LIST_OPTION.length > 0 ? LAWYER_LIST_OPTION[0].value : "",
   );
 
   /* ---- 주소검색 ---- */
-  /* 1. 주소검색 api 호출 */
-  const handleComplete = (data: PostcodeProps) => {
-    const roadAddress = `${data?.roadAddress} (${data?.buildingName ?? ""})`; // 도로명 주소
-    const rdnmAddress = `${!!data?.autoJibunAddress ? data?.autoJibunAddress : data.jibunAddress}`; // 지번 주소
-
-    setAddrForm((prevForm) => {
-      if (prevForm.roadAddr !== roadAddress || prevForm.rdnmAddr !== rdnmAddress) {
-        return {
-          ...prevForm,
-          rdnmAddr: roadAddress,
-          roadAddr: rdnmAddress,
-        };
-      }
-      return prevForm;
-    });
-
+  /* 1. 주소검색 모달에서 고른 주소 반영 (모달은 AddressSearchModal이 닫음) */
+  const handleSelectAddress = (address: { roadAddr: string; rdnmAddr: string }) => {
+    setAddrForm((prevForm) => ({ ...prevForm, ...address }));
     setAddrError(false); // 고유번호조회 인풋 에러 해제
-    closeopenSearchAddressModal(); // 모달 닫기
   };
 
   useEffect(() => {
@@ -305,20 +266,7 @@ export default function CreateForm() {
     }
 
     /* lotnumAddrCd에 따라 데이터 체크 */
-    const isValidAddrForm = (() => {
-      switch (addrForm.lotnumAddrCd) {
-        case "01":
-          return Object.values(addrForm).every((value) => value !== "");
-        case "02":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.bldg !== "";
-        case "03":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.unit !== "";
-        case "04":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "";
-        default:
-          return false;
-      }
-    })();
+    const isValidAddrForm = isAddressFormComplete(addrForm);
 
     if (!isValidAddrForm) {
       setAddrError(true); // 고유번호조회 인풋 에러
@@ -449,20 +397,7 @@ export default function CreateForm() {
     event.preventDefault();
 
     /* lotnumAddrCd에 따라 데이터 체크 */
-    const isValidAddrForm = (() => {
-      switch (addrForm.lotnumAddrCd) {
-        case "01":
-          return Object.values(addrForm).every((value) => value !== "");
-        case "02":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.bldg !== "";
-        case "03":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.unit !== "";
-        case "04":
-          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "";
-        default:
-          return false;
-      }
-    })();
+    const isValidAddrForm = isAddressFormComplete(addrForm);
 
     let hasError = false;
 
@@ -936,9 +871,10 @@ export default function CreateForm() {
         </Grid>
 
         {isOpenSearchAddressModal && (
-          <Modal title="주소검색" size="md" onClose={closeopenSearchAddressModal}>
-            <DaumPostcode onComplete={handleComplete} />
-          </Modal>
+          <AddressSearchModal
+            onSelect={handleSelectAddress}
+            onClose={closeopenSearchAddressModal}
+          />
         )}
       </Form>
     </>
