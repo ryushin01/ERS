@@ -18,7 +18,7 @@ import {
 } from "@constants/information";
 import { LAND_LOT_OPTION } from "@constants/option";
 import { AD_ASSIGN } from "@constants/path";
-import { useDatePicker, useDisclosure, useRadio } from "@hooks";
+import { useDatePicker, useDisclosure, useRadio, useSubmitLock } from "@hooks";
 import {
   getUnqRgsrtNo,
   patchAccignmentForm,
@@ -28,6 +28,7 @@ import {
 import { getCommonCodeList } from "@services/common";
 import { authAtom, toastState } from "@stores";
 import { isAddressFormComplete } from "@utils/addressUtil";
+import { formatAmountInput, isValidAmount, parseAmount } from "@utils/amountUtil";
 import { getCodeList, getMemberOptions } from "@utils/codeUtil";
 import { getDateString } from "@utils/dateUtil";
 
@@ -141,16 +142,10 @@ export default function Table({
     close: closeopenSearchAddressModal,
   } = useDisclosure();
 
+  // 원 단위 정수만 받아 천 단위 콤마로 표시 (부호·소수점·문자는 무시, 최대 15자리)
   const thousandSeparator = (event: ChangeEvent<HTMLInputElement>) => {
-    let price: string | number = event.target.value;
-    price = Number(price.replaceAll(",", ""));
-    if (isNaN(price)) {
-      setPrice("0");
-      setIsPricesError(false); // 필수 인풋 에러 해제
-    } else {
-      setPrice(price.toLocaleString("ko-KR"));
-      setIsPricesError(false); // 필수 인풋 에러 해제
-    }
+    setPrice(formatAmountInput(event.target.value));
+    setIsPricesError(false); // 필수 인풋 에러 해제
   };
 
   /* 보완요청 사유 조회 api*/
@@ -207,6 +202,11 @@ export default function Table({
   });
 
   /* 보완요청 진행요청 api */
+  // 중복 제출 방지 (보완요청·진행취소·배정하기). 실패 시에만 다시 제출 가능
+  const supplementLock = useSubmitLock();
+  const cancelLock = useSubmitLock();
+  const assignLock = useSubmitLock();
+
   const { mutate: regiSupplement } = useMutation({
     mutationKey: ["registration-supplement", requstNo],
     mutationFn: async () => await patchRegiSupplement(form),
@@ -223,9 +223,11 @@ export default function Table({
         });
         router.push(AD_ASSIGN);
       } else {
+        supplementLock.unlock();
       }
     },
     onError: (error) => {
+      supplementLock.unlock();
       console.error(error);
     },
   });
@@ -247,9 +249,11 @@ export default function Table({
         });
         router.push(AD_ASSIGN);
       } else {
+        cancelLock.unlock();
       }
     },
     onError: (error) => {
+      cancelLock.unlock();
       console.error(error);
     },
   });
@@ -267,9 +271,11 @@ export default function Table({
         });
         router.push(AD_ASSIGN);
       } else {
+        assignLock.unlock();
       }
     },
     onError: (error) => {
+      assignLock.unlock();
       console.error(error);
     },
   });
@@ -352,6 +358,7 @@ export default function Table({
     }
 
     // 보완요청 api 호출
+    if (!supplementLock.lock()) return; // 중복 제출 방지
     regiSupplement();
   };
   /* ----- [보완요청 끝] ----- */
@@ -431,6 +438,7 @@ export default function Table({
     }
 
     // 진행취소 요청 api 호출
+    if (!cancelLock.lock()) return; // 중복 제출 방지
     regiCancel();
   };
   /* ----- [진행취소 끝] ----- */
@@ -507,7 +515,7 @@ export default function Table({
   const handleDateChange = (date: Date | null) => {
     const newDate = date;
 
-    const setDate = date ? getDateString(date) : "";
+    const setDate = getDateString(date);
 
     setContractDate(newDate);
     setSeDate(setDate);
@@ -547,7 +555,8 @@ export default function Table({
       hasError = true;
     }
 
-    if (!price) {
+    // 0원·빈 값은 제출 불가 (이전에는 입력을 지우면 "0"이 되어 0원이 제출될 수 있었음)
+    if (!isValidAmount(parseAmount(price))) {
       setIsPricesError(true);
       hasError = true;
     }
@@ -575,8 +584,6 @@ export default function Table({
       });
       return;
     }
-    const replaceNum = price.replaceAll(",", "");
-
     // 1. 업데이트된 form 객체 만들기
     const updatedForm = {
       ...assignmentForm,
@@ -589,7 +596,7 @@ export default function Table({
       bldg: addrForm?.bldg ?? "",
       unit: addrForm?.unit ?? "",
       unqRgstrNo: unqRgstrNo ?? "",
-      bndMaxAmt: Number(replaceNum) ?? 0,
+      bndMaxAmt: parseAmount(price),
       seDt: seDate ?? "",
       lgagMembNo: selectLawyer ?? "",
       lgagDlvrCnts: lgagDlvrCnts ?? "",
@@ -629,7 +636,8 @@ export default function Table({
       return;
     }
     if (requestData && requestData.has("req")) {
-      // 6. API 호출
+      // 6. API 호출 (연속 클릭으로 requestData가 여러 번 바뀌어도 한 번만 전송)
+      if (!assignLock.lock()) return;
       patchAccignmentsubmit();
     }
     // 제출용 requestData가 만들어졌을 때만 검증 후 API를 호출합니다.
@@ -979,7 +987,13 @@ export default function Table({
             mobile={12}
             className="justify-center gap-x-3 [&>button]:w-1/3"
           >
-            <Button shape="solid" size="lg" color="main100" onClick={handleAssignmentForm}>
+            <Button
+              shape="solid"
+              size="lg"
+              color="main100"
+              onClick={handleAssignmentForm}
+              disabled={assignLock.isLocked}
+            >
               배정하기
             </Button>
             <Button
@@ -1066,7 +1080,13 @@ export default function Table({
               <Button shape="solid" size="md" color="grayscale" onClick={handleCloseSpplModal}>
                 취소
               </Button>
-              <Button type="submit" shape="solid" size="md" color="main100">
+              <Button
+                type="submit"
+                shape="solid"
+                size="md"
+                color="main100"
+                disabled={supplementLock.isLocked}
+              >
                 보완 요청하기
               </Button>
             </div>
@@ -1134,7 +1154,13 @@ export default function Table({
               <Button shape="solid" size="md" color="grayscale" onClick={handleCloseCaclModal}>
                 취소
               </Button>
-              <Button type="submit" shape="solid" size="md" color="main100">
+              <Button
+                type="submit"
+                shape="solid"
+                size="md"
+                color="main100"
+                disabled={cancelLock.isLocked}
+              >
                 진행 취소하기
               </Button>
             </div>

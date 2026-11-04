@@ -14,13 +14,15 @@ import { REALE_CD } from "@constants/code";
 import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
 import { LAND_LOT_OPTION } from "@constants/option";
 import { AD_ASSIGN } from "@constants/path";
-import { useDatePicker, useDisclosure, useFileUpload, useRadio } from "@hooks";
+import { useDatePicker, useDisclosure, useFileUpload, useRadio, useSubmitLock } from "@hooks";
 import { getRqstNoData, postCreateAssign } from "@services/adminAssign";
 import { getMemberListData, getUnqRgsrtNo } from "@services/assignDetail";
 import { getCommonCodeList } from "@services/common";
 import { authAtom, toastState } from "@stores";
 import { isAddressFormComplete } from "@utils/addressUtil";
+import { formatAmountInput, isValidAmount, parseAmount } from "@utils/amountUtil";
 import { getBankOptions, getCodeList, getMemberOptions } from "@utils/codeUtil";
+import { getDateString } from "@utils/dateUtil";
 
 import AddressSearchModal from "../AddressSearchModal";
 import EmptyBox from "./EmptyBox";
@@ -101,7 +103,7 @@ export default function CreateForm() {
     lotnumAddr: "", // [필수] 지번주소
     rdnmAddr: "", // [필수] 도로명주소
     realeCd: "00", // 부동산구분코드
-    lotnumAddrCd: "00", // [필수] 지번주소코드
+    lotnumAddrCd: "01", // [필수] 상세주소 유형 (화면 기본 선택 "동+호"와 같아야 함. 이전 "00"은 없는 코드)
     bldg: "", // 동
     unit: "", // 호
     unqRgstrNo: "", // 등기고유번호
@@ -155,10 +157,8 @@ export default function CreateForm() {
   // 2. 대출실행일 저장
   const handleExecDateChange = (date: Date | null) => {
     const newDate = date;
-    const timeDifference = date!.getTimezoneOffset() * 60000;
-    const koreanTime = new Date(date!.getTime() - timeDifference);
-
-    const setDate = date ? koreanTime.toISOString().substring(0, 10).replace(/-/g, "") : "";
+    // 선택한 날짜를 YYYYMMDD로 (날짜를 지우면 빈 값. 이전에는 null에서 getTimezoneOffset을 호출해 오류 발생)
+    const setDate = getDateString(date);
 
     setForm((prevForm) => ({
       ...prevForm,
@@ -189,34 +189,23 @@ export default function CreateForm() {
   const REAL_ESTATE_OPTION = getCodeList(realeCd);
 
   // 5. 채권최고액 저장
+  // 원 단위 정수만 받아 천 단위 콤마로 표시 (부호·소수점·문자는 무시, 최대 15자리)
   const thousandSeparator = (event: ChangeEvent<HTMLInputElement>) => {
-    let price: string | number = event.target.value;
-    price = Number(price.replaceAll(",", ""));
-    if (isNaN(price)) {
-      setPrice("0");
-      setIsPricesError(false); // 필수 인풋 에러 해제
-    } else {
-      setPrice(price.toLocaleString("ko-KR"));
-      setIsPricesError(false); // 필수 인풋 에러 해제
-    }
+    setPrice(formatAmountInput(event.target.value));
+    setIsPricesError(false); // 필수 인풋 에러 해제
   };
 
   useEffect(() => {
-    const replaceNum: string = price.replaceAll(",", "");
-
     setForm((prevForm) => ({
       ...prevForm,
-      bndMaxAmt: Number(replaceNum),
+      bndMaxAmt: parseAmount(price),
     }));
   }, [price]);
 
   // 6. 설정약정일 저장
   const handleDateChange = (date: Date | null) => {
     const newDate = date;
-    const timeDifference = date!.getTimezoneOffset() * 60000;
-    const koreanTime = new Date(date!.getTime() - timeDifference);
-
-    const setDate = date ? koreanTime.toISOString().substring(0, 10).replace(/-/g, "") : "";
+    const setDate = getDateString(date);
 
     setForm((prevForm) => ({
       ...prevForm,
@@ -245,6 +234,8 @@ export default function CreateForm() {
       ...prevForm,
       lotnumAddr: addrForm?.roadAddr,
       rdnmAddr: addrForm?.rdnmAddr,
+      // 상세주소 유형도 주소 입력값을 기준으로 맞춤 (라디오를 바꾸지 않아도 화면과 같은 값 전송)
+      lotnumAddrCd: addrForm?.lotnumAddrCd,
     }));
   }, [addrForm]);
   /* ---- 주소검색 끝 ---- */
@@ -304,6 +295,9 @@ export default function CreateForm() {
   }, [unqRgstrNoData, openToast]);
   /* ---- 등기 고유 번호 조회 끝 ---- */
 
+  // 중복 등록 방지: 제출을 시작하면 잠그고, 성공 시에는 페이지 이동까지 유지, 실패 시에만 다시 제출 가능
+  const submitLock = useSubmitLock();
+
   const { mutate: mutatePostCreateAssign, isPending: postCreateAssignLoading } = useMutation({
     mutationKey: ["post-create-assign"],
     mutationFn: async () => await postCreateAssign(requestData),
@@ -318,6 +312,11 @@ export default function CreateForm() {
         setTimeout(() => {
           router.push(AD_ASSIGN);
         }, 3000);
+      }
+
+      // 업무 오류(이미지 미등록·의뢰번호 중복 등)는 수정 후 다시 제출할 수 있도록 잠금 해제
+      if (response.data.code !== "00") {
+        submitLock.unlock();
       }
 
       // 등기자료 이미지 미등록 시
@@ -341,6 +340,7 @@ export default function CreateForm() {
       }
     },
     onError: (error) => {
+      submitLock.unlock();
       console.error(error);
     },
   });
@@ -432,7 +432,8 @@ export default function CreateForm() {
     }
 
     // 채권최고액 인풋 에러
-    if (!price) {
+    // 0원·빈 값은 제출 불가 (이전에는 입력을 지우면 "0"이 되어 0원이 제출될 수 있었음)
+    if (!isValidAmount(parseAmount(price))) {
       setIsPricesError(true);
       hasError = true;
     }
@@ -495,6 +496,7 @@ export default function CreateForm() {
     setRequestData(formData);
 
     // 5. 데이터 페칭
+    if (!submitLock.lock()) return; // 이미 제출 중이거나 등록 완료
     mutatePostCreateAssign();
   };
 
@@ -861,7 +863,7 @@ export default function CreateForm() {
                   shape="solid"
                   size="lg"
                   color="main100"
-                  onClick={() => handleAssignmentForm}
+                  disabled={submitLock.isLocked}
                 >
                   배정하기
                 </Button>

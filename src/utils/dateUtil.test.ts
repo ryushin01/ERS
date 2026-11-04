@@ -1,3 +1,4 @@
+import fc from "fast-check";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
@@ -126,5 +127,52 @@ describe.each([
   it("getDay는 같은 요일을 돌려준다", () => {
     expect(getDay("20261103")).toBe("화");
     expect(getDay("2026-11-08")).toBe("일");
+  });
+});
+
+// 속성 기반 테스트: 1900~2100년의 임의 날짜 × 여러 시간대에서 변환 규칙이 항상 지켜지는지 확인
+describe("날짜 변환 - 속성 기반 (fast-check)", () => {
+  const TIME_ZONES = [
+    "Asia/Seoul",
+    "UTC",
+    "America/New_York",
+    "Pacific/Honolulu",
+    "Pacific/Kiritimati",
+  ];
+  const originalTimeZone = process.env.TZ;
+
+  afterEach(() => {
+    if (originalTimeZone === undefined) delete process.env.TZ;
+    else process.env.TZ = originalTimeZone;
+  });
+
+  const ymd = fc
+    .date({
+      min: new Date("1900-01-01T00:00:00Z"),
+      max: new Date("2100-12-31T00:00:00Z"),
+      noInvalidDate: true,
+    })
+    .map((d) => d.toISOString().slice(0, 10).replaceAll("-", ""));
+
+  it("YYYYMMDD → Date → YYYYMMDD는 어느 시간대에서든 같은 날짜다", () => {
+    fc.assert(
+      fc.property(ymd, fc.constantFrom(...TIME_ZONES), (date, timeZone) => {
+        process.env.TZ = timeZone;
+        expect(getDateString(stringToDate(date))).toBe(date);
+      }),
+    );
+  });
+
+  it("구분자를 넣었다 빼도 같은 날짜이고, 요일은 실제 날짜의 요일과 같다", () => {
+    const dayList = ["일", "월", "화", "수", "목", "금", "토"];
+    fc.assert(
+      fc.property(ymd, fc.constantFrom(...TIME_ZONES), (date, timeZone) => {
+        process.env.TZ = timeZone;
+        const dashed = formatStringToDate(date, "-");
+        expect(dashed.replaceAll("-", "")).toBe(date);
+        expect(getDay(dashed)).toBe(getDay(date));
+        expect(getDay(date)).toBe(dayList[new Date(`${dashed}T12:00:00Z`).getUTCDay()]);
+      }),
+    );
   });
 });

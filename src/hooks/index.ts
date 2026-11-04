@@ -4,5 +4,14 @@ import useFileUpload from "./useFileUpload";
 import useLogout from "./useLogout";
 import useRadio from "./useRadio";
 import useResponsive from "./useResponsive";
+import useSubmitLock from "./useSubmitLock";
 
-export { useDatePicker, useDisclosure, useFileUpload, useLogout, useRadio, useResponsive };
+export {
+  useDatePicker,
+  useDisclosure,
+  useFileUpload,
+  useLogout,
+  useRadio,
+  useResponsive,
+  useSubmitLock,
+};
