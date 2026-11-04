@@ -44,4 +44,13 @@ describe("middleware 권한별 라우팅", () => {
   it("정적 파일은 권한과 상관없이 통과한다", () => {
     expect(redirectedTo("/icons/24/logo.svg")).toBeNull();
   });
+
+  it.each([undefined, "00", "20"])(
+    "Storybook은 로그인 상태(membGbCd=%s)와 상관없이 통과한다",
+    (membGbCd) => {
+      expect(redirectedTo("/storybook", membGbCd)).toBeNull();
+      expect(redirectedTo("/storybook/index.html", membGbCd)).toBeNull();
+      expect(redirectedTo("/storybook/iframe.html", membGbCd)).toBeNull();
+    },
+  );
 });

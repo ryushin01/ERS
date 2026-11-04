@@ -79,3 +79,10 @@ export const AD_NOTICE = `/${AD}/${NOTICE}`;
 
 // 법무대리인
 export const LA_PATH = `/${LA}`;
+
+// Storybook (컴포넌트 문서). 빌드 결과물(public/storybook)을 앱과 함께 정적 파일로 배포합니다.
+export const STORYBOOK_PATH = "/storybook";
+
+// Storybook 첫 화면. 다른 주소에 배포한 Storybook을 쓰려면 NEXT_PUBLIC_STORYBOOK_URL로 지정합니다.
+export const STORYBOOK_URL =
+  process.env.NEXT_PUBLIC_STORYBOOK_URL ?? `${STORYBOOK_PATH}/index.html`;

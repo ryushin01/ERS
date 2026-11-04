@@ -1,0 +1,161 @@
+/* 로그인 화면의 Storybook 바로 가기 버튼 */
+._storybook-link {
+    @apply flex items-center gap-x-4 w-full mt-4 px-6 py-5 rounded-xl border border-ers-main-20 bg-ers-grayscale-0 text-ers-main-100 transition-all duration-300;
+
+    ._storybook-link-icon {
+        @apply _flex-center shrink-0 w-11 h-11 rounded-xl bg-ers-main-100 text-ers-grayscale-0 transition-transform duration-500;
+    }
+
+    ._storybook-link-texts {
+        @apply flex flex-col flex-1 gap-y-[2px] text-left;
+        word-break: keep-all;
+
+        ._description {
+            @apply text-ers-grayscale-80;
+        }
+    }
+
+    ._storybook-link-arrow {
+        @apply shrink-0 transition-transform duration-300;
+    }
+
+    &:hover,
+    &:focus-visible {
+        @apply border-ers-main-60 bg-ers-main-5;
+        box-shadow: 0 8px 24px -12px rgba(17, 54, 98, 0.45);
+
+        ._storybook-link-icon {
+            transform: rotate(-8deg) scale(1.06);
+        }
+
+        ._storybook-link-arrow {
+            transform: translateX(4px);
+        }
+    }
+
+    &:focus-visible {
+        @apply outline outline-2 outline-offset-2 outline-ers-main-70;
+    }
+
+    &:active {
+        transform: scale(0.99);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    ._storybook-link {
+        @apply gap-x-3 px-4 py-4;
+
+        ._storybook-link-icon {
+            @apply w-9 h-9 rounded-lg;
+        }
+    }
+}
+
+/*
+ * Storybook으로 이동할 때의 전환 화면 (총 1.4초, StorybookLink.tsx의 STORYBOOK_TRANSITION_MS와 맞춤)
+ * 1) 0.00s~0.70s  버튼 위치에서 남색 원이 화면 전체로 펼쳐짐
+ * 2) 0.25s~1.13s  흩어져 있던 컴포넌트 조각 12개가 차례로 날아와 격자로 맞춰짐 (흰 조각 3개 + 노란 원 = 로고의 E와 도장)
+ * 3) 1.05s~1.40s  격자가 커지며 사라지고 이동 → Storybook 쪽에서 남색 화면이 오므라들며 도착(.storybook/manager-head.html)
+ */
+._storybook-transition {
+    @apply fixed inset-0 _flex-center;
+    z-index: 10001;
+    background:
+        radial-gradient(
+            circle at var(--origin-x) var(--origin-y),
+            rgba(95, 145, 194, 0.35),
+            transparent 55%
+        ),
+        linear-gradient(135deg, #113662 0%, #15448b 55%, #0b56a7 100%);
+    clip-path: circle(0 at var(--origin-x) var(--origin-y));
+    animation: ers-sb-reveal 0.7s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+
+    ._storybook-transition-stage {
+        @apply flex flex-col items-center gap-y-8;
+        animation: ers-sb-zoom 0.35s cubic-bezier(0.5, 0, 0.75, 0) 1.05s forwards;
+    }
+
+    ._storybook-transition-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 44px);
+        grid-auto-rows: 44px;
+        gap: 10px;
+
+        span {
+            @apply block rounded-[10px];
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            opacity: 0;
+            /* 조각마다 다른 위치·각도에서 출발 (--dx·--dy·--r은 StorybookLink.tsx에서 지정) */
+            transform: translate(var(--dx), var(--dy)) rotate(var(--r)) scale(0.3);
+            animation: ers-sb-assemble 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation-delay: calc(0.25s + var(--i) * 0.03s);
+        }
+
+        /* 강조 조각: 로고의 도장 색(노랑) */
+        span:nth-child(6) {
+            @apply rounded-full;
+            background: #fabe00;
+            border-color: #fabe00;
+        }
+
+        span:nth-child(1),
+        span:nth-child(5),
+        span:nth-child(9) {
+            background: rgba(255, 255, 255, 0.92);
+            border-color: rgba(255, 255, 255, 0.92);
+        }
+    }
+
+    ._storybook-transition-caption {
+        @apply flex flex-col items-center gap-y-1 text-ers-grayscale-0;
+        opacity: 0;
+        transform: translateY(12px);
+        animation: ers-sb-caption 0.4s ease-out 0.6s forwards;
+
+        strong {
+            @apply text-2xl font-bold tracking-tight;
+        }
+
+        span {
+            @apply text-sm;
+            opacity: 0.75;
+        }
+    }
+}
+
+@keyframes ers-sb-reveal {
+    to {
+        clip-path: circle(150vmax at var(--origin-x) var(--origin-y));
+    }
+}
+
+@keyframes ers-sb-assemble {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes ers-sb-caption {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes ers-sb-zoom {
+    to {
+        opacity: 0;
+        transform: scale(1.25);
+        filter: blur(2px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ._storybook-link,
+    ._storybook-link * {
+        transition: none !important;
+    }
+}

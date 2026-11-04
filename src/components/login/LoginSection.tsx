@@ -5,6 +5,7 @@ import { useResponsive } from "@hooks";
 
 import LoginForm from "./LoginForm";
 import LoginNotice from "./LoginNotice";
+import StorybookLink from "./StorybookLink";
 
 export default function LoginSection() {
   const { isDesktop } = useResponsive();
@@ -21,6 +22,7 @@ export default function LoginSection() {
       </Typography>
       <LoginForm isDesktop={isDesktop} />
       <LoginNotice isDesktop={isDesktop} />
+      <StorybookLink isDesktop={isDesktop} />
     </section>
   );
 }

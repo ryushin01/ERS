@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
 
-import { AD_ASSIGN, AD_PATH, FI_HOME, FI_PATH, LA_PATH, LOGIN_PATH } from "@constants/path";
+import {
+  AD_ASSIGN,
+  AD_PATH,
+  FI_HOME,
+  FI_PATH,
+  LA_PATH,
+  LOGIN_PATH,
+  STORYBOOK_PATH,
+} from "@constants/path";
 import { PUBLIC_FILES_REG_EXP } from "@constants/reg-exp";
 import { isPathUnder } from "@utils/pathUtil";
 
@@ -22,8 +30,8 @@ export function middleware(request: NextRequest) {
   const isMemberPage = [FI_PATH, AD_PATH, LA_PATH].some((path) => isPathUnder(pathname, path));
   const isValidPublicFiles = request.nextUrl.pathname.match(PUBLIC_FILES_REG_EXP);
 
-  // 정적 파일 정상 유무 확인
-  if (isValidPublicFiles) {
+  // 정적 파일, Storybook(컴포넌트 문서)은 로그인·사용자 유형과 상관없이 통과
+  if (isValidPublicFiles || isPathUnder(pathname, STORYBOOK_PATH)) {
     return NextResponse.next();
   }
 

@@ -52,6 +52,9 @@ jobs:
           for i in $(seq 1 30); do
             if curl -fsS -o /dev/null http://localhost:3000/; then
               echo "Container is serving on port 3000"
+              # Storybook(public/storybook)이 이미지에 함께 들어갔는지 확인
+              curl -fsS -o /dev/null http://localhost:3000/storybook/index.html
+              echo "Storybook is served at /storybook"
               exit 0
             fi
             sleep 2
