@@ -60,10 +60,7 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
   };
 
   /* 로그인 api 호출 */
-  const {
-    mutate: loginDataSend,
-    isPending: loginDataLoading,
-  } = useMutation({
+  const { mutate: loginDataSend, isPending: loginDataLoading } = useMutation({
     mutationKey: ["log-in"],
     mutationFn: async () => await postLoginData(form),
     onSuccess: (res) => {
@@ -108,8 +105,7 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
         }
         // 5. id 또는 password 불일치시 토스트팝업 (모바일은 하단에 pc는 상단에 토스트팝업 노출)
         openToast({
-          message:
-            "아이디 또는 비밀번호가 일치하지 않습니다.\n다시 확인해 주세요.",
+          message: "아이디 또는 비밀번호가 일치하지 않습니다.\n다시 확인해 주세요.",
           position: isDesktop ? "top" : "bottom",
         });
       }
@@ -211,14 +207,7 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
           placeholder={ID_INPUT.placeHolder}
           inputMessage={ID_INPUT.labelText}
           errorMessage={ID_INPUT.errorText}
-          icon={
-            <Image
-              src={ID_INPUT.icon}
-              alt="유저 아이콘"
-              width={20}
-              height={20}
-            />
-          }
+          icon={<Image src={ID_INPUT.icon} alt="유저 아이콘" width={20} height={20} />}
           iconPosition="left"
           isError={idError}
           onFocus={() => setIdError(false)}
@@ -232,14 +221,7 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
           placeholder={PASSWORD_INPUT.placeHolder}
           inputMessage={PASSWORD_INPUT.labelText}
           errorMessage={PASSWORD_INPUT.errorText}
-          icon={
-            <Image
-              src={PASSWORD_INPUT.icon}
-              alt="자물쇠 아이콘"
-              width={20}
-              height={20}
-            />
-          }
+          icon={<Image src={PASSWORD_INPUT.icon} alt="자물쇠 아이콘" width={20} height={20} />}
           iconPosition="left"
           isError={pwdError}
           onFocus={() => setPwdError(false)}
@@ -254,12 +236,7 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
             onChange={handleCheckboxChange}
           />
         </div>
-        <Button
-          type="submit"
-          shape="solid"
-          size="lg"
-          color="main100"
-        >
+        <Button type="submit" shape="solid" size="lg" color="main100">
           로그인
         </Button>
       </Form>

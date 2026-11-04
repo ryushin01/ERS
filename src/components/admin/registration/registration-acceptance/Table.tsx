@@ -24,9 +24,9 @@ import { getDetailAddress, getManagerInfo } from "@utils/stringUtil";
 import "@styles/responsive-table.css";
 
 export default function Table({
-                                requestNo,
-                                isDesktop,
-                              }: RegistrationAcceptanceProps & ResponsiveType) {
+  requestNo,
+  isDesktop,
+}: RegistrationAcceptanceProps & ResponsiveType) {
   const openToast = useSetAtom(toastState);
   const router = useRouter();
 
@@ -52,21 +52,19 @@ export default function Table({
   });
 
   /* 등기접수 정보 등록 */
-  const {
-    mutate: mutatePatchRegistrationApproval,
-    isPending: patchRegistrationApprovalLoading,
-  } = useMutation({
-    mutationKey: ["request-upload"],
-    mutationFn: async () => await patchRegistrationApproval(requestNo),
-    onSuccess: (response) => {
-      if (response.data.code === "00") {
-        handleSuccess();
-      }
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
+  const { mutate: mutatePatchRegistrationApproval, isPending: patchRegistrationApprovalLoading } =
+    useMutation({
+      mutationKey: ["request-upload"],
+      mutationFn: async () => await patchRegistrationApproval(requestNo),
+      onSuccess: (response) => {
+        if (response.data.code === "00") {
+          handleSuccess();
+        }
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    });
 
   const handleApprovalClick = () => {
     setIsApprovalDisabled(true);
@@ -92,74 +90,59 @@ export default function Table({
 
   return (
     <>
-      {registrationDetailLoading && patchRegistrationApprovalLoading && (
-        <Loading />
-      )}
+      {registrationDetailLoading && patchRegistrationApprovalLoading && <Loading />}
       <div className="pl-10">
         {/* 담보목적물 주소 */}
         <section className="_section">
-          <Typography
-            as="h2"
-            kind="title-medium"
-            isBold={true}
-            className="_title"
-          >
+          <Typography as="h2" kind="title-medium" isBold={true} className="_title">
             담보목적물 주소
           </Typography>
           <div className="_responsive-table-inner-wrapper _no-thead">
             <table className="_responsive-table">
-              <caption className="_hidden-table-caption">
-                담보목적물 주소 표
-              </caption>
+              <caption className="_hidden-table-caption">담보목적물 주소 표</caption>
               <tbody>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    지번
-                  </Typography>
-                </th>
-                <td>
-                  <Typography kind="body-large">
-                    {data?.lotnumAddr || "-"}
-                  </Typography>
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    도로명
-                  </Typography>
-                </th>
-                <td>
-                  <Typography kind="body-large">
-                    {data?.rdnmAddr || "-"}
-                  </Typography>
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    상세주소
-                  </Typography>
-                </th>
-                <td>
-                  <Typography kind="body-large">
-                    {getDetailAddress(data?.bldg, data?.unit)}
-                  </Typography>
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    고유번호
-                  </Typography>
-                </th>
-                <td>
-                  <Typography kind="body-large">
-                    {data?.unqRgstrNo || "-"}
-                  </Typography>
-                </td>
-              </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      지번
+                    </Typography>
+                  </th>
+                  <td>
+                    <Typography kind="body-large">{data?.lotnumAddr || "-"}</Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      도로명
+                    </Typography>
+                  </th>
+                  <td>
+                    <Typography kind="body-large">{data?.rdnmAddr || "-"}</Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      상세주소
+                    </Typography>
+                  </th>
+                  <td>
+                    <Typography kind="body-large">
+                      {getDetailAddress(data?.bldg, data?.unit)}
+                    </Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      고유번호
+                    </Typography>
+                  </th>
+                  <td>
+                    <Typography kind="body-large">{data?.unqRgstrNo || "-"}</Typography>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -167,51 +150,42 @@ export default function Table({
 
         {/* 기본정보 */}
         <section className="_section">
-          <Typography
-            as="h2"
-            kind="title-medium"
-            isBold={true}
-            className="_title"
-          >
+          <Typography as="h2" kind="title-medium" isBold={true} className="_title">
             기본정보
           </Typography>
           <div className="_responsive-table-inner-wrapper _no-thead">
             <table className="_responsive-table">
               <caption className="_hidden-table-caption">기본정보 표</caption>
               <tbody>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    의뢰번호
-                  </Typography>
-                </th>
-                <td>
-                  <Typography kind="body-large">{requestNo}</Typography>
-                </td>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    채무자
-                  </Typography>
-                </th>
-                <td>
-                  <Typography kind="body-large">
-                    {data?.dbtrNm || "-"}
-                  </Typography>
-                </td>
-                <td colSpan={2}></td>
-              </tr>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    대출실행일
-                  </Typography>
-                </th>
-                <td colSpan={5}>
-                  <Typography kind="body-large">
-                    {data?.execDt || "-"}
-                  </Typography>
-                </td>
-              </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      의뢰번호
+                    </Typography>
+                  </th>
+                  <td>
+                    <Typography kind="body-large">{requestNo}</Typography>
+                  </td>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      채무자
+                    </Typography>
+                  </th>
+                  <td>
+                    <Typography kind="body-large">{data?.dbtrNm || "-"}</Typography>
+                  </td>
+                  <td colSpan={2}></td>
+                </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      대출실행일
+                    </Typography>
+                  </th>
+                  <td colSpan={5}>
+                    <Typography kind="body-large">{data?.execDt || "-"}</Typography>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -220,12 +194,7 @@ export default function Table({
         {/* 등기접수 정보 */}
         <section className="_section">
           <div className="_addon">
-            <Typography
-              as="h2"
-              kind="title-medium"
-              isBold={true}
-              className="_title"
-            >
+            <Typography as="h2" kind="title-medium" isBold={true} className="_title">
               등기접수 정보
             </Typography>
 
@@ -240,59 +209,49 @@ export default function Table({
           </div>
           <div className="_responsive-table-inner-wrapper _no-thead">
             <table className="_responsive-table">
-              <caption className="_hidden-table-caption">
-                등기접수 정보 표
-              </caption>
+              <caption className="_hidden-table-caption">등기접수 정보 표</caption>
               <tbody>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    관할법원
-                  </Typography>
-                </th>
-                <td>
-                  <Typography kind="body-large">
-                    {data?.judtCourtNm || "-"}
-                  </Typography>
-                </td>
-                <td colSpan={4}></td>
-              </tr>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    등기소
-                  </Typography>
-                </th>
-                <td colSpan={5}>
-                  <Typography kind="body-large">
-                    {data?.regrNm || "-"}
-                  </Typography>
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    접수번호
-                  </Typography>
-                </th>
-                <td colSpan={5}>
-                  <Typography kind="body-large">
-                    {data?.acptNo || "-"}
-                  </Typography>
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    조회결과
-                  </Typography>
-                </th>
-                <td colSpan={5}>
-                  <Typography kind="body-large">
-                    {data?.rgstrAcptYn || "-"}
-                  </Typography>
-                </td>
-              </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      관할법원
+                    </Typography>
+                  </th>
+                  <td>
+                    <Typography kind="body-large">{data?.judtCourtNm || "-"}</Typography>
+                  </td>
+                  <td colSpan={4}></td>
+                </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      등기소
+                    </Typography>
+                  </th>
+                  <td colSpan={5}>
+                    <Typography kind="body-large">{data?.regrNm || "-"}</Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      접수번호
+                    </Typography>
+                  </th>
+                  <td colSpan={5}>
+                    <Typography kind="body-large">{data?.acptNo || "-"}</Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      조회결과
+                    </Typography>
+                  </th>
+                  <td colSpan={5}>
+                    <Typography kind="body-large">{data?.rgstrAcptYn || "-"}</Typography>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -300,56 +259,47 @@ export default function Table({
 
         {/* 담당자 정보 */}
         <section className="_section">
-          <Typography
-            as="h2"
-            kind="title-medium"
-            isBold={true}
-            className="_title"
-          >
+          <Typography as="h2" kind="title-medium" isBold={true} className="_title">
             담당자 정보
           </Typography>
           <div className="_responsive-table-inner-wrapper _no-thead">
             <table className="_responsive-table">
-              <caption className="_hidden-table-caption">
-                담당자 정보 표
-              </caption>
+              <caption className="_hidden-table-caption">담당자 정보 표</caption>
               <tbody>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    금융기관
-                  </Typography>
-                </th>
-                <td colSpan={3}>
-                  <Typography kind="body-large">
-                    {getManagerInfo(data?.bndMembNm, data?.bndMembHpno)}
-                  </Typography>
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    법무대리인
-                  </Typography>
-                </th>
-                <td colSpan={3}>
-                  <Typography kind="body-large">
-                    {getManagerInfo(data?.lgagMembNm, data?.lgagMembHpno)}
-                  </Typography>
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  <Typography kind="body-large" isBold={true}>
-                    전달사항
-                  </Typography>
-                </th>
-                <td colSpan={3}>
-                  <Typography kind="body-large">
-                    {data?.mngrDlvrCnts}
-                  </Typography>
-                </td>
-              </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      금융기관
+                    </Typography>
+                  </th>
+                  <td colSpan={3}>
+                    <Typography kind="body-large">
+                      {getManagerInfo(data?.bndMembNm, data?.bndMembHpno)}
+                    </Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      법무대리인
+                    </Typography>
+                  </th>
+                  <td colSpan={3}>
+                    <Typography kind="body-large">
+                      {getManagerInfo(data?.lgagMembNm, data?.lgagMembHpno)}
+                    </Typography>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <Typography kind="body-large" isBold={true}>
+                      전달사항
+                    </Typography>
+                  </th>
+                  <td colSpan={3}>
+                    <Typography kind="body-large">{data?.mngrDlvrCnts}</Typography>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -365,12 +315,7 @@ export default function Table({
               승인하기
             </Button>
 
-            <Button
-              shape="outline"
-              size="md"
-              color="main5"
-              onClick={openRejectionModal}
-            >
+            <Button shape="outline" size="md" color="main5" onClick={openRejectionModal}>
               반려
             </Button>
           </div>
@@ -379,10 +324,7 @@ export default function Table({
 
       {/* 등기접수 정보 등록 모달 */}
       {isRegistrationInformationModalOpen && (
-        <Modal
-          title="등기접수 정보 등록"
-          onClose={closeRegistrationInformationModal}
-        >
+        <Modal title="등기접수 정보 등록" onClose={closeRegistrationInformationModal}>
           <RegistrationInformation
             requestNo={requestNo}
             isDesktop={isDesktop}
@@ -393,10 +335,7 @@ export default function Table({
       {/* 반려 모달 */}
       {isRejectionModalOpen && (
         <Modal title="반려" size="md" onClose={closeRejectionModal}>
-          <RegistrationRejection
-            requestNo={requestNo}
-            closeRejectionModal={closeRejectionModal}
-          />
+          <RegistrationRejection requestNo={requestNo} closeRejectionModal={closeRejectionModal} />
         </Modal>
       )}
     </>

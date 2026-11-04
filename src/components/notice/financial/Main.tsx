@@ -3,12 +3,7 @@
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 
-import {
-  Breadcrumb,
-  Loading,
-  Pagination,
-  Typography,
-} from "@components/common";
+import { Breadcrumb, Loading, Pagination, Typography } from "@components/common";
 import { useResponsive } from "@hooks";
 import { getNoticeBoardList } from "@services/home";
 

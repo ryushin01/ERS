@@ -5,10 +5,7 @@ import { useSetAtom } from "jotai";
 import { Button } from "@components/button";
 import RegistrationDataView from "@components/registration/RegistrationDataView";
 import { PROC_STAT_CD } from "@constants/code";
-import {
-  getRegistrationInfoData,
-  patchRegistrationHold,
-} from "@services/request";
+import { getRegistrationInfoData, patchRegistrationHold } from "@services/request";
 import { toastState } from "@stores";
 import { ResponsiveType } from "@types";
 import { getCompareWithToday } from "@utils/dateUtil";
@@ -23,10 +20,10 @@ type RegistrationDataProps = {
  * @description 금융기관 - 등기자료 상세 팝업 (진행보류 처리 포함)
  */
 export default function RegistrationDataDetail({
-                                                 requestNo,
-                                                 onClose,
-                                                 isDesktop,
-                                               }: RegistrationDataProps & ResponsiveType) {
+  requestNo,
+  onClose,
+  isDesktop,
+}: RegistrationDataProps & ResponsiveType) {
   const openToast = useSetAtom(toastState);
   const [isHoldDisabled, setIsHoldDisabled] = useState(false);
 
@@ -69,10 +66,7 @@ export default function RegistrationDataDetail({
     const compareWithToday = getCompareWithToday(data?.execDt);
     if (compareWithToday === "same" || compareWithToday === "past") {
       setIsHoldDisabled(true);
-    } else if (
-      data?.statCd === PROC_STAT_CD.HOLD ||
-      data?.statCd === PROC_STAT_CD.CANCEL
-    ) {
+    } else if (data?.statCd === PROC_STAT_CD.HOLD || data?.statCd === PROC_STAT_CD.CANCEL) {
       setIsHoldDisabled(true);
     }
   }, [data]);

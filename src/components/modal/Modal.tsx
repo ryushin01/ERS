@@ -16,12 +16,12 @@ type ModalProps = {
   title: string;
   onClose: () => void;
   size?:
-    "xs" | // 미할당
-    "sm" | // 436x202
-    "md" | // 640x530
-    "lg" | // 700x987
-    "xl"   // 1104x800
-}
+    | "xs" // 미할당
+    | "sm" // 436x202
+    | "md" // 640x530
+    | "lg" // 700x987
+    | "xl"; // 1104x800
+};
 
 /**
  * @name Modal
@@ -74,4 +74,4 @@ export default function Modal({ children, title, onClose, size = "xl" }: ModalPr
     </>,
     portal as Element,
   );
-};
+}

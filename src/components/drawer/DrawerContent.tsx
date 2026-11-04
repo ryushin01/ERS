@@ -48,13 +48,13 @@ type DrawerContentProps = {
  */
 
 export default function DrawerContent({
-                                        level,
-                                        isModalOpen,
-                                        openModal,
-                                        closeModal,
-                                        profileData,
-                                        imgSrc,
-                                      }: DrawerContentProps) {
+  level,
+  isModalOpen,
+  openModal,
+  closeModal,
+  profileData,
+  imgSrc,
+}: DrawerContentProps) {
   const openToast = useSetAtom(toastState);
   const { isDesktop } = useResponsive();
   const authInfo = useAtomValue(authAtom);
@@ -162,9 +162,7 @@ export default function DrawerContent({
 
     // 버튼 활성화 여부 판단
     const isAnyEmpty =
-      updatedForm.pwd === "" ||
-      updatedForm.newPwd === "" ||
-      updatedForm.reNewPwd === "";
+      updatedForm.pwd === "" || updatedForm.newPwd === "" || updatedForm.reNewPwd === "";
 
     setIsDisabled(isAnyEmpty);
   };
@@ -180,21 +178,16 @@ export default function DrawerContent({
       {/* NOTE: 금융기관 케이스에서만 노출 */}
       {level === MEMB_GB_CD.FINANCIAL && (
         <div className="_drawer-content-inner-wrapper">
-          {isLogout ?
-            <Image
-              src={DefaultProfile}
-              alt="기본 프로필 이미지"
-              width={48}
-              height={48}
-            />
-            :
+          {isLogout ? (
+            <Image src={DefaultProfile} alt="기본 프로필 이미지" width={48} height={48} />
+          ) : (
             <ImageWithAuth
               src={imgSrc ? `${appURI}/api${imgSrc}` : ""}
               alt={`${profileData} 프로필 이미지`}
               width={48}
               height={48}
             />
-          }
+          )}
           <Typography kind="body-large" isBold={true}>
             {!!profileData ? profileData : "금융기관"}
           </Typography>
@@ -212,14 +205,7 @@ export default function DrawerContent({
           shape="outline"
           size="sm"
           color="grayscale"
-          icon={
-            <Image
-              src={LogoutIcon}
-              alt="로그아웃 아이콘"
-              width={14}
-              height={14}
-            />
-          }
+          icon={<Image src={LogoutIcon} alt="로그아웃 아이콘" width={14} height={14} />}
           iconPosition="right"
           onClick={handleLogout}
         >
@@ -281,13 +267,7 @@ export default function DrawerContent({
                 onChange={handleInputChange}
               />
             </div>
-            <Button
-              shape="solid"
-              size="lg"
-              color="main100"
-              type="submit"
-              disabled={isDisabled}
-            >
+            <Button shape="solid" size="lg" color="main100" type="submit" disabled={isDisabled}>
               비밀번호 변경
             </Button>
           </Form>

@@ -11,7 +11,7 @@ export default function CommonLayout({ children }: { children: ReactNode }) {
   return (
     <div className="_login-outer-wrapper">
       <Header />
-      
+
       <main>
         <div className="_login-inner-wrapper">{children}</div>
       </main>

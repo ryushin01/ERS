@@ -35,9 +35,7 @@ export default function Header() {
           </Link>
         </h1>
 
-        {pathname !== "/" &&
-          <HeaderRightArea />
-        }
+        {pathname !== "/" && <HeaderRightArea />}
       </div>
     </header>
   );

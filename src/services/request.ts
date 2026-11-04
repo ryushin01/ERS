@@ -1,7 +1,4 @@
-import {
-  API_CLIENT_REGISTRATION,
-  API_CLIENT_REQUEST,
-} from "@constants/api-path";
+import { API_CLIENT_REGISTRATION, API_CLIENT_REQUEST } from "@constants/api-path";
 import { PAGE_LIMIT_PC } from "@constants/page";
 import { axiosBasicInstance } from "@services";
 

@@ -6,12 +6,4 @@ import GridItem from "./GridItem";
 import Header from "./Header";
 import LoginLayout from "./LoginLayout";
 
-export {
-  CommonLayout,
-  Footer,
-  Gnb,
-  Grid,
-  GridItem,
-  Header,
-  LoginLayout,
-};
+export { CommonLayout, Footer, Gnb, Grid, GridItem, Header, LoginLayout };

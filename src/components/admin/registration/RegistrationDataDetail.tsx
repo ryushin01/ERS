@@ -13,9 +13,9 @@ type RegistrationDataDetailProps = {
  * @description 관리자 - 등기자료 상세 팝업 (등기관리·배정관리 공통)
  */
 export default function RegistrationDataDetail({
-                                                 requestNo,
-                                                 isDesktop,
-                                               }: RegistrationDataDetailProps & ResponsiveType) {
+  requestNo,
+  isDesktop,
+}: RegistrationDataDetailProps & ResponsiveType) {
   /* 등기자료 정보 조회 */
   const { data } = useQuery({
     queryKey: ["admin-registration-data", requestNo],
@@ -25,11 +25,6 @@ export default function RegistrationDataDetail({
   });
 
   return (
-    <RegistrationDataView
-      requestNo={requestNo}
-      data={data}
-      variant="admin"
-      isDesktop={isDesktop}
-    />
+    <RegistrationDataView requestNo={requestNo} data={data} variant="admin" isDesktop={isDesktop} />
   );
 }

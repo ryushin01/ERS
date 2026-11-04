@@ -1,11 +1,6 @@
 import InfoTableSection from "@components/common/InfoTableSection";
 
-import {
-  DetailVariant,
-  getAddressRows,
-  getManagerRows,
-  RegistrationDetailData,
-} from "./rows";
+import { DetailVariant, getAddressRows, getManagerRows, RegistrationDetailData } from "./rows";
 
 type RegistrationReceiptViewProps = {
   requestNo: string;
@@ -21,11 +16,11 @@ type RegistrationReceiptViewProps = {
  * @description 등기접수증 상세 팝업의 표시 영역입니다. (금융기관 현황조회·관리자 등기관리 공통)
  */
 export default function RegistrationReceiptView({
-                                                  requestNo,
-                                                  data,
-                                                  variant,
-                                                  isDesktop,
-                                                }: RegistrationReceiptViewProps) {
+  requestNo,
+  data,
+  variant,
+  isDesktop,
+}: RegistrationReceiptViewProps) {
   return (
     <>
       <InfoTableSection title="담보목적물 주소" rows={getAddressRows(data)} isDesktop={isDesktop} />
@@ -33,7 +28,10 @@ export default function RegistrationReceiptView({
         title="기본 정보"
         isDesktop={isDesktop}
         rows={[
-          [{ label: "의뢰번호", value: requestNo }, { label: "채무자", value: data?.dbtrNm || "-" }],
+          [
+            { label: "의뢰번호", value: requestNo },
+            { label: "채무자", value: data?.dbtrNm || "-" },
+          ],
           { label: "대출실행일", value: data?.execDt || "-" },
         ]}
       />

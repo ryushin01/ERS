@@ -2,12 +2,7 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  MutationCache,
-  QueryCache,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useSetAtom } from "jotai";
 import Cookies from "js-cookie";
@@ -48,35 +43,36 @@ export default function Provider({ children }: { children: ReactNode }) {
   };
 
   // 렌더링마다 새 인스턴스가 생성되어 캐시가 초기화되지 않도록 최초 1회만 생성합니다.
-  const [queryClient] = useState(() => new QueryClient({
-    // 전역으로 사용할 기본 옵션 설정
-    defaultOptions: {
-      queries: {
-        // 윈도우가 다시 포커스 시(화면을 보고 있을 때) 데이터 호출 여부
-        refetchOnWindowFocus: true,
-        // 페이지 전환 시 데이터 호출 여부
-        refetchOnMount: true,
-        // 네트워크 단절 후 재연결 시 데이터 호출 여부
-        refetchOnReconnect: true,
-        // 요청 실패 시 재요청 여부 및 횟수
-        retry: false,
-      },
-    },
-    mutationCache: new MutationCache({
-      onError: (e: Error) => {
-        handleError(e);
-      },
-      onSuccess: () => {
-      },
-    }),
-    queryCache: new QueryCache({
-      onError: (e: Error) => {
-        handleError(e);
-      },
-      onSuccess: () => {
-      },
-    }),
-  }));
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        // 전역으로 사용할 기본 옵션 설정
+        defaultOptions: {
+          queries: {
+            // 윈도우가 다시 포커스 시(화면을 보고 있을 때) 데이터 호출 여부
+            refetchOnWindowFocus: true,
+            // 페이지 전환 시 데이터 호출 여부
+            refetchOnMount: true,
+            // 네트워크 단절 후 재연결 시 데이터 호출 여부
+            refetchOnReconnect: true,
+            // 요청 실패 시 재요청 여부 및 횟수
+            retry: false,
+          },
+        },
+        mutationCache: new MutationCache({
+          onError: (e: Error) => {
+            handleError(e);
+          },
+          onSuccess: () => {},
+        }),
+        queryCache: new QueryCache({
+          onError: (e: Error) => {
+            handleError(e);
+          },
+          onSuccess: () => {},
+        }),
+      }),
+  );
 
   const pathSpy = () => {
     const storage = globalThis?.sessionStorage;
@@ -99,7 +95,6 @@ export default function Provider({ children }: { children: ReactNode }) {
     return () => {
       Cookies.remove("membGbCd");
     };
-
   }, []);
 
   return (

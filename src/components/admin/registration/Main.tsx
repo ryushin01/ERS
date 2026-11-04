@@ -38,97 +38,49 @@ export default function Main() {
     {
       id: "total",
       label: "전체",
-      content: (
-        <List
-          tabSelection={tabSelection}
-          setTabCount={setTabCount}
-          isDesktop={isDesktop}
-        />
-      ),
+      content: <List tabSelection={tabSelection} setTabCount={setTabCount} isDesktop={isDesktop} />,
       count: tabCount.total,
     },
     {
       id: "mtchCmpt",
       label: "배정완료",
-      content: (
-        <List
-          tabSelection={tabSelection}
-          setTabCount={setTabCount}
-          isDesktop={isDesktop}
-        />
-      ),
+      content: <List tabSelection={tabSelection} setTabCount={setTabCount} isDesktop={isDesktop} />,
       count: tabCount.mtchCmpt,
     },
     {
       id: "loanExec",
       label: "대출실행",
-      content: (
-        <List
-          tabSelection={tabSelection}
-          setTabCount={setTabCount}
-          isDesktop={isDesktop}
-        />
-      ),
+      content: <List tabSelection={tabSelection} setTabCount={setTabCount} isDesktop={isDesktop} />,
       count: tabCount.loanExec,
     },
     {
       id: "rqstProg",
       label: "접수검토중",
-      content: (
-        <List
-          tabSelection={tabSelection}
-          setTabCount={setTabCount}
-          isDesktop={isDesktop}
-        />
-      ),
+      content: <List tabSelection={tabSelection} setTabCount={setTabCount} isDesktop={isDesktop} />,
       count: tabCount.rqstProg,
     },
     {
       id: "rqstRtun",
       label: "접수반려",
-      content: (
-        <List
-          tabSelection={tabSelection}
-          setTabCount={setTabCount}
-          isDesktop={isDesktop}
-        />
-      ),
+      content: <List tabSelection={tabSelection} setTabCount={setTabCount} isDesktop={isDesktop} />,
       count: tabCount.rqstRtun,
     },
     {
       id: "rqstCmpt",
       label: "접수완료",
-      content: (
-        <List
-          tabSelection={tabSelection}
-          setTabCount={setTabCount}
-          isDesktop={isDesktop}
-        />
-      ),
+      content: <List tabSelection={tabSelection} setTabCount={setTabCount} isDesktop={isDesktop} />,
       count: tabCount.rqstCmpt,
     },
     {
       id: "progHold",
       label: "진행보류",
-      content: (
-        <List
-          tabSelection={tabSelection}
-          setTabCount={setTabCount}
-          isDesktop={isDesktop}
-        />
-      ),
+      content: <List tabSelection={tabSelection} setTabCount={setTabCount} isDesktop={isDesktop} />,
       count: tabCount.progHold,
     },
     {
       id: "progCncl",
       label: "진행취소",
-      content: (
-        <List
-          tabSelection={tabSelection}
-          setTabCount={setTabCount}
-          isDesktop={isDesktop}
-        />
-      ),
+      content: <List tabSelection={tabSelection} setTabCount={setTabCount} isDesktop={isDesktop} />,
       count: tabCount.progCncl,
     },
   ];

@@ -3,9 +3,4 @@ import CancelIcon from "./cancel-icon36.svg";
 import CheckCircleIcon from "./check-circle-icon36.svg";
 import FileAttachmentIcon from "./file-attachment-icon36.svg";
 
-export {
-  AlertCircleIcon,
-  CancelIcon,
-  CheckCircleIcon,
-  FileAttachmentIcon,
-};
+export { AlertCircleIcon, CancelIcon, CheckCircleIcon, FileAttachmentIcon };

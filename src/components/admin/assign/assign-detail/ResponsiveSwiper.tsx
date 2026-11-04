@@ -25,14 +25,14 @@ type ResponsiveSwiperProps = {
  *              새로 추가한 이미지만 개별 삭제할 수 있습니다.
  */
 export default function ResponsiveSwiper({
-                                           className = "",
-                                           requestNo,
-                                           imageList = [],
-                                           imageLoading,
-                                           isDesktop,
-                                           handleFileDelete,
-                                           apiImageLength = 0,
-                                         }: ResponsiveSwiperProps & ResponsiveType) {
+  className = "",
+  requestNo,
+  imageList = [],
+  imageLoading,
+  isDesktop,
+  handleFileDelete,
+  apiImageLength = 0,
+}: ResponsiveSwiperProps & ResponsiveType) {
   const slides = imageList.map(({ seq, filIdx, src, attcFilNm, source }, index) => {
     const alt = `의뢰번호 ${requestNo}의 등기자료 ${index + 1}번 이미지`;
     const imageProps = {
@@ -49,8 +49,7 @@ export default function ResponsiveSwiper({
           <ImageWithAuth src={`${appURI}/api${src}`} alt={alt} {...imageProps} />
         ),
       // 새로 추가한 이미지의 인덱스는 서버 이미지 개수만큼 뒤에서 시작
-      onDelete:
-        source === "prop" ? () => handleFileDelete?.(index - apiImageLength) : undefined,
+      onDelete: source === "prop" ? () => handleFileDelete?.(index - apiImageLength) : undefined,
     };
   });
 

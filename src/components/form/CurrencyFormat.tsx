@@ -17,17 +17,15 @@ type CurrencyFormatProps = {
  * @author 류창선 <ryushin0167@gmail.com>
  */
 export default function CurrencyFormat({
-                                         id,
-                                         name,
-                                         value,
-                                         onChange,
-                                         placeholder,
-                                         required,
-                                         inputSize = "sm",
-                                         isError = false,
-                                       }: CurrencyFormatProps) {
-
-
+  id,
+  name,
+  value,
+  onChange,
+  placeholder,
+  required,
+  inputSize = "sm",
+  isError = false,
+}: CurrencyFormatProps) {
   let setSize = "";
   switch (inputSize) {
     case "sm":
@@ -58,4 +56,3 @@ export default function CurrencyFormat({
     </div>
   );
 }
-

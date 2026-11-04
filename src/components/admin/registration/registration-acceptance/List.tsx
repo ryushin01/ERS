@@ -12,9 +12,9 @@ export type RegistrationAcceptanceProps = {
 };
 
 export default function List({
-                               requestNo,
-                               isDesktop,
-                             }: RegistrationAcceptanceProps & ResponsiveType) {
+  requestNo,
+  isDesktop,
+}: RegistrationAcceptanceProps & ResponsiveType) {
   return (
     <>
       <Grid className="_without-padding">

@@ -48,7 +48,13 @@ describe("Button", () => {
 
   it("iconPosition에 맞춰 아이콘을 텍스트 앞이나 뒤에 둔다", () => {
     const { rerender } = render(
-      <Button shape="solid" size="md" color="main100" icon={<i data-testid="icon" />} iconPosition="left">
+      <Button
+        shape="solid"
+        size="md"
+        color="main100"
+        icon={<i data-testid="icon" />}
+        iconPosition="left"
+      >
         다음
       </Button>,
     );
@@ -56,7 +62,13 @@ describe("Button", () => {
     expect(button.firstElementChild).toContainElement(screen.getByTestId("icon"));
 
     rerender(
-      <Button shape="solid" size="md" color="main100" icon={<i data-testid="icon" />} iconPosition="right">
+      <Button
+        shape="solid"
+        size="md"
+        color="main100"
+        icon={<i data-testid="icon" />}
+        iconPosition="right"
+      >
         다음
       </Button>,
     );

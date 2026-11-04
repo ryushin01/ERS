@@ -5,7 +5,7 @@ import "@styles/frame.css";
 type FrameProps = {
   aspectRatio?: "square" | "video" | "inherit";
   children: ReactNode;
-}
+};
 
 /**
  * @name Frame
@@ -16,13 +16,16 @@ type FrameProps = {
  */
 export default function Frame({ aspectRatio = "inherit", children }: FrameProps) {
   return (
-    <span className={`_frame 
-    ${aspectRatio === "inherit"
-      ? "h-full"
-      : aspectRatio === "square"
-        ? "aspect-square"
-        : "aspect-video"
-    }`}>
+    <span
+      className={`_frame 
+    ${
+      aspectRatio === "inherit"
+        ? "h-full"
+        : aspectRatio === "square"
+          ? "aspect-square"
+          : "aspect-video"
+    }`}
+    >
       {children}
     </span>
   );

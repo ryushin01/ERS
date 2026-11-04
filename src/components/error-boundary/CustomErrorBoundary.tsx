@@ -10,7 +10,7 @@ import { Fallback } from "@components/error-boundary";
 
 type CustomErrorBoundaryProps = {
   element: ReactNode;
-}
+};
 
 /**
  * @name CustomErrorBoundary
@@ -36,9 +36,7 @@ const CustomErrorBoundary = ({ element }: CustomErrorBoundaryProps) => {
       onReset={reset}
     >
       {/* 자식인 element의 로딩이 완료될 때까지 fallback의 값인 Spinner 노출 */}
-      <Suspense fallback={<Loading />}>
-        {element}
-      </Suspense>
+      <Suspense fallback={<Loading />}>{element}</Suspense>
     </ErrorBoundary>
   );
 };

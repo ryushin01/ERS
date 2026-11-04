@@ -21,11 +21,7 @@ type defineProps = {
   rqstNo?: string;
 };
 
-export default function FilterTable({
-                                      isDesktop,
-                                      setFilters,
-                                      rqstNo,
-                                    }: defineProps) {
+export default function FilterTable({ isDesktop, setFilters, rqstNo }: defineProps) {
   const { reset, ...datePickerProps } = useDatePicker();
   const [selectedButtonGroup, setSelectedButtonGroup] = useState<boolean[]>([]);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -57,10 +53,7 @@ export default function FilterTable({
     }));
   };
 
-  const STATUS_OPTION = [
-    { value: "", label: "전체" },
-    ...transformStatusData(data),
-  ];
+  const STATUS_OPTION = [{ value: "", label: "전체" }, ...transformStatusData(data)];
 
   useEffect(() => {
     if (rqstNo) {
@@ -148,9 +141,7 @@ export default function FilterTable({
       const newStartDate = datePickerProps?.startDate
         ? getDateString(datePickerProps?.startDate)
         : "";
-      const newEndDate = datePickerProps?.endDate
-        ? getDateString(datePickerProps?.endDate)
-        : "";
+      const newEndDate = datePickerProps?.endDate ? getDateString(datePickerProps?.endDate) : "";
 
       updatedFilters = {
         ...updatedFilters,
@@ -193,7 +184,6 @@ export default function FilterTable({
       const newForm = { ...prevForm, ...updatedFilters };
       return newForm;
     });
-
   };
 
   const handleDateChange = (dates: [Date | null, Date | null]) => {
@@ -234,92 +224,81 @@ export default function FilterTable({
       >
         <div className="_responsive-table-inner-wrapper _no-thead border-none">
           <table className="_responsive-table _col-8-type">
-            <caption className="_hidden-table-caption">
-              전자등기 현황조회 필터 표
-            </caption>
+            <caption className="_hidden-table-caption">전자등기 현황조회 필터 표</caption>
             <tbody>
-            <tr>
-              <th>
-                <Typography
-                  kind={isDesktop ? "title-small" : "body-medium"}
-                  isBold={true}
-                >
-                  의뢰번호
-                </Typography>
-              </th>
-              <td colSpan={2}>
-                <div className="min-w-52">
+              <tr>
+                <th>
+                  <Typography kind={isDesktop ? "title-small" : "body-medium"} isBold={true}>
+                    의뢰번호
+                  </Typography>
+                </th>
+                <td colSpan={2}>
+                  <div className="min-w-52">
+                    <InputField
+                      name="rqstNo"
+                      defaultValue={filters.rqstNo}
+                      required={false}
+                      placeholder={"의뢰번호를 입력해 주세요"}
+                      isError={false}
+                      inputSize="sm"
+                    />
+                  </div>
+                </td>
+                <td className="_hidden-in-mobile">&nbsp;</td>
+                <th>
+                  <Typography kind={isDesktop ? "title-small" : "body-medium"} isBold={true}>
+                    진행상태
+                  </Typography>
+                </th>
+                <td>
+                  <Select
+                    id="statCd"
+                    name="statCd"
+                    selectSize="sm"
+                    options={STATUS_OPTION}
+                    value={filters.statCd}
+                    onChange={handleSelectedStatus}
+                    isError={false}
+                  />
+                </td>
+                <th className="_hidden-in-mobile">
+                  <Typography kind={isDesktop ? "title-small" : "body-medium"} isBold={true}>
+                    접수번호
+                  </Typography>
+                </th>
+                <td className="_hidden-in-mobile">
                   <InputField
-                    name="rqstNo"
-                    defaultValue={filters.rqstNo}
+                    name="acptNo"
+                    defaultValue={filters.acptNo}
                     required={false}
-                    placeholder={"의뢰번호를 입력해 주세요"}
+                    placeholder={"접수번호를 입력해 주세요"}
                     isError={false}
                     inputSize="sm"
                   />
-                </div>
-              </td>
-              <td className="_hidden-in-mobile">&nbsp;</td>
-              <th>
-                <Typography
-                  kind={isDesktop ? "title-small" : "body-medium"}
-                  isBold={true}
-                >
-                  진행상태
-                </Typography>
-              </th>
-              <td>
-                <Select
-                  id="statCd"
-                  name="statCd"
-                  selectSize="sm"
-                  options={STATUS_OPTION}
-                  value={filters.statCd}
-                  onChange={handleSelectedStatus}
-                  isError={false}
-                />
-              </td>
-              <th className="_hidden-in-mobile">
-                <Typography
-                  kind={isDesktop ? "title-small" : "body-medium"}
-                  isBold={true}
-                >
-                  접수번호
-                </Typography>
-              </th>
-              <td className="_hidden-in-mobile">
-                <InputField
-                  name="acptNo"
-                  defaultValue={filters.acptNo}
-                  required={false}
-                  placeholder={"접수번호를 입력해 주세요"}
-                  isError={false}
-                  inputSize="sm"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <Typography
-                  kind={isDesktop ? "title-small" : "body-medium"}
-                  isBold={true}
-                  className="_hidden-in-desktop"
-                >
-                  조회기간
-                </Typography>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <Typography
+                    kind={isDesktop ? "title-small" : "body-medium"}
+                    isBold={true}
+                    className="_hidden-in-desktop"
+                  >
+                    조회기간
+                  </Typography>
 
-                <Select
-                  id="searchType"
-                  name="searchType"
-                  shape={isDesktop ? "none" : "default"}
-                  selectSize={isDesktop ? "md" : "sm"}
-                  options={PERIOD_OPTION}
-                  value={filters.searchType}
-                  onChange={handleChangeSearchType}
-                  isError={false}
-                />
-              </th>
-              <td colSpan={3}>
+                  <Select
+                    id="searchType"
+                    name="searchType"
+                    shape={isDesktop ? "none" : "default"}
+                    selectSize={isDesktop ? "md" : "sm"}
+                    options={PERIOD_OPTION}
+                    value={filters.searchType}
+                    onChange={handleChangeSearchType}
+                    isError={false}
+                  />
+                </th>
+                <td colSpan={3}>
                   <span className="_datepicker-and-button-group-wrapper">
                     <DatePicker
                       id="execution-date"
@@ -337,30 +316,27 @@ export default function FilterTable({
                       handleButtonGroup={handleButtonGroup}
                     />
                   </span>
-              </td>
-              <th className="_hidden-in-mobile">
-                <Typography
-                  kind={isDesktop ? "title-small" : "body-medium"}
-                  isBold={true}
-                >
-                  채무자
-                </Typography>
-              </th>
-              <td className="_hidden-in-mobile">
-                <InputField
-                  type="text"
-                  name="dbtrNm"
-                  defaultValue={filters.dbtrNm}
-                  required={false}
-                  placeholder={"채무자를 입력해 주세요"}
-                  isError={false}
-                  inputSize="sm"
-                />
-              </td>
-              <td colSpan={2} className="_hidden-in-mobile">
-                &nbsp;
-              </td>
-            </tr>
+                </td>
+                <th className="_hidden-in-mobile">
+                  <Typography kind={isDesktop ? "title-small" : "body-medium"} isBold={true}>
+                    채무자
+                  </Typography>
+                </th>
+                <td className="_hidden-in-mobile">
+                  <InputField
+                    type="text"
+                    name="dbtrNm"
+                    defaultValue={filters.dbtrNm}
+                    required={false}
+                    placeholder={"채무자를 입력해 주세요"}
+                    isError={false}
+                    inputSize="sm"
+                  />
+                </td>
+                <td colSpan={2} className="_hidden-in-mobile">
+                  &nbsp;
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

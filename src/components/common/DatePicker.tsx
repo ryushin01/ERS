@@ -33,18 +33,18 @@ type DatePickerProps = {
  * @property {boolean} isError              - 미입력 시 에러 처리
  */
 export default function DatePicker({
-                                     id,
-                                     name = "",
-                                     startDate,
-                                     endDate,
-                                     handleDatePicker,
-                                     handleDatesPicker,
-                                     isMultiComponent = false,
-                                     required = false,
-                                     isExcludingPast = false,
-                                     minDate = null,
-                                     isError = false,
-                                   }: DatePickerProps) {
+  id,
+  name = "",
+  startDate,
+  endDate,
+  handleDatePicker,
+  handleDatesPicker,
+  isMultiComponent = false,
+  required = false,
+  isExcludingPast = false,
+  minDate = null,
+  isError = false,
+}: DatePickerProps) {
   // 단일/범위 선택 공통 옵션
   const commonProps = {
     id,

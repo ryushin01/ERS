@@ -33,8 +33,7 @@ const EMPTY_SPPL_DATA = {
 
 export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
   const openToast = useSetAtom(toastState);
-  const { handleFileChange, handleFileDelete, previewImageList, imageList } =
-    useFileUpload();
+  const { handleFileChange, handleFileDelete, previewImageList, imageList } = useFileUpload();
   const [data, setData] = useState({
     rqstNo: "",
     execDt: "",
@@ -53,10 +52,7 @@ export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
   ]);
 
   /* 배정등록 상세정보 조회 api */
-  const {
-    data: spplData = EMPTY_SPPL_DATA,
-    isLoading: spplDataLoading,
-  } = useQuery({
+  const { data: spplData = EMPTY_SPPL_DATA, isLoading: spplDataLoading } = useQuery({
     queryKey: ["search-sppldata"],
     queryFn: async () => await getSupplimentData(rqstNo),
     select: (response) => response.data,
@@ -72,9 +68,7 @@ export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
   }, [spplData]);
 
   /* 부동산구분코드 조회 api */
-  const {
-    data: realeCdData,
-  } = useQuery({
+  const { data: realeCdData } = useQuery({
     queryKey: ["search-realecode"],
     queryFn: async () => await getCommonCodeList(REALE_CD),
     select: (response) => response.data,
@@ -110,8 +104,7 @@ export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
   /* 등기자료 이미지 정보 조회 */
   const { data: imageData, isLoading: imageLoading } = useQuery({
     queryKey: ["registration-images", rqstNo],
-    queryFn: async () =>
-      await getRegistrationImages(rqstNo!, ATTC_FIL_CD.REGISTRATION_DATA!),
+    queryFn: async () => await getRegistrationImages(rqstNo!, ATTC_FIL_CD.REGISTRATION_DATA!),
     select: (response) => response.data?.data,
     enabled: !!rqstNo,
   });
@@ -143,8 +136,7 @@ export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
   // 첨부 가능 개수 제어
   const isMaxFileExceeded = mergedImages?.length >= FILE_MAXIMUM_NUMBER;
   const isMaxSizeExceeded =
-    imageList?.reduce((total, file) => total + (file.size ?? 0), 0) >
-    FILE_MAXIMUM_SIZE;
+    imageList?.reduce((total, file) => total + (file.size ?? 0), 0) > FILE_MAXIMUM_SIZE;
 
   const isUploadDisabled = isMaxFileExceeded || isMaxSizeExceeded;
 

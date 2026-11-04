@@ -20,19 +20,15 @@ type filterProps = {
 };
 
 export default function FilterTable({
-                                      filters,
-                                      setFilters,
-                                      isDesktop,
-                                    }: filterProps & ResponsiveType) {
+  filters,
+  setFilters,
+  isDesktop,
+}: filterProps & ResponsiveType) {
   const { reset, ...datePickerProps } = useDatePicker();
   const [selectedPeriodExpanded, setSelectedPeriodExpanded] = useState(
     PERIOD_EXPANDED_OPTION[0].value,
   );
-  const [selectedButtonGroup, setSelectedButtonGroup] = useState<boolean[]>([
-    false,
-    false,
-    false,
-  ]);
+  const [selectedButtonGroup, setSelectedButtonGroup] = useState<boolean[]>([false, false, false]);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [requestNo, setRequestNo] = useState("");
@@ -89,17 +85,11 @@ export default function FilterTable({
     }
 
     // DatePicker 값 처리
-    if (
-      datePickerProps &&
-      !!datePickerProps?.startDate &&
-      !!datePickerProps?.endDate
-    ) {
+    if (datePickerProps && !!datePickerProps?.startDate && !!datePickerProps?.endDate) {
       const newStartDate = datePickerProps?.startDate
         ? getDateString(datePickerProps?.startDate)
         : "";
-      const newEndDate = datePickerProps?.endDate
-        ? getDateString(datePickerProps?.endDate)
-        : "";
+      const newEndDate = datePickerProps?.endDate ? getDateString(datePickerProps?.endDate) : "";
 
       const updatedFilters = {
         ...filters, // 기존 필터 값을 유지
@@ -152,48 +142,43 @@ export default function FilterTable({
       >
         <div className="_responsive-table-inner-wrapper _no-thead border-none">
           <table className="_responsive-table _col-8-type">
-            <caption className="_hidden-table-caption">
-              등기관리 필터 표
-            </caption>
+            <caption className="_hidden-table-caption">등기관리 필터 표</caption>
             <tbody>
-            <tr>
-              <th>
-                <Typography
-                  kind={isDesktop ? "title-small" : "body-medium"}
-                  isBold={true}
-                >
-                  의뢰번호
-                </Typography>
-              </th>
-              <td colSpan={2}>
-                <div className="min-w-52">
-                  <InputField
-                    name="rqstNo"
-                    defaultValue={!!requestNo ? requestNo : filters.rqstNo}
-                    required={false}
-                    placeholder={"의뢰번호를 입력해 주세요"}
+              <tr>
+                <th>
+                  <Typography kind={isDesktop ? "title-small" : "body-medium"} isBold={true}>
+                    의뢰번호
+                  </Typography>
+                </th>
+                <td colSpan={2}>
+                  <div className="min-w-52">
+                    <InputField
+                      name="rqstNo"
+                      defaultValue={!!requestNo ? requestNo : filters.rqstNo}
+                      required={false}
+                      placeholder={"의뢰번호를 입력해 주세요"}
+                      isError={false}
+                      inputSize="sm"
+                    />
+                  </div>
+                </td>
+                <td colSpan={5}></td>
+              </tr>
+              <tr>
+                <th>
+                  <Select
+                    id="searchType"
+                    name="searchType"
+                    shape={isDesktop ? "none" : "default"}
+                    selectSize="md"
+                    options={PERIOD_EXPANDED_OPTION}
+                    value={filters.searchType || selectedPeriodExpanded}
+                    onChange={(e) => setSelectedPeriodExpanded(e.target.value)}
                     isError={false}
-                    inputSize="sm"
+                    className={isDesktop ? "title-small" : "body-medium"}
                   />
-                </div>
-              </td>
-              <td colSpan={5}></td>
-            </tr>
-            <tr>
-              <th>
-                <Select
-                  id="searchType"
-                  name="searchType"
-                  shape={isDesktop ? "none" : "default"}
-                  selectSize="md"
-                  options={PERIOD_EXPANDED_OPTION}
-                  value={filters.searchType || selectedPeriodExpanded}
-                  onChange={(e) => setSelectedPeriodExpanded(e.target.value)}
-                  isError={false}
-                  className={isDesktop ? "title-small" : "body-medium"}
-                />
-              </th>
-              <td colSpan={3}>
+                </th>
+                <td colSpan={3}>
                   <span className="_datepicker-and-button-group-wrapper">
                     <DatePicker
                       id="execution-date"
@@ -211,9 +196,9 @@ export default function FilterTable({
                       handleButtonGroup={handleButtonGroup}
                     />
                   </span>
-              </td>
-              <td colSpan={4}></td>
-            </tr>
+                </td>
+                <td colSpan={4}></td>
+              </tr>
             </tbody>
           </table>
         </div>

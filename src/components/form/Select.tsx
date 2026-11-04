@@ -19,10 +19,7 @@ type SelectProps = {
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   className?: string;
   placeholder?: string;
-} & Omit<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>,
-  "className"
->;
+} & Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>, "className">;
 
 /**
  * @name Select

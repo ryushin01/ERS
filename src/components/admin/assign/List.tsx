@@ -21,19 +21,11 @@ interface ListProps {
   unMatchData: (data: number) => void;
 }
 
-export default function List({
-                               tabIndex,
-                               searchRqstNo,
-                               unMatchData,
-                             }: ListProps) {
+export default function List({ tabIndex, searchRqstNo, unMatchData }: ListProps) {
   const { isDesktop } = useResponsive();
   const openToast = useSetAtom(toastState);
-  const [selectedPeriod, setSelectedPeriod] = useState(
-    PERIOD_SORT_OPTION[0].value,
-  );
-  const [selectedNumeric, setSelectedNumeric] = useState(
-    NUMERIC_SORT_OPTION[0].value,
-  );
+  const [selectedPeriod, setSelectedPeriod] = useState(PERIOD_SORT_OPTION[0].value);
+  const [selectedNumeric, setSelectedNumeric] = useState(NUMERIC_SORT_OPTION[0].value);
 
   const [unMatchCount, setUnMatchCount] = useState<number>();
   const [page, setPage] = useState<number>(1);
@@ -48,10 +40,7 @@ export default function List({
   /* 2. 조회 조건(page, tabIndex, searchRqstNo, selectedPeriod, selectedNumeric)은 queryKey에 포함되어 있어 변경 시 자동으로 재조회됩니다. */
 
   /* 3. 배정관리 목록 조회 api */
-  const {
-    data: spplListData,
-    isLoading: spplListDataLoading,
-  } = useQuery({
+  const { data: spplListData, isLoading: spplListDataLoading } = useQuery({
     queryKey: [
       "search-supplementlist",
       page,

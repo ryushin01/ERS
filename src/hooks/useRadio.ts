@@ -13,8 +13,7 @@ import { ChangeInputType } from "@types";
 export default function useRadio(initValue: string | number): [string | number, ChangeInputType] {
   const [radioValue, setRadioValue] = useState(initValue);
 
-  const handleRadio = (event: ChangeEvent<HTMLInputElement>) =>
-    setRadioValue(event.target.value);
+  const handleRadio = (event: ChangeEvent<HTMLInputElement>) => setRadioValue(event.target.value);
 
   return [radioValue, handleRadio];
 }

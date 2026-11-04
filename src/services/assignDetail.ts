@@ -1,8 +1,4 @@
-import {
-  API_ADMIN_MATCH,
-  API_ADMIN_REGISTRATION,
-  API_API_IROS,
-} from "@constants/api-path";
+import { API_ADMIN_MATCH, API_ADMIN_REGISTRATION, API_API_IROS } from "@constants/api-path";
 import { adminURI, apiURI } from "@constants/env";
 import { axiosBasicInstance } from "@services";
 
@@ -13,10 +9,7 @@ export const getMemberListData = (membGbNo: string) =>
   }).then((response) => response.data);
 
 /* 배정관리 - 등기 보완요청 진행 */
-export const patchRegiSupplement = (form: {
-  rqstNo: string;
-  procRsnCnts: string;
-}) =>
+export const patchRegiSupplement = (form: { rqstNo: string; procRsnCnts: string }) =>
   axiosBasicInstance
     .patch(`${API_ADMIN_REGISTRATION}/supplementation`, form, {
       baseURL: adminURI,
@@ -24,10 +17,7 @@ export const patchRegiSupplement = (form: {
     .then((response) => response.data);
 
 /* 배정관리 - 등기 진행취소 진행 */
-export const patchRegiCancel = (form: {
-  rqstNo: string;
-  procRsnCnts: string;
-}) =>
+export const patchRegiCancel = (form: { rqstNo: string; procRsnCnts: string }) =>
   axiosBasicInstance
     .patch(`${API_ADMIN_REGISTRATION}/cancel`, form, { baseURL: adminURI })
     .then((response) => response.data);
@@ -43,10 +33,7 @@ export const patchAccignmentForm = (form: FormData) =>
   });
 
 /* 등기관리 - 등기 반려 진행 */
-export const patchRegiReject = (form: {
-  rqstNo: string;
-  procRsnCnts: string;
-}) =>
+export const patchRegiReject = (form: { rqstNo: string; procRsnCnts: string }) =>
   axiosBasicInstance
     .patch(`${API_ADMIN_REGISTRATION}/reject`, form, { baseURL: adminURI })
     .then((response) => response.data);

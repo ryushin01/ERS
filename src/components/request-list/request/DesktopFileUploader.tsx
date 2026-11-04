@@ -12,11 +12,7 @@ import { Button } from "@components/button";
 import { DatePicker, Loading, Typography } from "@components/common";
 import { Form, Label } from "@components/form";
 import { ATTC_FIL_CD } from "@constants/code";
-import {
-  FILE_MAXIMUM_NUMBER,
-  FILE_MAXIMUM_SIZE,
-  FILE_MAXIMUM_SIZE_STRING,
-} from "@constants/file";
+import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
 import { FI_REQUEST_LIST } from "@constants/path";
 import { useDatePicker } from "@hooks";
 import { PlusWhiteIcon } from "@icons20";
@@ -59,42 +55,39 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
   });
 
   /* 등기자료 신규 등록 */
-  const { mutate: mutatePostRequestData, isPending: postRequestDataLoading } =
-    useMutation({
-      mutationKey: ["request-upload"],
-      mutationFn: async () => await postRequestData(requestData),
-      onSuccess: (response) => {
-        if (response.data.code === "00") {
-          handleSuccess();
-        }
-      },
-      onError: (error) => {
-        console.error(error);
-        setIsButtonDisabled(false);
-      },
-    });
+  const { mutate: mutatePostRequestData, isPending: postRequestDataLoading } = useMutation({
+    mutationKey: ["request-upload"],
+    mutationFn: async () => await postRequestData(requestData),
+    onSuccess: (response) => {
+      if (response.data.code === "00") {
+        handleSuccess();
+      }
+    },
+    onError: (error) => {
+      console.error(error);
+      setIsButtonDisabled(false);
+    },
+  });
 
   /* 등기자료 수정 */
-  const { mutate: mutatePatchRequestData, isPending: patchRequestDataLoading } =
-    useMutation({
-      mutationKey: ["request-update"],
-      mutationFn: async () => await patchRequestData(requestData),
-      onSuccess: (response) => {
-        if (response.data.code === "00") {
-          handleSuccess();
-        }
-      },
-      onError: (error) => {
-        console.error(error);
-        setIsButtonDisabled(false);
-      },
-    });
+  const { mutate: mutatePatchRequestData, isPending: patchRequestDataLoading } = useMutation({
+    mutationKey: ["request-update"],
+    mutationFn: async () => await patchRequestData(requestData),
+    onSuccess: (response) => {
+      if (response.data.code === "00") {
+        handleSuccess();
+      }
+    },
+    onError: (error) => {
+      console.error(error);
+      setIsButtonDisabled(false);
+    },
+  });
 
   /* 등기의뢰 등록 또는 수정 후 성공 처리 */
   const handleSuccess = () => {
     openToast({
-      message:
-        "제출이 완료되었습니다.\n관리자가 검토 후 법무대리인이 배정됩니다.",
+      message: "제출이 완료되었습니다.\n관리자가 검토 후 법무대리인이 배정됩니다.",
       position: "top",
     });
 
@@ -129,9 +122,7 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
 
   /* 파일 삭제 */
   const handleRemove = (file: FileData) => {
-    setFileList((prevFileList) =>
-      prevFileList.filter((item) => item.uid !== file.uid),
-    );
+    setFileList((prevFileList) => prevFileList.filter((item) => item.uid !== file.uid));
   };
 
   //제출하기
@@ -166,10 +157,7 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
     });
 
     //최대 파일 갯수와 용량 모두 초과 시
-    if (
-      fileList.length > FILE_MAXIMUM_NUMBER &&
-      totalSize > FILE_MAXIMUM_SIZE
-    ) {
+    if (fileList.length > FILE_MAXIMUM_NUMBER && totalSize > FILE_MAXIMUM_SIZE) {
       openToast({
         message: `최대 ${FILE_MAXIMUM_NUMBER}개, 전체용량 ${FILE_MAXIMUM_SIZE_STRING}까지 업로드할 수 있습니다.\n개수 또는 용량을 조정해 주세요.`,
         position: "top",
@@ -271,10 +259,7 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
       });
     }
 
-    const totalSize = fileList.reduce(
-      (acc, file) => acc + (file?.filSize || 0),
-      0,
-    );
+    const totalSize = fileList.reduce((acc, file) => acc + (file?.filSize || 0), 0);
 
     if (totalSize > FILE_MAXIMUM_SIZE) {
       openToast({
@@ -286,9 +271,7 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
 
   return (
     <>
-      {imageLoading && postRequestDataLoading && patchRequestDataLoading && (
-        <Loading />
-      )}
+      {imageLoading && postRequestDataLoading && patchRequestDataLoading && <Loading />}
       <div className="_desktop-file-uploader-wrapper">
         <FileIndicator total={20} count={fileList.length} />
 
@@ -300,25 +283,15 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
         >
           <div className="_desktop-file-uploader">
             <Dragger {...props}>
-              <Typography
-                kind="title-large"
-                className="text-ers-grayscale-90"
-              >
-                이곳에 파일을 끌어다 놓거나, 파일 선택 버튼으로 업로드하세요.{" "}
-                <br />* 업로드 가능한 파일 형식: jpg, jpeg, png
+              <Typography kind="title-large" className="text-ers-grayscale-90">
+                이곳에 파일을 끌어다 놓거나, 파일 선택 버튼으로 업로드하세요. <br />* 업로드 가능한
+                파일 형식: jpg, jpeg, png
               </Typography>
               <Button
                 shape="solid"
                 size="md"
                 color="main60"
-                icon={
-                  <Image
-                    src={PlusWhiteIcon}
-                    alt="파일 추가 아이콘"
-                    width={20}
-                    height={20}
-                  />
-                }
+                icon={<Image src={PlusWhiteIcon} alt="파일 추가 아이콘" width={20} height={20} />}
                 iconPosition="right"
               >
                 파일 선택
@@ -329,11 +302,7 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
           </div>
 
           <div className="_datepicker-wrapper">
-            <Label
-              htmlFor="desktop-execution-date"
-              required={true}
-              labelText="대출실행일"
-            />
+            <Label htmlFor="desktop-execution-date" required={true} labelText="대출실행일" />
             <DatePicker
               id="desktop-execution-date"
               minDate={getTodayAddDays(1)}

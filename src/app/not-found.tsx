@@ -25,19 +25,11 @@ export default function NotFound() {
     <section className="_error-page _full">
       <div className="_error-page-inner-wrapper">
         <div>
-          <Typography
-            as="h1"
-            kind={isMobile ? "error-subtitle" : "error-title"}
-            isBold={true}
-          >
+          <Typography as="h1" kind={isMobile ? "error-subtitle" : "error-title"} isBold={true}>
             404
           </Typography>
 
-          <Typography
-            as="h2"
-            kind={isMobile ? "error-text" : "error-subtitle"}
-            isBold={true}
-          >
+          <Typography as="h2" kind={isMobile ? "error-text" : "error-subtitle"} isBold={true}>
             Not Found
           </Typography>
         </div>

@@ -23,11 +23,11 @@ interface ImageWithAuthProps extends Omit<ImageProps, "src"> {
  * @property {string} fallbackSrc  - 이미지를 불러오지 못했을 때 표시할 이미지 (기본값: 기본 프로필 이미지)
  */
 export default function ImageWithAuth({
-                                        src,
-                                        alt,
-                                        fallbackSrc = DefaultProfile,
-                                        ...props
-                                      }: ImageWithAuthProps) {
+  src,
+  alt,
+  fallbackSrc = DefaultProfile,
+  ...props
+}: ImageWithAuthProps) {
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
 
   useEffect(() => {

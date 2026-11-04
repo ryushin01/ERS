@@ -33,13 +33,13 @@ interface TypographyProps {
  * @property {string} kind           - 타이포그래피 종류
  */
 const Typography = ({
-                      as = "span",
-                      isBold = false,
-                      kind,
-                      children,
-                      id = "",
-                      className = "",
-                    }: TypographyProps) => {
+  as = "span",
+  isBold = false,
+  kind,
+  children,
+  id = "",
+  className = "",
+}: TypographyProps) => {
   const As = as;
   const typography: { [key: string]: string } = {
     "headline-large": "text-[32px] leading-[44px]",
@@ -62,9 +62,7 @@ const Typography = ({
   return (
     <As
       id={id}
-      className={`${typography[kind]} ${
-        isBold ? "font-semibold" : "font-normal"
-      } ${className}`}
+      className={`${typography[kind]} ${isBold ? "font-semibold" : "font-normal"} ${className}`}
     >
       {children}
     </As>

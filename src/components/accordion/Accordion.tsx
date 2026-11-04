@@ -29,87 +29,72 @@ type AccordionProps = {
  * @description 부모 컴포넌트가 클라이언트 컴포넌트이어야 합니다.
  */
 export default function Accordion({
-                                    id,
-                                    title,
-                                    author,
-                                    date,
-                                    description,
-                                    isUrgent,
-                                    fileInfoList,
-                                  }: AccordionProps) {
+  id,
+  title,
+  author,
+  date,
+  description,
+  isUrgent,
+  fileInfoList,
+}: AccordionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { isDesktop } = useResponsive();
 
   /* 파일 다운로드 API 호출 */
-  const { mutate: getBoardListData, isPending: boardListDataLoading } =
-    useMutation({
-      mutationKey: ["file-download"],
-      mutationFn: async ({
-                           seq,
-                           filidx,
-                         }: {
-        seq: string;
-        filidx: string;
-        fileName: string;
-      }) => await getFileDownLoad({ seq, filidx }),
-      onSuccess: (res, { fileName }) => {
-        const contentDisposition = res.headers["content-disposition"];
-        const downloadFileName =
-          fileName ||
-          (contentDisposition
-            ? contentDisposition.split("filename=")[1]?.replace(/"/g, "") // 파일명 추출
-            : "downloaded-file.pdf");
+  const { mutate: getBoardListData, isPending: boardListDataLoading } = useMutation({
+    mutationKey: ["file-download"],
+    mutationFn: async ({ seq, filidx }: { seq: string; filidx: string; fileName: string }) =>
+      await getFileDownLoad({ seq, filidx }),
+    onSuccess: (res, { fileName }) => {
+      const contentDisposition = res.headers["content-disposition"];
+      const downloadFileName =
+        fileName ||
+        (contentDisposition
+          ? contentDisposition.split("filename=")[1]?.replace(/"/g, "") // 파일명 추출
+          : "downloaded-file.pdf");
 
-        // 바이너리 데이터가 있는 경우 Blob 객체로 처리
-        const contentType = res.headers["content-type"];
-        const fileBlob = new Blob([res.data], {
-          type: typeof contentType === "string" && contentType ? contentType : "application/octet-stream", // 파일 형식 지정
-        });
+      // 바이너리 데이터가 있는 경우 Blob 객체로 처리
+      const contentType = res.headers["content-type"];
+      const fileBlob = new Blob([res.data], {
+        type:
+          typeof contentType === "string" && contentType ? contentType : "application/octet-stream", // 파일 형식 지정
+      });
 
-        // Blob URL 생성
-        const fileURL = URL.createObjectURL(fileBlob);
+      // Blob URL 생성
+      const fileURL = URL.createObjectURL(fileBlob);
 
-        // ✅ iOS 대응: FileReader로 처리
-        if (
-          navigator.userAgent.includes("iPhone") ||
-          navigator.userAgent.includes("iPad")
-        ) {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            const a = document.createElement("a");
-            a.href = reader.result as string;
-            a.download = decodeURIComponent(downloadFileName);
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-          };
-          reader.readAsDataURL(fileBlob);
-        } else {
-          // 일반적인 다운로드 처리
-          const link = document.createElement("a");
-          link.href = fileURL;
-          link.download = decodeURIComponent(downloadFileName);
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(fileURL); // ✅ 메모리 정리
-        }
-      },
-      onError: (error) => {
-        console.error("파일 다운로드 실패: ", error);
-      },
-    });
+      // ✅ iOS 대응: FileReader로 처리
+      if (navigator.userAgent.includes("iPhone") || navigator.userAgent.includes("iPad")) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const a = document.createElement("a");
+          a.href = reader.result as string;
+          a.download = decodeURIComponent(downloadFileName);
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        };
+        reader.readAsDataURL(fileBlob);
+      } else {
+        // 일반적인 다운로드 처리
+        const link = document.createElement("a");
+        link.href = fileURL;
+        link.download = decodeURIComponent(downloadFileName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(fileURL); // ✅ 메모리 정리
+      }
+    },
+    onError: (error) => {
+      console.error("파일 다운로드 실패: ", error);
+    },
+  });
 
   return (
     <div className={`_accordion ${isOpen ? "_open" : ""}`}>
-      <button
-        type="button"
-        className="_accordion-trigger"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <span
-          className={isDesktop ? "_accordion-text" : "_mobile-accordion-texts"}
-        >
+      <button type="button" className="_accordion-trigger" onClick={() => setIsOpen(!isOpen)}>
+        <span className={isDesktop ? "_accordion-text" : "_mobile-accordion-texts"}>
           <span className="_top-titles">
             <Typography
               kind={isDesktop ? "title-medium" : "body-medium"}
@@ -123,25 +108,13 @@ export default function Accordion({
             </Typography>
             <Typography
               kind={isDesktop ? "title-medium" : "body-medium"}
-              className={`_title ${
-                isUrgent ? "flex gap-x-[6px] text-ers-secondary-red-50" : ""
-              }`}
+              className={`_title ${isUrgent ? "flex gap-x-[6px] text-ers-secondary-red-50" : ""}`}
             >
               {!isDesktop && isUrgent && (
-                <Image
-                  src={AlertTriangleIcon14}
-                  alt="긴급점검 아이콘"
-                  width={14}
-                  height={14}
-                />
+                <Image src={AlertTriangleIcon14} alt="긴급점검 아이콘" width={14} height={14} />
               )}
               {isDesktop && isUrgent && (
-                <Image
-                  src={AlertTriangleIcon20}
-                  alt="긴급점검 아이콘"
-                  width={20}
-                  height={20}
-                />
+                <Image src={AlertTriangleIcon20} alt="긴급점검 아이콘" width={20} height={20} />
               )}
               {title}
             </Typography>
@@ -157,10 +130,7 @@ export default function Accordion({
             >
               {author}
             </Typography>
-            <Typography
-              kind={isDesktop ? "title-medium" : "caption-large"}
-              className="_date-text"
-            >
+            <Typography kind={isDesktop ? "title-medium" : "caption-large"} className="_date-text">
               {date}
             </Typography>
           </span>
@@ -201,9 +171,7 @@ export default function Accordion({
             ))}
           </p>
         )}
-        <Typography kind={isDesktop ? "title-medium" : "body-medium"}>
-          {description}
-        </Typography>
+        <Typography kind={isDesktop ? "title-medium" : "body-medium"}>{description}</Typography>
       </div>
     </div>
   );

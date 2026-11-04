@@ -28,12 +28,7 @@ type BannerProps = {
  * @property {number} application  - 접수완료 건수를 정의합니다.
  */
 
-export default function Banner({
-                                 name,
-                                 totalcount,
-                                 inprogress,
-                                 application,
-                               }: BannerProps) {
+export default function Banner({ name, totalcount, inprogress, application }: BannerProps) {
   const router = useRouter();
   const { isDesktop } = useResponsive();
 
@@ -60,32 +55,21 @@ export default function Banner({
             전자등기 의뢰하기
           </Button>
         </div>
-
       </div>
       <div className="_banner-right-content">
         <div
           className={`_todays-counts  after:absolute after:top-0 after:left-0 after:w-full after:h-full after:rounded-2xl after:bg-ers-grayscale-100 after:opacity-10`}
         >
           <div className="_todays-image">
-            <Image
-              src={FileAttachmentIcon}
-              width={32}
-              height={32}
-              alt="문서 아이콘"
-            />
+            <Image src={FileAttachmentIcon} width={32} height={32} alt="문서 아이콘" />
           </div>
           <div className="_content-text">
             <Typography kind={isDesktop ? "title-medium" : "title-small"}>
               오늘 실행 건수
             </Typography>
-            <Typography
-              kind={isDesktop ? "headline-medium" : "title-large"}
-              isBold={true}
-            >
+            <Typography kind={isDesktop ? "headline-medium" : "title-large"} isBold={true}>
               {totalcount}
-              <Typography kind={isDesktop ? "title-medium" : "title-small"}>
-                건
-              </Typography>
+              <Typography kind={isDesktop ? "title-medium" : "title-small"}>건</Typography>
             </Typography>
           </div>
         </div>
@@ -95,49 +79,25 @@ export default function Banner({
         >
           <div className="_each-wrapper">
             <div className="_notice-image">
-              <Image
-                src={AlertCircleIcon}
-                width={32}
-                height={32}
-                alt="알림 아이콘"
-              />
+              <Image src={AlertCircleIcon} width={32} height={32} alt="알림 아이콘" />
             </div>
             <div className="_content-text">
-              <Typography kind={isDesktop ? "title-medium" : "title-small"}>
-                진행중
-              </Typography>
-              <Typography
-                kind={isDesktop ? "headline-medium" : "title-large"}
-                isBold={true}
-              >
+              <Typography kind={isDesktop ? "title-medium" : "title-small"}>진행중</Typography>
+              <Typography kind={isDesktop ? "headline-medium" : "title-large"} isBold={true}>
                 {inprogress}
-                <Typography kind={isDesktop ? "title-medium" : "title-small"}>
-                  건
-                </Typography>
+                <Typography kind={isDesktop ? "title-medium" : "title-small"}>건</Typography>
               </Typography>
             </div>
           </div>
           <div className="_each-wrapper">
             <div className="_check-image">
-              <Image
-                src={CheckCircleIcon}
-                width={32}
-                height={32}
-                alt="체크 아이콘"
-              />
+              <Image src={CheckCircleIcon} width={32} height={32} alt="체크 아이콘" />
             </div>
             <div className="_content-text">
-              <Typography kind={isDesktop ? "title-medium" : "title-small"}>
-                접수완료
-              </Typography>
-              <Typography
-                kind={isDesktop ? "headline-medium" : "title-large"}
-                isBold={true}
-              >
+              <Typography kind={isDesktop ? "title-medium" : "title-small"}>접수완료</Typography>
+              <Typography kind={isDesktop ? "headline-medium" : "title-large"} isBold={true}>
                 {application}
-                <Typography kind={isDesktop ? "title-medium" : "title-small"}>
-                  건
-                </Typography>
+                <Typography kind={isDesktop ? "title-medium" : "title-small"}>건</Typography>
               </Typography>
             </div>
           </div>

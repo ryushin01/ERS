@@ -33,21 +33,18 @@ type AccountLayerProps = {
  */
 
 export default function AccountLayer({
-                                       level,
-                                       onClose,
-                                       isModalOpen,
-                                       openModal,
-                                       closeModal,
-                                       profileData,
-                                       imgSrc,
-                                     }: AccountLayerProps) {
+  level,
+  onClose,
+  isModalOpen,
+  openModal,
+  closeModal,
+  profileData,
+  imgSrc,
+}: AccountLayerProps) {
   const targetRef = useRef<HTMLElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (
-      targetRef.current &&
-      !targetRef.current.contains(event.target as Node)
-    ) {
+    if (targetRef.current && !targetRef.current.contains(event.target as Node)) {
       onClose();
     }
   };
@@ -67,9 +64,7 @@ export default function AccountLayer({
   return (
     <div className="_account-layer-wrapper">
       <section ref={targetRef} className="_account-layer">
-        <h1 className="_hidden">
-          비밀번호 변경, 로그아웃, 서비스 이용문의 정보 제공 섹션
-        </h1>
+        <h1 className="_hidden">비밀번호 변경, 로그아웃, 서비스 이용문의 정보 제공 섹션</h1>
         <DrawerContent
           level={level}
           isModalOpen={isModalOpen}

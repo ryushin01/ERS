@@ -65,14 +65,10 @@ export default function useFileUpload() {
 
   // 개별 파일 이미지 삭제
   const handleFileDelete = (index: number): void => {
-    const newImageFiles = imageList.filter(
-      (_, fileIndex) => fileIndex !== index,
-    );
+    const newImageFiles = imageList.filter((_, fileIndex) => fileIndex !== index);
     setImageList(newImageFiles);
 
-    const newPreviewUrls = previewImageList.filter(
-      (_, urlIndex) => urlIndex !== index,
-    );
+    const newPreviewUrls = previewImageList.filter((_, urlIndex) => urlIndex !== index);
     setPreviewImageList(newPreviewUrls);
 
     openToast({

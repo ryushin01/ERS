@@ -43,17 +43,13 @@ type RequestListItemData = {
  * @description 금융기관 - 전자등기 의뢰목록 조회
  */
 export default function Table({
-                                data,
-                                setQueryTime,
-                                isDesktop,
-                              }: RequestListDataProps & ResponsiveType) {
+  data,
+  setQueryTime,
+  isDesktop,
+}: RequestListDataProps & ResponsiveType) {
   const [requestNo, setRequestNo] = useState<string>("");
 
-  const {
-    isOpen: isModalOpen,
-    open: openModal,
-    close: closeModal,
-  } = useDisclosure();
+  const { isOpen: isModalOpen, open: openModal, close: closeModal } = useDisclosure();
 
   const {
     isOpen: isRegistrationDataModalOpen,
@@ -87,90 +83,67 @@ export default function Table({
     <>
       <div className="_responsive-table-inner-wrapper _has-thead">
         <table className="_responsive-table _col-5-type">
-          <caption className="_hidden-table-caption">
-            전자등기 의뢰목록 미배정 표
-          </caption>
+          <caption className="_hidden-table-caption">전자등기 의뢰목록 미배정 표</caption>
           <thead>
-          <tr>
-            <th>
-              <Typography
-                kind={isDesktop ? "title-medium" : "body-medium"}
-                isBold={true}
-              >
-                의뢰번호
-              </Typography>
-            </th>
-            <th>
-              <Typography
-                kind={isDesktop ? "title-medium" : "body-medium"}
-                isBold={true}
-              >
-                대출실행일
-              </Typography>
-            </th>
-            <th>
-              <Typography
-                kind={isDesktop ? "title-medium" : "body-medium"}
-                isBold={true}
-              >
-                의뢰일시
-              </Typography>
-            </th>
-            <th>
-              <Typography
-                kind={isDesktop ? "title-medium" : "body-medium"}
-                isBold={true}
-              >
-                진행상태
-              </Typography>
-            </th>
-            <th>
-              <Typography
-                kind={isDesktop ? "title-medium" : "body-medium"}
-                isBold={true}
-              >
-                등기자료
-              </Typography>
-            </th>
-          </tr>
+            <tr>
+              <th>
+                <Typography kind={isDesktop ? "title-medium" : "body-medium"} isBold={true}>
+                  의뢰번호
+                </Typography>
+              </th>
+              <th>
+                <Typography kind={isDesktop ? "title-medium" : "body-medium"} isBold={true}>
+                  대출실행일
+                </Typography>
+              </th>
+              <th>
+                <Typography kind={isDesktop ? "title-medium" : "body-medium"} isBold={true}>
+                  의뢰일시
+                </Typography>
+              </th>
+              <th>
+                <Typography kind={isDesktop ? "title-medium" : "body-medium"} isBold={true}>
+                  진행상태
+                </Typography>
+              </th>
+              <th>
+                <Typography kind={isDesktop ? "title-medium" : "body-medium"} isBold={true}>
+                  등기자료
+                </Typography>
+              </th>
+            </tr>
           </thead>
           <tbody>
-          {data?.rqstList?.map((item: RequestListItemData) => {
-            const { rqstNo, execDt, crtDtm, statNm, statCd } = item;
-            return (
-              <tr key={rqstNo}>
-                <td>
-                  <Typography
-                    kind={isDesktop ? "title-medium" : "body-medium"}
-                  >
-                    {rqstNo}
-                  </Typography>
-                </td>
-                <td>
-                  <Typography
-                    kind={isDesktop ? "title-medium" : "body-medium"}
-                  >
-                    {execDt}
-                  </Typography>
-                </td>
-                <td>
-                  <Typography
-                    kind={isDesktop ? "title-medium" : "body-medium"}
-                  >
-                    {crtDtm}
-                  </Typography>
-                </td>
-                <td>
-                  <Typography
-                    kind={isDesktop ? "title-medium" : "body-medium"}
-                    className={`_status ${
-                      statCd === PROC_STAT_CD.SUPPLEMENT ? "_supplement" : ""
-                    }`}
-                  >
-                    {statNm}
-                  </Typography>
-                </td>
-                <td>
+            {data?.rqstList?.map((item: RequestListItemData) => {
+              const { rqstNo, execDt, crtDtm, statNm, statCd } = item;
+              return (
+                <tr key={rqstNo}>
+                  <td>
+                    <Typography kind={isDesktop ? "title-medium" : "body-medium"}>
+                      {rqstNo}
+                    </Typography>
+                  </td>
+                  <td>
+                    <Typography kind={isDesktop ? "title-medium" : "body-medium"}>
+                      {execDt}
+                    </Typography>
+                  </td>
+                  <td>
+                    <Typography kind={isDesktop ? "title-medium" : "body-medium"}>
+                      {crtDtm}
+                    </Typography>
+                  </td>
+                  <td>
+                    <Typography
+                      kind={isDesktop ? "title-medium" : "body-medium"}
+                      className={`_status ${
+                        statCd === PROC_STAT_CD.SUPPLEMENT ? "_supplement" : ""
+                      }`}
+                    >
+                      {statNm}
+                    </Typography>
+                  </td>
+                  <td>
                     <span className="_table-button-wrapper">
                       <Button
                         shape="solid"
@@ -181,10 +154,10 @@ export default function Table({
                         등기자료
                       </Button>
                     </span>
-                </td>
-              </tr>
-            );
-          })}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -201,11 +174,7 @@ export default function Table({
               />
             </GridItem>
             <GridItem desktop={7} tablet={12} mobile={12}>
-              <Detail
-                isDesktop={isDesktop}
-                requestNo={requestNo}
-                onClose={handleCloseModal}
-              />
+              <Detail isDesktop={isDesktop} requestNo={requestNo} onClose={handleCloseModal} />
             </GridItem>
           </Grid>
         </Modal>

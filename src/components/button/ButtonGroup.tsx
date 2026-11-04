@@ -15,7 +15,7 @@ type ButtonGroupDataProps = {
   id: string;
   content: string;
   disabled: boolean;
-}
+};
 
 /**
  * @name ButtonGroup
@@ -32,11 +32,11 @@ type ButtonGroupDataProps = {
  */
 
 export default function ButtonGroup({
-                                      size,
-                                      data,
-                                      selectedButtonGroup,
-                                      handleButtonGroup,
-                                    }: ButtonGroupProps) {
+  size,
+  data,
+  selectedButtonGroup,
+  handleButtonGroup,
+}: ButtonGroupProps) {
   return (
     <div className={`_button-group ${size}`}>
       {data.map((button, index) => {

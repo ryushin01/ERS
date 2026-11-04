@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -50,6 +52,7 @@
     "jsdom": "^27.4.0",
     "lint-staged": "^16.4.0",
     "postcss": "^8.5.32",
+    "prettier": "^3",
     "tailwindcss": "^3.4.19",
     "typescript": "^5",
     "vite": "^6.4.0",
@@ -58,7 +61,11 @@
   },
   "packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a",
   "lint-staged": {
-    "*.{ts,tsx,mts,js,mjs}": "eslint --fix --max-warnings 0"
+    "*.{ts,tsx,mts,js,mjs}": [
+      "eslint --fix --max-warnings 0",
+      "prettier --write"
+    ],
+    "*.{css,json,yml,yaml}": "prettier --write"
   },
   "pnpm": {
     "overrides": {

@@ -32,7 +32,7 @@ const RESPONSE_DELAY_MS = 250;
 
 const ok = (data: unknown = null, msg = "정상 처리되었습니다.") => ({ code: "00", msg, data });
 
-const paginate = <T,>(list: T[], params: URLSearchParams) => {
+const paginate = <T>(list: T[], params: URLSearchParams) => {
   const pageNum = Math.max(Number(params.get("pageNum")) || 1, 1);
   const pageSize = Math.max(Number(params.get("pageSize")) || 10, 1);
   return {
@@ -70,7 +70,15 @@ const registrationStatistics = () => {
 /* 등기관리 상세의 문서 목록 */
 const documentList = (item: MockRegistration) => [
   { kind: "등기자료", crtMembNm: item.clientNm, crtDtm: item.crtDtm },
-  ...(item.acptNo ? [{ kind: "등기접수증", crtMembNm: item.lgagMembNm || "데모 법무법인", crtDtm: item.acptRptDtm }] : []),
+  ...(item.acptNo
+    ? [
+        {
+          kind: "등기접수증",
+          crtMembNm: item.lgagMembNm || "데모 법무법인",
+          crtDtm: item.acptRptDtm,
+        },
+      ]
+    : []),
 ];
 
 /* 새 의뢰번호: 기존 의뢰번호 중 가장 큰 번호 + 1 */
@@ -88,8 +96,7 @@ const routes: Route[] = [
   {
     method: "get",
     pattern: /^\/api\/comm\/code\/([A-Z_]+)$/,
-    handler: (_p, m) =>
-      ok({ commCodeList: COMMON_CODES[m[1]] ?? [] }),
+    handler: (_p, m) => ok({ commCodeList: COMMON_CODES[m[1]] ?? [] }),
   },
   {
     method: "patch",
@@ -107,7 +114,9 @@ const routes: Route[] = [
       return ok({
         cntExec: REGISTRATIONS.filter((item) => item.execDt === today).length,
         cntProg: REGISTRATIONS.filter((item) =>
-          ([PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION, PROC_STAT_CD.REVIEWING] as string[]).includes(item.statCd),
+          (
+            [PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION, PROC_STAT_CD.REVIEWING] as string[]
+          ).includes(item.statCd),
         ).length,
         cntComplete: REGISTRATIONS.filter((item) => item.statCd === PROC_STAT_CD.COMPLET).length,
       });
@@ -118,13 +127,15 @@ const routes: Route[] = [
     pattern: /^\/api\/client\/home\/registration-list$/,
     handler: () =>
       ok({
-        rgstrMasterList: REGISTRATIONS.slice(0, 5).map(({ rqstNo, dbtrNm, lgagMembNm, statNm, acptNo }) => ({
-          rqstNo,
-          dbtrNm,
-          lgagMembNm: lgagMembNm || "-",
-          statCdNm: statNm,
-          acptNo,
-        })),
+        rgstrMasterList: REGISTRATIONS.slice(0, 5).map(
+          ({ rqstNo, dbtrNm, lgagMembNm, statNm, acptNo }) => ({
+            rqstNo,
+            dbtrNm,
+            lgagMembNm: lgagMembNm || "-",
+            statCdNm: statNm,
+            acptNo,
+          }),
+        ),
       }),
   },
   {
@@ -159,7 +170,13 @@ const routes: Route[] = [
         params,
       );
       return ok({
-        rqstList: items.map(({ rqstNo, execDt, crtDtm, statNm, statCd }) => ({ rqstNo, execDt, crtDtm, statNm, statCd })),
+        rqstList: items.map(({ rqstNo, execDt, crtDtm, statNm, statCd }) => ({
+          rqstNo,
+          execDt,
+          crtDtm,
+          statNm,
+          statCd,
+        })),
         totalElements,
         totalPages,
       });
@@ -170,8 +187,16 @@ const routes: Route[] = [
     pattern: /^\/api\/client\/request\/info$/,
     handler: (params) => ok(findRegistration(params.get("rqstno")) ?? null),
   },
-  { method: "post", pattern: /^\/api\/client\/request$/, handler: () => ok(null, "제출이 완료되었습니다.") },
-  { method: "patch", pattern: /^\/api\/client\/request$/, handler: () => ok(null, "수정이 완료되었습니다.") },
+  {
+    method: "post",
+    pattern: /^\/api\/client\/request$/,
+    handler: () => ok(null, "제출이 완료되었습니다."),
+  },
+  {
+    method: "patch",
+    pattern: /^\/api\/client\/request$/,
+    handler: () => ok(null, "수정이 완료되었습니다."),
+  },
 
   /* 금융기관 - 전자등기 */
   {
@@ -217,7 +242,13 @@ const routes: Route[] = [
       const { items, totalElements, totalPages } = paginate(filtered, params);
       return ok({
         rgstrList: items.map(({ rqstNo, crtDtm, execDt, statNm, dbtrNm, statCd, acptNo }) => ({
-          rqstNo, crtDtm, execDt, statNm, dbtrNm, statCd, acptNo,
+          rqstNo,
+          crtDtm,
+          execDt,
+          statNm,
+          dbtrNm,
+          statCd,
+          acptNo,
         })),
         totalElements,
         totalPages,
@@ -237,7 +268,9 @@ const routes: Route[] = [
     method: "get",
     pattern: /^\/api\/api\/iros\/unqrgstrno$/,
     handler: (params) =>
-      params.get("rdnmAddr") ? ok(`1101-2026-${String(Date.now()).slice(-6)}`) : { code: "99", msg: "주소를 입력해 주세요.", data: "" },
+      params.get("rdnmAddr")
+        ? ok(`1101-2026-${String(Date.now()).slice(-6)}`)
+        : { code: "99", msg: "주소를 입력해 주세요.", data: "" },
   },
 
   /* 관리자 - 배정관리 */
@@ -248,17 +281,44 @@ const routes: Route[] = [
       const statuses = REQUEST_TAB_STATUS[params.get("tabSelection") ?? "00"] ?? [];
       const searchRqstNo = params.get("searchRqstNo") ?? "";
       const filtered = sortBy(
-        REGISTRATIONS.filter((item) => statuses.includes(item.statCd) && item.rqstNo.includes(searchRqstNo)),
+        REGISTRATIONS.filter(
+          (item) => statuses.includes(item.statCd) && item.rqstNo.includes(searchRqstNo),
+        ),
         params.get("sortOrder"),
       );
       const { items, totalElements, totalPages } = paginate(filtered, params);
       return ok({
-        mtchList: items.map(({ statNm, statCd, rqstNo, execDt, clientNm, clientMembNo, bndNm, bndBizNo, dbtrNm, crtDtm, mtchDtm }) => ({
-          statNm, statCd, rqstNo, execDt, clientNm, clientMembNo, bndNm, bndBizNo, dbtrNm, crtDtm, mtchDtm,
-        })),
+        mtchList: items.map(
+          ({
+            statNm,
+            statCd,
+            rqstNo,
+            execDt,
+            clientNm,
+            clientMembNo,
+            bndNm,
+            bndBizNo,
+            dbtrNm,
+            crtDtm,
+            mtchDtm,
+          }) => ({
+            statNm,
+            statCd,
+            rqstNo,
+            execDt,
+            clientNm,
+            clientMembNo,
+            bndNm,
+            bndBizNo,
+            dbtrNm,
+            crtDtm,
+            mtchDtm,
+          }),
+        ),
         totalElements,
         totalPages,
-        unMtchCnt: REGISTRATIONS.filter((item) => REQUEST_TAB_STATUS["00"].includes(item.statCd)).length,
+        unMtchCnt: REGISTRATIONS.filter((item) => REQUEST_TAB_STATUS["00"].includes(item.statCd))
+          .length,
       });
     },
   },
@@ -278,7 +338,8 @@ const routes: Route[] = [
     pattern: /^\/api\/admin\/match$/,
     handler: (_p, _m, body) => {
       const lawyer = MEMBERS["10"].find((member) => member.membNo === body.lgagMembNo);
-      const bank = MEMBERS["00"].find((member) => member.bizNo === body.bndBizNo) ?? MEMBERS["00"][0];
+      const bank =
+        MEMBERS["00"].find((member) => member.bizNo === body.bndBizNo) ?? MEMBERS["00"][0];
       createRegistration({
         rqstNo: String(body.rqstNo || nextRequestNo()),
         execDt: String(body.execDt ?? dateFromToday(0)),
@@ -295,7 +356,12 @@ const routes: Route[] = [
         bndBizNo: bank.bizNo,
         bndMembNm: bank.membNm,
         ...(lawyer
-          ? { statCd: PROC_STAT_CD.MATCH, lgagMembNm: lawyer.membNm, lgagMembHpno: "010-0000-0000", mtchDtm: dateFromToday(0) }
+          ? {
+              statCd: PROC_STAT_CD.MATCH,
+              lgagMembNm: lawyer.membNm,
+              lgagMembHpno: "010-0000-0000",
+              mtchDtm: dateFromToday(0),
+            }
           : {}),
       });
       return ok(null, "등록이 완료되었습니다.");
@@ -307,7 +373,8 @@ const routes: Route[] = [
     pattern: /^\/api\/admin\/match$/,
     handler: (_p, _m, body) => {
       const target = findRegistration(String(body.rqstNo ?? ""));
-      const lawyer = MEMBERS["10"].find((member) => member.membNo === body.lgagMembNo) ?? MEMBERS["10"][0];
+      const lawyer =
+        MEMBERS["10"].find((member) => member.membNo === body.lgagMembNo) ?? MEMBERS["10"][0];
       if (target) {
         Object.assign(target, {
           dbtrNm: String(body.dbtrNm || target.dbtrNm),
@@ -345,9 +412,18 @@ const routes: Route[] = [
       );
       const { items, totalElements, totalPages } = paginate(filtered, params);
       return ok({
-        rgstrMngrList: items.map(({ statNm, statCd, execDt, acptRptDtm, rqstNo, bndMembNm, dbtrNm, lgagMembNm }) => ({
-          statNm, statCd, execDt, acptRptDtm, rqstNo, bndMembNm, dbtrNm, lgagMembNm,
-        })),
+        rgstrMngrList: items.map(
+          ({ statNm, statCd, execDt, acptRptDtm, rqstNo, bndMembNm, dbtrNm, lgagMembNm }) => ({
+            statNm,
+            statCd,
+            execDt,
+            acptRptDtm,
+            rqstNo,
+            bndMembNm,
+            dbtrNm,
+            lgagMembNm,
+          }),
+        ),
         totalElements,
         totalPages,
         rgstrStatistics: registrationStatistics(),
@@ -377,7 +453,15 @@ const routes: Route[] = [
       return ok({
         ...item,
         fileList: item.acptNo
-          ? [{ seq: item.rqstNo, filIdx: "1", src: imageSrc(item.rqstNo, "02", 1), attcFilNm: "등기접수증_1.svg", filSize: 24000 }]
+          ? [
+              {
+                seq: item.rqstNo,
+                filIdx: "1",
+                src: imageSrc(item.rqstNo, "02", 1),
+                attcFilNm: "등기접수증_1.svg",
+                filSize: 24000,
+              },
+            ]
           : [],
       });
     },
@@ -398,8 +482,11 @@ const routes: Route[] = [
           acptNo: String(body.acptNo || target.acptNo || "10999"),
           judtCourtCd: String(body.judtCourtCd ?? ""),
           regrCd: String(body.regrCd ?? ""),
-          judtCourtNm: COMMON_CODES.JUDT_COURT_CD.find((code) => code.code === body.judtCourtCd)?.codeNm ?? target.judtCourtNm,
-          regrNm: COMMON_CODES.REGR_CD.find((code) => code.code === body.regrCd)?.codeNm ?? target.regrNm,
+          judtCourtNm:
+            COMMON_CODES.JUDT_COURT_CD.find((code) => code.code === body.judtCourtCd)?.codeNm ??
+            target.judtCourtNm,
+          regrNm:
+            COMMON_CODES.REGR_CD.find((code) => code.code === body.regrCd)?.codeNm ?? target.regrNm,
           mngrDlvrCnts: String(body.mngrDlvrCnts ?? ""),
           acptRptDtm: dateFromToday(0),
           rgstrAcptYn: "Y",
@@ -423,7 +510,11 @@ const routes: Route[] = [
     method: "patch",
     pattern: /^\/api\/admin\/registration\/(supplementation|cancel|reject)$/,
     handler: (_p, m, body) => {
-      const statCd = { supplementation: PROC_STAT_CD.SUPPLEMENT, cancel: PROC_STAT_CD.CANCEL, reject: PROC_STAT_CD.RETURN }[m[1]]!;
+      const statCd = {
+        supplementation: PROC_STAT_CD.SUPPLEMENT,
+        cancel: PROC_STAT_CD.CANCEL,
+        reject: PROC_STAT_CD.RETURN,
+      }[m[1]]!;
       const target = findRegistration(String(body.rqstNo ?? ""));
       if (target) {
         const procRsnCnts = String(body.procRsnCnts ?? "");
@@ -459,9 +550,18 @@ const routes: Route[] = [
     method: "get",
     pattern: /^\/api\/files\/preview\/([^/]+)\/(\d+)\/(\d+)$/,
     handler: (_p, m) =>
-      new Blob([createDocumentSvg(m[2] === "02" ? "등기접수증" : "근저당권 설정계약서", m[1], Number(m[3]))], {
-        type: "image/svg+xml",
-      }),
+      new Blob(
+        [
+          createDocumentSvg(
+            m[2] === "02" ? "등기접수증" : "근저당권 설정계약서",
+            m[1],
+            Number(m[3]),
+          ),
+        ],
+        {
+          type: "image/svg+xml",
+        },
+      ),
   },
   {
     method: "get",
@@ -529,6 +629,14 @@ export const mockAdapter = (config: InternalAxiosRequestConfig): Promise<AxiosRe
         headers: {},
         config,
       };
-      reject(new AxiosError(`Mock API not found: ${method.toUpperCase()} ${path}`, "ERR_BAD_REQUEST", config, null, response));
+      reject(
+        new AxiosError(
+          `Mock API not found: ${method.toUpperCase()} ${path}`,
+          "ERR_BAD_REQUEST",
+          config,
+          null,
+          response,
+        ),
+      );
     }, RESPONSE_DELAY_MS);
   });

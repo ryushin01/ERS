@@ -31,17 +31,13 @@ export type filterData = {
 };
 
 export default function List({
-                               tabSelection,
-                               setTabCount,
-                               isDesktop,
-                             }: listDataProps & ResponsiveType) {
+  tabSelection,
+  setTabCount,
+  isDesktop,
+}: listDataProps & ResponsiveType) {
   const openToast = useSetAtom(toastState);
-  const [selectedPeriod, setSelectedPeriod] = useState(
-    PERIOD_SORT_OPTION[0].value,
-  );
-  const [selectedNumeric, setSelectedNumeric] = useState(
-    NUMERIC_SORT_OPTION[0].value,
-  );
+  const [selectedPeriod, setSelectedPeriod] = useState(PERIOD_SORT_OPTION[0].value);
+  const [selectedNumeric, setSelectedNumeric] = useState(NUMERIC_SORT_OPTION[0].value);
   const [filters, setFilters] = useState<filterData>({
     rqstNo: "",
     searchType: "EXEC", // 초기값 : 대출실행
@@ -51,43 +47,42 @@ export default function List({
   }); // 필터 상태 관리
   const [page, setPage] = useState(1);
 
-  const { data: registrationListData, isLoading: registrationListLoading } =
-    useQuery({
-      queryKey: [
-        "admin-registration-list",
-        tabSelection,
-        page,
-        filters,
-        selectedPeriod,
-        selectedNumeric,
-      ],
-      queryFn: async () =>
-        await getRegistrationListData({
-          tabSelection: tabSelection,
-          rqstNo: filters.rqstNo,
-          searchType: filters.searchType,
-          fromDate: filters.fromDate,
-          toDate: filters.toDate,
-          sortOrder: selectedPeriod,
-          page: page,
-          size: parseInt(selectedNumeric),
-        }),
-      select: (response) => {
-        //등기의뢰번호 및 검색일자 조회 시 데이터 없을 경우 처리
-        if (
-          (!!filters.rqstNo || !!filters.fromDate || !!filters.toDate) &&
-          response?.data?.data?.totalElements === 0
-        ) {
-          openToast({
-            message: "일치하는 검색결과가 없습니다",
-            position: isDesktop ? "top" : "bottom",
-          });
-        }
+  const { data: registrationListData, isLoading: registrationListLoading } = useQuery({
+    queryKey: [
+      "admin-registration-list",
+      tabSelection,
+      page,
+      filters,
+      selectedPeriod,
+      selectedNumeric,
+    ],
+    queryFn: async () =>
+      await getRegistrationListData({
+        tabSelection: tabSelection,
+        rqstNo: filters.rqstNo,
+        searchType: filters.searchType,
+        fromDate: filters.fromDate,
+        toDate: filters.toDate,
+        sortOrder: selectedPeriod,
+        page: page,
+        size: parseInt(selectedNumeric),
+      }),
+    select: (response) => {
+      //등기의뢰번호 및 검색일자 조회 시 데이터 없을 경우 처리
+      if (
+        (!!filters.rqstNo || !!filters.fromDate || !!filters.toDate) &&
+        response?.data?.data?.totalElements === 0
+      ) {
+        openToast({
+          message: "일치하는 검색결과가 없습니다",
+          position: isDesktop ? "top" : "bottom",
+        });
+      }
 
-        return response?.data?.data;
-      },
-      enabled: !!page,
-    });
+      return response?.data?.data;
+    },
+    enabled: !!page,
+  });
 
   useEffect(() => {
     setPage(1);
@@ -128,11 +123,7 @@ export default function List({
   return (
     <>
       {registrationListLoading && <Loading />}
-      <FilterTable
-        isDesktop={isDesktop}
-        filters={filters}
-        setFilters={setFilters}
-      />
+      <FilterTable isDesktop={isDesktop} filters={filters} setFilters={setFilters} />
       <Grid className="_without-padding mt-6 mb-4 justify-end">
         <GridItem mobile={12} tablet={12} desktop={3}>
           <div className="flex gap-x-4">

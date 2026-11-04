@@ -17,10 +17,7 @@ type SearchInputProps = {
   onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
   name: string;
   defaultValue?: string;
-} & Omit<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  "className"
->;
+} & Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "className">;
 
 /**
  * @name SearchInput
@@ -40,16 +37,16 @@ type SearchInputProps = {
  */
 
 export default function SearchInput({
-                                      shape = "xl",
-                                      required = false,
-                                      disabled,
-                                      onClick,
-                                      onChange,
-                                      onBlur,
-                                      name,
-                                      defaultValue,
-                                      ...props
-                                    }: SearchInputProps) {
+  shape = "xl",
+  required = false,
+  disabled,
+  onClick,
+  onChange,
+  onBlur,
+  name,
+  defaultValue,
+  ...props
+}: SearchInputProps) {
   const { isDesktop } = useResponsive();
   const className = `_search-input-label _text-input ${
     isDesktop ? "text-[16px]" : "text-[14px]"

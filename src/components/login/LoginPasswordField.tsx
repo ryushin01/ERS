@@ -93,9 +93,7 @@ export default function LoginPasswordField({
       isError={isError}
     >
       <div className={inputWithLabelText}>
-        {icon && iconPosition === "left" && (
-          <span className="pr-2">{icon}</span>
-        )}
+        {icon && iconPosition === "left" && <span className="pr-2">{icon}</span>}
         <Input
           id={htmlFor}
           type={type}
@@ -111,9 +109,7 @@ export default function LoginPasswordField({
           onFocus={onFocus}
           defaultValue={defaultValue}
         />
-        {icon && iconPosition === "right" && (
-          <span className="pl-2">{icon}</span>
-        )}
+        {icon && iconPosition === "right" && <span className="pl-2">{icon}</span>}
       </div>
       {isError ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>

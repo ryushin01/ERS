@@ -27,23 +27,18 @@ export default function Gnb() {
           const isSelected = isPathUnder(pathname, path);
 
           return (
-            <li
-              key={id}
-              className={isSelected ? "_selected" : undefined}
-            >
+            <li key={id} className={isSelected ? "_selected" : undefined}>
               <Link href={path}>
                 <span className="_menu-item-inner-wrapper">
-                  {(defaultIcon && selectedIcon) &&
+                  {defaultIcon && selectedIcon && (
                     <Image
-                      src={isDesktop ?
-                        (isSelected ? selectedIcon! : defaultIcon!) : (selectedIcon!)}
+                      src={isDesktop ? (isSelected ? selectedIcon! : defaultIcon!) : selectedIcon!}
                       alt={`${name} 메뉴 ${isSelected ? "선택" : "선택 해제"}`}
                       width={24}
                       height={24}
                     />
-                  }
-                  <Typography
-                    kind={isDesktop ? "title-medium" : "caption-small"}>
+                  )}
+                  <Typography kind={isDesktop ? "title-medium" : "caption-small"}>
                     {name}
                   </Typography>
                 </span>

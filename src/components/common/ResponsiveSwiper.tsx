@@ -21,16 +21,15 @@ type ResponsiveSwiperProps = {
  *              부모 컴포넌트가 클라이언트 컴포넌트이어야 합니다.
  */
 export default function ResponsiveSwiper({
-                                           className = "",
-                                           requestNo,
-                                           attachFileCode,
-                                           isDesktop,
-                                         }: ResponsiveSwiperProps & ResponsiveType) {
+  className = "",
+  requestNo,
+  attachFileCode,
+  isDesktop,
+}: ResponsiveSwiperProps & ResponsiveType) {
   /* 등기자료 정보 조회 */
   const { data, isLoading } = useQuery({
     queryKey: ["registration-images", requestNo],
-    queryFn: async () =>
-      await getRegistrationImages(requestNo!, attachFileCode!),
+    queryFn: async () => await getRegistrationImages(requestNo!, attachFileCode!),
     select: (response) => response.data?.data,
     enabled: !!requestNo,
   });

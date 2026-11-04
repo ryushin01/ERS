@@ -36,11 +36,11 @@ type SwiperGalleryProps = {
  *              슬라이드 내용(이미지)은 사용하는 쪽에서 만들어 전달합니다.
  */
 export default function SwiperGallery({
-                                        slides,
-                                        className = "",
-                                        paginationType = "fraction",
-                                        isLoading = false,
-                                      }: SwiperGalleryProps) {
+  slides,
+  className = "",
+  paginationType = "fraction",
+  isLoading = false,
+}: SwiperGalleryProps) {
   return (
     <>
       {isLoading && <Loading />}

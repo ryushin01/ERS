@@ -15,18 +15,12 @@ type FileIndicatorProps = {
  * @property {number} count     - 현재까지 업로드 된 파일 갯수
  */
 
-export default function FileIndicator({
-                                        total,
-                                        count,
-                                      }: FileIndicatorProps) {
+export default function FileIndicator({ total, count }: FileIndicatorProps) {
   const { isDesktop } = useResponsive();
 
   return (
     <div className="_file-indicator">
-      <Label
-        required={true}
-        labelText="파일 업로드"
-      />
+      <Label required={true} labelText="파일 업로드" />
       <>
         <Typography
           kind={isDesktop ? "headline-small" : "body-large"}

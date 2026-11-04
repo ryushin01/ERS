@@ -121,11 +121,7 @@ export default function List({ isDesktop }: ResponsiveType) {
 
   return (
     <>
-      <FilterTable
-        isDesktop={isDesktop}
-        setFilters={setFilters}
-        rqstNo={rqstNo}
-      />
+      <FilterTable isDesktop={isDesktop} setFilters={setFilters} rqstNo={rqstNo} />
       <div className="_responsive-table-outer-wrapper">
         <PageIndicator
           total={total}

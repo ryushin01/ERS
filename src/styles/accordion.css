@@ -61,7 +61,7 @@
 
         ._top-titles {
             span:last-child {
-                @apply w-12 text-center
+                @apply w-12 text-center;
             }
         }
     }

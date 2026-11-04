@@ -27,7 +27,7 @@ import "@styles/file-uploader.css";
 
 type MobileFileUploaderProps = {
   requestNo?: string | null;
-}
+};
 
 export type FileProps = {
   uid?: string;
@@ -40,10 +40,10 @@ export type FileProps = {
 };
 
 export default function MobileFileUploader({
-                                             requestNo,
-                                             isMobile,
-                                             isPortrait,
-                                           }: MobileFileUploaderProps & ResponsiveType) {
+  requestNo,
+  isMobile,
+  isPortrait,
+}: MobileFileUploaderProps & ResponsiveType) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [existingImageList, setIsExistingImageList] = useState({});
@@ -54,17 +54,9 @@ export default function MobileFileUploader({
   const openToast = useSetAtom(toastState);
   const timestamp = Date.now();
 
-  const {
-    isOpen: isCameraOpen,
-    open: openCamera,
-    close: closeCamera,
-  } = useDisclosure();
+  const { isOpen: isCameraOpen, open: openCamera, close: closeCamera } = useDisclosure();
 
-  const {
-    isOpen: isPreviewOpen,
-    open: openPreview,
-    close: closePreview,
-  } = useDisclosure();
+  const { isOpen: isPreviewOpen, open: openPreview, close: closePreview } = useDisclosure();
 
   // react-webcam 옵션 지정
   const videoConstraints = {
@@ -94,44 +86,48 @@ export default function MobileFileUploader({
    * @function takePicture
    * @description 사진 촬영 함수
    */
-  const takePicture = useCallback((event: MouseEvent) => {
-    event.preventDefault();
+  const takePicture = useCallback(
+    (event: MouseEvent) => {
+      event.preventDefault();
 
-    const imageSrc = webcamRef.current?.getScreenshot(
-      isMobile
-        ? { width: 320, height: 426 }
-        : isPortrait
-          ? { width: 600, height: 800 }
-          : { width: 480, height: 640 },
-    );
+      const imageSrc = webcamRef.current?.getScreenshot(
+        isMobile
+          ? { width: 320, height: 426 }
+          : isPortrait
+            ? { width: 600, height: 800 }
+            : { width: 480, height: 640 },
+      );
 
-    // 카메라가 준비되지 않아 캡처에 실패한 경우 중단
-    if (!imageSrc) return;
+      // 카메라가 준비되지 않아 캡처에 실패한 경우 중단
+      if (!imageSrc) return;
 
-    // 1. 업데이트 이미지 목록 배열에 base64 형식의 이미지 저장(미리보기 용도)
-    updatedImageList.push({
-      uid: String(imageList.length),
-      attcFilNm: String(imageList.length + `.jpeg`),
-      filSize: 0,
-      src: imageSrc,
-      file: fileList[imageList.length],
-    });
+      // 1. 업데이트 이미지 목록 배열에 base64 형식의 이미지 저장(미리보기 용도)
+      updatedImageList.push({
+        uid: String(imageList.length),
+        attcFilNm: String(imageList.length + `.jpeg`),
+        filSize: 0,
+        src: imageSrc,
+        file: fileList[imageList.length],
+      });
 
-    // 2. base64 형식의 이미지를 File 형식으로 변환
-    const file = convertBase64ToFile(imageSrc, imageList.length);
+      // 2. base64 형식의 이미지를 File 형식으로 변환
+      const file = convertBase64ToFile(imageSrc, imageList.length);
 
-    // 3. 변환된 File을 업데이트 파일 목록 배열에 저장(서버 통신 용도)
-    updatedFileList.push(file);
+      // 3. 변환된 File을 업데이트 파일 목록 배열에 저장(서버 통신 용도)
+      updatedFileList.push(file);
 
-    // 4. 임시 이미지 목록 배열과 임시 파일 목록 배열 업데이트
-    setTempImageList(updatedImageList);
-    setTempFileList(updatedFileList);
+      // 4. 임시 이미지 목록 배열과 임시 파일 목록 배열 업데이트
+      setTempImageList(updatedImageList);
+      setTempFileList(updatedFileList);
 
-    // 5. 카메라 비활성화 및 미리보기 활성화
-    closeCamera();
-    openPreview();
+      // 5. 카메라 비활성화 및 미리보기 활성화
+      closeCamera();
+      openPreview();
+    },
+    // 촬영 시점의 이미지 목록만 의존하도록 의도된 콜백입니다. (그 외 값은 실행 시점의 최신 값을 읽기만 함)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [webcamRef, imageList, tempImageList, tempFileList]);
+    [webcamRef, imageList, tempImageList, tempFileList],
+  );
 
   /**
    * @function convertBase64ToFile
@@ -312,13 +308,9 @@ export default function MobileFileUploader({
       // 6. 데이터 페칭 함수 호출
       mutatePostRequestData();
     }
-
   };
 
-  const {
-    mutate: mutatePostRequestData,
-    isPending,
-  } = useMutation({
+  const { mutate: mutatePostRequestData, isPending } = useMutation({
     mutationKey: ["mobile-file-upload"],
     mutationFn: async () => await postRequestData(requestData),
     onSuccess: (response) => {
@@ -332,20 +324,19 @@ export default function MobileFileUploader({
     },
   });
 
-  const { mutate: mutatePatchRequestData, isPending: patchRequestDataLoading } =
-    useMutation({
-      mutationKey: ["request-update"],
-      mutationFn: async () => await patchRequestData(requestData),
-      onSuccess: (response) => {
-        if (response.data.code === "00") {
-          successToFetching();
-        }
-      },
-      onError: (error) => {
-        setIsProcessingSubmit(false);
-        console.error(error);
-      },
-    });
+  const { mutate: mutatePatchRequestData, isPending: patchRequestDataLoading } = useMutation({
+    mutationKey: ["request-update"],
+    mutationFn: async () => await patchRequestData(requestData),
+    onSuccess: (response) => {
+      if (response.data.code === "00") {
+        successToFetching();
+      }
+    },
+    onError: (error) => {
+      setIsProcessingSubmit(false);
+      console.error(error);
+    },
+  });
 
   const successToFetching = () => {
     openToast({
@@ -411,11 +402,13 @@ export default function MobileFileUploader({
                 className="_take-picture-button"
               >
                 <Image src={PlusMainIcon} alt="사진 촬영 더하기 아이콘" width={20} height={20} />
-                <Typography kind="body-medium" isBold={true} className="text-ers-main-100">사진 촬영</Typography>
+                <Typography kind="body-medium" isBold={true} className="text-ers-main-100">
+                  사진 촬영
+                </Typography>
               </button>
             </li>
 
-            {imageList &&
+            {imageList && (
               <MobileFileListItem
                 imageList={imageList}
                 setImageList={setImageList}
@@ -423,15 +416,11 @@ export default function MobileFileUploader({
                 setFileList={setFileList}
                 setIsExistingImageList={setIsExistingImageList}
               />
-            }
+            )}
           </ul>
 
           <div className="_datepicker-wrapper">
-            <Label
-              htmlFor="desktop-execution-date"
-              required={true}
-              labelText="대출실행일"
-            />
+            <Label htmlFor="desktop-execution-date" required={true} labelText="대출실행일" />
             <DatePicker
               id="desktop-execution-date"
               isExcludingPast={true}
@@ -445,7 +434,8 @@ export default function MobileFileUploader({
               shape="solid"
               size="md"
               color="grayscale"
-              onClick={() => router.push(FI_REQUEST_LIST)}>
+              onClick={() => router.push(FI_REQUEST_LIST)}
+            >
               목록
             </Button>
 
@@ -462,7 +452,7 @@ export default function MobileFileUploader({
           </div>
         </Form>
 
-        {(isCameraOpen || isPreviewOpen) &&
+        {(isCameraOpen || isPreviewOpen) && (
           <>
             <div className="_camera-backdrop"></div>
             <div className="_camera">
@@ -476,7 +466,7 @@ export default function MobileFileUploader({
                   <Image src={BackIcon} alt="카메라 끄기 아이콘" width={24} height={24} />
                 </button>
 
-                {isCameraOpen &&
+                {isCameraOpen && (
                   <div className="_video-wrapper">
                     <Webcam
                       ref={webcamRef}
@@ -495,47 +485,40 @@ export default function MobileFileUploader({
                       }}
                     />
                   </div>
-                }
+                )}
 
-                {isPreviewOpen &&
-                  <Image src={tempImageList[tempImageList.length - 1].src!} alt="임시 이미지" width={50} height={50} />
-                }
+                {isPreviewOpen && (
+                  <Image
+                    src={tempImageList[tempImageList.length - 1].src!}
+                    alt="임시 이미지"
+                    width={50}
+                    height={50}
+                  />
+                )}
               </div>
 
-              {isCameraOpen &&
+              {isCameraOpen && (
                 <div className="_camera-button-wrap">
-                  <button
-                    type="button"
-                    aria-label="사진 촬영"
-                    onClick={takePicture}
-                  >
+                  <button type="button" aria-label="사진 촬영" onClick={takePicture}>
                     <Image src={CameraIcon} alt="사진 촬영 카메라 아이콘" width={48} height={48} />
                   </button>
                 </div>
-              }
+              )}
 
-              {isPreviewOpen &&
+              {isPreviewOpen && (
                 <div className="_button-wrap">
-                  <Button
-                    shape="solid"
-                    size="md"
-                    color="grayscale"
-                    onClick={reTakePicture}>
+                  <Button shape="solid" size="md" color="grayscale" onClick={reTakePicture}>
                     다시 촬영
                   </Button>
 
-                  <Button
-                    shape="solid"
-                    size="md"
-                    color="main100"
-                    onClick={uploadPicture}>
+                  <Button shape="solid" size="md" color="main100" onClick={uploadPicture}>
                     사진 업로드하기
                   </Button>
                 </div>
-              }
+              )}
             </div>
           </>
-        }
+        )}
       </div>
     </>
   );

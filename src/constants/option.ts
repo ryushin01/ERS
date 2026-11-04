@@ -122,18 +122,15 @@ export const LAWYER_LIST_OPTION = [
 export const SUPPLEMENT_REQUEST_OPTION = [
   {
     value: "supplement-request-option-1",
-    label:
-      "등록된 이미지가 깨져 확인이 어렵습니다. 등기자료를 다시 등록해 주세요.",
+    label: "등록된 이미지가 깨져 확인이 어렵습니다. 등기자료를 다시 등록해 주세요.",
   },
   {
     value: "supplement-request-option-2",
-    label:
-      "전체 페이지가 모두 등록되지 않았습니다. 등기자료를 다시 등록해 주세요.",
+    label: "전체 페이지가 모두 등록되지 않았습니다. 등기자료를 다시 등록해 주세요.",
   },
   {
     value: "supplement-request-option-3",
-    label:
-      "설정계약서가 아닌 다른 서류가 등록되었습니다. 등기자료를 다시 등록해 주세요.",
+    label: "설정계약서가 아닌 다른 서류가 등록되었습니다. 등기자료를 다시 등록해 주세요.",
   },
   {
     value: "supplement-request-option-4",
@@ -148,8 +145,7 @@ export const SUPPLEMENT_REQUEST_OPTION = [
 export const CANCEL_PROGRESS_OPTION = [
   {
     value: "cancel-progress-option-1",
-    label:
-      "등록된 이미지가 깨져 확인이 어렵습니다. 등기접수증을 다시 등록해 주세요.",
+    label: "등록된 이미지가 깨져 확인이 어렵습니다. 등기접수증을 다시 등록해 주세요.",
   },
   {
     value: "cancel-progress-option-2",

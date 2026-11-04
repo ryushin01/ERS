@@ -12,7 +12,8 @@ export const SUPPLEMENT_REQUEST_INFORMATION_LIST = [
 export const CANCEL_PROGRESS_INFORMATION_LIST = [
   {
     id: "cancel-progress-information-1",
-    content: "진행취소 시, 진행상태가 [진행취소]로 변경되며 한 번 변경된 상태는 복구할 수 없습니다.",
+    content:
+      "진행취소 시, 진행상태가 [진행취소]로 변경되며 한 번 변경된 상태는 복구할 수 없습니다.",
   },
 ];
 

@@ -25,11 +25,11 @@ type TabGroupProps = {
  * @property {function} onTabChange   - 탭 전환 함수
  */
 export default function TabGroup({
-                                   items,
-                                   defaultTab,
-                                   onTabChange,
-                                   isDesktop,
-                                 }: TabGroupProps & ResponsiveType) {
+  items,
+  defaultTab,
+  onTabChange,
+  isDesktop,
+}: TabGroupProps & ResponsiveType) {
   const [activeTab, setActiveTab] = useState(defaultTab || 0);
 
   const handleTabChange = (index: number) => {
@@ -56,17 +56,12 @@ export default function TabGroup({
               </Typography>
 
               {tab.count !== undefined && (
-                <Badge
-                  type="number"
-                  colorType={activeTab === index ? "active" : "default"}
-                >
+                <Badge type="number" colorType={activeTab === index ? "active" : "default"}>
                   {tab.count}
                 </Badge>
               )}
             </button>
-            <div
-              className={`_tab-border ${activeTab === index ? "active" : ""}`}
-            ></div>
+            <div className={`_tab-border ${activeTab === index ? "active" : ""}`}></div>
           </li>
         ))}
       </ul>

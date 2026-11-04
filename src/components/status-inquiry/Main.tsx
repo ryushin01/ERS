@@ -15,7 +15,9 @@ export default function Main() {
         kind={isDesktop ? "headline-medium" : "title-large"}
         isBold={true}
         className={isDesktop ? "py-6" : "pb-4"}
-      >전자등기 현황조회</Typography>
+      >
+        전자등기 현황조회
+      </Typography>
 
       <List isDesktop={isDesktop} />
     </section>

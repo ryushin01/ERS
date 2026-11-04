@@ -30,32 +30,30 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
+  children,
+}: Readonly<{
   children: ReactNode;
 }>) {
   return (
     <html lang="ko">
-    <head>
-      <link
-        rel="stylesheet"
-        as="style"
-        crossOrigin="anonymous"
-        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"
-      />
-      <link rel="manifest" href="/manifest.json" />
-      <link rel="apple-touch-icon" sizes="192x192" href="/images/logo/logo-192x192.png" />
-      <link rel="apple-touch-icon" sizes="512x512" href="/images/logo/logo-512x512.png" />
-    </head>
-    <body>
-    <Provider>
-      <div id="app">
-        {children}
-      </div>
-      <ToastPopup />
-      <div id="portal" />
-    </Provider>
-    </body>
+      <head>
+        <link
+          rel="stylesheet"
+          as="style"
+          crossOrigin="anonymous"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"
+        />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/images/logo/logo-192x192.png" />
+        <link rel="apple-touch-icon" sizes="512x512" href="/images/logo/logo-512x512.png" />
+      </head>
+      <body>
+        <Provider>
+          <div id="app">{children}</div>
+          <ToastPopup />
+          <div id="portal" />
+        </Provider>
+      </body>
     </html>
   );
 }

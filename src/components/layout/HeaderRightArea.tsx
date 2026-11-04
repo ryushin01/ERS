@@ -15,11 +15,7 @@ import { useDisclosure, useLogout, useResponsive } from "@hooks";
 import { LogoutIcon } from "@icons14";
 import { MenuIcon } from "@icons24";
 import { DownArrowIcon, UpArrowIcon } from "@icons32";
-import {
-  getProfileData,
-  getSearchAdminRgstData,
-  getSearchBankRgstData,
-} from "@services/home";
+import { getProfileData, getSearchAdminRgstData, getSearchBankRgstData } from "@services/home";
 import { authAtom, toastState } from "@stores";
 
 /**
@@ -44,23 +40,11 @@ export default function HeaderRightArea() {
   const [searchRqstNo, setSearchRqstNo] = useState("");
   const [imgSrc, setImgSrc] = useState("");
 
-  const {
-    isOpen: isDropdownOpen,
-    open: openDropdown,
-    close: closeDropdown,
-  } = useDisclosure();
+  const { isOpen: isDropdownOpen, open: openDropdown, close: closeDropdown } = useDisclosure();
 
-  const {
-    isOpen: isDrawerOpen,
-    open: openDrawer,
-    close: closeDrawer,
-  } = useDisclosure();
+  const { isOpen: isDrawerOpen, open: openDrawer, close: closeDrawer } = useDisclosure();
 
-  const {
-    isOpen: isModalOpen,
-    open: openModal,
-    close: closeModal,
-  } = useDisclosure();
+  const { isOpen: isModalOpen, open: openModal, close: closeModal } = useDisclosure();
 
   // 사용자 구분 코드 (00 : 금융기관 / 10 : 법무 대리인 / 20 : 관리자)
   const level: MembGbCd = authInfo.membGbCd as MembGbCd;
@@ -77,9 +61,7 @@ export default function HeaderRightArea() {
   });
 
   /* 금융기관 의뢰번호 조회 api 호출 */
-  const {
-    refetch: getSearchBnkRqstNo,
-  } = useQuery({
+  const { refetch: getSearchBnkRqstNo } = useQuery({
     queryKey: ["search-bank-rgstr", searchRqstNo],
     queryFn: async () => {
       const response = await getSearchBankRgstData(searchRqstNo);
@@ -95,9 +77,7 @@ export default function HeaderRightArea() {
   });
 
   /* 관리자 의뢰번호 조회 api 호출 */
-  const {
-    refetch: getSearchAdmRqstNo,
-  } = useQuery({
+  const { refetch: getSearchAdmRqstNo } = useQuery({
     queryKey: ["search-admin-rgstr", searchRqstNo],
     queryFn: async () => {
       const response = await getSearchAdminRgstData(searchRqstNo);
@@ -171,8 +151,7 @@ export default function HeaderRightArea() {
           onSubmit={(e) => {
             handleSubmit(e);
           }}
-          onChange={() => {
-          }}
+          onChange={() => {}}
           legendText="의뢰번호 검색"
           isHiddenLegend={true}
         >
@@ -217,9 +196,7 @@ export default function HeaderRightArea() {
                 icon={
                   <Image
                     src={isDropdownOpen ? UpArrowIcon : DownArrowIcon}
-                    alt={
-                      isDropdownOpen ? "위 화살표 아이콘" : "아래 화살표 아이콘"
-                    }
+                    alt={isDropdownOpen ? "위 화살표 아이콘" : "아래 화살표 아이콘"}
                     width={32}
                     height={32}
                   />
@@ -241,14 +218,7 @@ export default function HeaderRightArea() {
                   shape="outline"
                   size="sm"
                   color="grayscale"
-                  icon={
-                    <Image
-                      src={LogoutIcon}
-                      alt="로그아웃 아이콘"
-                      width={14}
-                      height={14}
-                    />
-                  }
+                  icon={<Image src={LogoutIcon} alt="로그아웃 아이콘" width={14} height={14} />}
                   iconPosition="right"
                   onClick={handleLogout}
                 >
@@ -264,14 +234,7 @@ export default function HeaderRightArea() {
         <IconButton
           size="md"
           onClick={openDrawer}
-          icon={
-            <Image
-              src={MenuIcon}
-              alt="메뉴 토글 아이콘"
-              width={24}
-              height={24}
-            />
-          }
+          icon={<Image src={MenuIcon} alt="메뉴 토글 아이콘" width={24} height={24} />}
         />
       )}
 

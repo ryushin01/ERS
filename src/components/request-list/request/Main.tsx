@@ -27,8 +27,14 @@ export default function Main() {
       </Typography>
 
       {isDesktop && <DesktopFileUploader requestNo={requestNo} />}
-      {!isDesktop &&
-        <MobileFileUploader requestNo={requestNo} isTablet={isTablet} isMobile={isMobile} isPortrait={isPortrait} />}
+      {!isDesktop && (
+        <MobileFileUploader
+          requestNo={requestNo}
+          isTablet={isTablet}
+          isMobile={isMobile}
+          isPortrait={isPortrait}
+        />
+      )}
     </section>
   );
 }

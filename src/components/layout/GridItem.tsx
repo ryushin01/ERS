@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
 
 type GridItemProps = {
-  mobile: number,
-  tablet: number,
-  desktop: number,
+  mobile: number;
+  tablet: number;
+  desktop: number;
   children?: ReactNode;
   className?: string;
 };
@@ -18,12 +18,12 @@ type GridItemProps = {
  * @property {number} desktop       - 데스크탑 해상도(min-width: 1280px)에서 차지할 화면 분할 갯수
  */
 export default function GridItem({
-                                   mobile,
-                                   tablet,
-                                   desktop,
-                                   children,
-                                   className = "",
-                                 }: GridItemProps) {
+  mobile,
+  tablet,
+  desktop,
+  children,
+  className = "",
+}: GridItemProps) {
   const mobileGridCols: { [key: number]: string } = {
     1: "w-1/12",
     2: "w-2/12",
@@ -70,7 +70,9 @@ export default function GridItem({
   };
 
   return (
-    <div className={`${className} ${mobileGridCols[mobile]} ${tabletGridCols[tablet]} ${desktopGridCols[desktop]}`}>
+    <div
+      className={`${className} ${mobileGridCols[mobile]} ${tabletGridCols[tablet]} ${desktopGridCols[desktop]}`}
+    >
       {children}
     </div>
   );

@@ -11,10 +11,7 @@ type CheckboxProps = {
   checked: boolean;
   disabled?: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-} & Omit<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  "className"
->;
+} & Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "className">;
 
 /**
  * @name Checkbox
@@ -27,13 +24,7 @@ type CheckboxProps = {
  * @property {boolean} disabled         - 비활성화 여부
  * @property {function} onChange        - 선택 시 호출 함수
  */
-export default function Checkbox({
-  name,
-  labelText,
-  checked,
-  disabled,
-  onChange,
-}: CheckboxProps) {
+export default function Checkbox({ name, labelText, checked, disabled, onChange }: CheckboxProps) {
   const className = `_checkbox`;
 
   return (

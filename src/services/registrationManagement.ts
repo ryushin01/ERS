@@ -70,10 +70,7 @@ export const patchRegistrationApproval = (rqstNo: string) =>
   );
 
 /* 등기관리 - 등기 반려처리 진행 */
-export const patchRegistrationReject = (form: {
-  rqstNo: string;
-  procRsnCnts: string;
-}) =>
+export const patchRegistrationReject = (form: { rqstNo: string; procRsnCnts: string }) =>
   axiosBasicInstance
     .patch(`${API_ADMIN_REGISTRATION}/reject`, form, { baseURL: adminURI })
     .then((response) => response.data);

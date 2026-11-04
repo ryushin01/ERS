@@ -9,15 +9,7 @@ import DaumPostcode from "react-daum-postcode";
 
 import { Button } from "@components/button";
 import { DatePicker, Loading, Typography } from "@components/common";
-import {
-  CurrencyFormat,
-  Form,
-  InputField,
-  Label,
-  Radio,
-  Select,
-  TextArea,
-} from "@components/form";
+import { CurrencyFormat, Form, InputField, Label, Radio, Select, TextArea } from "@components/form";
 import { Grid, GridItem } from "@components/layout";
 import { Modal } from "@components/modal";
 import { REALE_CD } from "@constants/code";
@@ -47,8 +39,7 @@ type PostcodeProps = {
 export default function CreateForm() {
   const router = useRouter();
   const { ...datePickerProps } = useDatePicker();
-  const { handleFileChange, handleFileDelete, previewImageList, imageList } =
-    useFileUpload();
+  const { handleFileChange, handleFileDelete, previewImageList, imageList } = useFileUpload();
   const authInfo = useAtomValue(authAtom);
   const openToast = useSetAtom(toastState);
   // 로그인 정보는 sessionStorage에 있어 서버 렌더링 결과와 다르므로, 마운트 후에만 표시 (hydration 불일치 방지)
@@ -82,7 +73,6 @@ export default function CreateForm() {
   const [execDate, setExecDate] = useState<Date | null>();
   const [contractDate, setContractDate] = useState<Date | null>();
   const [lgagDlvrCnts, setLgagDlvrCnts] = useState("");
-
 
   const [execDtError, setExecDtError] = useState(false); // 대출실행일 인풋 에러
   const [selectBankError, setSelectBankError] = useState(false); // 채권자 인풋 에러
@@ -173,9 +163,7 @@ export default function CreateForm() {
     const timeDifference = date!.getTimezoneOffset() * 60000;
     const koreanTime = new Date(date!.getTime() - timeDifference);
 
-    const setDate = date
-      ? koreanTime.toISOString().substring(0, 10).replace(/-/g, "")
-      : "";
+    const setDate = date ? koreanTime.toISOString().substring(0, 10).replace(/-/g, "") : "";
 
     setForm((prevForm) => ({
       ...prevForm,
@@ -195,9 +183,7 @@ export default function CreateForm() {
     }));
   };
   // 3.2. 채권자 리스트 option data
-  const BANK_LIST_OPTION = Array.isArray(bankList)
-    ? transformBankListData(bankList)
-    : [];
+  const BANK_LIST_OPTION = Array.isArray(bankList) ? transformBankListData(bankList) : [];
   const [selectBank, setSelectedBank] = useState(
     BANK_LIST_OPTION.length > 0 ? BANK_LIST_OPTION[0].value : "",
   );
@@ -247,9 +233,7 @@ export default function CreateForm() {
     const timeDifference = date!.getTimezoneOffset() * 60000;
     const koreanTime = new Date(date!.getTime() - timeDifference);
 
-    const setDate = date
-      ? koreanTime.toISOString().substring(0, 10).replace(/-/g, "")
-      : "";
+    const setDate = date ? koreanTime.toISOString().substring(0, 10).replace(/-/g, "") : "";
 
     setForm((prevForm) => ({
       ...prevForm,
@@ -269,9 +253,7 @@ export default function CreateForm() {
   };
 
   /* 법무대리인 리스트 option data */
-  const LAWYER_LIST_OPTION = Array.isArray(membList)
-    ? transformListData(membList)
-    : []; // membList가 배열인지 확인한 후 호출
+  const LAWYER_LIST_OPTION = Array.isArray(membList) ? transformListData(membList) : []; // membList가 배열인지 확인한 후 호출
   const [selectLawyer, setSelectedLawyer] = useState(
     LAWYER_LIST_OPTION.length > 0 ? LAWYER_LIST_OPTION[0].value : "",
   );
@@ -280,15 +262,10 @@ export default function CreateForm() {
   /* 1. 주소검색 api 호출 */
   const handleComplete = (data: PostcodeProps) => {
     const roadAddress = `${data?.roadAddress} (${data?.buildingName ?? ""})`; // 도로명 주소
-    const rdnmAddress = `${
-      !!data?.autoJibunAddress ? data?.autoJibunAddress : data.jibunAddress
-    }`; // 지번 주소
+    const rdnmAddress = `${!!data?.autoJibunAddress ? data?.autoJibunAddress : data.jibunAddress}`; // 지번 주소
 
     setAddrForm((prevForm) => {
-      if (
-        prevForm.roadAddr !== roadAddress ||
-        prevForm.rdnmAddr !== rdnmAddress
-      ) {
+      if (prevForm.roadAddr !== roadAddress || prevForm.rdnmAddr !== rdnmAddress) {
         return {
           ...prevForm,
           rdnmAddr: roadAddress,
@@ -333,17 +310,9 @@ export default function CreateForm() {
         case "01":
           return Object.values(addrForm).every((value) => value !== "");
         case "02":
-          return (
-            addrForm.roadAddr !== "" &&
-            addrForm.rdnmAddr !== "" &&
-            addrForm.bldg !== ""
-          );
+          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.bldg !== "";
         case "03":
-          return (
-            addrForm.roadAddr !== "" &&
-            addrForm.rdnmAddr !== "" &&
-            addrForm.unit !== ""
-          );
+          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.unit !== "";
         case "04":
           return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "";
         default:
@@ -387,16 +356,12 @@ export default function CreateForm() {
   }, [unqRgstrNoData, openToast]);
   /* ---- 등기 고유 번호 조회 끝 ---- */
 
-  const {
-    mutate: mutatePostCreateAssign,
-    isPending: postCreateAssignLoading,
-  } = useMutation({
+  const { mutate: mutatePostCreateAssign, isPending: postCreateAssignLoading } = useMutation({
     mutationKey: ["post-create-assign"],
     mutationFn: async () => await postCreateAssign(requestData),
     onSuccess: (response) => {
       // 배정 성공 시
       if (response.data.code === "00") {
-
         openToast({
           message: "배정이 완료되었습니다.",
           position: "top",
@@ -489,24 +454,15 @@ export default function CreateForm() {
         case "01":
           return Object.values(addrForm).every((value) => value !== "");
         case "02":
-          return (
-            addrForm.roadAddr !== "" &&
-            addrForm.rdnmAddr !== "" &&
-            addrForm.bldg !== ""
-          );
+          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.bldg !== "";
         case "03":
-          return (
-            addrForm.roadAddr !== "" &&
-            addrForm.rdnmAddr !== "" &&
-            addrForm.unit !== ""
-          );
+          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.unit !== "";
         case "04":
           return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "";
         default:
           return false;
       }
     })();
-
 
     let hasError = false;
 
@@ -645,19 +601,13 @@ export default function CreateForm() {
         <Grid className="_without-padding">
           <GridItem desktop={6} tablet={6} mobile={12}>
             {previewImageList.length > 0 ? (
-              <ResponsiveSwiper
-                imageList={previewImageList}
-                handleFileDelete={handleFileDelete}
-              />
+              <ResponsiveSwiper imageList={previewImageList} handleFileDelete={handleFileDelete} />
             ) : (
               <EmptyBox />
             )}
 
             <div className="w-[108px] mt-2">
-              <label
-                htmlFor="registration-data-input-file"
-                className="_file-uploader"
-              >
+              <label htmlFor="registration-data-input-file" className="_file-uploader">
                 등기자료 추가
               </label>
               <input
@@ -674,113 +624,89 @@ export default function CreateForm() {
             <div className="pl-10">
               <div className="_responsive-table-inner-wrapper _no-thead _admin">
                 <table className="_responsive-table">
-                  <caption className="_hidden-table-caption">
-                    전자등기 배정 표
-                  </caption>
+                  <caption className="_hidden-table-caption">전자등기 배정 표</caption>
                   <tbody>
-                  <tr>
-                    <th>
-                      <Typography kind="title-small">의뢰번호</Typography>
-                    </th>
-                    <td colSpan={5}>
-                      <Typography kind="title-small">{rqstNo}</Typography>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>
-                      <Label
-                        htmlFor="exec-dt"
-                        required={true}
-                        labelText="대출실행일"
-                      />
-                    </th>
-                    <td colSpan={2}>
-                      <DatePicker
-                        name="execDt"
-                        id="exec-dt"
-                        {...datePickerProps}
-                        handleDatePicker={handleExecDateChange}
-                        startDate={execDate!}
-                        isError={execDtError}
-                      />
-                    </td>
-                    <td colSpan={3}></td>
-                  </tr>
-                  <tr>
-                    <th>
-                      <Label
-                        htmlFor="bnd-memb-no"
-                        required={true}
-                        labelText="채권자"
-                      />
-                    </th>
-                    <td colSpan={2}>
-                      <Select
-                        id="bnd-memb-no"
-                        name="bndBizNo"
-                        selectSize="sm"
-                        placeholder="채권자 선택"
-                        options={BANK_LIST_OPTION}
-                        value={selectBank}
-                        onChange={(e) => {
-                          setSelectedBank(e.target.value);
-                          setSelectBankError(false);
-                        }}
-                        isError={selectBankError}
-                      />
-                    </td>
-                    <th>
-                      <Label
-                        htmlFor="dbtr-nm"
-                        required={true}
-                        labelText="채무자"
-                      />
-                    </th>
-                    <td colSpan={2}>
-                      <InputField
-                        name="dbtrNm"
-                        defaultValue={dbtrNM}
-                        htmlFor="dbtr-nm"
-                        type="text"
-                        inputSize="sm"
-                        placeholder="채무자 입력"
-                        onChange={(e) => handleCahngeDbtrNm(e)}
-                        isError={isDbtrNMError}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>
-                      <Label
-                        htmlFor="reale-cd"
-                        required={true}
-                        labelText="부동산구분"
-                      />
-                    </th>
-                    <td colSpan={2}>
-                      <Select
-                        id="reale-cd"
-                        name="realeCd"
-                        selectSize="sm"
-                        options={REAL_ESTATE_OPTION}
-                        value={selectedRealEstate}
-                        onChange={(e) =>
-                          setSelectedRealEstate(e.target.value)
-                        }
-                        isError={realeError}
-                      />
-                    </td>
-                    <td colSpan={3}></td>
-                  </tr>
-                  <tr>
-                    <th>
-                      <Label
-                        htmlFor="lotnum"
-                        required={true}
-                        labelText="담보목적물"
-                      />
-                    </th>
-                    <td colSpan={5}>
+                    <tr>
+                      <th>
+                        <Typography kind="title-small">의뢰번호</Typography>
+                      </th>
+                      <td colSpan={5}>
+                        <Typography kind="title-small">{rqstNo}</Typography>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        <Label htmlFor="exec-dt" required={true} labelText="대출실행일" />
+                      </th>
+                      <td colSpan={2}>
+                        <DatePicker
+                          name="execDt"
+                          id="exec-dt"
+                          {...datePickerProps}
+                          handleDatePicker={handleExecDateChange}
+                          startDate={execDate!}
+                          isError={execDtError}
+                        />
+                      </td>
+                      <td colSpan={3}></td>
+                    </tr>
+                    <tr>
+                      <th>
+                        <Label htmlFor="bnd-memb-no" required={true} labelText="채권자" />
+                      </th>
+                      <td colSpan={2}>
+                        <Select
+                          id="bnd-memb-no"
+                          name="bndBizNo"
+                          selectSize="sm"
+                          placeholder="채권자 선택"
+                          options={BANK_LIST_OPTION}
+                          value={selectBank}
+                          onChange={(e) => {
+                            setSelectedBank(e.target.value);
+                            setSelectBankError(false);
+                          }}
+                          isError={selectBankError}
+                        />
+                      </td>
+                      <th>
+                        <Label htmlFor="dbtr-nm" required={true} labelText="채무자" />
+                      </th>
+                      <td colSpan={2}>
+                        <InputField
+                          name="dbtrNm"
+                          defaultValue={dbtrNM}
+                          htmlFor="dbtr-nm"
+                          type="text"
+                          inputSize="sm"
+                          placeholder="채무자 입력"
+                          onChange={(e) => handleCahngeDbtrNm(e)}
+                          isError={isDbtrNMError}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        <Label htmlFor="reale-cd" required={true} labelText="부동산구분" />
+                      </th>
+                      <td colSpan={2}>
+                        <Select
+                          id="reale-cd"
+                          name="realeCd"
+                          selectSize="sm"
+                          options={REAL_ESTATE_OPTION}
+                          value={selectedRealEstate}
+                          onChange={(e) => setSelectedRealEstate(e.target.value)}
+                          isError={realeError}
+                        />
+                      </td>
+                      <td colSpan={3}></td>
+                    </tr>
+                    <tr>
+                      <th>
+                        <Label htmlFor="lotnum" required={true} labelText="담보목적물" />
+                      </th>
+                      <td colSpan={5}>
                         <span className="flex flex-col gap-y-2 w-full">
                           <span className="flex max-w-24 mb-4">
                             <Button
@@ -793,10 +719,7 @@ export default function CreateForm() {
                             </Button>
                           </span>
                           <span className="flex items-center gap-x-2 mb-2 w-[500px] [&>span:first-child]:min-w-24">
-                            <Typography
-                              kind="body-medium"
-                              className="text-ers-grayscale-80"
-                            >
+                            <Typography kind="body-medium" className="text-ers-grayscale-80">
                               지번 주소
                             </Typography>
                             <InputField
@@ -811,10 +734,7 @@ export default function CreateForm() {
                             />
                           </span>
                           <span className="flex items-center gap-x-2 mb-2 w-[500px] [&>span:first-child]:min-w-24">
-                            <Typography
-                              kind="body-medium"
-                              className="text-ers-grayscale-80"
-                            >
+                            <Typography kind="body-medium" className="text-ers-grayscale-80">
                               도로명 주소
                             </Typography>
                             <InputField
@@ -829,16 +749,12 @@ export default function CreateForm() {
                             />
                           </span>
                           <span className="flex items-center gap-x-2 mb-2 [&>span:first-child]:min-w-24">
-                            <Typography
-                              kind="body-medium"
-                              className="text-ers-grayscale-80"
-                            >
+                            <Typography kind="body-medium" className="text-ers-grayscale-80">
                               상세 주소
                             </Typography>
                             <ul className="flex gap-x-4 text-sm">
                               {LAND_LOT_OPTION.map((auth) => {
-                                const { id, name, value, labelText, disabled } =
-                                  auth;
+                                const { id, name, value, labelText, disabled } = auth;
 
                                 return (
                                   <li key={id}>
@@ -855,60 +771,50 @@ export default function CreateForm() {
                               })}
                             </ul>
                           </span>
-                            <span className="flex ">
-                        {/* 01 , 02 일때 bldg 영역노출 */}
-                              {(radioValue === "01" || radioValue === "02") && (
-                                <span className="flex items-center gap-x-2 [&>div:first-child]:w-[70%]">
-                            <InputField
-                              name="bldg"
-                              defaultValue={addrForm.bldg}
-                              htmlFor=""
-                              type="text"
-                              inputSize="sm"
-                              placeholder=""
-                              isError={addrError}
-                            />
-                            <Typography
-                              kind="body-medium"
-                              className="text-ers-grayscale-80"
-                            >
-                              동
-                            </Typography>
+                          <span className="flex ">
+                            {/* 01 , 02 일때 bldg 영역노출 */}
+                            {(radioValue === "01" || radioValue === "02") && (
+                              <span className="flex items-center gap-x-2 [&>div:first-child]:w-[70%]">
+                                <InputField
+                                  name="bldg"
+                                  defaultValue={addrForm.bldg}
+                                  htmlFor=""
+                                  type="text"
+                                  inputSize="sm"
+                                  placeholder=""
+                                  isError={addrError}
+                                />
+                                <Typography kind="body-medium" className="text-ers-grayscale-80">
+                                  동
+                                </Typography>
+                              </span>
+                            )}
+                            {/* 01 , 03 일때 unit 영역노출 */}
+                            {(radioValue === "01" || radioValue === "03") && (
+                              <span className="flex items-center gap-x-2 [&>div:first-child]:w-[70%]">
+                                <InputField
+                                  name="unit"
+                                  defaultValue={addrForm.unit}
+                                  htmlFor=""
+                                  type="number"
+                                  inputSize="sm"
+                                  placeholder=""
+                                  isError={addrError}
+                                />
+                                <Typography kind="body-medium" className="text-ers-grayscale-80">
+                                  호
+                                </Typography>
+                              </span>
+                            )}
                           </span>
-                              )}
-                              {/* 01 , 03 일때 unit 영역노출 */}
-                              {(radioValue === "01" || radioValue === "03") && (
-                                <span className="flex items-center gap-x-2 [&>div:first-child]:w-[70%]">
-                            <InputField
-                              name="unit"
-                              defaultValue={addrForm.unit}
-                              htmlFor=""
-                              type="number"
-                              inputSize="sm"
-                              placeholder=""
-                              isError={addrError}
-                            />
-                            <Typography
-                              kind="body-medium"
-                              className="text-ers-grayscale-80"
-                            >
-                              호
-                            </Typography>
-                          </span>
-                              )}
-                      </span>
                         </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>
-                      <Label
-                        htmlFor="unq-cd"
-                        required={true}
-                        labelText="고유번호"
-                      />
-                    </th>
-                    <td colSpan={3}>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        <Label htmlFor="unq-cd" required={true} labelText="고유번호" />
+                      </th>
+                      <td colSpan={3}>
                         <span className="flex gap-x-4 [&>button]:w-[108px] [&>div]:flex-1">
                           <Button
                             shape="solid"
@@ -929,95 +835,82 @@ export default function CreateForm() {
                             isError={unqRgstrNoError}
                           />
                         </span>
-                    </td>
-                    <td colSpan={2}></td>
-                  </tr>
-                  <tr>
-                    <th>
-                      <Label
-                        htmlFor="bnd-max-amt"
-                        required={true}
-                        labelText="채권최고액"
-                      />
-                    </th>
-                    <td colSpan={2}>
-                      <CurrencyFormat
-                        id="bnd-max-amt"
-                        name="price"
-                        value={price!}
-                        onChange={thousandSeparator}
-                        placeholder="채권최고액 입력"
-                        inputSize="sm"
-                        isError={isPricesError}
-                      />
-                    </td>
-                    <td colSpan={3}></td>
-                  </tr>
-                  <tr>
-                    <th>
-                      <Label
-                        htmlFor="se-dt"
-                        required={true}
-                        labelText="설정약정일"
-                      />
-                    </th>
-                    <td colSpan={2}>
-                      <DatePicker
-                        id="se-dt"
-                        {...datePickerProps}
-                        handleDatePicker={handleDateChange}
-                        startDate={contractDate!}
-                        isError={isContractDateError}
-                      />
-                    </td>
-                    <td colSpan={3}></td>
-                  </tr>
+                      </td>
+                      <td colSpan={2}></td>
+                    </tr>
+                    <tr>
+                      <th>
+                        <Label htmlFor="bnd-max-amt" required={true} labelText="채권최고액" />
+                      </th>
+                      <td colSpan={2}>
+                        <CurrencyFormat
+                          id="bnd-max-amt"
+                          name="price"
+                          value={price!}
+                          onChange={thousandSeparator}
+                          placeholder="채권최고액 입력"
+                          inputSize="sm"
+                          isError={isPricesError}
+                        />
+                      </td>
+                      <td colSpan={3}></td>
+                    </tr>
+                    <tr>
+                      <th>
+                        <Label htmlFor="se-dt" required={true} labelText="설정약정일" />
+                      </th>
+                      <td colSpan={2}>
+                        <DatePicker
+                          id="se-dt"
+                          {...datePickerProps}
+                          handleDatePicker={handleDateChange}
+                          startDate={contractDate!}
+                          isError={isContractDateError}
+                        />
+                      </td>
+                      <td colSpan={3}></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
 
               <div className="_responsive-table-inner-wrapper _no-thead _admin mt-6 mb-8">
                 <table className="_responsive-table">
-                  <caption className="_hidden-table-caption">
-                    법무대리인, 제출 담당자 표
-                  </caption>
+                  <caption className="_hidden-table-caption">법무대리인, 제출 담당자 표</caption>
                   <tbody>
-                  <tr>
-                    <th>
-                      <Label
-                        htmlFor="reale-cd"
-                        required={false}
-                        labelText="법무대리인"
-                      />
-                    </th>
-                    <td colSpan={2}>
-                      <Select
-                        id="reale-cd"
-                        name="lgagMembNo"
-                        selectSize="sm"
-                        placeholder="법무대리인 선택"
-                        options={LAWYER_LIST_OPTION}
-                        value={selectLawyer}
-                        onChange={(e) => setSelectedLawyer(e.target.value)}
-                      />
-                    </td>
-                    <td colSpan={3}></td>
-                  </tr>
-                  <tr>
-                    <th>
-                      <Typography kind="title-small">제출 담당자</Typography>
-                    </th>
-                    <td colSpan={2}>
-                      <Typography kind="title-small">{isClient ? authInfo?.membNm : ""}</Typography>
-                    </td>
-                    <td colSpan={3}></td>
-                  </tr>
+                    <tr>
+                      <th>
+                        <Label htmlFor="reale-cd" required={false} labelText="법무대리인" />
+                      </th>
+                      <td colSpan={2}>
+                        <Select
+                          id="reale-cd"
+                          name="lgagMembNo"
+                          selectSize="sm"
+                          placeholder="법무대리인 선택"
+                          options={LAWYER_LIST_OPTION}
+                          value={selectLawyer}
+                          onChange={(e) => setSelectedLawyer(e.target.value)}
+                        />
+                      </td>
+                      <td colSpan={3}></td>
+                    </tr>
+                    <tr>
+                      <th>
+                        <Typography kind="title-small">제출 담당자</Typography>
+                      </th>
+                      <td colSpan={2}>
+                        <Typography kind="title-small">
+                          {isClient ? authInfo?.membNm : ""}
+                        </Typography>
+                      </td>
+                      <td colSpan={3}></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
 
-              <div
-                className="h-32 [&>label>textarea]:p-4 [&>label>textarea]:rounded-lg [&>label>textarea]:text-base [&>label>textarea]:text-ers-grayscale-80">
+              <div className="h-32 [&>label>textarea]:p-4 [&>label>textarea]:rounded-lg [&>label>textarea]:text-base [&>label>textarea]:text-ers-grayscale-80">
                 <TextArea
                   name="lgagDlvrCnts"
                   isError={false}
@@ -1028,11 +921,7 @@ export default function CreateForm() {
               </div>
 
               {isOpenSearchAddressModal && (
-                <Modal
-                  title="주소검색"
-                  size="md"
-                  onClose={closeopenSearchAddressModal}
-                >
+                <Modal title="주소검색" size="md" onClose={closeopenSearchAddressModal}>
                   <DaumPostcode onComplete={handleComplete} />
                 </Modal>
               )}
@@ -1053,11 +942,7 @@ export default function CreateForm() {
         </Grid>
 
         {isOpenSearchAddressModal && (
-          <Modal
-            title="주소검색"
-            size="md"
-            onClose={closeopenSearchAddressModal}
-          >
+          <Modal title="주소검색" size="md" onClose={closeopenSearchAddressModal}>
             <DaumPostcode onComplete={handleComplete} />
           </Modal>
         )}

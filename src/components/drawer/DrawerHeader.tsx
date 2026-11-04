@@ -5,7 +5,7 @@ import { CancelIcon } from "@icons24";
 
 type DrawerHeaderProps = {
   onClose: () => void;
-}
+};
 
 /**
  * @name DrawerHeader
@@ -20,15 +20,8 @@ export default function DrawerHeader({ onClose }: DrawerHeaderProps) {
       <IconButton
         size="md"
         onClick={onClose}
-        icon={
-          <Image
-            src={CancelIcon}
-            alt="드로어 닫기 아이콘"
-            width={24}
-            height={24}
-          />
-        }
+        icon={<Image src={CancelIcon} alt="드로어 닫기 아이콘" width={24} height={24} />}
       />
     </div>
   );
-};
+}

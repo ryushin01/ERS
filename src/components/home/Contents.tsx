@@ -21,11 +21,7 @@ type ContentsProps = {
   getNoticeListData: HomeNoticeListResponse;
 };
 
-export default function Contents({
-                                   isDesktop,
-                                   getRegiListData,
-                                   getNoticeListData,
-                                 }: ContentsProps) {
+export default function Contents({ isDesktop, getRegiListData, getNoticeListData }: ContentsProps) {
   const router = useRouter();
 
   const regiListData = getRegiListData.data.rgstrMasterList ?? [];
@@ -34,14 +30,9 @@ export default function Contents({
   return (
     <Grid>
       <GridItem desktop={7} tablet={12} mobile={12}>
-        <div
-          className={`relative pt-8 w-full h-full ${isDesktop ? "" : "pb-8"}`}
-        >
+        <div className={`relative pt-8 w-full h-full ${isDesktop ? "" : "pb-8"}`}>
           <div className="m-2">
-            <Typography
-              kind={isDesktop ? "headline-small" : "title-large"}
-              isBold={true}
-            >
+            <Typography kind={isDesktop ? "headline-small" : "title-large"} isBold={true}>
               실시간 등기현황
             </Typography>
           </div>
@@ -57,14 +48,7 @@ export default function Contents({
               shape="none"
               size="sm"
               color="grayscale"
-              icon={
-                <Image
-                  src={NarrowRightIcon.src}
-                  alt="더보기 화살표"
-                  width={20}
-                  height={20}
-                />
-              }
+              icon={<Image src={NarrowRightIcon.src} alt="더보기 화살표" width={20} height={20} />}
               iconPosition="right"
               onClick={() => router.push(FI_STATUS_INQUIRY)}
             >
@@ -74,14 +58,9 @@ export default function Contents({
         </div>
       </GridItem>
       <GridItem desktop={5} tablet={12} mobile={12}>
-        <div
-          className={`relative pt-8 w-full h-full ${isDesktop ? "" : "pb-20"}`}
-        >
+        <div className={`relative pt-8 w-full h-full ${isDesktop ? "" : "pb-20"}`}>
           <div className="m-2">
-            <Typography
-              kind={isDesktop ? "headline-small" : "title-large"}
-              isBold={true}
-            >
+            <Typography kind={isDesktop ? "headline-small" : "title-large"} isBold={true}>
               공지사항
             </Typography>
           </div>
@@ -96,14 +75,7 @@ export default function Contents({
               shape="none"
               size="sm"
               color="grayscale"
-              icon={
-                <Image
-                  src={NarrowRightIcon.src}
-                  alt="더보기 화살표"
-                  width={20}
-                  height={20}
-                />
-              }
+              icon={<Image src={NarrowRightIcon.src} alt="더보기 화살표" width={20} height={20} />}
               iconPosition="right"
               onClick={() => router.push(FI_NOTICE)}
             >

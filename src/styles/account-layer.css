@@ -28,12 +28,12 @@
     &::before,
     &::after {
         @apply absolute left-1/2 -translate-x-1/2;
-        content: '';
+        content: "";
     }
 
     &::before {
-        @apply w-6 h-5 absolute z-1 -top-[10px] bg-no-repeat bg-center ;
-        background-image: url('/icons/24/triangle-icon24.svg');
+        @apply w-6 h-5 absolute z-1 -top-[10px] bg-no-repeat bg-center;
+        background-image: url("/icons/24/triangle-icon24.svg");
     }
 
     &::after {

@@ -28,41 +28,25 @@ export default function Main() {
     {
       label: "미배정",
       content: (
-        <List
-          tabIndex={tabCode}
-          searchRqstNo={submittedRqstNo}
-          unMatchData={onChangeMatchData}
-        />
+        <List tabIndex={tabCode} searchRqstNo={submittedRqstNo} unMatchData={onChangeMatchData} />
       ),
     },
     {
       label: "배정완료",
       content: (
-        <List
-          tabIndex={tabCode}
-          searchRqstNo={submittedRqstNo}
-          unMatchData={onChangeMatchData}
-        />
+        <List tabIndex={tabCode} searchRqstNo={submittedRqstNo} unMatchData={onChangeMatchData} />
       ),
     },
     {
       label: "진행보류",
       content: (
-        <List
-          tabIndex={tabCode}
-          searchRqstNo={submittedRqstNo}
-          unMatchData={onChangeMatchData}
-        />
+        <List tabIndex={tabCode} searchRqstNo={submittedRqstNo} unMatchData={onChangeMatchData} />
       ),
     },
     {
       label: "진행취소",
       content: (
-        <List
-          tabIndex={tabCode}
-          searchRqstNo={submittedRqstNo}
-          unMatchData={onChangeMatchData}
-        />
+        <List tabIndex={tabCode} searchRqstNo={submittedRqstNo} unMatchData={onChangeMatchData} />
       ),
     },
   ];
@@ -109,12 +93,7 @@ export default function Main() {
   return (
     <section className="pb-5">
       <div className="flex items-center gap-x-[10px]">
-        <Typography
-          as="h2"
-          kind="headline-medium"
-          isBold={true}
-          className="py-6"
-        >
+        <Typography as="h2" kind="headline-medium" isBold={true} className="py-6">
           배정관리
         </Typography>
 
@@ -144,12 +123,7 @@ export default function Main() {
                 />
               </div>
               <div className="w-[136px]">
-                <Button
-                  shape="solid"
-                  type="submit"
-                  size="md"
-                  color="main100"
-                >
+                <Button shape="solid" type="submit" size="md" color="main100">
                   검색
                 </Button>
               </div>

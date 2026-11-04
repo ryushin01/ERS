@@ -67,9 +67,7 @@ export default function TextArea({
         {children}
       </textarea>
       <p className="_count">
-        <span className={countStyle}>
-          {countLength || defaultValue?.length}
-        </span>
+        <span className={countStyle}>{countLength || defaultValue?.length}</span>
         <span>/{maxLength}</span>
       </p>
     </label>

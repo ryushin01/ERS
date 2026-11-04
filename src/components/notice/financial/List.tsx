@@ -23,16 +23,8 @@ export default function List({ data }: dataProps) {
 
       <ul>
         {data.map((accordion) => {
-          const {
-            seq,
-            num,
-            boardTitle,
-            writerNm,
-            chgDtm,
-            boardContents,
-            emcyYn,
-            fileInfoList,
-          } = accordion;
+          const { seq, num, boardTitle, writerNm, chgDtm, boardContents, emcyYn, fileInfoList } =
+            accordion;
 
           return (
             <li key={`${seq}-${num}`}>

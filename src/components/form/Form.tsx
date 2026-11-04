@@ -34,12 +34,7 @@ export default function Form({
 }: FormProps) {
   const hiddenLegend = isHiddenLegend ? "_hidden" : "";
   return (
-    <form
-      onSubmit={onSubmit}
-      onChange={onChange}
-      onInput={onInput}
-      className={className}
-    >
+    <form onSubmit={onSubmit} onChange={onChange} onInput={onInput} className={className}>
       <fieldset>
         <legend className={hiddenLegend}>{legendText}</legend>
         {children}

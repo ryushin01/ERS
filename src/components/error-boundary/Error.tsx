@@ -10,7 +10,7 @@ import { isPathUnder } from "@utils/pathUtil";
 
 type ErrorProps = {
   onReset?: () => void;
-}
+};
 
 /**
  * @name Error
@@ -32,20 +32,13 @@ const Error = ({ onReset }: ErrorProps) => {
     <section className="_error-page">
       <div className="_error-page-inner-wrapper">
         <div>
-          <Typography
-            as="h1"
-            kind={isMobile ? "error-subtitle" : "error-title"}
-            isBold={true}
-          >
+          <Typography as="h1" kind={isMobile ? "error-subtitle" : "error-title"} isBold={true}>
             일시적인 오류가 발생했습니다.
           </Typography>
 
-          <Typography
-            as="h2"
-            kind={isMobile ? "error-text" : "error-subtitle"}
-            isBold={true}
-          >
-            서비스 이용에 불편을 드려 죄송합니다.<br />
+          <Typography as="h2" kind={isMobile ? "error-text" : "error-subtitle"} isBold={true}>
+            서비스 이용에 불편을 드려 죄송합니다.
+            <br />
             잠시 후 다시 시도해 주세요.
           </Typography>
         </div>

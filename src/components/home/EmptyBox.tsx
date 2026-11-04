@@ -10,9 +10,7 @@ export default function EmptyBox({ element }: EmptyBoxProps) {
 
   return (
     <div className="flex _flex-center w-full h-full">
-      <Typography kind={isDesktop ? "title-medium" : "body-medium"}>
-        {element}
-      </Typography>
+      <Typography kind={isDesktop ? "title-medium" : "body-medium"}>{element}</Typography>
     </div>
   );
 }

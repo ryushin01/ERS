@@ -14,15 +14,9 @@ type DesktopFileListItemProps = {
   handleRemove: (file: FileData) => void;
 };
 
-export default function DesktopFileList({
-  fileList,
-  handleRemove,
-}: DesktopFileListItemProps) {
+export default function DesktopFileList({ fileList, handleRemove }: DesktopFileListItemProps) {
   const getTotalFileSize = (fileList: FileData[]) => {
-    const totalSize = fileList.reduce(
-      (acc, file) => acc + (file?.filSize || 0),
-      0,
-    );
+    const totalSize = fileList.reduce((acc, file) => acc + (file?.filSize || 0), 0);
     return formatMegaBytes(totalSize, 2);
   };
 

@@ -50,35 +50,31 @@ export default function RegistrationRejection({
   });
 
   /* 반려 처리 */
-  const { mutate: registratioinReject, isPending: registrationRejectPending } =
-    useMutation({
-      mutationKey: ["registration-reject"],
-      mutationFn: async () => await patchRegistrationReject(form),
-      onSuccess: (res) => {
-        if (res.code === "00") {
-          openToast({
-            message: "반려 처리되었습니다.",
-            position: "top",
-          });
+  const { mutate: registratioinReject, isPending: registrationRejectPending } = useMutation({
+    mutationKey: ["registration-reject"],
+    mutationFn: async () => await patchRegistrationReject(form),
+    onSuccess: (res) => {
+      if (res.code === "00") {
+        openToast({
+          message: "반려 처리되었습니다.",
+          position: "top",
+        });
 
-          setTimeout(() => {
-            router.push(AD_REGISTRATION);
-          }, 3000);
-        } else {
-        }
-      },
-      onError: (error) => {
-        console.error(error);
-        setIsButtonDisabled(false);
-      },
-    });
+        setTimeout(() => {
+          router.push(AD_REGISTRATION);
+        }, 3000);
+      } else {
+      }
+    },
+    onError: (error) => {
+      console.error(error);
+      setIsButtonDisabled(false);
+    },
+  });
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (
-      (selectRejection === "" || selectRejection === "99") &&
-      rejecReason.trim() === ""
-    ) {
+    if ((selectRejection === "" || selectRejection === "99") && rejecReason.trim() === "") {
       setIslError(true);
       openToast({
         message: "반려 사유를 입력해 주세요.",
@@ -118,12 +114,7 @@ export default function RegistrationRejection({
         className="px-4"
       >
         <div className="flex flex-col gap-y-3">
-          <Label
-            htmlFor="reject-progress"
-            required={true}
-            labelText="반려사유"
-            labelSize="md"
-          />
+          <Label htmlFor="reject-progress" required={true} labelText="반려사유" labelSize="md" />
           <Select
             id="reject-progress"
             name="reject-progress"
@@ -156,10 +147,7 @@ export default function RegistrationRejection({
 
             return (
               <li key={id}>
-                <Typography
-                  kind="body-medium"
-                  className="text-ers-grayscale-90"
-                >
+                <Typography kind="body-medium" className="text-ers-grayscale-90">
                   {content}
                 </Typography>
               </li>
@@ -168,21 +156,10 @@ export default function RegistrationRejection({
         </ul>
 
         <div className="flex [&>button:first-child]:flex-2 [&>button:last-child]:flex-3 gap-x-3">
-          <Button
-            shape="solid"
-            size="md"
-            color="grayscale"
-            onClick={closeRejectionModal}
-          >
+          <Button shape="solid" size="md" color="grayscale" onClick={closeRejectionModal}>
             취소
           </Button>
-          <Button
-            type="submit"
-            shape="solid"
-            size="md"
-            color="main100"
-            disabled={isButtonDisabled}
-          >
+          <Button type="submit" shape="solid" size="md" color="main100" disabled={isButtonDisabled}>
             반려하기
           </Button>
         </div>

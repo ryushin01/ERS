@@ -3,9 +3,7 @@ import { axiosBasicInstance } from "@services";
 
 /* 등기현황 진행상태 조회 */
 export const getStatusCdData = () =>
-  axiosBasicInstance(`${API_COMM_CODE}/PROC_STAT_CD`).then(
-    (response) => response.data,
-  );
+  axiosBasicInstance(`${API_COMM_CODE}/PROC_STAT_CD`).then((response) => response.data);
 
 /* 등기현황 리스트 조회 */
 export const getStasusListData = ({

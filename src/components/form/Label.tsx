@@ -36,9 +36,7 @@ export default function Label({
   styleClass,
   labelSize,
 }: LabelProps) {
-  const labelStyle = `${isError ? "_error" : ""} ${
-    hasIcon ? "_with-icon-label" : ""
-  }`;
+  const labelStyle = `${isError ? "_error" : ""} ${hasIcon ? "_with-icon-label" : ""}`;
 
   const style = [
     labelStyle,
@@ -58,9 +56,7 @@ export default function Label({
               {labelText}
             </Typography>
           )}
-          {labelText && required && (
-            <span className="text-ers-secondary-red-50 pl-1">*</span>
-          )}
+          {labelText && required && <span className="text-ers-secondary-red-50 pl-1">*</span>}
           {children}
         </label>
       ) : (
@@ -74,9 +70,7 @@ export default function Label({
                 {labelText}
               </Typography>
             )}
-            {labelText && required && (
-              <span className="text-ers-secondary-red-50 pl-1">*</span>
-            )}
+            {labelText && required && <span className="text-ers-secondary-red-50 pl-1">*</span>}
           </label>
           {children}
         </div>

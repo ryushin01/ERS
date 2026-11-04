@@ -4,8 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import useRadio from "./useRadio";
 
-const changeEvent = (value: string) =>
-  ({ target: { value } }) as ChangeEvent<HTMLInputElement>;
+const changeEvent = (value: string) => ({ target: { value } }) as ChangeEvent<HTMLInputElement>;
 
 describe("useRadio", () => {
   it("초기값으로 시작한다", () => {

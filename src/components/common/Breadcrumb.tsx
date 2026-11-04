@@ -12,27 +12,27 @@ import { isPathUnder } from "@utils/pathUtil";
 import "@styles/breadcrumb.css";
 
 type PathListProps = {
-  [key: string]: string
-}
+  [key: string]: string;
+};
 
 export const FI_PATH_LIST: PathListProps = {
-  "home": "홈",
-  "notice": "공지사항",
+  home: "홈",
+  notice: "공지사항",
   "request-list": "의뢰목록",
-  "request": "전자등기 의뢰",
+  request: "전자등기 의뢰",
 };
 
 export const AD_PATH_LIST: PathListProps = {
-  "assign": "배정관리",
+  assign: "배정관리",
   "assign-create": "전자등기 신규등록",
   "assign-detail": "전자등기 배정",
-  "registration": "등기관리",
+  registration: "등기관리",
   "registration-detail": "등기관리 상세",
   "registration-acceptance": "등기접수증 승인",
-  "member": "회원관리",
+  member: "회원관리",
   "member-detail": "회원관리 상세",
   "member-create": "회원등록",
-  "notice": "공지사항",
+  notice: "공지사항",
   "notice-create": "공지사항 등록",
 };
 
@@ -57,8 +57,9 @@ export default function Breadcrumb() {
           <li key={path}>
             <Link href={pathArray.length - 1 !== index ? `/${location}` : ""}>
               <Image src={RightArrowIcon} alt="우측 화살표 아이콘" width={14} height={14} />
-              <Typography
-                kind="body-medium">{isPathUnder(pathname, AD_PATH) ? AD_PATH_LIST[path] : FI_PATH_LIST[path]}</Typography>
+              <Typography kind="body-medium">
+                {isPathUnder(pathname, AD_PATH) ? AD_PATH_LIST[path] : FI_PATH_LIST[path]}
+              </Typography>
             </Link>
           </li>
         );

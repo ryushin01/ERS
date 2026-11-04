@@ -57,7 +57,7 @@ const HTTP_ERROR_MESSAGES: Record<number, string> = {
 
 // 요청 인터셉터: 세션스토리지의 토큰을 Authorization 헤더로 주입
 axiosBasicInstance.interceptors.request.use(
-  function(config) {
+  function (config) {
     if (!config.headers) return config;
 
     const auth = sessionStorage.getItem("auth");
@@ -72,7 +72,7 @@ axiosBasicInstance.interceptors.request.use(
 
     return config;
   },
-  function(error) {
+  function (error) {
     return Promise.reject(error);
   },
 );
@@ -81,10 +81,10 @@ axiosBasicInstance.interceptors.request.use(
 // - 업무 실패(HTTP 200 + code "99")는 각 화면에서 처리합니다.
 // - HTTP 오류는 ApiError로 변환해 reject하고, Provider의 QueryCache/MutationCache onError가 토스트로 노출합니다.
 axiosBasicInstance.interceptors.response.use(
-  function(response) {
+  function (response) {
     return response;
   },
-  function(error) {
+  function (error) {
     const status: number | undefined = error.response?.status;
 
     if (!status) {
@@ -99,8 +99,8 @@ axiosBasicInstance.interceptors.response.use(
 
     const message =
       status === 400
-        ? error.response.data?.msg ?? DEFAULT_ERROR_MESSAGE
-        : HTTP_ERROR_MESSAGES[status] ?? DEFAULT_ERROR_MESSAGE;
+        ? (error.response.data?.msg ?? DEFAULT_ERROR_MESSAGE)
+        : (HTTP_ERROR_MESSAGES[status] ?? DEFAULT_ERROR_MESSAGE);
 
     return Promise.reject(new ApiError(status, message));
   },

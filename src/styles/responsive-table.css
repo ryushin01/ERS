@@ -139,7 +139,6 @@
                 }
             }
 
-
             /* 9컬럼 */
 
             &._col-9-type {
@@ -190,7 +189,6 @@
 
                     th {
                         @apply bg-ers-main-0;
-
                     }
                 }
 
@@ -230,12 +228,11 @@
                     }
 
                     ._button-group {
-                        @apply w-1/3
+                        @apply w-1/3;
                     }
                 }
             }
         }
-
 
         &._admin {
             ._responsive-table {
@@ -337,7 +334,6 @@
     }
 
     ._responsive-table-inner-wrapper {
-
         ._responsive-table {
             ._table-button-wrapper {
                 @apply px-0;
@@ -425,14 +421,12 @@
                 /* 7컬럼 */
 
                 &._col-7-type {
-
                     tr {
                         th:nth-child(n),
                         td:nth-child(n) {
                             @apply w-auto;
                         }
                     }
-
 
                     tr {
                         display: grid;

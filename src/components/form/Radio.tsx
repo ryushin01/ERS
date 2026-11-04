@@ -15,11 +15,8 @@ type RadioProps = {
   defaultChecked?: boolean;
   disabled?: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  isMobile?: boolean
-} & Omit<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  "className"
->;
+  isMobile?: boolean;
+} & Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "className">;
 
 /**
  * @name Radio
@@ -35,14 +32,14 @@ type RadioProps = {
  * @property {boolean} isDesktop        - 데스크탑 해상도 진입 여부
  */
 export default function Radio({
-                                name,
-                                value,
-                                labelText,
-                                checked,
-                                disabled,
-                                onChange,
-                                isDesktop,
-                              }: RadioProps & ResponsiveType) {
+  name,
+  value,
+  labelText,
+  checked,
+  disabled,
+  onChange,
+  isDesktop,
+}: RadioProps & ResponsiveType) {
   const className = `_radio`;
 
   return (

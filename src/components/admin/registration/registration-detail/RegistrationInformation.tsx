@@ -9,11 +9,7 @@ import { Button } from "@components/button";
 import { Loading, Typography } from "@components/common";
 import { Form, InputField, Label, Select, TextArea } from "@components/form";
 import { JUDT_COURT_CD, PROC_STAT_CD, REGR_CD } from "@constants/code";
-import {
-  FILE_MAXIMUM_NUMBER,
-  FILE_MAXIMUM_SIZE,
-  FILE_MAXIMUM_SIZE_STRING,
-} from "@constants/file";
+import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
 import { PlusIcon } from "@icons14";
 import { CancelIcon } from "@icons18";
 import { getCommonCodeList } from "@services/common";
@@ -34,10 +30,10 @@ type RegistrationInformationlProps = {
 };
 
 export default function RegistrationInformation({
-                                                  requestNo,
-                                                  onClose,
-                                                  isDesktop,
-                                                }: RegistrationInformationlProps & ResponsiveType) {
+  requestNo,
+  onClose,
+  isDesktop,
+}: RegistrationInformationlProps & ResponsiveType) {
   const openToast = useSetAtom(toastState);
   const [isError, setIsError] = useState(false);
   const [fileList, setFileList] = useState<FileData[]>([]);
@@ -46,9 +42,7 @@ export default function RegistrationInformation({
   const [selectRegistryOffice, setSelectRegistryOffice] = useState("");
   const [acceptNo, setAcceptNo] = useState("");
   const [judtCourtCodeList, setJudtCourtCodeList] = useState<CodeOption[]>([]);
-  const [registryOfficeCodeList, setRegistryOfficeCodeList] = useState<
-    CodeOption[]
-  >([]);
+  const [registryOfficeCodeList, setRegistryOfficeCodeList] = useState<CodeOption[]>([]);
   const [mngrDlvrCnts, setMngrDlvrCnts] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
@@ -79,22 +73,20 @@ export default function RegistrationInformation({
   });
 
   /* 등기접수 정보 등록 */
-  const {
-    mutate: mutatePostRegistrationAccept,
-    isPending: postRegistrationAcceptLoading,
-  } = useMutation({
-    mutationKey: ["request-upload"],
-    mutationFn: async () => await postRegistrationAccept(requestData),
-    onSuccess: (response) => {
-      if (response.data.code === "00") {
-        handleSuccess();
-      }
-    },
-    onError: (error) => {
-      console.error(error);
-      setIsButtonDisabled(false);
-    },
-  });
+  const { mutate: mutatePostRegistrationAccept, isPending: postRegistrationAcceptLoading } =
+    useMutation({
+      mutationKey: ["request-upload"],
+      mutationFn: async () => await postRegistrationAccept(requestData),
+      onSuccess: (response) => {
+        if (response.data.code === "00") {
+          handleSuccess();
+        }
+      },
+      onError: (error) => {
+        console.error(error);
+        setIsButtonDisabled(false);
+      },
+    });
 
   /* 관할법원 코드리스트 세팅 */
   useEffect(() => {
@@ -166,9 +158,7 @@ export default function RegistrationInformation({
 
   /* 파일 삭제 */
   const handleFileRemove = (uid: string) => {
-    setFileList((prevFileList) =>
-      prevFileList.filter((item) => item.uid !== uid),
-    );
+    setFileList((prevFileList) => prevFileList.filter((item) => item.uid !== uid));
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -203,10 +193,7 @@ export default function RegistrationInformation({
     });
 
     //최대 파일 갯수와 용량 모두 초과 시
-    if (
-      fileList.length > FILE_MAXIMUM_NUMBER &&
-      totalSize > FILE_MAXIMUM_SIZE
-    ) {
+    if (fileList.length > FILE_MAXIMUM_NUMBER && totalSize > FILE_MAXIMUM_SIZE) {
       openToast({
         message: `최대 ${FILE_MAXIMUM_NUMBER}개, 전체용량 ${FILE_MAXIMUM_SIZE_STRING}까지 업로드할 수 있습니다.\n개수 또는 용량을 조정해 주세요.`,
         position: "top",
@@ -303,10 +290,7 @@ export default function RegistrationInformation({
       });
     }
 
-    const totalSize = fileList.reduce(
-      (acc, file) => acc + (file?.filSize || 0),
-      0,
-    );
+    const totalSize = fileList.reduce((acc, file) => acc + (file?.filSize || 0), 0);
 
     if (totalSize > FILE_MAXIMUM_SIZE) {
       openToast({
@@ -329,11 +313,7 @@ export default function RegistrationInformation({
         {/* NOTE: 진행상태가 '접수반려'인 경우에만 해당 영역 노출 */}
         {data?.statCd === PROC_STAT_CD.RETURN && (
           <div>
-            <Typography
-              kind="title-medium"
-              isBold={true}
-              className="text-ers-secondary-red-50"
-            >
+            <Typography kind="title-medium" isBold={true} className="text-ers-secondary-red-50">
               반려사유
             </Typography>
             <Typography kind="body-large" as="p">
@@ -357,38 +337,28 @@ export default function RegistrationInformation({
               <table className="_responsive-table">
                 <caption className="_hidden-table-caption">기본정보 표</caption>
                 <tbody>
-                <tr>
-                  <th>
-                    <Typography
-                      kind={isDesktop ? "body-large" : "body-small"}
-                      isBold={true}
-                    >
-                      의뢰번호
-                    </Typography>
-                  </th>
-                  <td>
-                    <Typography
-                      kind={isDesktop ? "body-large" : "body-small"}
-                    >
-                      {requestNo}
-                    </Typography>
-                  </td>
-                  <th>
-                    <Typography
-                      kind={isDesktop ? "body-large" : "body-small"}
-                      isBold={true}
-                    >
-                      채무자
-                    </Typography>
-                  </th>
-                  <td>
-                    <Typography
-                      kind={isDesktop ? "body-large" : "body-small"}
-                    >
-                      {data?.dbtrNm}
-                    </Typography>
-                  </td>
-                </tr>
+                  <tr>
+                    <th>
+                      <Typography kind={isDesktop ? "body-large" : "body-small"} isBold={true}>
+                        의뢰번호
+                      </Typography>
+                    </th>
+                    <td>
+                      <Typography kind={isDesktop ? "body-large" : "body-small"}>
+                        {requestNo}
+                      </Typography>
+                    </td>
+                    <th>
+                      <Typography kind={isDesktop ? "body-large" : "body-small"} isBold={true}>
+                        채무자
+                      </Typography>
+                    </th>
+                    <td>
+                      <Typography kind={isDesktop ? "body-large" : "body-small"}>
+                        {data?.dbtrNm}
+                      </Typography>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -409,14 +379,7 @@ export default function RegistrationInformation({
               shape="solid"
               size="sm"
               color="main60"
-              icon={
-                <Image
-                  src={PlusIcon}
-                  alt="더하기 아이콘"
-                  width={14}
-                  height={14}
-                />
-              }
+              icon={<Image src={PlusIcon} alt="더하기 아이콘" width={14} height={14} />}
               iconPosition="right"
               onClick={handleFileButtonClick}
             >
@@ -438,20 +401,10 @@ export default function RegistrationInformation({
               {fileList?.map((file) => {
                 return (
                   <li key={file.uid} className="_flex-center gap-x-[6px]">
-                    <button
-                      type="button"
-                      onClick={() => handleFileRemove(`${file.uid}`)}
-                    >
-                      <Image
-                        src={CancelIcon}
-                        alt="개별 삭제 아이콘"
-                        width={18}
-                        height={18}
-                      />
+                    <button type="button" onClick={() => handleFileRemove(`${file.uid}`)}>
+                      <Image src={CancelIcon} alt="개별 삭제 아이콘" width={18} height={18} />
                     </button>
-                    <Typography kind="title-small">
-                      {file.attcFilNm}{" "}
-                    </Typography>
+                    <Typography kind="title-small">{file.attcFilNm} </Typography>
                   </li>
                 );
               })}
@@ -462,89 +415,73 @@ export default function RegistrationInformation({
         {/* 접수정보 */}
         <div>
           <section className="_section">
-            <Label
-              htmlFor="court"
-              required={true}
-              labelText="접수정보"
-              labelSize="md"
-            />
+            <Label htmlFor="court" required={true} labelText="접수정보" labelSize="md" />
 
             <div className="_responsive-table-inner-wrapper _no-thead">
               <table className="_responsive-table">
                 <caption className="_hidden-table-caption">접수정보 표</caption>
                 <tbody>
-                <tr>
-                  <th>
-                    <Typography
-                      kind={isDesktop ? "body-large" : "body-small"}
-                      isBold={true}
-                    >
-                      관할법원
-                    </Typography>
-                  </th>
-                  <td colSpan={2}>
-                    <Select
-                      id="court"
-                      name="court"
-                      selectSize="sm"
-                      placeholder="법원을 선택해 주세요"
-                      options={judtCourtCodeList}
-                      value={selectJudtCourt}
-                      onChange={handleJudtCourtChange}
-                      isError={isError && !selectJudtCourt}
-                      required={true}
-                    />
-                  </td>
-                  <td colSpan={3}></td>
-                </tr>
-                <tr>
-                  <th>
-                    <Typography
-                      kind={isDesktop ? "body-large" : "body-small"}
-                      isBold={true}
-                    >
-                      등기소
-                    </Typography>
-                  </th>
-                  <td colSpan={2}>
-                    <Select
-                      id="registry-office"
-                      name="registry-office"
-                      selectSize="sm"
-                      placeholder="법원을 선택한 후 등기소를 선택해 주세요"
-                      options={registryOfficeCodeList}
-                      value={selectRegistryOffice}
-                      onChange={(e) =>
-                        setSelectRegistryOffice(e.target.value)
-                      }
-                      isError={isError && !selectRegistryOffice}
-                      required={true}
-                    />
-                  </td>
-                  <td colSpan={3}></td>
-                </tr>
-                <tr>
-                  <th>
-                    <Typography
-                      kind={isDesktop ? "body-large" : "body-small"}
-                      isBold={true}
-                    >
-                      접수번호
-                    </Typography>
-                  </th>
-                  <td colSpan={2}>
-                    <InputField
-                      type="text"
-                      name="acptNo"
-                      defaultValue={acceptNo || ""}
-                      placeholder={"접수번호를 입력해 주세요"}
-                      isError={isError && !acceptNo}
-                      inputSize="sm"
-                      onChange={(e) => setAcceptNo(e.target.value)}
-                    />
-                  </td>
-                  <td colSpan={3}></td>
-                </tr>
+                  <tr>
+                    <th>
+                      <Typography kind={isDesktop ? "body-large" : "body-small"} isBold={true}>
+                        관할법원
+                      </Typography>
+                    </th>
+                    <td colSpan={2}>
+                      <Select
+                        id="court"
+                        name="court"
+                        selectSize="sm"
+                        placeholder="법원을 선택해 주세요"
+                        options={judtCourtCodeList}
+                        value={selectJudtCourt}
+                        onChange={handleJudtCourtChange}
+                        isError={isError && !selectJudtCourt}
+                        required={true}
+                      />
+                    </td>
+                    <td colSpan={3}></td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <Typography kind={isDesktop ? "body-large" : "body-small"} isBold={true}>
+                        등기소
+                      </Typography>
+                    </th>
+                    <td colSpan={2}>
+                      <Select
+                        id="registry-office"
+                        name="registry-office"
+                        selectSize="sm"
+                        placeholder="법원을 선택한 후 등기소를 선택해 주세요"
+                        options={registryOfficeCodeList}
+                        value={selectRegistryOffice}
+                        onChange={(e) => setSelectRegistryOffice(e.target.value)}
+                        isError={isError && !selectRegistryOffice}
+                        required={true}
+                      />
+                    </td>
+                    <td colSpan={3}></td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <Typography kind={isDesktop ? "body-large" : "body-small"} isBold={true}>
+                        접수번호
+                      </Typography>
+                    </th>
+                    <td colSpan={2}>
+                      <InputField
+                        type="text"
+                        name="acptNo"
+                        defaultValue={acceptNo || ""}
+                        placeholder={"접수번호를 입력해 주세요"}
+                        isError={isError && !acceptNo}
+                        inputSize="sm"
+                        onChange={(e) => setAcceptNo(e.target.value)}
+                      />
+                    </td>
+                    <td colSpan={3}></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -572,13 +509,7 @@ export default function RegistrationInformation({
 
         {/* CTA */}
         <div className="_flex-center mt-[62px] [&>button]:w-[27%]">
-          <Button
-            type="submit"
-            shape="solid"
-            size="lg"
-            color="main100"
-            disabled={isButtonDisabled}
-          >
+          <Button type="submit" shape="solid" size="lg" color="main100" disabled={isButtonDisabled}>
             등록하기
           </Button>
         </div>

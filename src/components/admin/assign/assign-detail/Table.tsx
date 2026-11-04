@@ -8,15 +8,7 @@ import DaumPostcode from "react-daum-postcode";
 
 import { Button } from "@components/button";
 import { DatePicker, Loading, Typography } from "@components/common";
-import {
-  CurrencyFormat,
-  Form,
-  InputField,
-  Label,
-  Radio,
-  Select,
-  TextArea,
-} from "@components/form";
+import { CurrencyFormat, Form, InputField, Label, Radio, Select, TextArea } from "@components/form";
 import { Grid, GridItem } from "@components/layout";
 import { Modal } from "@components/modal";
 import { PROC_CLS_GB_CD, SPPL_REQ_GB_CD } from "@constants/code";
@@ -312,14 +304,10 @@ export default function Table({
   };
 
   /* 2. 보완요청 셀렉트 option data */
-  const SUPPLEMENT_REQUEST_OPTION = transformStatusData(
-    spplReqCdData?.data?.commCodeList,
-  );
+  const SUPPLEMENT_REQUEST_OPTION = transformStatusData(spplReqCdData?.data?.commCodeList);
 
   /* 3. 보완요청 셀렉트박스 onChange */
-  const handleSupplementChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
+  const handleSupplementChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
 
     setSpplError(false);
@@ -345,8 +333,7 @@ export default function Table({
     setForm((prevForm) => ({
       ...prevForm,
       rqstNo: requstNo,
-      procRsnCnts:
-        selectSupplementRequest === "99" ? targetValue : prevForm.procRsnCnts, // ✅ "99" 선택 시 입력값 적용
+      procRsnCnts: selectSupplementRequest === "99" ? targetValue : prevForm.procRsnCnts, // ✅ "99" 선택 시 입력값 적용
     }));
   };
 
@@ -399,9 +386,7 @@ export default function Table({
   };
 
   /* 2. 진행취소 셀렉트 option data */
-  const CANCEL_PROGRESS_OPTION = transformStatusData(
-    procCancelCdData?.data?.commCodeList,
-  );
+  const CANCEL_PROGRESS_OPTION = transformStatusData(procCancelCdData?.data?.commCodeList);
 
   /* 3. 진행취소 셀렉트박스 onChange */
   const handleCancelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -410,9 +395,7 @@ export default function Table({
     setCnclError(false);
     setSelectedCancelProgress(selectedValue);
 
-    const selectedOption = CANCEL_PROGRESS_OPTION.find(
-      (option) => option.value === selectedValue,
-    );
+    const selectedOption = CANCEL_PROGRESS_OPTION.find((option) => option.value === selectedValue);
 
     if (selectedOption && selectedValue) {
       setForm((prevForm) => ({
@@ -430,8 +413,7 @@ export default function Table({
     setForm((prevForm) => ({
       ...prevForm,
       rqstNo: requstNo,
-      procRsnCnts:
-        selectCancelProgress === "99" ? targetValue : prevForm.procRsnCnts, // ✅ "99" 선택 시 입력값 적용
+      procRsnCnts: selectCancelProgress === "99" ? targetValue : prevForm.procRsnCnts, // ✅ "99" 선택 시 입력값 적용
     }));
   };
 
@@ -488,9 +470,7 @@ export default function Table({
   };
 
   /* 법무대리인 리스트 option data */
-  const LAWYER_LIST_OPTION = Array.isArray(membList)
-    ? transformListData(membList)
-    : []; // membList가 배열인지 확인한 후 호출
+  const LAWYER_LIST_OPTION = Array.isArray(membList) ? transformListData(membList) : []; // membList가 배열인지 확인한 후 호출
   const [selectLawyer, setSelectedLawyer] = useState(
     LAWYER_LIST_OPTION.length > 0 ? LAWYER_LIST_OPTION[0].value : "",
   );
@@ -510,15 +490,10 @@ export default function Table({
   /* 1. 주소검색 api 호출 */
   const handleComplete = (data: PostcodeData) => {
     const roadAddress = `${data?.roadAddress} (${data?.buildingName ?? ""})`; // 도로명 주소
-    const rdnmAddress = `${
-      !!data?.autoJibunAddress ? data?.autoJibunAddress : data.jibunAddress
-    }`; // 지번 주소
+    const rdnmAddress = `${!!data?.autoJibunAddress ? data?.autoJibunAddress : data.jibunAddress}`; // 지번 주소
 
     setAddrForm((prevForm) => {
-      if (
-        prevForm.roadAddr !== roadAddress ||
-        prevForm.rdnmAddr !== rdnmAddress
-      ) {
+      if (prevForm.roadAddr !== roadAddress || prevForm.rdnmAddr !== rdnmAddress) {
         return {
           ...prevForm,
           rdnmAddr: roadAddress,
@@ -544,17 +519,9 @@ export default function Table({
         case "01":
           return Object.values(addrForm).every((value) => value !== "");
         case "02":
-          return (
-            addrForm.roadAddr !== "" &&
-            addrForm.rdnmAddr !== "" &&
-            addrForm.bldg !== ""
-          );
+          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.bldg !== "";
         case "03":
-          return (
-            addrForm.roadAddr !== "" &&
-            addrForm.rdnmAddr !== "" &&
-            addrForm.unit !== ""
-          );
+          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.unit !== "";
         case "04":
           return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "";
         default:
@@ -617,17 +584,9 @@ export default function Table({
         case "01":
           return Object.values(addrForm).every((value) => value !== "");
         case "02":
-          return (
-            addrForm.roadAddr !== "" &&
-            addrForm.rdnmAddr !== "" &&
-            addrForm.bldg !== ""
-          );
+          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.bldg !== "";
         case "03":
-          return (
-            addrForm.roadAddr !== "" &&
-            addrForm.rdnmAddr !== "" &&
-            addrForm.unit !== ""
-          );
+          return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "" && addrForm.unit !== "";
         case "04":
           return addrForm.roadAddr !== "" && addrForm.rdnmAddr !== "";
         default:
@@ -740,10 +699,7 @@ export default function Table({
     images: ImageItem[],
     formData: FormData,
   ): Promise<void> => {
-    const fetchToFile = async (
-      src: string,
-      name: string,
-    ): Promise<File | null> => {
+    const fetchToFile = async (src: string, name: string): Promise<File | null> => {
       // 서버 이미지 경로(/files/images/)는 다시 받지 않음
       if (src.includes("/files/images/")) {
         return null;
@@ -774,9 +730,7 @@ export default function Table({
       if (!image?.src) continue;
 
       const name =
-        image.source === "api"
-          ? image.attcFilNm || "api.jpg"
-          : image.name || "image.jpg";
+        image.source === "api" ? image.attcFilNm || "api.jpg" : image.name || "image.jpg";
 
       const file = await fetchToFile(image.src, name);
       if (file) {
@@ -792,9 +746,7 @@ export default function Table({
       <div className="pl-10">
         <div className="_responsive-table-inner-wrapper _no-thead _admin">
           <table className="_responsive-table">
-            <caption className="_hidden-table-caption">
-              전자등기 배정 표
-            </caption>
+            <caption className="_hidden-table-caption">전자등기 배정 표</caption>
             <tbody>
               <tr>
                 <th>
@@ -838,11 +790,7 @@ export default function Table({
               </tr>
               <tr>
                 <th>
-                  <Label
-                    htmlFor="reale-cd"
-                    required={true}
-                    labelText="부동산구분"
-                  />
+                  <Label htmlFor="reale-cd" required={true} labelText="부동산구분" />
                 </th>
                 <td colSpan={2}>
                   <Select
@@ -859,11 +807,7 @@ export default function Table({
               </tr>
               <tr>
                 <th>
-                  <Label
-                    htmlFor="lotnum"
-                    required={true}
-                    labelText="담보목적물"
-                  />
+                  <Label htmlFor="lotnum" required={true} labelText="담보목적물" />
                 </th>
                 <td colSpan={5}>
                   <span className="flex flex-col gap-y-2 w-full">
@@ -885,10 +829,7 @@ export default function Table({
                         </Button>
                       </span>
                       <span className="flex items-center gap-x-2 mb-2 w-[500px] [&>span:first-child]:min-w-24">
-                        <Typography
-                          kind="body-medium"
-                          className="text-ers-grayscale-80"
-                        >
+                        <Typography kind="body-medium" className="text-ers-grayscale-80">
                           지번 주소
                         </Typography>
                         <InputField
@@ -903,10 +844,7 @@ export default function Table({
                         />
                       </span>
                       <span className="flex items-center gap-x-2 mb-2 w-[500px] [&>span:first-child]:min-w-24">
-                        <Typography
-                          kind="body-medium"
-                          className="text-ers-grayscale-80"
-                        >
+                        <Typography kind="body-medium" className="text-ers-grayscale-80">
                           도로명 주소
                         </Typography>
                         <InputField
@@ -921,16 +859,12 @@ export default function Table({
                         />
                       </span>
                       <span className="flex items-center gap-x-2 mb-2 [&>span:first-child]:min-w-24">
-                        <Typography
-                          kind="body-medium"
-                          className="text-ers-grayscale-80"
-                        >
+                        <Typography kind="body-medium" className="text-ers-grayscale-80">
                           상세 주소
                         </Typography>
                         <ul className="flex gap-x-4 text-sm">
                           {LAND_LOT_OPTION.map((auth) => {
-                            const { id, name, value, labelText, disabled } =
-                              auth;
+                            const { id, name, value, labelText, disabled } = auth;
 
                             return (
                               <li key={id}>
@@ -960,10 +894,7 @@ export default function Table({
                               placeholder=""
                               isError={addrError}
                             />
-                            <Typography
-                              kind="body-medium"
-                              className="text-ers-grayscale-80"
-                            >
+                            <Typography kind="body-medium" className="text-ers-grayscale-80">
                               동
                             </Typography>
                           </span>
@@ -980,10 +911,7 @@ export default function Table({
                               placeholder=""
                               isError={addrError}
                             />
-                            <Typography
-                              kind="body-medium"
-                              className="text-ers-grayscale-80"
-                            >
+                            <Typography kind="body-medium" className="text-ers-grayscale-80">
                               호
                             </Typography>
                           </span>
@@ -995,20 +923,11 @@ export default function Table({
               </tr>
               <tr>
                 <th>
-                  <Label
-                    htmlFor="unq-cd"
-                    required={true}
-                    labelText="고유번호"
-                  />
+                  <Label htmlFor="unq-cd" required={true} labelText="고유번호" />
                 </th>
                 <td colSpan={3}>
                   <span className="flex gap-x-4 [&>button]:w-[108px] [&>div]:flex-1">
-                    <Button
-                      shape="solid"
-                      size="sm"
-                      color="main100"
-                      onClick={handleSearchRgstrNo}
-                    >
+                    <Button shape="solid" size="sm" color="main100" onClick={handleSearchRgstrNo}>
                       고유번호 조회
                     </Button>
                     <InputField
@@ -1027,11 +946,7 @@ export default function Table({
               </tr>
               <tr>
                 <th>
-                  <Label
-                    htmlFor="bnd-max-amt"
-                    required={true}
-                    labelText="채권최고액"
-                  />
+                  <Label htmlFor="bnd-max-amt" required={true} labelText="채권최고액" />
                 </th>
                 <td colSpan={2}>
                   <CurrencyFormat
@@ -1048,11 +963,7 @@ export default function Table({
               </tr>
               <tr>
                 <th>
-                  <Label
-                    htmlFor="se-dt"
-                    required={true}
-                    labelText="설정약정일"
-                  />
+                  <Label htmlFor="se-dt" required={true} labelText="설정약정일" />
                 </th>
                 <td colSpan={2}>
                   <DatePicker
@@ -1071,17 +982,11 @@ export default function Table({
 
         <div className="_responsive-table-inner-wrapper _no-thead _admin mt-6 mb-8">
           <table className="_responsive-table">
-            <caption className="_hidden-table-caption">
-              법무대리인, 제출 담당자 표
-            </caption>
+            <caption className="_hidden-table-caption">법무대리인, 제출 담당자 표</caption>
             <tbody>
               <tr>
                 <th>
-                  <Label
-                    htmlFor="reale-cd"
-                    required={false}
-                    labelText="법무대리인"
-                  />
+                  <Label htmlFor="reale-cd" required={false} labelText="법무대리인" />
                 </th>
                 <td colSpan={2}>
                   <Select
@@ -1102,11 +1007,7 @@ export default function Table({
                   <Typography kind="title-small">제출 담당자</Typography>
                 </th>
                 <td colSpan={2}>
-                  {isClient && (
-                    <Typography kind="title-small">
-                      {authInfo?.membNm}
-                    </Typography>
-                  )}
+                  {isClient && <Typography kind="title-small">{authInfo?.membNm}</Typography>}
                 </td>
                 <td colSpan={3}></td>
               </tr>
@@ -1124,11 +1025,7 @@ export default function Table({
           />
         </div>
         {isOpenSearchAddressModal && (
-          <Modal
-            title="주소검색"
-            size="md"
-            onClose={closeopenSearchAddressModal}
-          >
+          <Modal title="주소검색" size="md" onClose={closeopenSearchAddressModal}>
             <DaumPostcode onComplete={handleComplete} />
           </Modal>
         )}
@@ -1140,12 +1037,7 @@ export default function Table({
             mobile={12}
             className="justify-center gap-x-3 [&>button]:w-1/3"
           >
-            <Button
-              shape="solid"
-              size="lg"
-              color="main100"
-              onClick={handleAssignmentForm}
-            >
+            <Button shape="solid" size="lg" color="main100" onClick={handleAssignmentForm}>
               배정하기
             </Button>
             <Button
@@ -1220,10 +1112,7 @@ export default function Table({
 
                 return (
                   <li key={id}>
-                    <Typography
-                      kind="body-medium"
-                      className="text-ers-grayscale-90"
-                    >
+                    <Typography kind="body-medium" className="text-ers-grayscale-90">
                       {content}
                     </Typography>
                   </li>
@@ -1232,12 +1121,7 @@ export default function Table({
             </ul>
 
             <div className="flex [&>button:first-child]:flex-2 [&>button:last-child]:flex-3 gap-x-3">
-              <Button
-                shape="solid"
-                size="md"
-                color="grayscale"
-                onClick={handleCloseSpplModal}
-              >
+              <Button shape="solid" size="md" color="grayscale" onClick={handleCloseSpplModal}>
                 취소
               </Button>
               <Button type="submit" shape="solid" size="md" color="main100">
@@ -1296,10 +1180,7 @@ export default function Table({
 
                 return (
                   <li key={id}>
-                    <Typography
-                      kind="body-medium"
-                      className="text-ers-grayscale-90"
-                    >
+                    <Typography kind="body-medium" className="text-ers-grayscale-90">
                       {content}
                     </Typography>
                   </li>
@@ -1308,12 +1189,7 @@ export default function Table({
             </ul>
 
             <div className="flex [&>button:first-child]:flex-2 [&>button:last-child]:flex-3 gap-x-3">
-              <Button
-                shape="solid"
-                size="md"
-                color="grayscale"
-                onClick={handleCloseCaclModal}
-              >
+              <Button shape="solid" size="md" color="grayscale" onClick={handleCloseCaclModal}>
                 취소
               </Button>
               <Button type="submit" shape="solid" size="md" color="main100">

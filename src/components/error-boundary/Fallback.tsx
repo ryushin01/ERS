@@ -10,9 +10,7 @@ import { Error } from "@components/error-boundary";
 const Fallback = ({ resetErrorBoundary }: FallbackProps) => {
   // const status = error.response?.status || "500";
 
-  return (
-    <Error onReset={resetErrorBoundary} />
-  );
+  return <Error onReset={resetErrorBoundary} />;
 };
 
 export default Fallback;

@@ -20,53 +20,39 @@ export default function Announcement({ data }: NoticeListProps) {
       <table className="_responsive-table _col-2-type">
         <caption className="_hidden-table-caption">공지사항 표</caption>
         <thead>
-        <tr>
-          <th>
-            <Typography
-              kind={isDesktop ? "title-medium" : "body-medium"}
-              isBold={true}
-            >
-              공지사항 제목
-            </Typography>
-          </th>
-          <th>
-            <Typography
-              kind={isDesktop ? "title-medium" : "body-medium"}
-              isBold={true}
-            >
-              등록일
-            </Typography>
-          </th>
-        </tr>
+          <tr>
+            <th>
+              <Typography kind={isDesktop ? "title-medium" : "body-medium"} isBold={true}>
+                공지사항 제목
+              </Typography>
+            </th>
+            <th>
+              <Typography kind={isDesktop ? "title-medium" : "body-medium"} isBold={true}>
+                등록일
+              </Typography>
+            </th>
+          </tr>
         </thead>
         <tbody>
-        {data?.map((item, idx) => (
-          <tr
-            key={`${idx}${item.crtDtm}`}
-            className={item.emcyYn === true ? "_emergency" : ""}
-          >
-            <th>
+          {data?.map((item, idx) => (
+            <tr key={`${idx}${item.crtDtm}`} className={item.emcyYn === true ? "_emergency" : ""}>
+              <th>
                 <span className="_table-content-wrapper">
                   {item.emcyYn === true ? (
-                    <Image
-                      src={AlertTriangleIcon20}
-                      alt="긴급점검 아이콘"
-                      width={20}
-                      height={20}
-                    />
+                    <Image src={AlertTriangleIcon20} alt="긴급점검 아이콘" width={20} height={20} />
                   ) : null}
                   <Typography kind={isDesktop ? "title-medium" : "body-medium"}>
                     {!!item.boardTitles ? item.boardTitles : "-"}
                   </Typography>
                 </span>
-            </th>
-            <td>
-              <Typography kind={isDesktop ? "title-medium" : "body-medium"}>
-                {!!item.crtDtm ? item.crtDtm : "-"}
-              </Typography>
-            </td>
-          </tr>
-        ))}
+              </th>
+              <td>
+                <Typography kind={isDesktop ? "title-medium" : "body-medium"}>
+                  {!!item.crtDtm ? item.crtDtm : "-"}
+                </Typography>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

@@ -36,19 +36,19 @@ type ButtonProps = {
  */
 
 export default function Button({
-                                 type = "button",
-                                 shape,
-                                 color,
-                                 size,
-                                 icon,
-                                 iconPosition,
-                                 onClick,
-                                 children = "",
-                                 disabled = false,
-                                 role,
-                                 isSelected,
-                                 id,
-                               }: ButtonProps) {
+  type = "button",
+  shape,
+  color,
+  size,
+  icon,
+  iconPosition,
+  onClick,
+  children = "",
+  disabled = false,
+  role,
+  isSelected,
+  id,
+}: ButtonProps) {
   let buttonSize = "";
   let solidButtonColor = "";
   let solidButtonActionColor = "";
@@ -122,8 +122,7 @@ export default function Button({
   /* 아웃라인버튼 color switch */
   switch (color) {
     case "main5":
-      outlineButtonColor =
-        "bg-ers-main-5 border border-ers-main-100 text-ers-main-100";
+      outlineButtonColor = "bg-ers-main-5 border border-ers-main-100 text-ers-main-100";
       break;
     case "grayscale":
       outlineButtonColor =
@@ -150,8 +149,7 @@ export default function Button({
   }
 
   /* 보더 radius */
-  const borderRadius =
-    size === "md" || size === "lg" ? "rounded-lg" : "rounded-md";
+  const borderRadius = size === "md" || size === "lg" ? "rounded-lg" : "rounded-md";
 
   const className = `_text-button ${buttonSize} ${
     disabled
@@ -178,13 +176,7 @@ export default function Button({
     >
       {icon && iconPosition === "left" && <span className="pr-1">{icon}</span>}
       <Typography
-        kind={
-          size === "sm"
-            ? "body-medium"
-            : size === "md"
-              ? "title-small"
-              : "title-medium"
-        }
+        kind={size === "sm" ? "body-medium" : size === "md" ? "title-small" : "title-medium"}
       >
         {children}
       </Typography>

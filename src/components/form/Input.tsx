@@ -18,10 +18,7 @@ type InputProps = {
   name: string;
   defaultValue: string;
   //   color: "neutral" | "primary" | "secondary";
-} & Omit<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  "className"
->;
+} & Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "className">;
 
 /**
  * @name Input

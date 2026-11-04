@@ -3,12 +3,7 @@ import { ReactNode } from "react";
 import InfoTableSection from "@components/common/InfoTableSection";
 import { formatNumberComma } from "@utils/stringUtil";
 
-import {
-  DetailVariant,
-  getAddressRows,
-  getManagerRows,
-  RegistrationDetailData,
-} from "./rows";
+import { DetailVariant, getAddressRows, getManagerRows, RegistrationDetailData } from "./rows";
 
 type RegistrationDataViewProps = {
   requestNo: string;
@@ -27,12 +22,12 @@ type RegistrationDataViewProps = {
  *              데이터 조회와 버튼 동작은 각 화면의 상위 컴포넌트에서 처리합니다.
  */
 export default function RegistrationDataView({
-                                               requestNo,
-                                               data,
-                                               variant,
-                                               isDesktop,
-                                               children,
-                                             }: RegistrationDataViewProps) {
+  requestNo,
+  data,
+  variant,
+  isDesktop,
+  children,
+}: RegistrationDataViewProps) {
   return (
     <>
       <InfoTableSection title="담보목적물 주소" rows={getAddressRows(data)} isDesktop={isDesktop} />
@@ -40,9 +35,18 @@ export default function RegistrationDataView({
         title="기본 정보"
         isDesktop={isDesktop}
         rows={[
-          [{ label: "의뢰번호", value: requestNo }, { label: "채무자", value: data?.dbtrNm || "-" }],
-          [{ label: "설정약정일", value: data?.seDt || "-" }, { label: "대출실행일", value: data?.execDt || "-" }],
-          { label: "채권최고액", value: data?.bndMaxAmt ? `${formatNumberComma(data.bndMaxAmt)} 원` : "-" },
+          [
+            { label: "의뢰번호", value: requestNo },
+            { label: "채무자", value: data?.dbtrNm || "-" },
+          ],
+          [
+            { label: "설정약정일", value: data?.seDt || "-" },
+            { label: "대출실행일", value: data?.execDt || "-" },
+          ],
+          {
+            label: "채권최고액",
+            value: data?.bndMaxAmt ? `${formatNumberComma(data.bndMaxAmt)} 원` : "-",
+          },
         ]}
       />
       <InfoTableSection

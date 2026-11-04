@@ -21,10 +21,10 @@ type DetailDataProps = {
 };
 
 export default function Detail({
-                                 requestNo,
-                                 onClose,
-                                 isDesktop,
-                               }: DetailDataProps & ResponsiveType) {
+  requestNo,
+  onClose,
+  isDesktop,
+}: DetailDataProps & ResponsiveType) {
   const router = useRouter();
   const openToast = useSetAtom(toastState);
   const [isHoldDisabled, setIsHoldDisabled] = useState(false);
@@ -76,23 +76,18 @@ export default function Detail({
           <table className="_responsive-table">
             <caption className="_hidden-table-caption">기본 정보 표</caption>
             <tbody>
-            <tr>
-              <th>
-                <Typography
-                  kind={isDesktop ? "body-large" : "body-small"}
-                  isBold={true}
-                >
-                  의뢰번호
-                </Typography>
-              </th>
-              <td colSpan={3}>
-                <Typography
-                  kind={isDesktop ? "body-large" : "body-small"}
-                >
-                  {requestNo}
-                </Typography>
-              </td>
-            </tr>
+              <tr>
+                <th>
+                  <Typography kind={isDesktop ? "body-large" : "body-small"} isBold={true}>
+                    의뢰번호
+                  </Typography>
+                </th>
+                <td colSpan={3}>
+                  <Typography kind={isDesktop ? "body-large" : "body-small"}>
+                    {requestNo}
+                  </Typography>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -112,40 +107,30 @@ export default function Detail({
           <table className="_responsive-table">
             <caption className="_hidden-table-caption">담당자 정보 표</caption>
             <tbody>
-            <tr>
-              <th>
-                <Typography
-                  kind={isDesktop ? "body-large" : "body-small"}
-                  isBold={true}
-                >
-                  법무대리인
-                </Typography>
-              </th>
-              <td colSpan={3}>
-                <Typography
-                  kind={isDesktop ? "body-large" : "body-small"}
-                >
-                  {getManagerInfo(data?.lgagMembNm, data?.lgagMembHpno)}
-                </Typography>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <Typography
-                  kind={isDesktop ? "body-large" : "body-small"}
-                  isBold={true}
-                >
-                  시스템 관리자
-                </Typography>
-              </th>
-              <td colSpan={3}>
-                <Typography
-                  kind={isDesktop ? "body-large" : "body-small"}
-                >
-                  {getManagerInfo(data?.mngrMembNm, data?.mngrMembHpno)}
-                </Typography>
-              </td>
-            </tr>
+              <tr>
+                <th>
+                  <Typography kind={isDesktop ? "body-large" : "body-small"} isBold={true}>
+                    법무대리인
+                  </Typography>
+                </th>
+                <td colSpan={3}>
+                  <Typography kind={isDesktop ? "body-large" : "body-small"}>
+                    {getManagerInfo(data?.lgagMembNm, data?.lgagMembHpno)}
+                  </Typography>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <Typography kind={isDesktop ? "body-large" : "body-small"} isBold={true}>
+                    시스템 관리자
+                  </Typography>
+                </th>
+                <td colSpan={3}>
+                  <Typography kind={isDesktop ? "body-large" : "body-small"}>
+                    {getManagerInfo(data?.mngrMembNm, data?.mngrMembHpno)}
+                  </Typography>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

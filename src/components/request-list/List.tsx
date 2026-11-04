@@ -31,10 +31,7 @@ type RequestListDataProps = {
  * @author 류창선 <ryushin0167@gmail.com>
  * @description 금융기관 - 전자등기 의뢰목록 조회
  */
-export default function List({
-                               tabSelection,
-                               isDesktop,
-                             }: RequestListDataProps & ResponsiveType) {
+export default function List({ tabSelection, isDesktop }: RequestListDataProps & ResponsiveType) {
   const [page, setPage] = useState(1);
   const [pageLimit, setPageLimit] = useState(0);
   const [queryTime, setQueryTime] = useState(new Date());
@@ -66,12 +63,7 @@ export default function List({
       <div className="mt-4 [&>div]:justify-end [&>div>div]:p-0">
         <Grid>
           <GridItem desktop={2} tablet={12} mobile={12}>
-            <Button
-              shape="solid"
-              size="md"
-              color="main100"
-              onClick={() => router.push(FI_REQUEST)}
-            >
+            <Button shape="solid" size="md" color="main100" onClick={() => router.push(FI_REQUEST)}>
               전자등기 의뢰하기
             </Button>
           </GridItem>
@@ -84,11 +76,7 @@ export default function List({
           page={page}
           limit={isDesktop ? PAGE_LIMIT_PC : PAGE_LIMIT_MOBILE}
         />
-        <Table
-          data={requestListData}
-          isDesktop={isDesktop}
-          setQueryTime={setQueryTime}
-        />
+        <Table data={requestListData} isDesktop={isDesktop} setQueryTime={setQueryTime} />
         <Pagination
           total={requestListData?.totalElements}
           page={page}

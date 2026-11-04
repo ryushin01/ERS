@@ -88,29 +88,28 @@ export default function RegistrationCancel({
   };
 
   /* 진행취소 처리 */
-  const { mutate: regiCancel, isPending: registrationCancelPending } =
-    useMutation({
-      mutationKey: ["registration-cancel"],
-      mutationFn: async () => await patchRegiCancel(form),
-      onSuccess: (res) => {
-        if (res.code === "00") {
-          // 토스트팝업 노출 & 등기관리 페이지로 이동
-          openToast({
-            message: "진행취소 상태로 변경되었습니다.",
-            position: "top",
-          });
+  const { mutate: regiCancel, isPending: registrationCancelPending } = useMutation({
+    mutationKey: ["registration-cancel"],
+    mutationFn: async () => await patchRegiCancel(form),
+    onSuccess: (res) => {
+      if (res.code === "00") {
+        // 토스트팝업 노출 & 등기관리 페이지로 이동
+        openToast({
+          message: "진행취소 상태로 변경되었습니다.",
+          position: "top",
+        });
 
-          setTimeout(() => {
-            router.push(AD_REGISTRATION);
-          }, 3000);
-        } else {
-        }
-      },
-      onError: (error) => {
-        console.error(error);
-        setIsButtonDisabled(false);
-      },
-    });
+        setTimeout(() => {
+          router.push(AD_REGISTRATION);
+        }, 3000);
+      } else {
+      }
+    },
+    onError: (error) => {
+      console.error(error);
+      setIsButtonDisabled(false);
+    },
+  });
 
   return (
     <>
@@ -122,12 +121,7 @@ export default function RegistrationCancel({
         className="px-4"
       >
         <div className="flex flex-col gap-y-3">
-          <Label
-            htmlFor="cancel-progress"
-            required={true}
-            labelText="취소사유"
-            labelSize="md"
-          />
+          <Label htmlFor="cancel-progress" required={true} labelText="취소사유" labelSize="md" />
           <Select
             id="cancel-progress"
             name="procRsnCnts"
@@ -159,10 +153,7 @@ export default function RegistrationCancel({
 
             return (
               <li key={id}>
-                <Typography
-                  kind="body-medium"
-                  className="text-ers-grayscale-90"
-                >
+                <Typography kind="body-medium" className="text-ers-grayscale-90">
                   {content}
                 </Typography>
               </li>
@@ -171,21 +162,10 @@ export default function RegistrationCancel({
         </ul>
 
         <div className="flex [&>button:first-child]:flex-2 [&>button:last-child]:flex-3 gap-x-3">
-          <Button
-            shape="solid"
-            size="md"
-            color="grayscale"
-            onClick={closeCancelProgressModal}
-          >
+          <Button shape="solid" size="md" color="grayscale" onClick={closeCancelProgressModal}>
             취소
           </Button>
-          <Button
-            type="submit"
-            shape="solid"
-            size="md"
-            color="main100"
-            disabled={isButtonDisabled}
-          >
+          <Button type="submit" shape="solid" size="md" color="main100" disabled={isButtonDisabled}>
             진행 취소하기
           </Button>
         </div>

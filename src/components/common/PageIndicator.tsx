@@ -18,11 +18,7 @@ type PageIndicatorProps = {
  * @property {number} limit        - 한페이지에 표시할 데이터 개수를 정의합니다.
  */
 
-export default function PageIndicator({
-                                        total = 0,
-                                        page,
-                                        limit,
-                                      }: PageIndicatorProps) {
+export default function PageIndicator({ total = 0, page, limit }: PageIndicatorProps) {
   const { isDesktop } = useResponsive();
   const allPageNum = Math.ceil(total / limit); // 총 페이지네이션 갯수
 

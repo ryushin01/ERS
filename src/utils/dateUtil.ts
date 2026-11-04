@@ -2,9 +2,7 @@ function getKoreaDate() {
   const now = new Date();
   const koreaTimeOffset = 9 * 60; // 한국은 UTC+9
   const localTimeOffset = now.getTimezoneOffset();
-  const koreaTime = new Date(
-    now.getTime() + (koreaTimeOffset + localTimeOffset) * 60000,
-  );
+  const koreaTime = new Date(now.getTime() + (koreaTimeOffset + localTimeOffset) * 60000);
 
   const year = koreaTime.getFullYear();
   const month = String(koreaTime.getMonth() + 1).padStart(2, "0");
@@ -20,9 +18,7 @@ function checkIsToday(date: string) {
   return today === targetDate;
 }
 
-function getCompareWithToday(
-  date: string | undefined,
-): "past" | "same" | "future" | "" {
+function getCompareWithToday(date: string | undefined): "past" | "same" | "future" | "" {
   if (date === undefined) return "";
 
   const today = getKoreaDate();
@@ -64,10 +60,7 @@ function stringToDate(date: string) {
 }
 
 function formatStringToDate(date: string, sign: string) {
-  return `${date.slice(0, 4)}${sign}${date.slice(4, 6)}${sign}${date.slice(
-    6,
-    8,
-  )}`;
+  return `${date.slice(0, 4)}${sign}${date.slice(4, 6)}${sign}${date.slice(6, 8)}`;
 }
 
 function getDateString(date: Date | null) {

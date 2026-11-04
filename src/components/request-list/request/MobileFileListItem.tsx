@@ -27,9 +27,7 @@ export default function MobileFileListItem({
     setImageList((prev) => prev?.filter((item) => item.uid !== uid));
 
     // attcFilNm 기준으로 이미지 삭제
-    setIsExistingImageList((prev) =>
-      prev?.filter((item) => item.attcFilNm !== attcFilNm),
-    );
+    setIsExistingImageList((prev) => prev?.filter((item) => item.attcFilNm !== attcFilNm));
 
     // index 기준으로 파일 삭제 후 반영
     fileList.splice(index, 1);
@@ -66,12 +64,7 @@ export default function MobileFileListItem({
               className="_delete-single-file-button"
             >
               <span>
-                <Image
-                  src={CancelWhiteIcon}
-                  alt="단일 이미지 삭제 아이콘"
-                  width={14}
-                  height={14}
-                />
+                <Image src={CancelWhiteIcon} alt="단일 이미지 삭제 아이콘" width={14} height={14} />
               </span>
             </button>
           </li>

@@ -31,26 +31,74 @@ const statNm = (statCd: string) =>
   PROC_STAT_CODE_LIST.find((item) => item.code === statCd)?.codeNm ?? "";
 
 const DEBTORS = [
-  "김민준", "이서연", "박도윤", "최하은", "정시우", "강지아",
-  "조예준", "윤수아", "장주원", "임채원", "한지호", "오다은",
+  "김민준",
+  "이서연",
+  "박도윤",
+  "최하은",
+  "정시우",
+  "강지아",
+  "조예준",
+  "윤수아",
+  "장주원",
+  "임채원",
+  "한지호",
+  "오다은",
 ];
 
 /* 상세주소는 동·호 번호만 저장 (화면에서 "동", "호"를 붙여 표시) */
 const ADDRESSES = [
-  { rdnmAddr: "서울특별시 중구 예시로 12", lotnumAddr: "서울특별시 중구 예시동 101-1", bldg: "101", unit: "1201" },
-  { rdnmAddr: "서울특별시 성북구 샘플로 34", lotnumAddr: "서울특별시 성북구 샘플동 22-3", bldg: "103", unit: "804" },
-  { rdnmAddr: "경기도 성남시 분당구 데모로 56", lotnumAddr: "경기도 성남시 분당구 데모동 7", bldg: "", unit: "1502" },
-  { rdnmAddr: "인천광역시 연수구 가상로 78", lotnumAddr: "인천광역시 연수구 가상동 45-6", bldg: "", unit: "305" },
+  {
+    rdnmAddr: "서울특별시 중구 예시로 12",
+    lotnumAddr: "서울특별시 중구 예시동 101-1",
+    bldg: "101",
+    unit: "1201",
+  },
+  {
+    rdnmAddr: "서울특별시 성북구 샘플로 34",
+    lotnumAddr: "서울특별시 성북구 샘플동 22-3",
+    bldg: "103",
+    unit: "804",
+  },
+  {
+    rdnmAddr: "경기도 성남시 분당구 데모로 56",
+    lotnumAddr: "경기도 성남시 분당구 데모동 7",
+    bldg: "",
+    unit: "1502",
+  },
+  {
+    rdnmAddr: "인천광역시 연수구 가상로 78",
+    lotnumAddr: "인천광역시 연수구 가상동 45-6",
+    bldg: "",
+    unit: "305",
+  },
 ];
 
 /* 상태 분포: 의뢰 목록의 4개 탭과 현황조회 필터가 모두 채워지도록 구성 */
 const STATUS_SEQUENCE = [
-  PROC_STAT_CD.REQUEST, PROC_STAT_CD.SUPPLEMENT, PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION,
-  PROC_STAT_CD.REVIEWING, PROC_STAT_CD.COMPLET, PROC_STAT_CD.RETURN, PROC_STAT_CD.COMPLET,
-  PROC_STAT_CD.HOLD, PROC_STAT_CD.CANCEL, PROC_STAT_CD.REQUEST, PROC_STAT_CD.MATCH,
-  PROC_STAT_CD.EXECUTION, PROC_STAT_CD.COMPLET, PROC_STAT_CD.REVIEWING, PROC_STAT_CD.REQUEST,
-  PROC_STAT_CD.COMPLET, PROC_STAT_CD.MATCH, PROC_STAT_CD.SUPPLEMENT, PROC_STAT_CD.COMPLET,
-  PROC_STAT_CD.EXECUTION, PROC_STAT_CD.HOLD, PROC_STAT_CD.COMPLET, PROC_STAT_CD.MATCH,
+  PROC_STAT_CD.REQUEST,
+  PROC_STAT_CD.SUPPLEMENT,
+  PROC_STAT_CD.MATCH,
+  PROC_STAT_CD.EXECUTION,
+  PROC_STAT_CD.REVIEWING,
+  PROC_STAT_CD.COMPLET,
+  PROC_STAT_CD.RETURN,
+  PROC_STAT_CD.COMPLET,
+  PROC_STAT_CD.HOLD,
+  PROC_STAT_CD.CANCEL,
+  PROC_STAT_CD.REQUEST,
+  PROC_STAT_CD.MATCH,
+  PROC_STAT_CD.EXECUTION,
+  PROC_STAT_CD.COMPLET,
+  PROC_STAT_CD.REVIEWING,
+  PROC_STAT_CD.REQUEST,
+  PROC_STAT_CD.COMPLET,
+  PROC_STAT_CD.MATCH,
+  PROC_STAT_CD.SUPPLEMENT,
+  PROC_STAT_CD.COMPLET,
+  PROC_STAT_CD.EXECUTION,
+  PROC_STAT_CD.HOLD,
+  PROC_STAT_CD.COMPLET,
+  PROC_STAT_CD.MATCH,
 ];
 
 export type MockRegistration = {
@@ -101,9 +149,19 @@ export type MockStatusHistory = {
 };
 
 const HAS_LAWYER = (statCd: string) =>
-  ([PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION, PROC_STAT_CD.REVIEWING, PROC_STAT_CD.RETURN, PROC_STAT_CD.COMPLET] as string[]).includes(statCd);
+  (
+    [
+      PROC_STAT_CD.MATCH,
+      PROC_STAT_CD.EXECUTION,
+      PROC_STAT_CD.REVIEWING,
+      PROC_STAT_CD.RETURN,
+      PROC_STAT_CD.COMPLET,
+    ] as string[]
+  ).includes(statCd);
 const HAS_RECEIPT = (statCd: string) =>
-  ([PROC_STAT_CD.REVIEWING, PROC_STAT_CD.RETURN, PROC_STAT_CD.COMPLET] as string[]).includes(statCd);
+  ([PROC_STAT_CD.REVIEWING, PROC_STAT_CD.RETURN, PROC_STAT_CD.COMPLET] as string[]).includes(
+    statCd,
+  );
 
 /* 현재 상태까지의 진행 이력 (최근 이력이 앞) */
 const STATUS_FLOW: Record<string, string[]> = {
@@ -111,9 +169,26 @@ const STATUS_FLOW: Record<string, string[]> = {
   [PROC_STAT_CD.SUPPLEMENT]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.SUPPLEMENT],
   [PROC_STAT_CD.MATCH]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.MATCH],
   [PROC_STAT_CD.EXECUTION]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION],
-  [PROC_STAT_CD.REVIEWING]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION, PROC_STAT_CD.REVIEWING],
-  [PROC_STAT_CD.RETURN]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION, PROC_STAT_CD.REVIEWING, PROC_STAT_CD.RETURN],
-  [PROC_STAT_CD.COMPLET]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION, PROC_STAT_CD.REVIEWING, PROC_STAT_CD.COMPLET],
+  [PROC_STAT_CD.REVIEWING]: [
+    PROC_STAT_CD.REQUEST,
+    PROC_STAT_CD.MATCH,
+    PROC_STAT_CD.EXECUTION,
+    PROC_STAT_CD.REVIEWING,
+  ],
+  [PROC_STAT_CD.RETURN]: [
+    PROC_STAT_CD.REQUEST,
+    PROC_STAT_CD.MATCH,
+    PROC_STAT_CD.EXECUTION,
+    PROC_STAT_CD.REVIEWING,
+    PROC_STAT_CD.RETURN,
+  ],
+  [PROC_STAT_CD.COMPLET]: [
+    PROC_STAT_CD.REQUEST,
+    PROC_STAT_CD.MATCH,
+    PROC_STAT_CD.EXECUTION,
+    PROC_STAT_CD.REVIEWING,
+    PROC_STAT_CD.COMPLET,
+  ],
   [PROC_STAT_CD.CANCEL]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.CANCEL],
   [PROC_STAT_CD.HOLD]: [PROC_STAT_CD.REQUEST, PROC_STAT_CD.HOLD],
 };
@@ -149,7 +224,12 @@ export const changeStatus = (
 ) => {
   target.statCd = statCd;
   target.statNm = statNm(statCd);
-  target.statHistList.unshift({ statNm: statNm(statCd), procRsnCnts, crtMembNm, crtDtm: dateFromToday(0) });
+  target.statHistList.unshift({
+    statNm: statNm(statCd),
+    procRsnCnts,
+    crtMembNm,
+    crtDtm: dateFromToday(0),
+  });
 };
 
 export const REGISTRATIONS: MockRegistration[] = STATUS_SEQUENCE.map((statCd, i) => {
@@ -217,7 +297,8 @@ const restoreDemoState = () => {
   if (typeof window === "undefined") return;
   try {
     const saved = JSON.parse(sessionStorage.getItem(DEMO_STATE_KEY) ?? "null");
-    if (Array.isArray(saved) && saved.length > 0) REGISTRATIONS.splice(0, REGISTRATIONS.length, ...saved);
+    if (Array.isArray(saved) && saved.length > 0)
+      REGISTRATIONS.splice(0, REGISTRATIONS.length, ...saved);
   } catch {
     // 저장된 값이 손상되었으면 초기 데이터 사용
   }
@@ -228,7 +309,13 @@ restoreDemoState();
 /* 의뢰목록 탭 (00:미배정, 01:배정완료, 02:진행보류, 03:진행취소) */
 export const REQUEST_TAB_STATUS: Record<string, string[]> = {
   "00": [PROC_STAT_CD.REQUEST, PROC_STAT_CD.SUPPLEMENT],
-  "01": [PROC_STAT_CD.MATCH, PROC_STAT_CD.EXECUTION, PROC_STAT_CD.REVIEWING, PROC_STAT_CD.RETURN, PROC_STAT_CD.COMPLET],
+  "01": [
+    PROC_STAT_CD.MATCH,
+    PROC_STAT_CD.EXECUTION,
+    PROC_STAT_CD.REVIEWING,
+    PROC_STAT_CD.RETURN,
+    PROC_STAT_CD.COMPLET,
+  ],
   "02": [PROC_STAT_CD.HOLD],
   "03": [PROC_STAT_CD.CANCEL],
 };
@@ -236,13 +323,15 @@ export const REQUEST_TAB_STATUS: Record<string, string[]> = {
 export const NOTICES = [
   {
     title: "[긴급] 등기소 전산 점검에 따른 접수 지연 안내",
-    contents: "등기소 전산 점검으로 인해 금일 18시 이후 접수 건은 익영업일에 처리됩니다.\n이용에 참고 부탁드립니다.",
+    contents:
+      "등기소 전산 점검으로 인해 금일 18시 이후 접수 건은 익영업일에 처리됩니다.\n이용에 참고 부탁드립니다.",
     emcyYn: true,
     offset: 0,
   },
   {
     title: "전자등기 의뢰 시 등기자료 촬영 가이드",
-    contents: "계약서는 모든 페이지가 선명하게 보이도록 촬영해 주세요.\n빛 반사와 그림자가 생기지 않도록 주의해 주세요.",
+    contents:
+      "계약서는 모든 페이지가 선명하게 보이도록 촬영해 주세요.\n빛 반사와 그림자가 생기지 않도록 주의해 주세요.",
     emcyYn: false,
     offset: -2,
   },
@@ -299,24 +388,38 @@ export const COMMON_CODES: Record<string, { grpCd: string; code: string; codeNm:
   SPPL_REQ_GB_CD: commCode("SPPL_REQ_GB_CD", ["등기자료 이미지 불량", "필수 서류 누락", "기타"]),
   PROC_CLS_GB_CD: commCode("PROC_CLS_GB_CD", ["대출 취소", "고객 요청", "기타"]),
   RTUN_GB_CD: commCode("RTUN_GB_CD", ["접수증 이미지 불량", "접수번호 불일치", "기타"]),
-  JUDT_COURT_CD: commCode("JUDT_COURT_CD", ["서울중앙지방법원", "수원지방법원 성남지원", "인천지방법원"]),
+  JUDT_COURT_CD: commCode("JUDT_COURT_CD", [
+    "서울중앙지방법원",
+    "수원지방법원 성남지원",
+    "인천지방법원",
+  ]),
   REGR_CD: commCode("REGR_CD", ["중부등기소", "성남등기소", "인천지방법원 등기과"]),
 };
 
 /* 회원 목록 (00: 금융기관, 10: 법무대리인) */
-export const MEMBERS: Record<string, { membNo: string; membNm: string; bizNo: string; bizNm: string }[]> = {
+export const MEMBERS: Record<
+  string,
+  { membNo: string; membNm: string; bizNo: string; bizNm: string }[]
+> = {
   "00": [
     { membNo: "DEMO", membNm: "데모 금융기관", bizNo: "000-00-00001", bizNm: "데모 금융기관" },
     { membNo: "DEMO2", membNm: "샘플 금융기관", bizNo: "000-00-00002", bizNm: "샘플 금융기관" },
   ],
   "10": [
     { membNo: "LAW1", membNm: "데모 법무법인", bizNo: "000-00-00011", bizNm: "데모 법무법인" },
-    { membNo: "LAW2", membNm: "샘플 법무사사무소", bizNo: "000-00-00012", bizNm: "샘플 법무사사무소" },
+    {
+      membNo: "LAW2",
+      membNm: "샘플 법무사사무소",
+      bizNo: "000-00-00012",
+      bizNm: "샘플 법무사사무소",
+    },
   ],
 };
 
 /* 데모 중 새로 등록하는 의뢰 (기존 의뢰 형식을 복사해 만듭니다) */
-export const createRegistration = (fields: Partial<MockRegistration> & { rqstNo: string }): MockRegistration => {
+export const createRegistration = (
+  fields: Partial<MockRegistration> & { rqstNo: string },
+): MockRegistration => {
   const base = REGISTRATIONS[0];
   const registration: MockRegistration = {
     ...base,

@@ -42,26 +42,26 @@ export default function InfoTableSection({ title, rows, isDesktop }: InfoTableSe
         <table className="_responsive-table">
           <caption className="_hidden-table-caption">{title} 표</caption>
           <tbody>
-          {rows.map((row) => {
-            const cells = Array.isArray(row) ? row : [row];
+            {rows.map((row) => {
+              const cells = Array.isArray(row) ? row : [row];
 
-            return (
-              <tr key={cells.map((cell) => cell.label).join("-")}>
-                {cells.map(({ label, value }) => (
-                  <Fragment key={label}>
-                    <th>
-                      <Typography kind={cellKind} isBold={true}>
-                        {label}
-                      </Typography>
-                    </th>
-                    <td colSpan={cells.length === 1 ? 3 : undefined}>
-                      <Typography kind={cellKind}>{value}</Typography>
-                    </td>
-                  </Fragment>
-                ))}
-              </tr>
-            );
-          })}
+              return (
+                <tr key={cells.map((cell) => cell.label).join("-")}>
+                  {cells.map(({ label, value }) => (
+                    <Fragment key={label}>
+                      <th>
+                        <Typography kind={cellKind} isBold={true}>
+                          {label}
+                        </Typography>
+                      </th>
+                      <td colSpan={cells.length === 1 ? 3 : undefined}>
+                        <Typography kind={cellKind}>{value}</Typography>
+                      </td>
+                    </Fragment>
+                  ))}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

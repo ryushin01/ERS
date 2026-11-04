@@ -84,7 +84,6 @@ InputFieldProps) {
   const [isHideText, setIsHideText] = useState(true);
   const hasIcon = icon ? true : false; // icon 있으면 true 없으면 false
 
-
   /* TODO : password가 아닌 다른걸로 분기처리 방법 찾아보기. input+button 조합 password 아닌것도 있을수있음. 
   button/icon >> button type(button/reset) | src(토글이면 이미지 두개) | alt */
 
@@ -222,9 +221,7 @@ InputFieldProps) {
       isError={isError}
     >
       <div className={inputWithLabelText}>
-        {icon && iconPosition === "left" && (
-          <span className="pr-2">{icon}</span>
-        )}
+        {icon && iconPosition === "left" && <span className="pr-2">{icon}</span>}
         <Input
           id={htmlFor}
           type={type}
@@ -241,9 +238,7 @@ InputFieldProps) {
           defaultValue={defaultValue!}
           value={value}
         />
-        {icon && iconPosition === "right" && (
-          <span className="pl-2">{icon}</span>
-        )}
+        {icon && iconPosition === "right" && <span className="pl-2">{icon}</span>}
       </div>
       {isError ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>

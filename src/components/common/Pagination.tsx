@@ -1,12 +1,7 @@
 import { Dispatch, useState } from "react";
 import Image from "next/image";
 
-import {
-  LeftArrowDoubleIcon,
-  LeftArrowIcon,
-  RightArrowDoubleIcon,
-  RightIcon,
-} from "@icons20";
+import { LeftArrowDoubleIcon, LeftArrowIcon, RightArrowDoubleIcon, RightIcon } from "@icons20";
 
 import "@styles/pagination.css";
 
@@ -120,12 +115,7 @@ export default function Pagination({
               }}
               disabled={page === 1}
             >
-              <Image
-                src={LeftArrowIcon}
-                width={20}
-                height={20}
-                alt={"이전페이지 호출 아이콘"}
-              />
+              <Image src={LeftArrowIcon} width={20} height={20} alt={"이전페이지 호출 아이콘"} />
             </button>
             {reArray.slice(blockArea, pageLimit + blockArea).map((n) => (
               <button
@@ -144,12 +134,7 @@ export default function Pagination({
               }}
               disabled={page === allPageNum}
             >
-              <Image
-                src={RightIcon}
-                width={20}
-                height={20}
-                alt={"다음페이지 호출 아이콘"}
-              />
+              <Image src={RightIcon} width={20} height={20} alt={"다음페이지 호출 아이콘"} />
             </button>
             <button
               className="_pagination-button"

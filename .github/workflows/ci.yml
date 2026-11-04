@@ -28,6 +28,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
+      - run: pnpm format:check
       - run: pnpm typecheck
       - run: pnpm test
       # 데모 모드(기본값)로 빌드하므로 API 주소 환경 변수는 필요 없음

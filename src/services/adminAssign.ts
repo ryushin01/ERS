@@ -29,9 +29,7 @@ export const getSupplimentData = (rqstNo: string) =>
 
 // 전자등기 신규등록 > 의뢰번호 조회
 export const getRqstNoData = () =>
-  axiosBasicInstance(`${API_COMM_SEQUENCE}?sequence=RQST_NO`).then(
-    (response) => response.data,
-  );
+  axiosBasicInstance(`${API_COMM_SEQUENCE}?sequence=RQST_NO`).then((response) => response.data);
 
 // 배정 신규등록
 export const postCreateAssign = (form: FormData) =>
