@@ -5,6 +5,6 @@ services:
     build:
       context: ../../
       dockerfile: docker/production/Dockerfile
-    image: with-docker-koser-standard-production
+    image: with-docker-ers-production
     ports:
       - '0.0.0.0:3000:3000'
