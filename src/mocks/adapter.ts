@@ -81,6 +81,14 @@ const documentList = (item: MockRegistration) => [
     : []),
 ];
 
+/* 화면 폼은 날짜를 YYYYMMDD로 보내므로, 목업 데이터 형식(YYYY-MM-DD)으로 맞춤 */
+const toDashedDate = (value: unknown) => {
+  const date = String(value ?? "");
+  return /^\d{8}$/.test(date)
+    ? `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`
+    : date;
+};
+
 /* 새 의뢰번호: 기존 의뢰번호 중 가장 큰 번호 + 1 */
 const nextRequestNo = () => {
   const max = Math.max(...REGISTRATIONS.map((item) => Number(item.rqstNo.replace(/\D/g, "")) || 0));
@@ -263,13 +271,13 @@ const routes: Route[] = [
     handler: () => ok(nextRequestNo()),
   },
 
-  /* 인터넷등기소 - 등기고유번호 조회 (가상 번호) */
+  /* 인터넷등기소 - 등기고유번호 조회 (가상 번호, 화면 입력칸이 type="number"라 숫자 14자리) */
   {
     method: "get",
     pattern: /^\/api\/api\/iros\/unqrgstrno$/,
     handler: (params) =>
       params.get("rdnmAddr")
-        ? ok(`1101-2026-${String(Date.now()).slice(-6)}`)
+        ? ok(`11012026${String(Date.now()).slice(-6)}`)
         : { code: "99", msg: "주소를 입력해 주세요.", data: "" },
   },
 
@@ -342,8 +350,8 @@ const routes: Route[] = [
         MEMBERS["00"].find((member) => member.bizNo === body.bndBizNo) ?? MEMBERS["00"][0];
       createRegistration({
         rqstNo: String(body.rqstNo || nextRequestNo()),
-        execDt: String(body.execDt ?? dateFromToday(0)),
-        seDt: String(body.seDt ?? ""),
+        execDt: toDashedDate(body.execDt) || dateFromToday(0),
+        seDt: toDashedDate(body.seDt),
         dbtrNm: String(body.dbtrNm ?? ""),
         bndMaxAmt: Number(body.bndMaxAmt) || 0,
         rdnmAddr: String(body.rdnmAddr ?? ""),
@@ -378,6 +386,7 @@ const routes: Route[] = [
       if (target) {
         Object.assign(target, {
           dbtrNm: String(body.dbtrNm || target.dbtrNm),
+          seDt: toDashedDate(body.seDt) || target.seDt,
           bndMaxAmt: Number(body.bndMaxAmt) || target.bndMaxAmt,
           unqRgstrNo: String(body.unqRgstrNo || target.unqRgstrNo),
           lgagMembNm: lawyer.membNm,

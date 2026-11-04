@@ -108,16 +108,20 @@ describe("mockAdapter (데모 모드 목업 API)", () => {
     const form = new FormData();
     form.append(
       "req",
-      JSON.stringify({ rqstNo, dbtrNm: "테스트채무자", lgagMembNo: "LAW1", execDt: "2026-11-10" }),
+      JSON.stringify({ rqstNo, dbtrNm: "테스트채무자", lgagMembNo: "LAW1", execDt: "20261110" }),
     );
     expect((await request("post", "/api/admin/match", form)).code).toBe("00");
 
     const { data: created } = await request("get", `/api/admin/match/${rqstNo}`);
+    // 폼이 보내는 YYYYMMDD 날짜는 YYYY-MM-DD로 저장하고, 접수 전이므로 법원·등기소는 비어 있음
     expect(created).toMatchObject({
       rqstNo,
       dbtrNm: "테스트채무자",
+      execDt: "2026-11-10",
       statCd: PROC_STAT_CD.MATCH,
       lgagMembNm: "데모 법무법인",
+      judtCourtNm: "",
+      regrNm: "",
     });
   });
 

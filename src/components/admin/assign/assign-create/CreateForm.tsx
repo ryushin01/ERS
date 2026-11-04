@@ -880,11 +880,11 @@ export default function CreateForm() {
                   <tbody>
                     <tr>
                       <th>
-                        <Label htmlFor="reale-cd" required={false} labelText="법무대리인" />
+                        <Label htmlFor="lgag-memb-no" required={false} labelText="법무대리인" />
                       </th>
                       <td colSpan={2}>
                         <Select
-                          id="reale-cd"
+                          id="lgag-memb-no"
                           name="lgagMembNo"
                           selectSize="sm"
                           placeholder="법무대리인 선택"
@@ -919,12 +919,6 @@ export default function CreateForm() {
                   onChange={(e) => setLgagDlvrCnts(e.target.value)}
                 />
               </div>
-
-              {isOpenSearchAddressModal && (
-                <Modal title="주소검색" size="md" onClose={closeopenSearchAddressModal}>
-                  <DaumPostcode onComplete={handleComplete} />
-                </Modal>
-              )}
 
               <div className="max-w-[28%] mt-16 mx-auto">
                 <Button
