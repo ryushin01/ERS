@@ -333,11 +333,7 @@
         text-indent: -999999px;
     }
 
-    /* common mixin */
-    ._flex-center {
-        @apply flex items-center justify-center;
-    }
-
+    /* common mixin (._flex-center는 다른 CSS 파일에서도 @apply로 쓰므로 tailwind.config.ts 플러그인에 정의) */
     ._position-center {
         @apply top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
     }

@@ -1,3 +1,5 @@
+import plugin from "tailwindcss/plugin";
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -5,6 +7,8 @@ export default {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/stories/**/*.{js,ts,jsx,tsx,mdx}",
+    "./.storybook/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -97,5 +101,19 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    /*
+     * 여러 CSS 파일에서 @apply로 쓰는 공통 클래스는 플러그인으로 정의합니다.
+     * globals.css의 @layer에 두면 그 파일이 먼저 처리될 때만 다른 파일에서 @apply가 동작합니다. (Storybook·Vite는 순서가 보장되지 않음)
+     */
+    plugin(({ addComponents }) => {
+      addComponents({
+        "._flex-center": {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        },
+      });
+    }),
+  ],
 } satisfies Config;
