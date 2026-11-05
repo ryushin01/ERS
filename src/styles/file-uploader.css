@@ -25,7 +25,8 @@
                 .ant-upload-drag-container {
                     @apply flex flex-col items-center gap-y-6;
 
-                    button {
+                    button,
+                    ._dragger-select {
                         @apply w-40;
                     }
                 }

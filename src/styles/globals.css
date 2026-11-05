@@ -234,12 +234,12 @@
                 @apply flex min-w-full;
 
                 li {
-                    @apply flex-1 text-ers-grayscale-0/60;
+                    @apply flex-1 text-ers-grayscale-0/75;
 
                     &:hover,
                     &:focus,
                     &:active {
-                        @apply bg-transparent text-ers-grayscale-0/60;
+                        @apply bg-transparent text-ers-grayscale-0/75;
                     }
 
                     a {

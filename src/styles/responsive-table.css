@@ -22,7 +22,7 @@
             @apply text-ers-main-100;
 
             &._supplement {
-                @apply text-ers-secondary-yellow-50;
+                @apply text-ers-secondary-yellow-70;
             }
         }
 

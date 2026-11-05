@@ -168,6 +168,7 @@ export default function FilterTable({
                 <th>
                   <Select
                     id="searchType"
+                    ariaLabel="조회기간 기준"
                     name="searchType"
                     shape={isDesktop ? "none" : "default"}
                     selectSize="md"

@@ -388,6 +388,7 @@ export default function RegistrationInformation({
               ref={fileInputRef}
               type="file"
               id="fileInput"
+              aria-label="등기접수증 파일 선택"
               multiple={true}
               accept=".jpg, .jpeg, .png"
               className="_hidden"
@@ -429,6 +430,7 @@ export default function RegistrationInformation({
                     <td colSpan={2}>
                       <Select
                         id="court"
+                        ariaLabel="관할법원"
                         name="court"
                         selectSize="sm"
                         placeholder="법원을 선택해 주세요"
@@ -450,6 +452,7 @@ export default function RegistrationInformation({
                     <td colSpan={2}>
                       <Select
                         id="registry-office"
+                        ariaLabel="등기소"
                         name="registry-office"
                         selectSize="sm"
                         placeholder="법원을 선택한 후 등기소를 선택해 주세요"

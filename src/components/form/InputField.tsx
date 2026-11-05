@@ -32,6 +32,8 @@ type InputFieldProps = {
   inputSize?: "sm" | "md" | "lg";
   className?: string;
   readOnly?: boolean;
+  /* 화면에 보이는 라벨과 연결되지 않을 때 스크린 리더가 읽을 이름 */
+  ariaLabel?: string;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "size">;
 
 /**
@@ -78,6 +80,7 @@ export default function InputField({
   hasButton = false,
   readOnly = false,
   className,
+  ariaLabel,
 }: // ref,
 InputFieldProps) {
   const [coreValue, setCoreValue] = useState(defaultValue);
@@ -128,6 +131,7 @@ InputFieldProps) {
       >
         <div className={inputWithLabelText}>
           <Input
+            aria-label={ariaLabel}
             id={htmlFor}
             type={isHideText ? "password" : "text"}
             placeholder={placeholder}
@@ -180,6 +184,7 @@ InputFieldProps) {
     >
       <div className={inputWithLabelText}>
         <Input
+          aria-label={ariaLabel}
           id={htmlFor}
           type={type}
           placeholder={placeholder}
@@ -223,6 +228,7 @@ InputFieldProps) {
       <div className={inputWithLabelText}>
         {icon && iconPosition === "left" && <span className="pr-2">{icon}</span>}
         <Input
+          aria-label={ariaLabel}
           id={htmlFor}
           type={type}
           placeholder={placeholder}

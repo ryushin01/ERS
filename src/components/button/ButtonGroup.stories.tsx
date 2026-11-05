@@ -11,7 +11,7 @@ const PERIODS = [
   { id: "3month", content: "3개월", disabled: false },
 ];
 
-/** 조회 기간처럼 여러 버튼 중 하나를 고르는 그룹 (aria-selected로 선택 상태 표시) */
+/** 조회 기간처럼 여러 버튼 중 하나를 고르는 그룹 (aria-pressed로 선택 상태 표시) */
 const meta = {
   title: "Button/ButtonGroup",
   component: ButtonGroup,

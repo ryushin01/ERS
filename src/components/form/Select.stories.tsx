@@ -13,6 +13,7 @@ const meta = {
   args: {
     id: "sort",
     name: "sort",
+    ariaLabel: "정렬 순서",
     value: PERIOD_SORT_OPTION[0].value,
     selectSize: "sm",
     options: PERIOD_SORT_OPTION,
@@ -40,6 +41,7 @@ export const PageSize: Story = {
   args: {
     id: "size",
     name: "size",
+    ariaLabel: "한 페이지에 보여 줄 개수",
     options: NUMERIC_SORT_OPTION,
     value: NUMERIC_SORT_OPTION[0].value,
   },

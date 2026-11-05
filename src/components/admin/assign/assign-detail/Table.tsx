@@ -788,6 +788,7 @@ export default function Table({
                         </Typography>
                         <InputField
                           name="roadAddr"
+                          ariaLabel="지번 주소"
                           defaultValue={addrForm.roadAddr}
                           htmlFor="lotnum"
                           type="text"
@@ -803,6 +804,7 @@ export default function Table({
                         </Typography>
                         <InputField
                           name="rdnmAddr"
+                          ariaLabel="도로명 주소"
                           defaultValue={addrForm.rdnmAddr}
                           htmlFor="roadAddr"
                           type="text"
@@ -841,6 +843,7 @@ export default function Table({
                           <span className="flex items-center gap-x-2 [&>div:first-child]:w-[70%]">
                             <InputField
                               name="bldg"
+                              ariaLabel="상세 주소 동"
                               defaultValue={addrForm.bldg}
                               htmlFor=""
                               type="text"
@@ -858,6 +861,7 @@ export default function Table({
                           <span className="flex items-center gap-x-2 [&>div:first-child]:w-[70%]">
                             <InputField
                               name="unit"
+                              ariaLabel="상세 주소 호"
                               defaultValue={addrForm.unit}
                               htmlFor=""
                               type="number"

@@ -14,8 +14,7 @@ type ButtonProps = {
   onClick?: () => void;
   children?: string;
   disabled?: boolean;
-  role?: string;
-  isSelected?: boolean;
+  isPressed?: boolean;
   id?: string;
 };
 
@@ -31,8 +30,7 @@ type ButtonProps = {
  * @property {string} iconPosition   - 버튼의 아이콘 위치를 정의합니다.
  * @property {function} onClick      - 버튼 클릭시 동작을 위해 정의합니다.
  * @property {boolean} disabled      - 버튼의 비활성화 상태를 정의합니다.
- * @property {string} role           - 버튼 그룹에서 aria-selected 속성 사용을 위한 역할 속성
- * @property {boolean} isSelected    - 버튼 그룹에서 선택된 버튼 구분
+ * @property {boolean} isPressed     - 버튼 그룹에서 선택된(눌린) 버튼 표시 (aria-pressed)
  */
 
 export default function Button({
@@ -45,8 +43,7 @@ export default function Button({
   onClick,
   children = "",
   disabled = false,
-  role,
-  isSelected,
+  isPressed,
   id,
 }: ButtonProps) {
   let buttonSize = "";
@@ -87,7 +84,7 @@ export default function Button({
       solidButtonColor = "bg-ers-main-5 text-ers-main-100";
       break;
     case "grayscale":
-      solidButtonColor = "bg-ers-grayscale-60 text-ers-grayscale-0";
+      solidButtonColor = "bg-ers-grayscale-80 text-ers-grayscale-0";
       break;
     case "bluegray":
       solidButtonColor = "bg-ers-secondary-bluegray-50 text-ers-grayscale-0";
@@ -112,7 +109,7 @@ export default function Button({
       break;
     case "grayscale":
       solidButtonActionColor =
-        "hover:bg-ers-grayscale-50 text-ers-grayscale-0 focus:bg-ers-grayscale-40 text-ers-grayscale-0 active:bg-ers-grayscale-40 text-ers-grayscale-0";
+        "hover:bg-ers-grayscale-90 text-ers-grayscale-0 focus:bg-ers-grayscale-90 text-ers-grayscale-0 active:bg-ers-grayscale-90 text-ers-grayscale-0";
       break;
     default:
       solidButtonActionColor =
@@ -170,8 +167,7 @@ export default function Button({
       type={type}
       disabled={disabled}
       onClick={onClick}
-      role={role}
-      aria-selected={isSelected}
+      aria-pressed={isPressed}
       aria-label={`${children} 버튼`}
     >
       {icon && iconPosition === "left" && <span className="pr-1">{icon}</span>}

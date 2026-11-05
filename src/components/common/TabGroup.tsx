@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { KeyboardEvent, ReactNode, useId, useState } from "react";
 
 import { Badge, Typography } from "@components/common";
 import { ResponsiveType } from "@types";
@@ -37,15 +37,41 @@ export default function TabGroup({
     onTabChange?.(index);
   };
 
+  /* 탭 키보드 이동 (WAI-ARIA 탭 패턴): ←/→로 이전·다음 탭, Home/End로 처음·마지막 탭 */
+  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const lastIndex = items.length - 1;
+    const nextIndex = {
+      ArrowRight: index === lastIndex ? 0 : index + 1,
+      ArrowLeft: index === 0 ? lastIndex : index - 1,
+      Home: 0,
+      End: lastIndex,
+    }[event.key];
+
+    if (nextIndex === undefined) return;
+    event.preventDefault();
+    handleTabChange(nextIndex);
+    document.getElementById(tabId(nextIndex))?.focus();
+  };
+
+  const tabGroupId = useId();
+  const tabId = (index: number) => `${tabGroupId}-tab-${index}`;
+  const panelId = `${tabGroupId}-panel`;
+
   return (
     <div className="_tab-container">
       <ul role="tablist" className="_tab-list">
         {items.map((tab, index) => (
-          <li key={index} className="_tab-list-wrap">
+          // tablist의 자식은 tab이어야 하므로 li는 목록 의미를 없앰(presentation)
+          <li key={index} role="presentation" className="_tab-list-wrap">
             <button
               type="button"
               role="tab"
+              id={tabId(index)}
+              aria-selected={activeTab === index}
+              aria-controls={panelId}
+              tabIndex={activeTab === index ? 0 : -1}
               onClick={() => handleTabChange(index)}
+              onKeyDown={(event) => handleKeyDown(event, index)}
               className="_tab-trigger"
             >
               <Typography
@@ -65,7 +91,9 @@ export default function TabGroup({
           </li>
         ))}
       </ul>
-      <div className="_tab-content">{items[activeTab]?.content}</div>
+      <div role="tabpanel" id={panelId} aria-labelledby={tabId(activeTab)} className="_tab-content">
+        {items[activeTab]?.content}
+      </div>
     </div>
   );
 }

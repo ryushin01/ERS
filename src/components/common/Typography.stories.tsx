@@ -42,7 +42,7 @@ export const Scale: Story = {
     <div className="flex flex-col gap-y-3">
       {KINDS.map((kind) => (
         <div key={kind} className="flex items-baseline gap-x-6">
-          <code className="w-36 shrink-0 text-xs text-ers-grayscale-70">{kind}</code>
+          <code className="w-36 shrink-0 text-xs text-ers-grayscale-90">{kind}</code>
           <Typography {...args} kind={kind}>
             의뢰부터 승인까지 한곳에서
           </Typography>

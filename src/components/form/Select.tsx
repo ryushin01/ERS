@@ -19,6 +19,8 @@ type SelectProps = {
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   className?: string;
   placeholder?: string;
+  /* 화면에 보이는 라벨이 없을 때 스크린 리더가 읽을 이름 */
+  ariaLabel?: string;
 } & Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>, "className">;
 
 /**
@@ -33,6 +35,7 @@ type SelectProps = {
  * @property {string} label        - 선택된 값의 라벨을 정의합니다.
  * @property {function} options    - 셀렉트 선택 옵션들을 정의합니다.
  * @property {function} onChange   - 셀렉트 동작 위해 정의합니다.
+ * @property {string} ariaLabel     - 보이는 라벨이 없을 때 스크린 리더용 이름 (aria-label)
  */
 
 export default function Select({
@@ -48,6 +51,7 @@ export default function Select({
   className = "",
   placeholder = "",
   required = false,
+  ariaLabel,
 }: SelectProps) {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (onChange) {
@@ -86,6 +90,7 @@ export default function Select({
         onChange={handleChange}
         className={`_select ${setSize}`}
         required={required}
+        aria-label={ariaLabel}
       >
         {placeholder && (
           <option value={placeholder} hidden>

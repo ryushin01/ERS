@@ -12,6 +12,6 @@
     }
 
     ._empty-box {
-        @apply flex justify-center items-center relative w-full h-[68vh] rounded-xl border border-ers-grayscale-40 text-ers-grayscale-80;
+        @apply flex justify-center items-center relative w-full h-[68vh] rounded-xl border border-ers-grayscale-40 text-ers-grayscale-90;
     }
 }

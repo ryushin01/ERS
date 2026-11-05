@@ -28,10 +28,10 @@ const getClassName = (colorType: string, type: string) => {
         return "_badge bg-ers-main-100 text-ers-grayscale-0 rounded-full min-w-7";
 
       case "default":
-        return "_badge bg-ers-grayscale-40 text-ers-grayscale-80 rounded-full min-w-7";
+        return "_badge bg-ers-grayscale-40 text-ers-grayscale-90 rounded-full min-w-7";
 
       default:
-        return "_badge bg-ers-grayscale-40 text-ers-grayscale-80 rounded-full min-w-7";
+        return "_badge bg-ers-grayscale-40 text-ers-grayscale-90 rounded-full min-w-7";
     }
   } else if (type === "text") {
     switch (colorType) {

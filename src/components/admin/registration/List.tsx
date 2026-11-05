@@ -129,6 +129,7 @@ export default function List({
           <div className="flex gap-x-4">
             <Select
               id="sortOrder"
+              ariaLabel="정렬 순서"
               name="sortOrder"
               selectSize="sm"
               options={PERIOD_SORT_OPTION}
@@ -138,6 +139,7 @@ export default function List({
             />
             <Select
               id="pageSize"
+              ariaLabel="한 페이지에 보여 줄 개수"
               name="pageSize"
               selectSize="sm"
               options={NUMERIC_SORT_OPTION}

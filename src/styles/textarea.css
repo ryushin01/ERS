@@ -2,7 +2,7 @@
     @apply w-full h-full relative;
 
     ._count {
-        @apply absolute bottom-[-28px] right-0 text-ers-grayscale-80;
+        @apply absolute bottom-[-28px] right-0 text-ers-grayscale-90;
 
         ._count-text {
             &._active {

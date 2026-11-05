@@ -96,6 +96,7 @@ export default function List({ tabIndex, searchRqstNo, unMatchData }: ListProps)
           <div className="flex gap-x-4">
             <Select
               id="select1"
+              ariaLabel="정렬 순서"
               name="select1"
               selectSize="sm"
               options={PERIOD_SORT_OPTION}
@@ -105,6 +106,7 @@ export default function List({ tabIndex, searchRqstNo, unMatchData }: ListProps)
             />
             <Select
               id="select2"
+              ariaLabel="한 페이지에 보여 줄 개수"
               name="select2"
               selectSize="sm"
               options={NUMERIC_SORT_OPTION}

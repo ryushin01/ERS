@@ -22,8 +22,7 @@ type ButtonGroupDataProps = {
  * @version 1.0.0
  * @author 류창선 <ryushin0167@gmail.com>
  * @description - 부모 컴포넌트가 클라이언트 컴포넌트이어야 합니다.
- *              - aria-selected 속성은 단일 또는 다중 선택 상태를 나타냅니다.
- *              - aria-selected 속성 사용 시 button에 role 속성을 추가해야 오류가 발생하지 않습니다.
+ *              - 선택 상태는 토글 버튼의 aria-pressed로 나타냅니다. (탭 목록이 아니므로 role="tab"·aria-selected를 쓰지 않음)
  * @property {string} size                    - 버튼 크기
  * @property {string} content                 - 버튼 내부 텍스트 및 웹 접근성 처리
  * @property {boolean} disabled               - 버튼 비활성화 여부
@@ -49,8 +48,7 @@ export default function ButtonGroup({
               size="sm"
               color="grayscale"
               onClick={() => handleButtonGroup(index)}
-              role="tab"
-              isSelected={selectedButtonGroup[index] || false}
+              isPressed={selectedButtonGroup[index] || false}
               disabled={disabled}
             >
               {content}

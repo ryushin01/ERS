@@ -8,7 +8,7 @@
             @apply bg-ers-grayscale-0;
         }
 
-        &[aria-selected="true"] {
+        &[aria-pressed="true"] {
             @apply text-ers-main-100;
 
             &::after {
@@ -29,11 +29,11 @@
             }
         }
 
-        &[aria-selected="false"] {
+        &[aria-pressed="false"] {
             @apply border-r-0;
         }
 
-        /*&[aria-selected="true"] {*/
+        /*&[aria-pressed="true"] {*/
         /*    @apply -ml-1 border-ers-main-100 text-ers-main-100;*/
 
         /*    & + button {*/

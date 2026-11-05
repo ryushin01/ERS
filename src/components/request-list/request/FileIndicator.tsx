@@ -31,7 +31,7 @@ export default function FileIndicator({ total, count }: FileIndicatorProps) {
         </Typography>
         <Typography
           kind={isDesktop ? "headline-small" : "body-large"}
-          className="text-ers-grayscale-80"
+          className="text-ers-grayscale-90"
         >
           /{total}
         </Typography>

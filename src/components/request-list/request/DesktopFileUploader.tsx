@@ -286,15 +286,13 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
                 이곳에 파일을 끌어다 놓거나, 파일 선택 버튼으로 업로드하세요. <br />* 업로드 가능한
                 파일 형식: jpg, jpeg, png
               </Typography>
-              <Button
-                shape="solid"
-                size="md"
-                color="main60"
-                icon={<Image src={PlusWhiteIcon} alt="파일 추가 아이콘" width={20} height={20} />}
-                iconPosition="right"
-              >
-                파일 선택
-              </Button>
+              {/* 업로드 영역 전체가 버튼(role="button")이므로, 안의 "파일 선택"은 버튼 모양만 낸 글자로 둡니다. (버튼 안 버튼 방지) */}
+              <span className="_text-button _dragger-select py-3 rounded-lg bg-ers-main-60 text-ers-grayscale-0">
+                <Typography kind="title-small">파일 선택</Typography>
+                <span className="pl-1">
+                  <Image src={PlusWhiteIcon} alt="" width={20} height={20} />
+                </span>
+              </span>
             </Dragger>
 
             <DesktopFileList fileList={fileList} handleRemove={handleRemove} />

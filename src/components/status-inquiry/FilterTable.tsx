@@ -247,6 +247,7 @@ export default function FilterTable({ isDesktop, setFilters, rqstNo }: definePro
                 <td>
                   <Select
                     id="statCd"
+                    ariaLabel="진행상태"
                     name="statCd"
                     selectSize="sm"
                     options={STATUS_OPTION}
@@ -283,6 +284,7 @@ export default function FilterTable({ isDesktop, setFilters, rqstNo }: definePro
 
                   <Select
                     id="searchType"
+                    ariaLabel="조회기간 기준"
                     name="searchType"
                     shape={isDesktop ? "none" : "default"}
                     selectSize={isDesktop ? "md" : "sm"}
