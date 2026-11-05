@@ -174,10 +174,12 @@ pnpm run dev
 | 폼 → 요청 내용 | `CreateForm`·`DetailForm`·`DesktopFileUploader`·`MobileFileUploader`·`RegistrationInformation`·`ReasonModals`(반려·진행취소) 테스트 | 폼에 입력하고 제출했을 때 서버로 가는 요청(JSON·첨부 파일)이 입력값과 정확히 같은지, 연속 클릭에도 한 번만 전송되는지 |
 | 공통 동작 | `Pagination`·`TabGroup`·`LoginForm`·`HeaderRightArea`·`AccountLayer`·`DrawerContent`·`useLogout`·`useFileUpload` 테스트 | 페이지 이동, 탭 키보드 조작, 로그인, 헤더 의뢰번호 검색(Enter·버튼·없는 번호), 계정 메뉴 닫기와 초점, 비밀번호 변경, 로그아웃(데모·API·실패), 파일 개수·용량 제한 |
 | 검색 조건 | `status-inquiry/List`·`admin/registration/FilterTable`·`admin/assign/Main` 테스트 | 의뢰번호·진행상태·접수번호·채무자·기간 검색과 초기화, 헤더 검색 후 재검색, 한 페이지 개수와 쪽수, 배정관리 탭 |
-| 스토리 | 모든 `*.stories.tsx` (`pnpm run test:storybook`) | 스토리 252개를 실제 브라우저에서 렌더링, 접근성 위반(axe) 검사 (스토리의 첫 화면 기준이라 레이아웃 잘림은 잡지 못함) |
+| 오류 화면 | `app/error.test.tsx` | 앱 전체 오류 화면의 다시 시도, 사용자 유형별 홈 이동 |
+| 스토리 | 모든 `*.stories.tsx` (`pnpm run test:storybook`) | 스토리 254개를 실제 브라우저에서 렌더링, 접근성 위반(axe) 검사 (스토리의 첫 화면 기준이라 레이아웃 잘림은 잡지 못함) |
 | E2E | `e2e/` (`pnpm run test:e2e`) | 아래 [E2E 테스트](#e2e-테스트) 참고 |
 | 속성 기반 | `utils/amountUtil.test.ts`, `utils/dateUtil.test.ts` | [fast-check](https://fast-check.dev)로 임의 입력 수천 건을 생성해 금액·날짜 변환 규칙이 항상 지켜지는지 (예: 금액 표시 → 숫자 변환 시 원래 값, 모든 시간대에서 같은 날짜) |
 
+- 오류 화면: 페이지별 `CustomErrorBoundary`가 먼저 받고, 그 바깥이나 바운더리가 없는 페이지의 오류는 `app/error.tsx`, 루트 레이아웃 오류는 `app/global-error.tsx`가 받습니다. 없는 주소는 `app/not-found.tsx`입니다.
 - 화면 통합 테스트는 `src/test/renderWithProviders.tsx`(QueryClient·jotai Provider, PC 화면 `matchMedia`)를 쓰고, `next/navigation`은 테스트 파일에서 `vi.mock`으로 대신합니다.
 - tsconfig의 alias를 그대로 쓸 수 있습니다(`vite-tsconfig-paths`).
 - 서버 코드(`middleware.ts` 등)를 테스트할 때는 파일 맨 위에 `// @vitest-environment node`를 적습니다.
