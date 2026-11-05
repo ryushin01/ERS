@@ -5,6 +5,7 @@ import {
   collectPageProblems,
   findBrokenImages,
   login,
+  measureLayout,
   PAGES,
   settle,
   type UserType,
@@ -75,6 +76,9 @@ test.describe("열린 상태", () => {
     await settle(page);
 
     expect(await axeViolations(page, '[role="dialog"]')).toEqual([]);
+    const { cutHeaders, cutCells } = await measureLayout(page);
+    expect(cutHeaders).toEqual([]);
+    expect(cutCells).toEqual([]);
   });
 
   test("달력", async ({ page }) => {

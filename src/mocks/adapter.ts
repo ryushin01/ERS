@@ -198,12 +198,37 @@ const routes: Route[] = [
   {
     method: "post",
     pattern: /^\/api\/client\/request$/,
-    handler: () => ok(null, "제출이 완료되었습니다."),
+    // 전자등기 의뢰: 미배정(등기의뢰) 건으로 추가. 나머지 정보는 관리자가 배정할 때 입력합니다.
+    handler: (_p, _m, body) => {
+      createRegistration({
+        rqstNo: nextRequestNo(),
+        execDt: toDashedDate(body.execDt) || dateFromToday(0),
+        seDt: "",
+        dbtrNm: "",
+        bndMaxAmt: 0,
+        rdnmAddr: "",
+        lotnumAddr: "",
+        bldg: "",
+        unit: "",
+      });
+      return ok(null, "제출이 완료되었습니다.");
+    },
   },
   {
     method: "patch",
     pattern: /^\/api\/client\/request$/,
-    handler: () => ok(null, "수정이 완료되었습니다."),
+    // 의뢰 수정: 대출실행일을 고치고, 보완필요 건은 다시 등기의뢰로 돌아갑니다.
+    handler: (_p, _m, body) => {
+      const target = findRegistration(String(body.rqstNo ?? ""));
+      if (target) {
+        target.execDt = toDashedDate(body.execDt) || target.execDt;
+        if (target.statCd === PROC_STAT_CD.SUPPLEMENT) {
+          target.procRsnCnts = "";
+          changeStatus(target, PROC_STAT_CD.REQUEST);
+        }
+      }
+      return ok(null, "수정이 완료되었습니다.");
+    },
   },
 
   /* 금융기관 - 전자등기 */
@@ -596,10 +621,12 @@ const parseRequest = (config: InternalAxiosRequestConfig) => {
   return { path, params };
 };
 
-/* JSON 문자열 또는 multipart(FormData의 req·reqVo JSON 필드) 요청 본문을 객체로 바꿉니다. */
+/* JSON 문자열 또는 multipart(FormData의 req·reqVo·rqstCrtReq JSON 필드, 그 외 문자열 필드) 요청 본문을 객체로 바꿉니다. */
 const parseBody = (data: unknown): Body => {
   if (typeof FormData !== "undefined" && data instanceof FormData) {
-    return parseBody(data.get("req") ?? data.get("reqVo") ?? "");
+    const json = data.get("req") ?? data.get("reqVo") ?? data.get("rqstCrtReq");
+    if (json) return parseBody(json);
+    return Object.fromEntries([...data.entries()].filter(([, value]) => typeof value === "string"));
   }
   if (typeof data === "string") {
     try {

@@ -125,6 +125,37 @@ describe("mockAdapter (데모 모드 목업 API)", () => {
     });
   });
 
+  it("금융기관이 전자등기를 의뢰하면 새 의뢰번호의 미배정 건으로 관리자 목록에 추가된다", async () => {
+    const request = await loadAdapter();
+    const form = new FormData();
+    form.append("execDt", "20991231");
+    form.append("multipartFiles", new File(["x"], "계약서.png"));
+
+    await request("post", "/api/client/request", form);
+
+    const { data } = await request(
+      "get",
+      "/api/admin/match/list?tabSelection=00&pageNum=1&pageSize=50&sortOrder=00",
+    );
+    const created = data.mtchList.find((item: { rqstNo: string }) => item.rqstNo === "DEMO-002401");
+    expect(created).toMatchObject({ execDt: "2099-12-31", statCd: PROC_STAT_CD.REQUEST });
+  });
+
+  it("보완필요 건을 수정해 제출하면 등기의뢰로 돌아가고 사유가 지워진다", async () => {
+    const request = await loadAdapter();
+    const form = new FormData();
+    form.append("rqstCrtReq", JSON.stringify({ rqstNo: "DEMO-002399", execDt: "20991231" }));
+
+    await request("patch", "/api/client/request", form);
+
+    const { data } = await request("get", "/api/client/request/info?rqstno=DEMO-002399");
+    expect(data).toMatchObject({
+      statCd: PROC_STAT_CD.REQUEST,
+      execDt: "2099-12-31",
+      procRsnCnts: "",
+    });
+  });
+
   it("변경 내용은 sessionStorage에 저장되어 새로고침(모듈 재로딩) 후에도 유지된다", async () => {
     let request = await loadAdapter();
     const { data: list } = await request(

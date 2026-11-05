@@ -42,3 +42,4 @@ storybook-static/
 # E2E 테스트 결과물
 test-results/
 playwright-report/
+coverage/

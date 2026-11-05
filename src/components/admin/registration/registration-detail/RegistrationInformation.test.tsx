@@ -81,6 +81,20 @@ async function fill() {
 }
 
 describe("등기접수 정보 등록 → 요청 내용 (통합)", () => {
+  it("상세 응답이 오기 전에 고른 파일은 응답이 와도 지워지지 않는다", async () => {
+    const { REGISTRATIONS } = await import("@/mocks/data");
+    const target = REGISTRATIONS.find((item) => item.statCd === PROC_STAT_CD.EXECUTION)!;
+    renderWithProviders(
+      <RegistrationInformation requestNo={target.rqstNo} onClose={vi.fn()} isDesktop />,
+    );
+
+    const receipt = new File(["receipt"], "먼저고른접수증.png", { type: "image/png" });
+    await userEvent.upload(document.getElementById("fileInput") as HTMLInputElement, receipt);
+    await screen.findByText(target.dbtrNm, {}, { timeout: 3000 });
+
+    expect(screen.getByText(/먼저고른접수증/)).toBeInTheDocument();
+  });
+
   it("입력한 법원·등기소·접수번호와 접수증 파일을 그대로 보낸다", async () => {
     const { target, receipt } = await fill();
 

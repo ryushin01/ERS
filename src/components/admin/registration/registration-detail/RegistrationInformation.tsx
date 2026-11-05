@@ -257,26 +257,24 @@ export default function RegistrationInformation({
     });
   };
 
-  //기 등록한 파일 정보 조회 시 fileList에 추가
+  // 기 등록한 정보를 받으면 폼에 채움.
+  // 응답이 늦거나 창으로 돌아와 다시 조회해도 사용자가 이미 입력한 값과 새로 고른 파일은 지우지 않음
   useEffect(() => {
-    setSelectJudtCourt(data?.judtCourtCd);
-    setSelectRegistryOffice(data?.regrCd);
-    setAcceptNo(data?.acptNo);
-    setMngrDlvrCnts(data?.mngrDlvrCnts);
+    setSelectJudtCourt((prev) => prev || data?.judtCourtCd);
+    setSelectRegistryOffice((prev) => prev || data?.regrCd);
+    setAcceptNo((prev) => prev || data?.acptNo);
+    setMngrDlvrCnts((prev) => prev || data?.mngrDlvrCnts);
 
-    setFileList([]);
-    data?.fileList?.map((file: FileData) => {
-      const fileData: FileData = {
-        uid: `${file.seq}_${file.filIdx}`,
-        seq: file.seq,
-        filIdx: file.filIdx,
-        attcFilNm: file.attcFilNm,
-        filSize: file.filSize,
-        src: file.src,
-        file: undefined,
-      };
-      setFileList((prev) => [...prev, fileData]);
-    });
+    const savedFiles: FileData[] = (data?.fileList ?? []).map((file: FileData) => ({
+      uid: `${file.seq}_${file.filIdx}`,
+      seq: file.seq,
+      filIdx: file.filIdx,
+      attcFilNm: file.attcFilNm,
+      filSize: file.filSize,
+      src: file.src,
+      file: undefined,
+    }));
+    setFileList((prev) => [...savedFiles, ...prev.filter((file) => file.file)]);
   }, [data]);
 
   //첨부파일 추가 시 개수 및 용량 체크
@@ -347,6 +345,8 @@ export default function RegistrationInformation({
                         {requestNo}
                       </Typography>
                     </td>
+                  </tr>
+                  <tr>
                     <th>
                       <Typography kind={isDesktop ? "body-large" : "body-small"} isBold={true}>
                         채무자

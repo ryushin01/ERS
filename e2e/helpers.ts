@@ -151,30 +151,33 @@ export function measureLayout(page: Page): Promise<LayoutReport> {
 
     const cutHeaders = new Set<string>();
     const cutCells = new Set<string>();
-    document.querySelectorAll<HTMLElement>("main th, main td").forEach((cell) => {
-      const text = cell.textContent?.trim();
-      if (!text || cell.querySelector("input, select, button, textarea")) return;
-      // 공지 표의 제목 칸은 긴 제목을 말줄임으로 표시하는 것이 정상 동작
-      if (cell.closest("._col-2-type") && !cell.previousElementSibling) return;
+    document
+      .querySelectorAll<HTMLElement>('main th, main td, [role="dialog"] th, [role="dialog"] td')
+      .forEach((cell) => {
+        const text = cell.textContent?.trim();
+        if (!text || cell.querySelector("input, select, button, textarea")) return;
+        // 공지 표의 제목 칸은 긴 제목을 말줄임으로 표시하는 것이 정상 동작
+        if (cell.closest("._col-2-type") && !cell.previousElementSibling) return;
 
-      const range = document.createRange();
-      range.selectNodeContents(cell);
-      const style = getComputedStyle(cell);
-      const available =
-        cell.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-      const isCutInside = [...cell.querySelectorAll("span")].some(
-        (span) =>
-          span.scrollWidth > span.clientWidth + 1 && getComputedStyle(span).overflow !== "visible",
-      );
+        const range = document.createRange();
+        range.selectNodeContents(cell);
+        const style = getComputedStyle(cell);
+        const available =
+          cell.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+        const isCutInside = [...cell.querySelectorAll("span")].some(
+          (span) =>
+            span.scrollWidth > span.clientWidth + 1 &&
+            getComputedStyle(span).overflow !== "visible",
+        );
 
-      if (
-        range.getBoundingClientRect().width > available + 1 ||
-        cell.scrollWidth > cell.clientWidth + 1 ||
-        isCutInside
-      ) {
-        (cell.tagName === "TH" ? cutHeaders : cutCells).add(text);
-      }
-    });
+        if (
+          range.getBoundingClientRect().width > available + 1 ||
+          cell.scrollWidth > cell.clientWidth + 1 ||
+          isCutInside
+        ) {
+          (cell.tagName === "TH" ? cutHeaders : cutCells).add(text);
+        }
+      });
 
     return {
       overflow: document.documentElement.scrollWidth - window.innerWidth,

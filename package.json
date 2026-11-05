@@ -1,6 +1,6 @@
 {
   "name": "ers",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "private": true,
   "scripts": {
     "dev": "next dev -p 4000 --experimental-https",
@@ -19,7 +19,8 @@
     "build:app": "next build",
     "test:storybook": "vitest run --project storybook",
     "test:e2e": "playwright test --project=chromium",
-    "screenshots": "playwright test --project=screenshots"
+    "screenshots": "playwright test --project=screenshots",
+    "test:coverage": "vitest run --project unit --coverage"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.104.5",
@@ -57,6 +58,7 @@
     "@vitejs/plugin-react": "^5.2.0",
     "@vitest/browser": "4.1.12",
     "@vitest/browser-playwright": "4.1.12",
+    "@vitest/coverage-v8": "4.1.12",
     "eslint": "^9.39.5",
     "eslint-config-next": "15.5.28",
     "eslint-config-prettier": "^9.1.2",

@@ -10,7 +10,7 @@ import { Drawer } from "@components/drawer";
 import { Form, SearchInput } from "@components/form";
 import { MEMB_GB_CD, MembGbCd } from "@constants/auth";
 import { appURI } from "@constants/env";
-import { AD_REGISTRATION, STATUS_INQUIRY } from "@constants/path";
+import { AD_REGISTRATION, FI_STATUS_INQUIRY } from "@constants/path";
 import { useDisclosure, useLogout, useResponsive } from "@hooks";
 import { LogoutIcon } from "@icons14";
 import { MenuIcon } from "@icons24";
@@ -66,7 +66,7 @@ export default function HeaderRightArea() {
     queryFn: async () => {
       const response = await getSearchBankRgstData(searchRqstNo);
       if (response.data) {
-        handleSearchSuccess(STATUS_INQUIRY);
+        handleSearchSuccess(FI_STATUS_INQUIRY);
       } else {
         handleSearchFail();
       }
@@ -101,7 +101,7 @@ export default function HeaderRightArea() {
   };
 
   const handleSearchSuccess = (movePath: string) => {
-    if (movePath === STATUS_INQUIRY) {
+    if (movePath === FI_STATUS_INQUIRY) {
       sessionStorage.setItem("bank-rqstno", searchRqstNo);
     } else if (movePath === AD_REGISTRATION) {
       sessionStorage.setItem("admin-rqstno", searchRqstNo);
@@ -124,14 +124,6 @@ export default function HeaderRightArea() {
 
   const handleSearch = () => {
     if (!searchRqstNo) return;
-
-    if (searchRqstNo && searchRqstNo.length < 13) {
-      openToast({
-        message: "의뢰번호 전체를 입력해주세요.",
-        position: "top",
-      });
-      return;
-    }
 
     // 접속한 멤버가 금융기관일때 의뢰번호 조회 api 호출
     if (authInfo.membGbCd === MEMB_GB_CD.FINANCIAL) {
@@ -158,8 +150,7 @@ export default function HeaderRightArea() {
           <SearchInput
             name="search"
             shape="xl"
-            onClick={handleSearch}
-            onBlur={(e) => setSearchRqstNo(e.target.value)}
+            onChange={(e) => setSearchRqstNo(e.target.value.trim())}
           />
         </Form>
       )}

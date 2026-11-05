@@ -41,6 +41,7 @@ const eslintConfig = [
       "public/storybook/**",
       "storybook-static/**",
       "test-results/**",
+      "coverage/**",
       "playwright-report/**",
     ],
   },

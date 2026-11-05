@@ -6,6 +6,20 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
+    // pnpm test:coverage. 실행 코드만 측정합니다. (스토리·테스트·타입·목업 제외)
+    coverage: {
+      provider: "v8",
+      reporter: ["text-summary", "html"],
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: [
+        "src/**/*.stories.tsx",
+        "src/**/*.test.{ts,tsx}",
+        "src/stories/**",
+        "src/test/**",
+        "src/types/**",
+        "src/mocks/**",
+      ],
+    },
     projects: [
       /*
        * 단위·통합 테스트 (pnpm test, 커밋 전 검사)

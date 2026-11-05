@@ -1,7 +1,7 @@
 # ERS - 전자등기 관리 시스템
 
 [![CI](https://github.com/ryushin01/ERS/actions/workflows/ci.yml/badge.svg)](https://github.com/ryushin01/ERS/actions/workflows/ci.yml)
-![version](https://img.shields.io/badge/version-2.0.3-113662)
+![version](https://img.shields.io/badge/version-2.0.4-113662)
 ![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)
 
 금융기관·관리자용 부동산 전자등기 관리 웹 애플리케이션의 프론트엔드입니다. **ERS**는 **E**lectronic **R**egistration **S**ystem의 줄임말입니다.
@@ -97,7 +97,7 @@ pnpm run dev    # https://localhost:4000
 .storybook/      Storybook 설정
 docker/          개발·운영 Dockerfile
 docs/            문서
-e2e/             E2E 테스트 (레이아웃·접근성·키보드·Storybook)
+e2e/             E2E 테스트 (레이아웃·접근성·키보드·업무 흐름·Storybook)
 public/          아이콘, 이미지, 로고
 src/
 ├─ app/          라우팅 (금융기관·관리자·법무대리인)
