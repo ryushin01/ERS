@@ -19,7 +19,15 @@ export default defineConfig({
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  projects: [
+    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
+    // README 스크린샷 촬영 (pnpm screenshots). 검사가 아니라서 평소 E2E에는 포함하지 않습니다.
+    {
+      name: "screenshots",
+      testMatch: "readme.screenshots.ts",
+      use: { ...devices["Desktop Chrome"] },
+    },
+  ],
   webServer: {
     command: `pnpm exec next start -p ${PORT}`,
     url: `http://localhost:${PORT}`,

@@ -18,7 +18,8 @@
     "build-storybook": "storybook build -o public/storybook --quiet",
     "build:app": "next build",
     "test:storybook": "vitest run --project storybook",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test --project=chromium",
+    "screenshots": "playwright test --project=screenshots"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.104.5",

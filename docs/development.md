@@ -46,6 +46,7 @@ pnpm run dev
 | `pnpm test` | 단위 테스트 (Vitest, jsdom) |
 | `pnpm run test:watch` | 단위 테스트 감시 모드 (파일을 저장하면 다시 실행) |
 | `pnpm run test:e2e` | E2E 테스트: 프로덕션 빌드를 실행해 실제 화면을 검사 (먼저 `pnpm run build` 필요, 처음 한 번 `pnpm exec playwright install chromium` 필요) |
+| `pnpm run screenshots` | README 스크린샷 다시 찍기 (먼저 `pnpm run build` 필요) |
 | `pnpm run test:storybook` | 스토리 테스트: 모든 스토리를 실제 브라우저(Chromium)에서 렌더링하고 접근성 검사 (처음 한 번 `pnpm exec playwright install chromium` 필요) |
 
 ## 프로젝트 구조
@@ -196,5 +197,6 @@ pnpm run test:e2e
 | `e2e/storybook.spec.ts` | Storybook 바로 가기 전환·도착 애니메이션, 뒤로 가기, 로그인 상태 접근, 동작 줄이기 설정 |
 
 - 화면을 추가하면 `e2e/helpers.ts`의 `PAGES`에 경로를 추가합니다.
+- README의 스크린샷은 `pnpm run screenshots`로 다시 찍습니다. 먼저 `pnpm run build`가 필요하고, 결과는 `docs/images`에 저장됩니다. 평소 E2E에는 포함되지 않습니다. README의 이미지 목록이 스크립트(`e2e/readme.screenshots.ts`)와 다르면 실패합니다.
 - 서버는 테스트가 자동으로 띄웁니다(4100번 포트). 코드를 바꾼 뒤에는 다시 빌드해야 반영됩니다.
 - `pnpm run dev`와 같은 `.next` 폴더를 쓰므로, 개발 서버를 켠 채로 빌드하거나 E2E를 돌리지 않습니다.
