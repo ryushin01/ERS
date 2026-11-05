@@ -8,6 +8,32 @@
 
 > **프로젝트 상태:** 진행이 중단된 프로토타입을 정리한 **포트폴리오용 데모**입니다. 백엔드 없이 목업 API로 동작하고, 화면의 모든 데이터는 가상 데이터입니다. 고객사 정보·연락처·로고·샘플 문서는 제거하거나 예시 값으로 바꾸었습니다.
 
+## 화면
+
+화면의 기관, 채무자, 의뢰, 주소는 모두 목업 데이터입니다.
+
+### 금융기관
+
+| 홈 | 의뢰목록 |
+|---|---|
+| ![오늘 실행·진행중·접수완료 건수 배너와 실시간 등기현황 표](docs/images/financial-home.jpg) | ![미배정, 배정완료, 진행보류, 진행취소 탭과 의뢰 목록](docs/images/financial-request-list.jpg) |
+
+| 등기자료 팝업 | 로그인 |
+|---|---|
+| ![가상 근저당권 설정계약서 이미지와 기본 정보를 보여 주는 팝업](docs/images/financial-registration-data.jpg) | ![사용자 유형 선택, 로그인 폼, Storybook 바로 가기 버튼](docs/images/login.jpg) |
+
+### 관리자
+
+| 등기관리 | 전자등기 배정 |
+|---|---|
+| ![진행상태별 탭과 건수, 검색 조건, 등기 목록 표](docs/images/admin-registration.jpg) | ![등기자료 이미지와 배정 정보 입력 표](docs/images/admin-assign-detail.jpg) |
+
+### 모바일과 Storybook
+
+| 모바일 홈 | 모바일 의뢰목록 | Storybook |
+|---|---|---|
+| <img src="docs/images/mobile-home.jpg" alt="모바일 홈의 건수 카드와 하단 메뉴" width="240"> | <img src="docs/images/mobile-request-list.jpg" alt="모바일 의뢰목록의 탭과 카드형 표" width="240"> | ![컴포넌트 목록과 금융기관 홈 스토리를 보여 주는 Storybook](docs/images/storybook.jpg) |
+
 ## 주요 기능
 
 **금융기관**

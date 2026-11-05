@@ -186,3 +186,10 @@
         }
     }
 }
+
+/* 인사말과 오른쪽 건수 카드가 한 줄에 들어가지 않는 폭: 글자 중간에서 꺾이지 않도록 인사말을 두 줄로 표시 */
+@media screen and (min-width: 1367px) and (max-width: 1799px) {
+    ._banner-container ._banner-left-content ._banner-text {
+        @apply flex-col gap-y-0 whitespace-nowrap;
+    }
+}

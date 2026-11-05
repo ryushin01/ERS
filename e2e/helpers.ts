@@ -50,6 +50,8 @@ export type LayoutReport = {
   clippedControls: string[];
   /** 두 줄 이상으로 꺾인 탭 이름 */
   wrappedTabs: string[];
+  /** 글자 중간에서 줄이 꺾인 홈 인사말 */
+  wrappedGreeting: string[];
   /** 사라질 만큼 좁아진 입력칸 */
   collapsedControls: string[];
   /** 콘텐츠 모델에 어긋난 요소 중첩 (HTML Living Standard, KWCAG 마크업 오류 방지) */
@@ -97,6 +99,10 @@ export function measureLayout(page: Page): Promise<LayoutReport> {
         clippedControls.add(name);
       }
     });
+
+    const wrappedGreeting = [...document.querySelectorAll<HTMLElement>("._banner-text > span")]
+      .filter((text) => text.getClientRects().length > 1 || text.offsetHeight > 60)
+      .map((text) => text.textContent ?? "");
 
     const collapsedControls = [...document.querySelectorAll<HTMLElement>("main input, main select")]
       .filter((control) => {
@@ -174,6 +180,7 @@ export function measureLayout(page: Page): Promise<LayoutReport> {
       overflow: document.documentElement.scrollWidth - window.innerWidth,
       clippedControls: [...clippedControls],
       wrappedTabs,
+      wrappedGreeting,
       collapsedControls,
       invalidNesting: [...invalidNesting],
       cutHeaders: [...cutHeaders],

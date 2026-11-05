@@ -29,6 +29,7 @@ for (const width of WIDTHS) {
         expect.soft(report.collapsedControls, `${path} 사라진 입력칸`).toEqual([]);
         expect.soft(report.invalidNesting, `${path} 잘못된 요소 중첩`).toEqual([]);
         if (width >= 375) {
+          expect.soft(report.wrappedGreeting, `${path} 꺾인 인사말`).toEqual([]);
           expect.soft(report.cutHeaders, `${path} 잘린 항목 이름`).toEqual([]);
         }
         if (width >= 1024) {
