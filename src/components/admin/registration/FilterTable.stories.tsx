@@ -17,7 +17,7 @@ const INITIAL: filterData = {
 
 /** 등기관리 검색 조건: 의뢰번호, 기간 기준(대출실행일 등), 기간 */
 const meta = {
-  title: "Admin/Registration/FilterTable",
+  title: "Pages/Admin/Registration/FilterTable",
   component: FilterTable,
   tags: ["autodocs"],
   parameters: { auth: "admin" },

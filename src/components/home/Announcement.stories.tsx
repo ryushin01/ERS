@@ -8,7 +8,7 @@ import type { HomeNoticeListResponse } from "@types";
 
 /** 홈의 공지사항 표 (긴급 공지는 강조 표시) */
 const meta = {
-  title: "Financial/Home/Announcement",
+  title: "Pages/Financial/Home/Announcement",
   component: Announcement,
   tags: ["autodocs"],
   parameters: { auth: "financial" },

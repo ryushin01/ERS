@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 금융기관 의뢰목록: 미배정·배정완료·진행보류·진행취소 탭 */
 const meta = {
-  title: "Financial/RequestList/Main",
+  title: "Pages/Financial/RequestList/Main",
   component: Main,
   tags: ["autodocs"],
   parameters: {

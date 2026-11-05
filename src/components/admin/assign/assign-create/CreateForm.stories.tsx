@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
  * 필수 항목을 비운 채 등록하면 오류 표시가 됩니다.
  */
 const meta = {
-  title: "Admin/AssignCreate/CreateForm",
+  title: "Pages/Admin/AssignCreate/CreateForm",
   component: CreateForm,
   tags: ["autodocs"],
   parameters: {

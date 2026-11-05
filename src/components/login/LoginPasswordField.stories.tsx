@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 로그인 비밀번호 입력칸 (눈 아이콘으로 보이기·숨기기) */
 const meta = {
-  title: "Login/LoginPasswordField",
+  title: "Patterns/Login/LoginPasswordField",
   component: LoginPasswordField,
   tags: ["autodocs"],
   args: {

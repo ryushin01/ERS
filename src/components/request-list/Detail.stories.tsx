@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 보완필요 팝업의 오른쪽 영역: 의뢰 정보, 보완 사유, 진행보류·수정 버튼 */
 const meta = {
-  title: "Financial/RequestList/Detail",
+  title: "Pages/Financial/RequestList/Detail",
   component: Detail,
   tags: ["autodocs"],
   parameters: { auth: "financial", ...routeParameters("/financial/request-list") },

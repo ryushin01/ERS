@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 검색 조건(FilterTable)과 결과 표·페이지 이동 */
 const meta = {
-  title: "Financial/StatusInquiry/List",
+  title: "Pages/Financial/StatusInquiry/List",
   component: List,
   tags: ["autodocs"],
   parameters: { auth: "financial", ...routeParameters("/financial/status-inquiry") },

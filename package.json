@@ -1,6 +1,6 @@
 {
   "name": "ers",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "private": true,
   "scripts": {
     "dev": "next dev -p 4000 --experimental-https",
@@ -70,6 +70,7 @@
     "playwright": "1.64.1",
     "postcss": "^8.5.32",
     "prettier": "^3",
+    "remark-gfm": "4.0.1",
     "storybook": "10.6.3",
     "tailwindcss": "^3.4.19",
     "typescript": "~5.7.3",

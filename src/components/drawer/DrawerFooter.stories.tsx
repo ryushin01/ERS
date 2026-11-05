@@ -6,7 +6,7 @@ import "@styles/drawer.css";
 
 /** 서비스 이용 문의 연락처 */
 const meta = {
-  title: "Drawer/DrawerFooter",
+  title: "Components/Overlays/DrawerFooter",
   component: DrawerFooter,
   tags: ["autodocs"],
   decorators: [

@@ -9,7 +9,7 @@ const rqstNo = rqstNoByStatus(PROC_STAT_CD.REQUEST);
 
 /** 배정 화면의 본문: 등기자료 이미지(추가 업로드) + 의뢰 정보 표 */
 const meta = {
-  title: "Admin/AssignDetail/DetailForm",
+  title: "Pages/Admin/AssignDetail/DetailForm",
   component: DetailForm,
   tags: ["autodocs"],
   parameters: {

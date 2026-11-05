@@ -8,7 +8,7 @@ import Button from "./Button";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 const meta = {
-  title: "Button/Button",
+  title: "Components/Actions/Button",
   component: Button,
   tags: ["autodocs"],
   args: {

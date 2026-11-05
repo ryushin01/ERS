@@ -11,7 +11,7 @@ import "@styles/login.css";
  * 데모 모드에서는 입력 없이 로그인 버튼만 눌러도 선택한 유형으로 로그인합니다. (법무대리인은 준비 중 안내)
  */
 const meta = {
-  title: "Login/LoginForm",
+  title: "Patterns/Login/LoginForm",
   component: LoginForm,
   tags: ["autodocs"],
   parameters: routeParameters("/"),

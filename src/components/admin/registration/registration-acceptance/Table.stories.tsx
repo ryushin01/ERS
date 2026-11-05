@@ -9,7 +9,7 @@ const requestNo = rqstNoByStatus(PROC_STAT_CD.REVIEWING);
 
 /** 등기접수증 정보 표와 승인·반려 버튼 */
 const meta = {
-  title: "Admin/RegistrationAcceptance/Table",
+  title: "Pages/Admin/RegistrationAcceptance/Table",
   component: Table,
   tags: ["autodocs"],
   parameters: {

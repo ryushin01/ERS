@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 현재 경로(usePathname)로 메뉴 위치를 표시합니다. */
 const meta = {
-  title: "Common/Breadcrumb",
+  title: "Components/Navigation/Breadcrumb",
   component: Breadcrumb,
   tags: ["autodocs"],
 } satisfies Meta<typeof Breadcrumb>;

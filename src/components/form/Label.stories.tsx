@@ -4,7 +4,7 @@ import Label from "./Label";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 const meta = {
-  title: "Form/Label",
+  title: "Components/Inputs/Label",
   component: Label,
   tags: ["autodocs"],
   args: { htmlFor: "story-label", labelText: "채무자", required: false, labelSize: "sm" },

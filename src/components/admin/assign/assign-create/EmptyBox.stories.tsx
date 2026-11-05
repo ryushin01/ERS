@@ -6,7 +6,7 @@ import "@styles/responsive-swiper.css";
 
 /** 업로드한 등기자료 이미지가 없을 때의 자리 표시 */
 const meta = {
-  title: "Admin/AssignCreate/EmptyBox",
+  title: "Pages/Admin/AssignCreate/EmptyBox",
   component: EmptyBox,
   tags: ["autodocs"],
   decorators: [

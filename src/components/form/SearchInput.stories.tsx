@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 헤더의 의뢰번호 검색칸 */
 const meta = {
-  title: "Form/SearchInput",
+  title: "Components/Inputs/SearchInput",
   component: SearchInput,
   tags: ["autodocs"],
   args: { name: "searchRqstNo", placeholder: "의뢰번호 검색", onChange: fn(), onClick: fn() },

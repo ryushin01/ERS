@@ -6,7 +6,7 @@ import "@styles/login.css";
 
 /** 로그인 화면 하단의 사용 문의 안내 */
 const meta = {
-  title: "Login/LoginNotice",
+  title: "Patterns/Login/LoginNotice",
   component: LoginNotice,
   tags: ["autodocs"],
   args: { isDesktop: true },

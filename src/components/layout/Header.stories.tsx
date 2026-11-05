@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 로고와 (로그인 후) 의뢰번호 검색·계정 메뉴를 표시하는 상단 헤더 */
 const meta = {
-  title: "Layout/Header",
+  title: "Patterns/Layout/Header",
   component: Header,
   tags: ["autodocs"],
   parameters: { layout: "fullscreen" },

@@ -3,7 +3,7 @@ import ErrorMessage from "./ErrorMessage";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 const meta = {
-  title: "Form/ErrorMessage",
+  title: "Components/Inputs/ErrorMessage",
   component: ErrorMessage,
   tags: ["autodocs"],
   args: { children: "필수 입력 항목입니다." },

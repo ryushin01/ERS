@@ -13,7 +13,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
  * API 오류는 QueryCache·MutationCache의 onError에서 공통으로 토스트로 알립니다.
  */
 const meta = {
-  title: "Common/Provider",
+  title: "Patterns/Layout/Provider",
   component: Provider,
   tags: ["autodocs"],
   args: { children: null },

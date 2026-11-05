@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 현황조회 결과 표. 등기자료·등기접수증 버튼으로 상세 팝업을 엽니다. */
 const meta = {
-  title: "Financial/StatusInquiry/Table",
+  title: "Pages/Financial/StatusInquiry/Table",
   component: Table,
   tags: ["autodocs"],
   parameters: { auth: "financial" },

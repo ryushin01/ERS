@@ -13,7 +13,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
  * 열리면 대화상자로 포커스가 이동하고, ESC·배경 클릭·닫기 버튼으로 닫힙니다.
  */
 const meta = {
-  title: "Modal/Modal",
+  title: "Components/Overlays/Modal",
   component: Modal,
   tags: ["autodocs"],
   parameters: { docs: { story: { inline: false, height: "640px" } } },

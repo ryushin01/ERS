@@ -14,7 +14,7 @@ import "@styles/login.css";
  * 누르면 버튼 위치에서 화면이 펼쳐지고 컴포넌트 조각이 격자로 모인 뒤 Storybook으로 이동합니다.
  */
 const meta = {
-  title: "Login/StorybookLink",
+  title: "Patterns/Login/StorybookLink",
   component: StorybookLink,
   tags: ["autodocs"],
   args: { isDesktop: true },

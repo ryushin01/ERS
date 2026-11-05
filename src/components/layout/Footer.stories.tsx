@@ -3,7 +3,7 @@ import Footer from "./Footer";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 const meta = {
-  title: "Layout/Footer",
+  title: "Patterns/Layout/Footer",
   component: Footer,
   tags: ["autodocs"],
   parameters: { layout: "fullscreen" },

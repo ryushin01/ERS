@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 등기자료 팝업의 정보 영역 (관리자) */
 const meta = {
-  title: "Admin/Registration/RegistrationDataDetail",
+  title: "Pages/Admin/Registration/RegistrationDataDetail",
   component: RegistrationDataDetail,
   tags: ["autodocs"],
   parameters: { auth: "admin" },

@@ -3,7 +3,7 @@ import Badge from "./Badge";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 const meta = {
-  title: "Common/Badge",
+  title: "Components/Feedback/Badge",
   component: Badge,
   tags: ["autodocs"],
   args: { type: "number", colorType: "default", children: 12 },

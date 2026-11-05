@@ -10,7 +10,7 @@ const requestNo = rqstNoByStatus(PROC_STAT_CD.COMPLET);
 
 /** 등기접수증 상세 표시 영역 (금융기관·관리자 공통) */
 const meta = {
-  title: "Registration/RegistrationReceiptView",
+  title: "Patterns/Registration/RegistrationReceiptView",
   component: RegistrationReceiptView,
   tags: ["autodocs"],
   loaders: [async () => ({ detail: (await getRegistrationAcceptData(requestNo)).data?.data })],

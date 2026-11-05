@@ -23,7 +23,7 @@ function Bomb() {
 
 /** 하위 화면의 렌더링 오류를 잡아 오류 안내(Fallback)로 바꿔 보여 줍니다. */
 const meta = {
-  title: "Error/CustomErrorBoundary",
+  title: "Patterns/Error/CustomErrorBoundary",
   component: CustomErrorBoundary,
   tags: ["autodocs"],
   parameters: { layout: "fullscreen", ...routeParameters("/financial/home") },

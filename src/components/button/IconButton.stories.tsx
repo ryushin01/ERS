@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 아이콘만 있는 버튼. children은 화면에 보이지 않고 버튼 이름(aria-label)으로 쓰이므로 필수입니다. */
 const meta = {
-  title: "Button/IconButton",
+  title: "Components/Actions/IconButton",
   component: IconButton,
   tags: ["autodocs"],
   args: {

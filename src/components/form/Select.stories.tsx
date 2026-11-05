@@ -7,7 +7,7 @@ import Select from "./Select";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 const meta = {
-  title: "Form/Select",
+  title: "Components/Inputs/Select",
   component: Select,
   tags: ["autodocs"],
   args: {

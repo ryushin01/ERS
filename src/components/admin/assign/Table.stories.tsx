@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 배정완료·진행보류·진행취소 표 (등기자료 팝업 포함) */
 const meta = {
-  title: "Admin/Assign/Table",
+  title: "Pages/Admin/Assign/Table",
   component: Table,
   tags: ["autodocs"],
   parameters: { auth: "admin", ...routeParameters("/admin/assign") },

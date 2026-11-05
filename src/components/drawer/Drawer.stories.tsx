@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 모바일 헤더의 메뉴 버튼으로 여는 계정 드로어 (오른쪽에서 밀려 나옵니다) */
 const meta = {
-  title: "Drawer/Drawer",
+  title: "Components/Overlays/Drawer",
   component: Drawer,
   tags: ["autodocs"],
   parameters: {

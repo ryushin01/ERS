@@ -8,7 +8,7 @@ import type { HomeRegistrationListResponse } from "@types";
 
 /** 홈의 실시간 등기현황 표 */
 const meta = {
-  title: "Financial/Home/RegistrationStatus",
+  title: "Pages/Financial/Home/RegistrationStatus",
   component: RegistrationStatus,
   tags: ["autodocs"],
   parameters: { auth: "financial" },

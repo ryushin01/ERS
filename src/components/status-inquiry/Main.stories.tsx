@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 금융기관 현황조회: 검색 조건 + 결과 표 */
 const meta = {
-  title: "Financial/StatusInquiry/Main",
+  title: "Pages/Financial/StatusInquiry/Main",
   component: Main,
   tags: ["autodocs"],
   parameters: {

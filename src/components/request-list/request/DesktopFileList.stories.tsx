@@ -15,7 +15,7 @@ const FILES: FileData[] = [
 
 /** 업로드할 파일 목록과 전체 사용량. 항목마다 삭제할 수 있습니다. */
 const meta = {
-  title: "Financial/Request/DesktopFileList",
+  title: "Pages/Financial/Request/DesktopFileList",
   component: DesktopFileList,
   tags: ["autodocs"],
   args: { fileList: FILES, handleRemove: () => {} },

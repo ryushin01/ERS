@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import "@styles/drawer.css";
 
 const meta = {
-  title: "Drawer/DrawerHeader",
+  title: "Components/Overlays/DrawerHeader",
   component: DrawerHeader,
   tags: ["autodocs"],
   args: { onClose: fn() },

@@ -13,7 +13,7 @@ const loadTab = (tabSelection: string) => async () => ({
 
 /** 의뢰목록 표. 상태별 버튼(보완필요 사유·등기자료·수정 등)을 누르면 팝업이 열립니다. */
 const meta = {
-  title: "Financial/RequestList/Table",
+  title: "Pages/Financial/RequestList/Table",
   component: Table,
   tags: ["autodocs"],
   parameters: { auth: "financial", ...routeParameters("/financial/request-list") },

@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 등기관리 탭 하나의 목록 (검색 조건 + 정렬 + 표 + 페이지 이동) */
 const meta = {
-  title: "Admin/Registration/List",
+  title: "Pages/Admin/Registration/List",
   component: List,
   tags: ["autodocs"],
   parameters: { auth: "admin", ...routeParameters("/admin/registration") },

@@ -1,3 +1,5 @@
+import remarkGfm from "remark-gfm";
+
 import type { StorybookConfig } from "@storybook/nextjs-vite";
 
 /**
@@ -7,7 +9,15 @@ import type { StorybookConfig } from "@storybook/nextjs-vite";
  */
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(ts|tsx)"],
-  addons: ["@storybook/addon-docs", "@storybook/addon-a11y", "@storybook/addon-vitest"],
+  addons: [
+    {
+      name: "@storybook/addon-docs",
+      // MDX는 기본적으로 표 문법(GFM)을 해석하지 못하므로 remark-gfm을 연결합니다.
+      options: { mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } } },
+    },
+    "@storybook/addon-a11y",
+    "@storybook/addon-vitest",
+  ],
   framework: {
     name: "@storybook/nextjs-vite",
     options: {},

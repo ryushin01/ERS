@@ -9,7 +9,7 @@ const Cell = ({ children }: { children: string }) => (
 
 /** 12단 반응형 그리드. GridItem에 모바일·태블릿·PC별 칸 수를 지정합니다. */
 const meta = {
-  title: "Layout/Grid",
+  title: "Components/Layout/Grid",
   component: Grid,
   tags: ["autodocs"],
   render: (args) => (

@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 등기접수증 반려 사유 선택 ("기타"는 직접 입력) */
 const meta = {
-  title: "Admin/RegistrationStatus/RegistrationRejection",
+  title: "Pages/Admin/RegistrationStatus/RegistrationRejection",
   component: RegistrationRejection,
   tags: ["autodocs"],
   parameters: { auth: "admin", ...routeParameters("/admin/registration/registration-acceptance") },

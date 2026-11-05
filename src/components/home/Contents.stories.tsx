@@ -10,7 +10,7 @@ import "@styles/home.css";
 
 /** 홈 하단: 실시간 등기현황 + 공지사항 (데이터는 데모 목업 API에서 받아 전달) */
 const meta = {
-  title: "Financial/Home/Contents",
+  title: "Pages/Financial/Home/Contents",
   component: Contents,
   tags: ["autodocs"],
   parameters: { auth: "financial", ...routeParameters("/financial/home") },

@@ -5,7 +5,7 @@ import Pagination from "./Pagination";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 const meta = {
-  title: "Common/Pagination",
+  title: "Components/Navigation/Pagination",
   component: Pagination,
   tags: ["autodocs"],
   args: { total: 240, page: 1, limit: 10, pageCount: 10, setPage: () => {} },

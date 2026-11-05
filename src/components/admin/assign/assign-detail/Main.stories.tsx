@@ -14,7 +14,7 @@ const rqstNo = rqstNoByStatus(PROC_STAT_CD.REQUEST);
 
 /** 전자등기 배정: 등기자료 확인, 의뢰 정보 수정, 법무대리인 지정·보완요청·진행취소 */
 const meta = {
-  title: "Admin/AssignDetail/Main",
+  title: "Pages/Admin/AssignDetail/Main",
   component: Main,
   tags: ["autodocs"],
   parameters: {

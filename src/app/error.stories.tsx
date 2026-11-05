@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 개별 에러 바운더리가 없는 페이지에서 오류가 났을 때의 화면 */
 const meta = {
-  title: "Error/RouteError",
+  title: "Patterns/Error/RouteError",
   component: RouteError,
   tags: ["autodocs"],
   parameters: { layout: "fullscreen", ...routeParameters("/financial/home") },

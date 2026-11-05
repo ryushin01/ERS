@@ -6,7 +6,7 @@ import Checkbox from "./Checkbox";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 const meta = {
-  title: "Form/Checkbox",
+  title: "Components/Inputs/Checkbox",
   component: Checkbox,
   tags: ["autodocs"],
   args: { name: "id-saver", labelText: "아이디 저장", checked: false, onChange: fn() },

@@ -3,7 +3,7 @@ import PageIndicator from "./PageIndicator";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 const meta = {
-  title: "Common/PageIndicator",
+  title: "Components/Navigation/PageIndicator",
   component: PageIndicator,
   tags: ["autodocs"],
   args: { total: 124, page: 3, limit: 10 },

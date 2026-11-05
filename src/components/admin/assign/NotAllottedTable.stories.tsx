@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 미배정 표. 행을 누르면 전자등기 배정 화면으로 이동합니다. */
 const meta = {
-  title: "Admin/Assign/NotAllottedTable",
+  title: "Pages/Admin/Assign/NotAllottedTable",
   component: NotAllottedTable,
   tags: ["autodocs"],
   parameters: { auth: "admin", ...routeParameters("/admin/assign") },

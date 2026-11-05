@@ -6,7 +6,7 @@ import "@styles/file-uploader.css";
 
 /** 업로드한 파일 수 / 최대 파일 수 */
 const meta = {
-  title: "Financial/Request/FileIndicator",
+  title: "Pages/Financial/Request/FileIndicator",
   component: FileIndicator,
   tags: ["autodocs"],
   args: { count: 3, total: 10 },

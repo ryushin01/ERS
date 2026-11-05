@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 라벨·메시지 없는 기본 입력칸. 보통은 InputField를 사용합니다. */
 const meta = {
-  title: "Form/Input",
+  title: "Components/Inputs/Input",
   component: Input,
   tags: ["autodocs"],
   args: {

@@ -12,16 +12,20 @@ pnpm run build-storybook
 
 ### 구성
 
+사이드바는 `Foundations → Components → Patterns → Pages` 순서로, 작은 부품에서 조립된 화면으로 이어집니다. Carbon·Atlassian·KRDS 등의 구조를 참고했고, Atomic Design의 조립 순서는 이름 대신 정렬로 반영했습니다.
+
 | 분류 | 내용 |
 |---|---|
 | Foundations | 타이포그래피 단계 |
-| Common · Button · Form · Modal · Drawer · Accordion | 공통 UI 컴포넌트. Controls로 속성(크기·색상·상태)을 바꿔 볼 수 있습니다. |
-| Layout · Error · Login | 헤더·메뉴·레이아웃, 오류 화면, 로그인 화면 구성 요소 |
-| Financial · Admin · Registration | 업무 화면. 페이지(`Main`)는 헤더·메뉴를 포함한 실제 화면 그대로, 하위 표·팝업은 목업 데이터로 보여 줍니다. |
+| Components | 기능별 공통 부품: Actions · Inputs · Feedback · Navigation · Layout · Content · Overlays. Controls로 속성(크기·색상·상태)을 바꿔 볼 수 있습니다. |
+| Patterns | 부품을 조립한 공통 영역: 오류 화면, 등기 자료 보기, 로그인, 헤더·메뉴·레이아웃 |
+| Pages | 업무 화면(Financial · Admin). 페이지(`Main`)는 헤더·메뉴를 포함한 실제 화면 그대로, 하위 표·팝업은 목업 데이터로 보여 줍니다. |
+
+순서는 `.storybook/preview.tsx`의 `storySort`에서 정합니다. 업무 화면은 GNB 메뉴 순서를 따르고, 각 화면의 완성본인 `Main`을 마지막에 둡니다. 새 스토리를 추가하면 이 목록에도 넣어 주세요.
 
 - 공통 설정은 `.storybook/`에 있습니다.
   - `preview.tsx`: 앱 루트 레이아웃과 같은 환경(QueryClient, jotai, 토스트, `#portal`)을 스토리마다 새로 만듭니다. `parameters.auth`(`"financial"` | `"admin"`)를 지정하면 데모 사용자로 로그인한 상태가 됩니다.
-  - `main.ts`: 스토리 위치, 애드온(Docs, Accessibility, Vitest), 파비콘 경로 (`public`은 프레임워크가 자동으로 복사)
+  - `main.ts`: 스토리 위치, 애드온(Docs, Accessibility, Vitest), MDX 표 문법(`remark-gfm`), 파비콘 경로 (`public`은 프레임워크가 자동으로 복사)
 - 첫 화면은 소개 문서(`src/stories/Introduction.mdx`)입니다. 컴포넌트 주석은 `@description` 내용만 문서에 표시합니다.
 - 스토리용 도우미는 `src/stories/helpers.tsx`에 있습니다. (상태별 목업 의뢰번호, 화면 경로 지정, 모바일 뷰포트, 실제 화면 레이아웃)
 - 데이터를 props로 받는 컴포넌트는 스토리의 `loaders`에서 앱과 같은 services 함수로 목업 데이터를 받아 전달합니다.

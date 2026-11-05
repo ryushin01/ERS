@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 const panel = (text: string) => <div className="p-6 text-ers-grayscale-90">{text}</div>;
 
 const meta = {
-  title: "Common/TabGroup",
+  title: "Components/Navigation/TabGroup",
   component: TabGroup,
   tags: ["autodocs"],
   args: {

@@ -14,7 +14,7 @@ const rqstNo = rqstNoByStatus(PROC_STAT_CD.REVIEWING);
 
 /** 등기접수증 승인: 접수증 이미지와 정보를 확인하고 승인·반려 */
 const meta = {
-  title: "Admin/RegistrationAcceptance/Main",
+  title: "Pages/Admin/RegistrationAcceptance/Main",
   component: Main,
   tags: ["autodocs"],
   parameters: {

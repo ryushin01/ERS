@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 모바일·태블릿 업로드: 사진 촬영(카메라) 또는 앨범에서 선택 */
 const meta = {
-  title: "Financial/Request/MobileFileUploader",
+  title: "Pages/Financial/Request/MobileFileUploader",
   component: MobileFileUploader,
   tags: ["autodocs"],
   parameters: { auth: "financial", ...routeParameters("/financial/request-list/request") },
