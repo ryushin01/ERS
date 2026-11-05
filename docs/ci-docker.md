@@ -36,3 +36,7 @@ docker compose -f docker/production/docker-compose.yml up --build
 
 > 베이스 이미지는 `node:22-alpine`입니다(`.nvmrc`와 같은 Node 22 LTS).
 > Dockerfile은 빌드 시 `.env.development` / `.env.production`을 복사하므로, Docker로 빌드하려면 해당 파일을 먼저 만들어야 합니다(데모 모드는 빈 파일이면 됩니다). 컨테이너는 standalone 빌드 결과물을 `node server.js`로 실행합니다.
+
+## Vercel 데모
+
+Vercel 프로젝트 `ers`에 저장소가 연결되어 있어 `main`에 푸시하면 자동으로 운영 배포되고, PR마다 미리보기가 만들어집니다. 데모 모드가 기본이라 환경 변수는 필요 없습니다.

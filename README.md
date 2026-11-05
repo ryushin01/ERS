@@ -6,6 +6,8 @@
 
 금융기관·관리자용 부동산 전자등기 관리 웹 애플리케이션의 프론트엔드입니다. **ERS**는 **E**lectronic **R**egistration **S**ystem의 줄임말입니다.
 
+**[데모 바로 보기](https://ers-one.vercel.app/)** · 로그인 화면에서 사용자 유형을 고르고 버튼만 누르면 됩니다.
+
 > **프로젝트 상태:** 진행이 중단된 프로토타입을 정리한 **포트폴리오용 데모**입니다. 백엔드 없이 목업 API로 동작하고, 화면의 모든 데이터는 가상 데이터입니다. 고객사 정보·연락처·로고·샘플 문서는 제거하거나 예시 값으로 바꾸었습니다.
 
 ## 화면
@@ -61,11 +63,11 @@
 | 구분 | 사용 기술 |
 |---|---|
 | 프레임워크 | Next.js 15 (App Router), React 19, TypeScript |
-| 상태·데이터 | TanStack Query v5, jotai, axios |
+| 상태·데이터 | TanStack Query v5, jotai, axios, js-cookie |
 | 스타일·UI | Tailwind CSS 3, antd(파일 업로드), swiper, react-datepicker |
 | 품질 | ESLint(import 정렬), Prettier, husky + lint-staged, Vitest + React Testing Library, fast-check, Storybook 스토리 테스트(Vitest 브라우저 모드 + Playwright, axe 접근성 검사), E2E 테스트(Playwright) |
 | 문서 | Storybook 10 (`@storybook/nextjs-vite`) |
-| 배포 | Docker(standalone), GitHub Actions |
+| 배포 | Vercel(데모), Docker(standalone), GitHub Actions |
 
 ## 시작하기
 
