@@ -34,7 +34,14 @@ export default function Form({
 }: FormProps) {
   const hiddenLegend = isHiddenLegend ? "_hidden" : "";
   return (
-    <form onSubmit={onSubmit} onChange={onChange} onInput={onInput} className={className}>
+    <form
+      onSubmit={onSubmit}
+      onChange={onChange}
+      // React 19.3 타입부터 onInput은 InputEvent입니다. 입력칸에서 올라온 이벤트의 target(name·value)을
+      // 읽는 기존 핸들러와 맞추기 위해 onChange와 같은 형태로 넘깁니다.
+      onInput={onInput && ((event) => onInput(event as unknown as ChangeEvent<HTMLFormElement>))}
+      className={className}
+    >
       <fieldset>
         <legend className={hiddenLegend}>{legendText}</legend>
         {children}

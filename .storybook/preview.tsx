@@ -70,7 +70,8 @@ const preview: Preview = {
     controls: {
       matchers: { color: /(background|color)$/i, date: /Date$/i },
     },
-    a11y: { test: "todo" },
+    // 접근성 위반(axe)이 있으면 스토리 테스트를 실패시킵니다. (pnpm test:storybook)
+    a11y: { test: "error" },
     options: {
       storySort: {
         order: [

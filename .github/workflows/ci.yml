@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   check:
-    name: Lint · Typecheck · Test · Build
+    name: Lint · Typecheck · Test · Storybook test · Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +31,9 @@ jobs:
       - run: pnpm format:check
       - run: pnpm typecheck
       - run: pnpm test
+      # 모든 스토리를 실제 브라우저(Chromium)에서 렌더링하고 접근성 검사(axe)까지 실행
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:storybook
       # 데모 모드(기본값)로 빌드하므로 API 주소 환경 변수는 필요 없음
       - run: pnpm build
 
