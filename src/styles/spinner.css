@@ -9,7 +9,6 @@
         @apply _flex-center fixed inset-0 z-10;
 
         ._spinner {
-            @apply animate-spin;
             transform-origin: center;
             animation: _spinner 0.75s infinite linear;
         }
