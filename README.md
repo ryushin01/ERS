@@ -159,7 +159,7 @@ pnpm run dev
 
 ## Storybook
 
-`src`의 **모든 컴포넌트(110여 개)에 스토리**가 있습니다. 스토리 파일은 대상 파일 옆에 `*.stories.tsx`로 둡니다. 예: `src/components/button/Button.tsx` → `src/components/button/Button.stories.tsx`
+`src`의 **모든 컴포넌트(111개)와 404 화면에 스토리**가 있습니다. 스토리 파일은 대상 파일 옆에 `*.stories.tsx`로 둡니다. 예: `src/components/button/Button.tsx` → `src/components/button/Button.stories.tsx`
 
 ```bash
 // 개발 서버 (http://localhost:6006)
@@ -275,6 +275,20 @@ pnpm run build-storybook
 
 ## 개발 규칙과 테스트
 
+### 프론트엔드 기준
+
+앞으로의 프론트엔드 개발은 아래 기준을 따릅니다.
+
+| 기준 | 내용 |
+|---|---|
+| 아키텍처 | [Feature-Sliced Design](https://feature-sliced.design) v2.1. 계층은 위에서부터 app → pages → widgets → features → entities → shared이고, 아래 계층만 import합니다. Next.js에서는 계층 이름을 `_app`·`_pages`로 쓰고, 라우트 파일은 `_pages`를 다시 내보내기만 합니다. |
+| 마크업 | [HTML Living Standard](https://html.spec.whatwg.org). 요소를 의미에 맞게 쓰고 콘텐츠 모델을 지킵니다. (예: `button` 안에 대화형 요소 금지) |
+| 접근성 | 한국형 웹 콘텐츠 접근성 지침(KWCAG) 2.2, KS X OT0003. 4원칙 14지침 33개 검사항목 |
+| ARIA | [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/)와 [ARIA 사용 규칙](https://www.w3.org/TR/using-aria/). 네이티브 HTML을 우선하고, 역할을 지정하면 키보드 동작까지 구현합니다. |
+
+> **현재 코드는 아직 FSD 구조가 아닙니다.** `src/components`가 화면별로 나뉘어 있고, 공통 컴포넌트 일부가 `services`·`stores`를 직접 사용합니다. [향후 과제](#향후-과제)를 참고하세요.
+> 자동 검사(axe)를 통과했다고 KWCAG를 준수한다는 뜻은 아닙니다. axe는 33개 항목 중 일부만 확인할 수 있어, 새 화면은 항목별로 직접 점검합니다.
+
 ### import 순서와 커밋 전 검사
 
 - import 순서는 ESLint 규칙(`eslint-plugin-simple-import-sort`)으로 정렬합니다. 순서는 `react` → `next` → 외부 패키지 → 내부 alias(`@components`, `@hooks` 등) → 상대 경로 → `import type` → CSS 순이고, 그룹 사이에는 빈 줄을 하나 둡니다.
@@ -285,7 +299,7 @@ pnpm run build-storybook
 ### 코드 규칙
 
 - 화면 크기 구분은 `useResponsive`를 사용합니다. `matchMedia`를 `useSyncExternalStore`로 읽기 때문에 브라우저에서 새로 그리는 화면은 첫 렌더링부터 맞는 레이아웃이 나옵니다. (첫 진입 시 서버 렌더링 결과는 PC 기준이며, 하이드레이션 직후 바뀝니다)
-- 접근성: 탭은 `TabGroup`(WAI-ARIA 탭 패턴, ←/→/Home/End 이동), 여러 버튼 중 하나를 고르는 그룹은 `ButtonGroup`(`aria-pressed`)을 사용합니다. 보이는 라벨이 없는 `Select`·`InputField`는 `ariaLabel`을 지정합니다.
+- 접근성: 탭은 `TabGroup`(WAI-ARIA 탭 패턴, ←/→/Home/End 이동), 여러 버튼 중 하나를 고르는 그룹은 `ButtonGroup`(`aria-pressed`)을 사용합니다. 보이는 라벨이 없는 `Select`·`InputField`는 `ariaLabel`을 지정하고, `IconButton`은 이름(`children`)이 필수입니다. 모달·드로어 같은 대화상자의 초점 관리는 `useDialog`를 사용합니다.
 
 - 여러 CSS 파일에서 `@apply`로 쓰는 공통 클래스(`_flex-center`)는 `tailwind.config.ts`의 플러그인에 정의합니다. `globals.css`의 `@layer`에 두면 그 파일이 먼저 처리될 때만 다른 파일에서 `@apply`가 동작합니다.
 - 금액 입력은 `utils/amountUtil`로 처리합니다: 원 단위 정수만(부호·소수점·문자 무시), 최대 15자리, 0원은 제출 불가. 저장 요청 버튼은 `useSubmitLock`으로 중복 제출을 막습니다.
@@ -325,8 +339,9 @@ pnpm run test:e2e
 
 | 파일 | 내용 |
 |---|---|
-| `e2e/layout.spec.ts` | 폭 320~1920px 8단계에서 가로 넘침, 잘린 버튼·입력칸, 줄바꿈된 탭, 잘린 표 글자(항목 이름은 375px 이상, 값은 1024px 이상), 모바일 헤더 로고 |
+| `e2e/layout.spec.ts` | 폭 320~1920px 8단계에서 가로 넘침, 잘린 버튼·입력칸, 사라진 입력칸, 줄바꿈된 탭, 잘못된 요소 중첩, 잘린 표 글자(항목 이름은 375px 이상, 값은 1024px 이상), 모바일 헤더 로고 |
 | `e2e/accessibility.spec.ts` | PC·태블릿·모바일 전 화면의 접근성(axe), 콘솔 오류, 요청 실패, 깨진 이미지. 모달·달력·계정 메뉴·드로어를 연 상태와 아코디언 열림 상태 |
+| `e2e/keyboard.spec.ts` | 본문 바로가기, Tab 이동 시 초점 표시, 계정 메뉴·드로어 Esc 닫기와 초점 복귀, 의뢰번호 입력 |
 | `e2e/storybook.spec.ts` | Storybook 바로 가기 전환·도착 애니메이션, 뒤로 가기, 로그인 상태 접근, 동작 줄이기 설정 |
 
 - 화면을 추가하면 `e2e/helpers.ts`의 `PAGES`에 경로를 추가합니다.
@@ -424,6 +439,7 @@ docker compose -f docker/production/docker-compose.yml up --build
 
 | 버전     | 날짜         | 내용                                                           | 비고            |
 |--------|------------|--------------------------------------------------------------|---------------|
+| -      | 2026.11.5. | - E2E 테스트 추가(Playwright): 화면 폭별 잘림·넘침, 실제 화면 접근성, 키보드, Storybook 전환 흐름, CI 연결<br>- 폭 1680px 등기관리 표 날짜 잘림 수정<br>- 접근성(KWCAG 2.2·WAI-ARIA): 본문 바로가기, 초점 표시, 입력 오류 연결, 토스트 알림 전달, 드로어 대화상자·초점 관리, 버튼 이름, 잘못된 요소 중첩 수정<br>- 모바일 배정관리 의뢰번호 검색칸이 사라지고 `DEMO-` 입력이 안 되던 문제 수정 | v2.0.2 이후, 버전 미지정 |
 | v2.0.2 | 2026.11.5. | - 모바일 의뢰 수정에서 이미지 삭제 시 엉뚱한 파일이 지워지던 버그 수정<br>- PC 1440px·모바일 화면 잘림과 넘침 수정(필터·표·탭·헤더·주소 입력칸)<br>- 접근성 개선: 아코디언 열림 상태, 화면 확대 제한 해제, 푸터 대비<br>- Storybook 소개 문서, 뒤로 가기 개선, 문서 주석 정리, 개발 서버 연결<br>- 공유 이미지에 새 로고 추가, TypeScript 5.7 고정 | 메이저 업그레이드 없음 |
 | v2.0.1 | 2026.11.5. | - 접근성 개선: 탭(WAI-ARIA 탭 패턴·키보드 이동), 조회 기간 버튼(`aria-pressed`), 셀렉트·주소 입력칸 이름, 업로드 영역 버튼 중첩 제거, 명암 대비(오류 빨강·보완필요 노랑·회색 버튼·배지·모바일 메뉴 등)<br>- 스토리 테스트 도입(Vitest 브라우저 모드 + Playwright): 모든 스토리 렌더링·접근성 검사, CI에 추가<br>- 화면 크기 판단(`useResponsive`)을 `useSyncExternalStore`로 변경해 모바일에서 PC 레이아웃이 먼저 그려지던 깜빡임 수정, react-responsive 제거<br>- 의존성 업데이트(같은 메이저 안): React 19.3, TanStack Query 5.104, antd 5.29, jotai 2.20, react-datepicker 8.10, date-fns 4.4 등 | 메이저 업그레이드 없음 |
 | v2.0.0 | 2026.11.4. | **포트폴리오 데모 공개**<br>- 코드 정리(타입·버그·Lint), 미사용 코드·의존성 정리, 중복 컴포넌트 통합<br>- 포트폴리오 데모 모드·목업 데이터, 관리자 데모 데이터, 데모 로그인 유형 선택<br>- 공개용 정보 정리<br>- import 순서 자동화, 커밋 전 검사(husky), CI(GitHub Actions)<br>- Vitest 단위·통합·속성 기반 테스트<br>- 보안 취약점 해결(Next.js 15.5, axios, swiper 등)<br>**Storybook·브랜딩**<br>- Storybook 10 도입, 모든 컴포넌트 스토리 작성<br>- Storybook을 앱과 함께 `/storybook`으로 배포, 로그인 화면에 바로 가기 버튼과 전환 애니메이션 추가<br>- ERS 로고(심볼·헤더 로고·파비콘·앱 아이콘) 교체 | 보안 패치 외 라이브러리 버전 변경 없음 (Storybook 신규 추가) |
@@ -434,4 +450,18 @@ docker compose -f docker/production/docker-compose.yml up --build
 
 ## 향후 과제
 
-![My Skills](https://skillicons.dev/icons?i=cypress,docker,regex,sass)
+![My Skills](https://skillicons.dev/icons?i=regex,sass)
+
+**기능**
+
+- 법무대리인 화면, 관리자 회원관리·공지관리 구현
+
+**구조**
+
+- FSD로 전환: 화면 간 상호 참조(`request-list` ↔ `status-inquiry`) 정리, 공통 컴포넌트에서 `services`·`stores` 분리, 계층 규칙 자동 검사
+
+**접근성**
+
+- 스크린 리더(VoiceOver, NVDA 등) 실사용 점검. 자동 검사와 코드 점검만 했습니다.
+- KWCAG 6.1.3 조작 가능: 공식 기준 수치와 대조 필요 (현재 표 안 링크 높이 19px, 라디오 20px)
+- KWCAG 33개 항목 전체 수동 점검
