@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image, { ImageProps } from "next/image";
 
 import { DefaultProfile } from "@common";
+import { useAdjustState } from "@hooks";
 import { axiosBasicInstance } from "@services";
 
 interface ImageWithAuthProps extends Omit<ImageProps, "src"> {
@@ -30,6 +31,9 @@ export default function ImageWithAuth({
 }: ImageWithAuthProps) {
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
 
+  // 이전 src의 주소는 이펙트 정리에서 해제되므로, 바뀌는 즉시 버려 해제된 주소를 그리지 않습니다.
+  useAdjustState([src], () => setObjectUrl(null));
+
   useEffect(() => {
     if (!src) return;
 
@@ -53,7 +57,7 @@ export default function ImageWithAuth({
     };
   }, [src]);
 
-  if (!src || !objectUrl) {
+  if (!objectUrl) {
     return <Image src={fallbackSrc} alt={alt} {...props} />;
   }
 
