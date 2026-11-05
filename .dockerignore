@@ -14,5 +14,7 @@ certificates
 **/*.test.tsx
 e2e
 README.md
+CHANGELOG.md
+docs
 public/storybook
 storybook-static
