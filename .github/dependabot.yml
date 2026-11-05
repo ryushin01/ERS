@@ -22,6 +22,9 @@ updates:
       # @types/node는 실행 환경(Node 22, .nvmrc)과 같은 메이저로 유지
       - dependency-name: "@types/node"
         versions: [">=23"]
+      # eslint-config-next 15의 typescript-eslint가 TypeScript 5.8 미만만 지원
+      - dependency-name: "typescript"
+        versions: [">=5.8"]
     groups:
       # 운영 의존성과 개발 도구를 나눠서 한 PR씩
       production:
