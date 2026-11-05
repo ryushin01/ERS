@@ -584,8 +584,8 @@
     }
 }
 
-/* 9컬럼 표(등기관리): 넓은 화면(1680~)보다 좁으면 글자와 여백을 줄이고, 칸 폭을 항목 내용에 맞게 조정 */
-@media screen and (min-width: 1367px) and (max-width: 1679px) {
+/* 9컬럼 표(등기관리): 넓은 화면(1800~)보다 좁으면 글자와 여백을 줄이고, 칸 폭을 항목 내용에 맞게 조정 */
+@media screen and (min-width: 1367px) and (max-width: 1799px) {
     /* 7컬럼 표(현황조회)의 "접수검토중 [번호]"도 같은 폭에서 잘리므로 글자·여백을 함께 줄임 */
     ._responsive-table-inner-wrapper._has-thead ._responsive-table._col-7-type tr {
         th,
