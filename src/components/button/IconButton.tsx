@@ -7,7 +7,8 @@ type IconButtonProps = {
   size: "md" | "lg";
   icon: ReactNode;
   onClick?: () => void;
-  children?: string;
+  /* 버튼 이름 (화면에 보이지 않고 스크린 리더가 읽음). 아이콘만 있으므로 필수 */
+  children: string;
   disabled?: boolean;
 };
 
@@ -16,7 +17,7 @@ export default function IconButton({
   size,
   icon,
   onClick,
-  children = "",
+  children,
   disabled = false,
 }: IconButtonProps) {
   let buttonSize = "";
@@ -43,7 +44,7 @@ export default function IconButton({
       type={type}
       disabled={disabled}
       onClick={onClick}
-      aria-label={`${children} 버튼`}
+      aria-label={children}
     >
       {icon && <span>{icon}</span>}
     </button>

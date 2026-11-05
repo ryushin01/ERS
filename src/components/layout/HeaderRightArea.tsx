@@ -173,6 +173,7 @@ export default function HeaderRightArea() {
               type="button"
               onClick={isDesktop ? openDropdown : openDrawer}
               className="flex gap-x-1"
+              aria-expanded={isDropdownOpen}
             >
               {!profileDataLoading && (
                 <ImageWithAuth
@@ -203,6 +204,7 @@ export default function HeaderRightArea() {
                 }
                 iconPosition="right"
                 onClick={openDropdown}
+                isExpanded={isDropdownOpen}
               >
                 {!!authInfo ? authInfo.membNm : ""}
               </Button>
@@ -234,8 +236,10 @@ export default function HeaderRightArea() {
         <IconButton
           size="md"
           onClick={openDrawer}
-          icon={<Image src={MenuIcon} alt="메뉴 토글 아이콘" width={24} height={24} />}
-        />
+          icon={<Image src={MenuIcon} alt="" width={24} height={24} />}
+        >
+          계정 메뉴 열기
+        </IconButton>
       )}
 
       {isDesktop && isDropdownOpen && (

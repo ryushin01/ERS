@@ -1,4 +1,4 @@
-import { ChangeEvent, InputHTMLAttributes, useState } from "react";
+import { ChangeEvent, InputHTMLAttributes, useId, useState } from "react";
 import Image from "next/image";
 
 import { EyeIcon, EyeOffIcon } from "@icons20";
@@ -96,6 +96,9 @@ InputFieldProps) {
   3. hasicon - 텍스트 + 아이콘(버튼아님) || 텍스트
   */
 
+  const messageId = useId();
+  const hasMessage = isError ? !!errorMessage : !!inputMessage;
+
   let setSize = "";
   switch (inputSize) {
     case "sm":
@@ -129,8 +132,10 @@ InputFieldProps) {
         isError={isError}
         styleClass={`_password-label my-1`}
       >
-        <div className={inputWithLabelText}>
+        <span className={inputWithLabelText}>
           <Input
+            aria-invalid={isError || undefined}
+            aria-describedby={hasMessage ? messageId : undefined}
             aria-label={ariaLabel}
             id={htmlFor}
             type={isHideText ? "password" : "text"}
@@ -154,22 +159,16 @@ InputFieldProps) {
             }}
             type="button"
             className="_flex-center"
+            aria-label={isHideText ? "비밀번호 보기" : "비밀번호 숨기기"}
           >
-            {
-              <Image
-                src={isHideText ? EyeOffIcon : EyeIcon}
-                alt={isHideText ? "보기 아이콘" : "숨김 아이콘"}
-                width={20}
-                height={20}
-              />
-            }
+            {<Image src={isHideText ? EyeOffIcon : EyeIcon} alt="" width={20} height={20} />}
           </button>
-        </div>
+        </span>
       </Label>
       {isError ? (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <ErrorMessage id={messageId}>{errorMessage}</ErrorMessage>
       ) : inputMessage ? (
-        <InputMessage>{inputMessage}</InputMessage>
+        <InputMessage id={messageId}>{inputMessage}</InputMessage>
       ) : (
         ""
       )}
@@ -182,8 +181,10 @@ InputFieldProps) {
       hasIcon={hasButton}
       isError={isError}
     >
-      <div className={inputWithLabelText}>
+      <span className={inputWithLabelText}>
         <Input
+          aria-invalid={isError || undefined}
+          aria-describedby={hasMessage ? messageId : undefined}
           aria-label={ariaLabel}
           id={htmlFor}
           type={type}
@@ -208,11 +209,11 @@ InputFieldProps) {
         >
           {icon}
         </button>
-      </div>
+      </span>
       {isError ? (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <ErrorMessage id={messageId}>{errorMessage}</ErrorMessage>
       ) : inputMessage ? (
-        <InputMessage>{inputMessage}</InputMessage>
+        <InputMessage id={messageId}>{inputMessage}</InputMessage>
       ) : (
         ""
       )}
@@ -225,9 +226,11 @@ InputFieldProps) {
       hasIcon={hasIcon}
       isError={isError}
     >
-      <div className={inputWithLabelText}>
+      <span className={inputWithLabelText}>
         {icon && iconPosition === "left" && <span className="pr-2">{icon}</span>}
         <Input
+          aria-invalid={isError || undefined}
+          aria-describedby={hasMessage ? messageId : undefined}
           aria-label={ariaLabel}
           id={htmlFor}
           type={type}
@@ -245,11 +248,11 @@ InputFieldProps) {
           value={value}
         />
         {icon && iconPosition === "right" && <span className="pl-2">{icon}</span>}
-      </div>
+      </span>
       {isError ? (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <ErrorMessage id={messageId}>{errorMessage}</ErrorMessage>
       ) : inputMessage ? (
-        <InputMessage>{inputMessage}</InputMessage>
+        <InputMessage id={messageId}>{inputMessage}</InputMessage>
       ) : (
         ""
       )}

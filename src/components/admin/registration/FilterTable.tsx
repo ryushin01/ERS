@@ -180,7 +180,7 @@ export default function FilterTable({
                   />
                 </th>
                 <td colSpan={7}>
-                  <span className="_datepicker-and-button-group-wrapper">
+                  <div className="_datepicker-and-button-group-wrapper">
                     <DatePicker
                       id="execution-date"
                       {...datePickerProps}
@@ -196,7 +196,7 @@ export default function FilterTable({
                       selectedButtonGroup={selectedButtonGroup}
                       handleButtonGroup={handleButtonGroup}
                     />
-                  </span>
+                  </div>
                 </td>
               </tr>
             </tbody>

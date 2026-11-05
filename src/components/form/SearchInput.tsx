@@ -53,12 +53,13 @@ export default function SearchInput({
   } ${shape === "lg" ? "rounded-lg" : "rounded-3xl"}`;
 
   return (
-    <label className={className}>
+    <div className={className}>
       <input
         type="search"
         required={required}
         disabled={disabled}
         placeholder={SEARCH_INPUT.placeHolder}
+        aria-label={SEARCH_INPUT.placeHolder}
         className="bg-transparent outline-none"
         name={name}
         onChange={onChange}
@@ -71,9 +72,10 @@ export default function SearchInput({
         type="submit"
         className="_flex-center"
         style={{ width: 32, height: 32 }}
+        aria-label="검색"
       >
-        <Image src={searchIcon} alt="검색 아이콘" width={20} height={20} />
+        <Image src={searchIcon} alt="" width={20} height={20} />
       </button>
-    </label>
+    </div>
   );
 }

@@ -352,3 +352,8 @@ input::placeholder {
 ._text-input:disabled + ._input-message {
     @apply opacity-0 hidden;
 }
+
+/* 입력칸 틀은 label 안에 들어가므로 span을 쓰고 블록으로 표시. :where로 다른 표시 규칙(flex 등)보다 약하게 지정 */
+:where(._label-text-input, ._no-password-input, ._password-input) {
+    display: block;
+}

@@ -647,8 +647,8 @@ export default function CreateForm() {
                         <Label htmlFor="lotnum" required={true} labelText="담보목적물" />
                       </th>
                       <td colSpan={5}>
-                        <span className="flex flex-col gap-y-2 w-full">
-                          <span className="flex max-w-24 mb-4">
+                        <div className="flex flex-col gap-y-2 w-full">
+                          <div className="flex max-w-24 mb-4">
                             <Button
                               shape="solid"
                               size="sm"
@@ -657,8 +657,8 @@ export default function CreateForm() {
                             >
                               주소 검색
                             </Button>
-                          </span>
-                          <span className="flex items-center gap-x-2 mb-2 w-full max-w-[500px] [&>span:first-child]:min-w-24 [&>div]:min-w-0">
+                          </div>
+                          <div className="flex items-center gap-x-2 mb-2 w-full max-w-[500px] flex-wrap md:flex-nowrap [&>span:first-child]:min-w-24 [&>div]:min-w-[120px] [&>div]:flex-1">
                             <Typography kind="body-medium" className="text-ers-grayscale-80">
                               지번 주소
                             </Typography>
@@ -673,8 +673,8 @@ export default function CreateForm() {
                               isError={addrError}
                               readOnly={true}
                             />
-                          </span>
-                          <span className="flex items-center gap-x-2 mb-2 w-full max-w-[500px] [&>span:first-child]:min-w-24 [&>div]:min-w-0">
+                          </div>
+                          <div className="flex items-center gap-x-2 mb-2 w-full max-w-[500px] flex-wrap md:flex-nowrap [&>span:first-child]:min-w-24 [&>div]:min-w-[120px] [&>div]:flex-1">
                             <Typography kind="body-medium" className="text-ers-grayscale-80">
                               도로명 주소
                             </Typography>
@@ -689,8 +689,8 @@ export default function CreateForm() {
                               isError={addrError}
                               readOnly={true}
                             />
-                          </span>
-                          <span className="flex items-center gap-x-2 mb-2 flex-wrap [&>span:first-child]:min-w-24">
+                          </div>
+                          <div className="flex items-center gap-x-2 mb-2 flex-wrap [&>span:first-child]:min-w-24">
                             <Typography kind="body-medium" className="text-ers-grayscale-80">
                               상세 주소
                             </Typography>
@@ -712,11 +712,11 @@ export default function CreateForm() {
                                 );
                               })}
                             </ul>
-                          </span>
-                          <span className="flex ">
+                          </div>
+                          <div className="flex flex-wrap gap-2">
                             {/* 01 , 02 일때 bldg 영역노출 */}
                             {(radioValue === "01" || radioValue === "02") && (
-                              <span className="flex items-center gap-x-2 [&>div:first-child]:w-[70%]">
+                              <div className="flex items-center flex-1 min-w-[100px] gap-x-2 [&>div:first-child]:w-[70%]">
                                 <InputField
                                   name="bldg"
                                   ariaLabel="상세 주소 동"
@@ -730,11 +730,11 @@ export default function CreateForm() {
                                 <Typography kind="body-medium" className="text-ers-grayscale-80">
                                   동
                                 </Typography>
-                              </span>
+                              </div>
                             )}
                             {/* 01 , 03 일때 unit 영역노출 */}
                             {(radioValue === "01" || radioValue === "03") && (
-                              <span className="flex items-center gap-x-2 [&>div:first-child]:w-[70%]">
+                              <div className="flex items-center flex-1 min-w-[100px] gap-x-2 [&>div:first-child]:w-[70%]">
                                 <InputField
                                   name="unit"
                                   ariaLabel="상세 주소 호"
@@ -748,10 +748,10 @@ export default function CreateForm() {
                                 <Typography kind="body-medium" className="text-ers-grayscale-80">
                                   호
                                 </Typography>
-                              </span>
+                              </div>
                             )}
-                          </span>
-                        </span>
+                          </div>
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -759,7 +759,7 @@ export default function CreateForm() {
                         <Label htmlFor="unq-cd" required={true} labelText="고유번호" />
                       </th>
                       <td colSpan={3}>
-                        <span className="flex gap-x-4 [&>button]:w-[108px] [&>div]:flex-1">
+                        <div className="flex flex-wrap gap-x-4 gap-y-2 [&>button]:w-[108px] [&>div]:flex-1 [&>div]:min-w-[100px]">
                           <Button
                             shape="solid"
                             size="sm"
@@ -778,7 +778,7 @@ export default function CreateForm() {
                             placeholder=""
                             isError={unqRgstrNoError}
                           />
-                        </span>
+                        </div>
                       </td>
                       <td colSpan={2}></td>
                     </tr>

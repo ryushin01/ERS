@@ -21,6 +21,15 @@ describe("Button", () => {
     expect(onClick).toHaveBeenCalledOnce();
   });
 
+  it('버튼 이름은 화면의 글자와 같다 ("버튼"을 덧붙이지 않음)', () => {
+    render(
+      <Button shape="solid" size="md" color="main100">
+        저장
+      </Button>,
+    );
+    expect(screen.getByRole("button")).toHaveAccessibleName("저장");
+  });
+
   it("disabled이면 누를 수 없고 비활성 스타일이 붙는다", async () => {
     const onClick = vi.fn();
     render(

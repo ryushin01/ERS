@@ -15,6 +15,7 @@ type ButtonProps = {
   children?: string;
   disabled?: boolean;
   isPressed?: boolean;
+  isExpanded?: boolean;
   id?: string;
 };
 
@@ -31,6 +32,7 @@ type ButtonProps = {
  * @property {function} onClick      - 버튼 클릭시 동작을 위해 정의합니다.
  * @property {boolean} disabled      - 버튼의 비활성화 상태를 정의합니다.
  * @property {boolean} isPressed     - 버튼 그룹에서 선택된(눌린) 버튼 표시 (aria-pressed)
+ * @property {boolean} isExpanded    - 메뉴를 여는 버튼의 열림 상태 (aria-expanded)
  */
 
 export default function Button({
@@ -44,6 +46,7 @@ export default function Button({
   children = "",
   disabled = false,
   isPressed,
+  isExpanded,
   id,
 }: ButtonProps) {
   let buttonSize = "";
@@ -168,7 +171,7 @@ export default function Button({
       disabled={disabled}
       onClick={onClick}
       aria-pressed={isPressed}
-      aria-label={`${children} 버튼`}
+      aria-expanded={isExpanded}
     >
       {icon && iconPosition === "left" && <span className="pr-1">{icon}</span>}
       <Typography

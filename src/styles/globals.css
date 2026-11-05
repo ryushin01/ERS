@@ -422,3 +422,33 @@
 /*.react-datepicker-popper {*/
 /*    transform: translate(0, 0) !important;*/
 /*}*/
+
+/* 본문 바로가기 (KWCAG 반복 영역 건너뛰기): 키보드 초점을 받을 때만 표시 */
+._skip-link {
+    @apply fixed top-2 left-2 px-4 py-2 rounded-lg bg-ers-main-100 text-ers-grayscale-0;
+    z-index: 10001;
+    transform: translateY(-200%);
+
+    &:focus {
+        transform: none;
+    }
+}
+
+main:focus {
+    outline: none;
+}
+
+/*
+ * 키보드 초점 표시 (KWCAG 초점 이동과 표시)
+ * 입력칸·버튼 곳곳에 outline-none이 있어 @layer 밖에서 !important로 지정합니다. (마우스 클릭에는 표시되지 않음)
+ */
+:is(a, button, select, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline: 2px solid #0b56a7 !important;
+    outline-offset: 2px;
+}
+
+/* 입력칸은 부모의 overflow-hidden에 잘리지 않도록 안쪽에 표시 */
+:is(input, textarea):focus-visible {
+    outline: 2px solid #0b56a7 !important;
+    outline-offset: -2px;
+}

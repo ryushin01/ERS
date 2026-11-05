@@ -295,7 +295,7 @@ export default function FilterTable({ isDesktop, setFilters, rqstNo }: definePro
                   />
                 </th>
                 <td colSpan={4}>
-                  <span className="_datepicker-and-button-group-wrapper">
+                  <div className="_datepicker-and-button-group-wrapper">
                     <DatePicker
                       id="execution-date"
                       {...datePickerProps}
@@ -311,7 +311,7 @@ export default function FilterTable({ isDesktop, setFilters, rqstNo }: definePro
                       selectedButtonGroup={selectedButtonGroup}
                       handleButtonGroup={handleButtonGroup}
                     />
-                  </span>
+                  </div>
                 </td>
                 <th className="_hidden-in-mobile">
                   <Typography kind={isDesktop ? "title-small" : "body-medium"} isBold={true}>

@@ -28,8 +28,9 @@ export default function ToastPopup() {
   return (
     <>
       {createPortal(
-        toastObject.isOpen && (
-          <section>
+        // 스크린 리더는 내용이 바뀌는 것을 읽으므로, 알림 영역은 토스트가 없을 때도 유지합니다.
+        <section role="status" aria-live="polite" aria-atomic="true" data-live-region>
+          {toastObject.isOpen && (
             <div
               className={`fixed left-1/2 transform -translate-x-1/2 transition z-10000 px-2 py-1 
                ${toastObject.position === "bottom" ? "animate-bottom" : "animate-top"} 
@@ -41,8 +42,8 @@ export default function ToastPopup() {
                 })}
               </div>
             </div>
-          </section>
-        ),
+          )}
+        </section>,
         document.body,
       )}
     </>

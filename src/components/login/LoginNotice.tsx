@@ -10,7 +10,12 @@ export default function LoginNotice({ isDesktop }: ResponsiveType) {
 
       <div>
         {/* 포트폴리오용 예시 연락처 */}
-        <a href="https://www.example.com" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://www.example.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="www.example.com (새 창 열림)"
+        >
           www.example.com
         </a>
         <Typography kind={isDesktop ? "body-medium" : "caption-large"}>

@@ -91,6 +91,7 @@ export default function Select({
         className={`_select ${setSize}`}
         required={required}
         aria-label={ariaLabel}
+        aria-invalid={isError || undefined}
       >
         {placeholder && (
           <option value={placeholder} hidden>

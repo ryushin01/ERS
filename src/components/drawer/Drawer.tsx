@@ -1,4 +1,10 @@
+"use client";
+
+import { useRef } from "react";
+import { createPortal } from "react-dom";
+
 import { DrawerContent, DrawerFooter, DrawerHeader } from "@components/drawer";
+import { useDialog } from "@hooks";
 
 import "@styles/drawer.css";
 
@@ -40,10 +46,22 @@ export default function Drawer({
   profileData,
   imgSrc,
 }: DrawerProps) {
-  return (
+  const dialogRef = useRef<HTMLElement>(null);
+  const portal = useDialog(dialogRef, onClose);
+
+  if (!portal) return null;
+
+  return createPortal(
     <>
-      <div className="_drawer-backdrop" onClick={onClose} />
-      <section className="_drawer-container animate-drawer">
+      <div className="_drawer-backdrop" onClick={onClose} aria-hidden="true" />
+      <section
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="계정 메뉴"
+        tabIndex={-1}
+        className="_drawer-container animate-drawer outline-none"
+      >
         <div className="_drawer-container-wrap">
           <DrawerHeader onClose={onClose} />
           <DrawerContent
@@ -57,6 +75,7 @@ export default function Drawer({
           <DrawerFooter />
         </div>
       </section>
-    </>
+    </>,
+    portal,
   );
 }

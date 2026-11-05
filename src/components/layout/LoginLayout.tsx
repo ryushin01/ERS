@@ -10,9 +10,12 @@ import { Header } from "@components/layout/index";
 export default function CommonLayout({ children }: { children: ReactNode }) {
   return (
     <div className="_login-outer-wrapper">
+      <a href="#main-content" className="_skip-link">
+        본문 바로가기
+      </a>
       <Header />
 
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <div className="_login-inner-wrapper">{children}</div>
       </main>
     </div>

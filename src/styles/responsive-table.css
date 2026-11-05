@@ -660,6 +660,8 @@
             @apply h-auto min-h-[54px];
         }
 
+        /* 좁은 칸에서는 잘라 내지 않고 줄바꿈 */
+        th,
         td {
             @apply overflow-visible;
             white-space: normal;

@@ -48,6 +48,8 @@ export default function DatePicker({
   // 단일/범위 선택 공통 옵션
   const commonProps = {
     id,
+    // 입력 오류 상태를 보조기술에 전달
+    ariaInvalid: isError ? "true" : undefined,
     // 한국어 설정
     locale: ko,
     // 연월일 포맷 정의

@@ -58,8 +58,8 @@ export default function Badge({ type, colorType, children }: BadgeProps) {
   const className = getClassName(colorType, type);
 
   return (
-    <div className={className}>
+    <span className={className}>
       <Typography kind="caption-large">{displayValue}</Typography>
-    </div>
+    </span>
   );
 }

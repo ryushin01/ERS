@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useId } from "react";
 
 import { ErrorMessage, Input, InputMessage, Label } from "@components/form";
 
@@ -65,6 +65,9 @@ export default function LoginPasswordField({
 }: passwordFieldProps) {
   const hasIcon = icon ? true : false; // icon 있으면 true 없으면 false
 
+  const messageId = useId();
+  const hasMessage = isError ? !!errorMessage : !!inputMessage;
+
   let setSize = "";
   switch (inputSize) {
     case "sm":
@@ -92,9 +95,11 @@ export default function LoginPasswordField({
       hasIcon={hasIcon}
       isError={isError}
     >
-      <div className={inputWithLabelText}>
+      <span className={inputWithLabelText}>
         {icon && iconPosition === "left" && <span className="pr-2">{icon}</span>}
         <Input
+          aria-invalid={isError || undefined}
+          aria-describedby={hasMessage ? messageId : undefined}
           id={htmlFor}
           type={type}
           placeholder={placeholder}
@@ -110,11 +115,11 @@ export default function LoginPasswordField({
           defaultValue={defaultValue}
         />
         {icon && iconPosition === "right" && <span className="pl-2">{icon}</span>}
-      </div>
+      </span>
       {isError ? (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <ErrorMessage id={messageId}>{errorMessage}</ErrorMessage>
       ) : inputMessage ? (
-        <InputMessage>{inputMessage}</InputMessage>
+        <InputMessage id={messageId}>{inputMessage}</InputMessage>
       ) : (
         ""
       )}

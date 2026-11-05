@@ -7,7 +7,7 @@ import IconButton from "./IconButton";
 
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-/** 아이콘만 있는 버튼. children은 화면에 보이지 않고 aria-label("{children} 버튼")로 쓰입니다. */
+/** 아이콘만 있는 버튼. children은 화면에 보이지 않고 버튼 이름(aria-label)으로 쓰이므로 필수입니다. */
 const meta = {
   title: "Button/IconButton",
   component: IconButton,

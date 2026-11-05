@@ -51,6 +51,7 @@ export default function CurrencyFormat({
         onChange={onChange}
         placeholder={placeholder}
         required={required}
+        aria-invalid={isError || undefined}
         className="w-full p-0 outline-none"
       />
     </div>

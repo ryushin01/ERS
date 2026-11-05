@@ -42,6 +42,7 @@ export default function AccountLayer({
   imgSrc,
 }: AccountLayerProps) {
   const targetRef = useRef<HTMLElement>(null);
+  const opener = useRef<HTMLElement | null>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (targetRef.current && !targetRef.current.contains(event.target as Node)) {
@@ -49,14 +50,28 @@ export default function AccountLayer({
     }
   };
 
+  /* 키보드 사용자를 위해 Esc로 닫고, 연 버튼으로 포커스를 돌려줌 */
+  const handleEscape = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      opener.current?.focus();
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    opener.current = document.activeElement as HTMLElement | null;
+  }, []);
+
   useEffect(() => {
     if (!isModalOpen) {
       document.addEventListener("click", handleClickOutside);
+      document.addEventListener("keydown", handleEscape);
     }
 
     // clean-up effect
     return () => {
       document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModalOpen]);
@@ -64,7 +79,7 @@ export default function AccountLayer({
   return (
     <div className="_account-layer-wrapper">
       <section ref={targetRef} className="_account-layer">
-        <h1 className="_hidden">비밀번호 변경, 로그아웃, 서비스 이용문의 정보 제공 섹션</h1>
+        <h2 className="_hidden">비밀번호 변경, 로그아웃, 서비스 이용문의 정보 제공 섹션</h2>
         <DrawerContent
           level={level}
           isModalOpen={isModalOpen}

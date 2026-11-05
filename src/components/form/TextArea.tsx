@@ -62,14 +62,15 @@ export default function TextArea({
         onBlur={onBlur}
         disabled={disabled}
         maxLength={maxLength}
+        aria-invalid={isError || undefined}
         defaultValue={defaultValue}
       >
         {children}
       </textarea>
-      <p className="_count">
+      <span className="_count">
         <span className={countStyle}>{countLength || defaultValue?.length}</span>
         <span>/{maxLength}</span>
-      </p>
+      </span>
     </label>
   );
 }
