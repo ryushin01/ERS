@@ -20,6 +20,8 @@ type UseLogoutOptions = {
 /* 로그인 화면 이동 지연 시간 (로그아웃 처리 후) */
 const REDIRECT_DELAY_MS = 1000;
 
+const LOGOUT_FAILED_MESSAGE = "로그아웃에 실패하였습니다.\n다시 시도해 주세요.";
+
 /**
  * @name useLogout
  * @version 1.0.0
@@ -50,12 +52,13 @@ export default function useLogout({ onLoggedOut, toastPosition = "top" }: UseLog
       }
 
       openToast({
-        message: "로그아웃에 실패하였습니다.\n다시 시도해 주세요.",
+        message: LOGOUT_FAILED_MESSAGE,
         position: toastPosition,
       });
     },
     onError: (error) => {
       console.error(error);
+      openToast({ message: LOGOUT_FAILED_MESSAGE, position: toastPosition });
     },
   });
 

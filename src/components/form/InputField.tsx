@@ -87,9 +87,6 @@ InputFieldProps) {
   const [isHideText, setIsHideText] = useState(true);
   const hasIcon = icon ? true : false; // icon 있으면 true 없으면 false
 
-  /* TODO : password가 아닌 다른걸로 분기처리 방법 찾아보기. input+button 조합 password 아닌것도 있을수있음. 
-  button/icon >> button type(button/reset) | src(토글이면 이미지 두개) | alt */
-
   /* inputField 분기처리
   1. type password - 텍스트 + 아이콘 (토글아이콘 및 아이콘으로 type password -> text로 변경)
   2. hasbutton - 텍스트 + 버튼 (reset)

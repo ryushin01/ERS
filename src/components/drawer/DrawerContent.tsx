@@ -91,7 +91,7 @@ export default function DrawerContent({
   };
 
   /* 비밀번호변경 api 호출 */
-  const { mutate: changePassword } = useMutation({
+  const { mutate: changePassword, isPending: isChangingPassword } = useMutation({
     mutationKey: ["log-in"],
     // 요청 데이터는 mutate 인자로 직접 받음 (상태를 바꾼 직후 호출해도 항상 방금 만든 값을 전송)
     mutationFn: async (payload: Parameters<typeof patchChangePassword>[0]) =>
@@ -169,9 +169,16 @@ export default function DrawerContent({
     setIsDisabled(isAnyEmpty);
   };
 
+  /* 취소하고 닫으면 입력한 비밀번호를 남기지 않음 */
+  const handleCloseModal = () => {
+    resetForm();
+    closeModal();
+  };
+
   /* 비밀번호변경 api 호출 함수 */
   const handleChangePassword = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (isChangingPassword) return;
     changePassword(form);
   };
 
@@ -216,7 +223,7 @@ export default function DrawerContent({
       </div>
 
       {isModalOpen && (
-        <Modal title="비밀번호 변경" onClose={closeModal} size="md">
+        <Modal title="비밀번호 변경" onClose={handleCloseModal} size="md">
           <Form
             onSubmit={handleChangePassword}
             legendText="비밀번호 변경 양식"
@@ -263,13 +270,20 @@ export default function DrawerContent({
                 inputSize={isDesktop ? "lg" : "md"}
                 required={true}
                 placeholder={CHANGE_PASSWORD_INPUT.repeatPassword}
+                ariaLabel={CHANGE_PASSWORD_INPUT.repeatPassword}
                 errorMessage={CHANGE_PASSWORD_INPUT.repeatErrorText}
                 isError={reNewPwdError}
                 onFocus={() => setReNewPwdError(false)}
                 onChange={handleInputChange}
               />
             </div>
-            <Button shape="solid" size="lg" color="main100" type="submit" disabled={isDisabled}>
+            <Button
+              shape="solid"
+              size="lg"
+              color="main100"
+              type="submit"
+              disabled={isDisabled || isChangingPassword}
+            >
               비밀번호 변경
             </Button>
           </Form>

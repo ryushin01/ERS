@@ -172,7 +172,7 @@ pnpm run dev
 | 데모 데이터 | `mocks/data.test.ts`, `mocks/adapter.test.ts` | 목업 데이터가 업무 규칙과 맞는지, 목업 API의 응답·상태 변경 |
 | 화면 통합 | `components/**/Main.test.tsx` | 화면을 실제 데이터 흐름(TanStack Query → services → 목업 API)으로 렌더링해 목록·건수가 데이터와 같은지 |
 | 폼 → 요청 내용 | `CreateForm`·`DetailForm`·`DesktopFileUploader`·`MobileFileUploader`·`RegistrationInformation`·`ReasonModals`(반려·진행취소) 테스트 | 폼에 입력하고 제출했을 때 서버로 가는 요청(JSON·첨부 파일)이 입력값과 정확히 같은지, 연속 클릭에도 한 번만 전송되는지 |
-| 공통 동작 | `Pagination`·`TabGroup`·`LoginForm`·`HeaderRightArea`·`useFileUpload` 테스트 | 페이지 이동, 탭 키보드 조작, 로그인, 헤더 의뢰번호 검색(Enter·버튼·없는 번호), 파일 개수·용량 제한 |
+| 공통 동작 | `Pagination`·`TabGroup`·`LoginForm`·`HeaderRightArea`·`AccountLayer`·`DrawerContent`·`useLogout`·`useFileUpload` 테스트 | 페이지 이동, 탭 키보드 조작, 로그인, 헤더 의뢰번호 검색(Enter·버튼·없는 번호), 계정 메뉴 닫기와 초점, 비밀번호 변경, 로그아웃(데모·API·실패), 파일 개수·용량 제한 |
 | 검색 조건 | `status-inquiry/List`·`admin/registration/FilterTable`·`admin/assign/Main` 테스트 | 의뢰번호·진행상태·접수번호·채무자·기간 검색과 초기화, 헤더 검색 후 재검색, 한 페이지 개수와 쪽수, 배정관리 탭 |
 | 스토리 | 모든 `*.stories.tsx` (`pnpm run test:storybook`) | 스토리 252개를 실제 브라우저에서 렌더링, 접근성 위반(axe) 검사 (스토리의 첫 화면 기준이라 레이아웃 잘림은 잡지 못함) |
 | E2E | `e2e/` (`pnpm run test:e2e`) | 아래 [E2E 테스트](#e2e-테스트) 참고 |

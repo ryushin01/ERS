@@ -19,8 +19,6 @@ type BadgeProps = {
  * @property {string} colorType    - 뱃지 컬러
  */
 
-/* TODO: colorType constants화 필요한지 고민해보기 */
-
 const getClassName = (colorType: string, type: string) => {
   if (type === "number") {
     switch (colorType) {
