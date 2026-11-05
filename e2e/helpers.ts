@@ -50,6 +50,10 @@ export type LayoutReport = {
   clippedControls: string[];
   /** 두 줄 이상으로 꺾인 탭 이름 */
   wrappedTabs: string[];
+  /** 사라질 만큼 좁아진 입력칸 */
+  collapsedControls: string[];
+  /** 콘텐츠 모델에 어긋난 요소 중첩 (HTML Living Standard, KWCAG 마크업 오류 방지) */
+  invalidNesting: string[];
   /** 내용이 잘린 표 머리글(항목 이름) */
   cutHeaders: string[];
   /** 내용이 잘린 표 값 */
@@ -94,6 +98,44 @@ export function measureLayout(page: Page): Promise<LayoutReport> {
       }
     });
 
+    const collapsedControls = [...document.querySelectorAll<HTMLElement>("main input, main select")]
+      .filter((control) => {
+        const type = control.getAttribute("type");
+        if (type === "radio" || type === "checkbox" || type === "file" || type === "hidden") {
+          return false;
+        }
+        const { width } = control.getBoundingClientRect();
+        return width > 0 && width < 30;
+      })
+      .map((control) => control.getAttribute("aria-label") || control.getAttribute("name") || "");
+
+    // 라이브러리(antd, react-datepicker)가 만드는 마크업은 고칠 수 없으므로 제외
+    const isLibraryMarkup = (element: Element) =>
+      !!element.closest('[class*="ant-"], [class*="react-datepicker"]');
+    const FLOW_CONTENT = "div, p, ul, ol, li, form, fieldset, section, table, h1, h2, h3, h4, nav";
+    const invalidNesting = new Set<string>();
+    document.querySelectorAll("span, p, label, button, h1, h2, h3, h4").forEach((parent) => {
+      if (isLibraryMarkup(parent)) return;
+      const child = parent.querySelector(FLOW_CONTENT);
+      if (child) {
+        invalidNesting.add(`${parent.tagName} > ${child.tagName}: ${parent.className}`);
+      }
+    });
+    document.querySelectorAll("button, a[href]").forEach((parent) => {
+      const child = parent.querySelector("button, a[href], input, select, textarea, [tabindex]");
+      if (child && !isLibraryMarkup(parent)) {
+        invalidNesting.add(`대화형 ${parent.tagName} > ${child.tagName}: ${parent.className}`);
+      }
+    });
+    document.querySelectorAll("label").forEach((label) => {
+      if (
+        !isLibraryMarkup(label) &&
+        label.querySelectorAll("input, select, textarea, button").length > 1
+      ) {
+        invalidNesting.add(`label에 컨트롤 2개 이상: ${label.className}`);
+      }
+    });
+
     // 탭 이름은 한 줄이어야 함 (좁은 화면에서 글자가 세로로 쌓이지 않고 가로로 스크롤)
     const wrappedTabs = [
       ...document.querySelectorAll<HTMLElement>("._tab-trigger > span:first-child"),
@@ -132,6 +174,8 @@ export function measureLayout(page: Page): Promise<LayoutReport> {
       overflow: document.documentElement.scrollWidth - window.innerWidth,
       clippedControls: [...clippedControls],
       wrappedTabs,
+      collapsedControls,
+      invalidNesting: [...invalidNesting],
       cutHeaders: [...cutHeaders],
       cutCells: [...cutCells],
     };

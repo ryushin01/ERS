@@ -26,6 +26,8 @@ for (const width of WIDTHS) {
         expect.soft(report.overflow, `${path} 가로 넘침`).toBeLessThanOrEqual(0);
         expect.soft(report.clippedControls, `${path} 잘린 버튼·입력칸`).toEqual([]);
         expect.soft(report.wrappedTabs, `${path} 줄바꿈된 탭`).toEqual([]);
+        expect.soft(report.collapsedControls, `${path} 사라진 입력칸`).toEqual([]);
+        expect.soft(report.invalidNesting, `${path} 잘못된 요소 중첩`).toEqual([]);
         if (width >= 375) {
           expect.soft(report.cutHeaders, `${path} 잘린 항목 이름`).toEqual([]);
         }
