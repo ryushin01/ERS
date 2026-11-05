@@ -102,7 +102,8 @@ export default function MobileFileUploader({
 
       // 1. 업데이트 이미지 목록 배열에 base64 형식의 이미지 저장(미리보기 용도)
       updatedImageList.push({
-        uid: String(imageList.length),
+        // 삭제 후 다시 찍어도 겹치지 않도록 촬영 시각을 포함 (순번만 쓰면 uid가 중복되어 함께 지워짐)
+        uid: `new-${Date.now()}-${imageList.length}`,
         attcFilNm: String(imageList.length + `.jpeg`),
         filSize: 0,
         src: imageSrc,
