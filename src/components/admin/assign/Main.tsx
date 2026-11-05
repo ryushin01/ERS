@@ -110,13 +110,14 @@ export default function Main() {
               onChange={handleFormChange}
               legendText="의뢰번호 검색"
               isHiddenLegend={true}
-              className="[&>fieldset]:flex [&>fieldset]:gap-x-3 [&>fieldset>div]:mr-1"
+              className="[&>fieldset]:flex [&>fieldset]:flex-wrap md:[&>fieldset]:flex-nowrap [&>fieldset]:gap-3 [&>fieldset>div]:mr-1"
             >
-              <div className="flex-1">
+              <div className="basis-full md:basis-0 flex-1">
                 <InputField
                   name="searchRqstNo"
+                  ariaLabel={REQUEST_NUMBER_INPUT.placeHolder}
                   defaultValue={searchRqstNo}
-                  type="number"
+                  type="text"
                   inputSize="md"
                   placeholder={REQUEST_NUMBER_INPUT.placeHolder}
                   isError={false}
