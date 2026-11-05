@@ -31,7 +31,8 @@ export function middleware(request: NextRequest) {
   const isValidPublicFiles = request.nextUrl.pathname.match(PUBLIC_FILES_REG_EXP);
 
   // 정적 파일, Storybook(컴포넌트 문서)은 로그인·사용자 유형과 상관없이 통과
-  if (isValidPublicFiles || isPathUnder(pathname, STORYBOOK_PATH)) {
+  // 권한 페이지 아래의 경로는 점이 있어도 정적 파일로 보지 않습니다. (상세 화면 번호에 점을 넣어 권한 검사를 건너뛰지 못하게)
+  if ((isValidPublicFiles && !isMemberPage) || isPathUnder(pathname, STORYBOOK_PATH)) {
     return NextResponse.next();
   }
 

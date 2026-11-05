@@ -32,6 +32,11 @@ describe("middleware 권한별 라우팅", () => {
     ["/financial/home", "20", "/admin/assign"],
     // 재발 방지: 이전에는 includes로 판정해서 금융기관 페이지로 오인했습니다.
     ["/financialx", "00", "/financial/home"],
+    // 재발 방지: 점이 있는 경로를 정적 파일로 보아 권한 검사를 건너뛰었습니다.
+    ["/admin/registration/registration-detail/example.svg", undefined, "/"],
+    ["/financial/home.png", undefined, "/"],
+    ["/admin/assign/assign-detail/1.2", "00", "/financial/home"],
+    ["/admin/assign/assign-detail/1.2", "20", null],
   ])("%s (membGbCd=%s) → %s", (pathname, membGbCd, expected) => {
     expect(redirectedTo(pathname, membGbCd)).toBe(expected);
   });
