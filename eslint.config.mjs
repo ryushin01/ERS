@@ -41,17 +41,6 @@ const eslintConfig = [
   ...nextCoreWebVitals,
   ...nextTypescript,
   {
-    // Next.js 16과 함께 들어온 React Compiler 대비 규칙입니다. 기존 코드에 42건이 있습니다.
-    // 상태 로직을 고치는 일이라 업그레이드와 나눠 따로 처리합니다.
-    rules: {
-      "react-hooks/set-state-in-effect": "off",
-      "react-hooks/immutability": "off",
-      "react-hooks/refs": "off",
-      "react-hooks/purity": "off",
-      "@next/next/no-location-assign-relative-destination": "off",
-    },
-  },
-  {
     // import 순서 자동 정렬. `pnpm lint:fix`로 자동 수정되고, 커밋할 때 lint-staged가 실행합니다.
     // 순서: react → next → 외부 패키지 → 내부 alias → 상대경로 → import type → 사이드 이펙트(CSS 등)
     // 그룹 사이는 빈 줄 하나, 그룹 안과 { } 안의 이름은 알파벳순입니다.

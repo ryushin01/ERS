@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSetAtom } from "jotai";
@@ -11,7 +11,7 @@ import { Form, InputField, Label, Select } from "@components/form";
 import { PROC_CLS_GB_CD } from "@constants/code";
 import { CANCEL_PROGRESS_INFORMATION_LIST } from "@constants/information";
 import { AD_REGISTRATION } from "@constants/path";
-import { useSubmitLock } from "@hooks";
+import { useAdjustState, useSubmitLock } from "@hooks";
 import { patchRegiCancel } from "@services/assignDetail";
 import { getCommonCodeList } from "@services/common";
 import { toastState } from "@stores";
@@ -48,11 +48,11 @@ export default function RegistrationCancel({
   });
 
   /* 진행취소 코드리스트 세팅 */
-  useEffect(() => {
+  useAdjustState([cancelCodeData], () => {
     if (!!cancelCodeData) {
       setCancelCodeList(getCodeList(cancelCodeData));
     }
-  }, [cancelCodeData]);
+  });
 
   /* 진행취소 요청 */
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

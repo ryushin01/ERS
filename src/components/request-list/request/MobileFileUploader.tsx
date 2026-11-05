@@ -1,4 +1,4 @@
-import { FormEvent, MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import { FormEvent, MouseEvent, useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -10,7 +10,7 @@ import { DatePicker, Loading, Typography } from "@components/common";
 import { Form, Label } from "@components/form";
 import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
 import { FI_REQUEST_LIST } from "@constants/path";
-import { useDatePicker, useDisclosure } from "@hooks";
+import { useAdjustState, useDatePicker, useDisclosure } from "@hooks";
 import { PlusMainIcon } from "@icons20";
 import { BackIcon } from "@icons24";
 import { CameraIcon } from "@icons50";
@@ -39,6 +39,27 @@ export type FileProps = {
   file?: File;
 };
 
+/**
+ * @function convertBase64ToFile
+ * @description base64 형식을 File 형식으로 변환하는 함수
+ * @param {string} base64 base64 파일 경로
+ * @param {number} index File 이름 지정을 위한 인덱스
+ * @returns File 객체
+ */
+const convertBase64ToFile = (base64: string, index?: number) => {
+  const base64Array: string[] = base64.split(",");
+  const mime = base64Array[0].match(/:(.*?);/)?.[1] ?? "image/jpeg";
+  const binaryData = atob(base64Array[1]);
+  let binaryDataLength: number = binaryData.length;
+  const unit8Array = new Uint8Array(binaryDataLength);
+
+  while (binaryDataLength--) {
+    unit8Array[binaryDataLength] = binaryData.charCodeAt(binaryDataLength);
+  }
+
+  return new File([unit8Array], `${Date.now()}-${index}.jpeg`, { type: mime });
+};
+
 export default function MobileFileUploader({
   requestNo,
   isMobile,
@@ -51,7 +72,6 @@ export default function MobileFileUploader({
   const webcamRef = useRef<Webcam>(null);
   const { ...datePickerProps } = useDatePicker();
   const openToast = useSetAtom(toastState);
-  const timestamp = Date.now();
 
   const { isOpen: isCameraOpen, open: openCamera, close: closeCamera } = useDisclosure();
 
@@ -74,12 +94,10 @@ export default function MobileFileUploader({
   // 미리보기 이미지 목록
   const [imageList, setImageList] = useState<FileProps[]>([]);
   const [tempImageList, setTempImageList] = useState<FileProps[]>([]);
-  const updatedImageList: FileProps[] = [...imageList];
 
   // 서버 전송용 파일 객체
   const [fileList, setFileList] = useState<File[]>([]);
   const [tempFileList, setTempFileList] = useState<File[]>([]);
-  const updatedFileList: File[] = [...fileList];
 
   /**
    * @function takePicture
@@ -101,6 +119,7 @@ export default function MobileFileUploader({
       if (!imageSrc) return;
 
       // 1. 업데이트 이미지 목록 배열에 base64 형식의 이미지 저장(미리보기 용도)
+      const updatedImageList: FileProps[] = [...imageList];
       updatedImageList.push({
         // 삭제 후 다시 찍어도 겹치지 않도록 촬영 시각을 포함 (순번만 쓰면 uid가 중복되어 함께 지워짐)
         uid: `new-${Date.now()}-${imageList.length}`,
@@ -114,6 +133,7 @@ export default function MobileFileUploader({
       const file = convertBase64ToFile(imageSrc, imageList.length);
 
       // 3. 변환된 File을 업데이트 파일 목록 배열에 저장(서버 통신 용도)
+      const updatedFileList: File[] = [...fileList];
       updatedFileList.push(file);
 
       // 4. 임시 이미지 목록 배열과 임시 파일 목록 배열 업데이트
@@ -128,27 +148,6 @@ export default function MobileFileUploader({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [webcamRef, imageList, tempImageList, tempFileList],
   );
-
-  /**
-   * @function convertBase64ToFile
-   * @description base64 형식을 File 형식으로 변환하는 함수
-   * @param {string} base64 base64 파일 경로
-   * @param {number} index File 이름 지정을 위한 인덱스
-   * @returns File 객체
-   */
-  const convertBase64ToFile = (base64: string, index?: number) => {
-    const base64Array: string[] = base64.split(",");
-    const mime = base64Array[0].match(/:(.*?);/)?.[1] ?? "image/jpeg";
-    const binaryData = atob(base64Array[1]);
-    let binaryDataLength: number = binaryData.length;
-    const unit8Array = new Uint8Array(binaryDataLength);
-
-    while (binaryDataLength--) {
-      unit8Array[binaryDataLength] = binaryData.charCodeAt(binaryDataLength);
-    }
-
-    return new File([unit8Array], `${timestamp}-${index}.jpeg`, { type: mime });
-  };
 
   /**
    * @function uploadPicture
@@ -345,12 +344,10 @@ export default function MobileFileUploader({
     }, 3000);
   };
 
-  useEffect(() => {
-    setImageList([]);
-    setFileList([]);
-
-    existingImageListData?.imgData.map((image: FileProps) => {
-      const imageData: FileProps = {
+  useAdjustState([existingImageListData], () => {
+    const images: FileProps[] = existingImageListData?.imgData ?? [];
+    setImageList(
+      images.map((image) => ({
         uid: `${image.seq}_${image.filIdx}`,
         seq: image.seq,
         filIdx: image.filIdx,
@@ -358,17 +355,14 @@ export default function MobileFileUploader({
         filSize: image.filSize,
         src: image.src,
         file: undefined,
-      };
-
-      setImageList((prev) => [...prev, imageData]);
-
+      })),
+    );
+    setFileList([]);
+    if (images.length > 0) {
       datePickerProps.handleDatePicker(stringToDate(existingImageListData?.execDt));
-    });
-
+    }
     setIsExistingImageList(existingImageListData?.imgData);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [existingImageListData]);
+  });
 
   return (
     <>

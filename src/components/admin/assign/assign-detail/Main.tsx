@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { Breadcrumb, Typography } from "@components/common";
@@ -11,14 +10,7 @@ import DetailForm from "./DetailForm";
 export default function Main() {
   const { isDesktop } = useResponsive();
   const { rqstNo } = useParams();
-  const [requestNo, setRqstNo] = useState("");
-
-  useEffect(() => {
-    if (rqstNo) {
-      const normalizedRqstNo = Array.isArray(rqstNo) ? rqstNo[0] : rqstNo;
-      setRqstNo(normalizedRqstNo);
-    }
-  }, [rqstNo]);
+  const requestNo = (Array.isArray(rqstNo) ? rqstNo[0] : rqstNo) ?? "";
 
   return (
     <section>

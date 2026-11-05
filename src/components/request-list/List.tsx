@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
@@ -14,6 +14,7 @@ import {
   PAGE_LIMIT_PC,
 } from "@constants/page";
 import { FI_REQUEST } from "@constants/path";
+import { useAdjustState } from "@hooks";
 import { getRequestListData } from "@services/request";
 import { ResponsiveType } from "@types";
 
@@ -33,7 +34,7 @@ type RequestListDataProps = {
  */
 export default function List({ tabSelection, isDesktop }: RequestListDataProps & ResponsiveType) {
   const [page, setPage] = useState(1);
-  const [pageLimit, setPageLimit] = useState(0);
+  const pageLimit = isDesktop ? PAGE_LIMIT_PC : PAGE_LIMIT_MOBILE;
   const [queryTime, setQueryTime] = useState(new Date());
   const router = useRouter();
 
@@ -49,13 +50,7 @@ export default function List({ tabSelection, isDesktop }: RequestListDataProps &
     enabled: !!tabSelection && pageLimit > 0,
   });
 
-  useEffect(() => {
-    setPage(1);
-  }, [tabSelection]);
-
-  useEffect(() => {
-    setPageLimit(isDesktop ? PAGE_LIMIT_PC : PAGE_LIMIT_MOBILE);
-  }, [isDesktop]);
+  useAdjustState([tabSelection], () => setPage(1));
 
   return (
     <>

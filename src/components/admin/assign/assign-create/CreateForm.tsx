@@ -14,7 +14,15 @@ import { REALE_CD } from "@constants/code";
 import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
 import { LAND_LOT_OPTION } from "@constants/option";
 import { AD_ASSIGN } from "@constants/path";
-import { useDatePicker, useDisclosure, useFileUpload, useRadio, useSubmitLock } from "@hooks";
+import {
+  useAdjustState,
+  useDatePicker,
+  useDisclosure,
+  useFileUpload,
+  useIsClient,
+  useRadio,
+  useSubmitLock,
+} from "@hooks";
 import { getRqstNoData, postCreateAssign } from "@services/adminAssign";
 import { getMemberListData, getUnqRgsrtNo } from "@services/assignDetail";
 import { getCommonCodeList } from "@services/common";
@@ -39,11 +47,8 @@ export default function CreateForm() {
   const authInfo = useAtomValue(authAtom);
   const openToast = useSetAtom(toastState);
   // 로그인 정보는 sessionStorage에 있어 서버 렌더링 결과와 다르므로, 마운트 후에만 표시 (hydration 불일치 방지)
-  const [isClient, setIsClient] = useState(false);
+  const isClient = useIsClient();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
   const [realeCd, setRealeCd] = useState([{ grpCd: "", code: "", codeNm: "" }]);
   const [bankList, setBankList] = useState([
     {
@@ -146,12 +151,12 @@ export default function CreateForm() {
   });
 
   // 1. 의뢰번호 저장
-  useEffect(() => {
+  useAdjustState([rqstNo], () => {
     setForm((prevForm) => ({
       ...prevForm,
       rqstNo: rqstNo,
     }));
-  }, [rqstNo]);
+  });
 
   // 2. 대출실행일 저장
   const handleExecDateChange = (date: Date | null) => {
@@ -194,12 +199,12 @@ export default function CreateForm() {
     setIsPricesError(false); // 필수 인풋 에러 해제
   };
 
-  useEffect(() => {
+  useAdjustState([price], () => {
     setForm((prevForm) => ({
       ...prevForm,
       bndMaxAmt: parseAmount(price),
     }));
-  }, [price]);
+  });
 
   // 6. 설정약정일 저장
   const handleDateChange = (date: Date | null) => {
@@ -228,7 +233,7 @@ export default function CreateForm() {
     setAddrError(false); // 고유번호조회 인풋 에러 해제
   };
 
-  useEffect(() => {
+  useAdjustState([addrForm], () => {
     setForm((prevForm) => ({
       ...prevForm,
       lotnumAddr: addrForm?.roadAddr,
@@ -236,7 +241,7 @@ export default function CreateForm() {
       // 상세주소 유형도 주소 입력값을 기준으로 맞춤 (라디오를 바꾸지 않아도 화면과 같은 값 전송)
       lotnumAddrCd: addrForm?.lotnumAddrCd,
     }));
-  }, [addrForm]);
+  });
   /* ---- 주소검색 끝 ---- */
 
   /* ---- 등기 고유 번호 조회 ---- */
@@ -272,17 +277,17 @@ export default function CreateForm() {
 
   /* 등기고유번호 조회 완료시 setUnqRgstrNo 데이터 set */
   useEffect(() => {
-    // 조회 전(데이터 없음)에는 입력값을 덮어쓰지 않음 (undefined가 들어가면 controlled input 경고 발생)
-    if (!unqRgstrNoData) return;
-
     if (unqRgstrNoData?.code === "99") {
       openToast({
         message: unqRgstrNoData?.msg,
         position: "top",
       });
-
-      return;
     }
+  }, [unqRgstrNoData, openToast]);
+
+  useAdjustState([unqRgstrNoData], () => {
+    // 조회 전(데이터 없음)에는 입력값을 덮어쓰지 않음 (undefined가 들어가면 controlled input 경고 발생)
+    if (!unqRgstrNoData || unqRgstrNoData.code === "99") return;
 
     setUnqRgstrNo(unqRgstrNoData?.data);
 
@@ -291,7 +296,7 @@ export default function CreateForm() {
       ...prevForm,
       unqRgstrNo: unqRgstrNoData?.data,
     }));
-  }, [unqRgstrNoData, openToast]);
+  });
   /* ---- 등기 고유 번호 조회 끝 ---- */
 
   // 중복 등록 방지: 제출을 시작하면 잠그고, 성공 시에는 페이지 이동까지 유지, 실패 시에만 다시 제출 가능
@@ -354,11 +359,11 @@ export default function CreateForm() {
   });
 
   /* 부동산구분코드 데이터 set 해주기 */
-  useEffect(() => {
+  useAdjustState([realeCdData], () => {
     if (realeCdData?.data.commCodeList) {
       setRealeCd(realeCdData.data.commCodeList);
     }
-  }, [realeCdData]);
+  });
 
   /* 회원 목록 조회(금융기관) api */
   const {
@@ -383,7 +388,7 @@ export default function CreateForm() {
   });
 
   /* 회원 목록 데이터 set 해주기 */
-  useEffect(() => {
+  useAdjustState([bankListData, memberListData], () => {
     if (Array.isArray(bankListData) && Array.isArray(memberListData)) {
       setBankList(bankListData);
       setMembList(memberListData);
@@ -391,7 +396,7 @@ export default function CreateForm() {
       setBankList([]);
       setMembList([]); // 만약 배열이 아니라면 빈 배열로 초기화
     }
-  }, [bankListData, memberListData]);
+  });
 
   const handleAssignmentForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

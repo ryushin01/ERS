@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSetAtom } from "jotai";
@@ -11,7 +11,7 @@ import { Form, InputField, Label, Select } from "@components/form";
 import { RTUN_GB_CD } from "@constants/code";
 import { REJECTION_INFORMATION_LIST } from "@constants/information";
 import { AD_REGISTRATION } from "@constants/path";
-import { useSubmitLock } from "@hooks";
+import { useAdjustState, useSubmitLock } from "@hooks";
 import { getCommonCodeList } from "@services/common";
 import { patchRegistrationReject } from "@services/registrationManagement";
 import { toastState } from "@stores";
@@ -93,11 +93,11 @@ export default function RegistrationRejection({
   };
 
   /* 반려사유 코드리스트 세팅 */
-  useEffect(() => {
+  useAdjustState([rejectCodeData], () => {
     if (!!rejectCodeData) {
       setRejectCodeList(getCodeList(rejectCodeData));
     }
-  }, [rejectCodeData]);
+  });
 
   return (
     <>

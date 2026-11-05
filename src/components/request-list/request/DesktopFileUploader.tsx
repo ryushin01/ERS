@@ -13,7 +13,7 @@ import { Form, Label } from "@components/form";
 import { ATTC_FIL_CD } from "@constants/code";
 import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
 import { FI_REQUEST_LIST } from "@constants/path";
-import { useDatePicker } from "@hooks";
+import { useAdjustState, useDatePicker } from "@hooks";
 import { PlusWhiteIcon } from "@icons20";
 import { getRegistrationImages } from "@services/file";
 import { patchRequestData, postRequestData } from "@services/request";
@@ -226,10 +226,9 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
   };
 
   //기 등록한 파일 정보 조회시 fileList에 추가
-  useEffect(() => {
-    setFileList([]);
-    fileData?.imgData?.map((image: FileData) => {
-      const fileData: FileData = {
+  useAdjustState([fileData], () => {
+    setFileList(
+      (fileData?.imgData ?? []).map((image: FileData) => ({
         uid: `${image.seq}_${image.filIdx}`,
         seq: image.seq,
         filIdx: image.filIdx,
@@ -237,16 +236,14 @@ export default function DesktopFileUploader({ requestNo }: requestProps) {
         filSize: image.filSize,
         src: image.src,
         file: undefined,
-      };
-      setFileList((prev) => [...prev, fileData]);
-    });
+      })),
+    );
 
     if (!!fileData?.execDt) {
       datePickerProps.handleDatePicker(stringToDate(fileData.execDt));
     }
-    // 조회한 등기자료(fileData)를 받았을 때만 초기값을 세팅합니다. (datePickerProps는 렌더링마다 새 객체)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fileData]);
+    // 조회한 등기자료(fileData)를 받았을 때만 초기값을 세팅합니다.
+  });
 
   //첨부파일 추가 시 개수 및 용량 체크
   useEffect(() => {

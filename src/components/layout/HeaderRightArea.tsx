@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -11,7 +11,7 @@ import { Form, SearchInput } from "@components/form";
 import { MEMB_GB_CD, MembGbCd } from "@constants/auth";
 import { appURI } from "@constants/env";
 import { AD_REGISTRATION, FI_STATUS_INQUIRY } from "@constants/path";
-import { useDisclosure, useLogout, useResponsive } from "@hooks";
+import { useAdjustState, useDisclosure, useLogout, useResponsive } from "@hooks";
 import { LogoutIcon } from "@icons14";
 import { MenuIcon } from "@icons24";
 import { DownArrowIcon, UpArrowIcon } from "@icons32";
@@ -106,16 +106,16 @@ export default function HeaderRightArea() {
     } else if (movePath === AD_REGISTRATION) {
       sessionStorage.setItem("admin-rqstno", searchRqstNo);
     }
+    // 목록 화면이 처음 열릴 때 위에 저장한 번호를 읽으므로, 같은 화면에서도 새로 열리도록 전체를 다시 불러옵니다.
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
     window.location.href = `${movePath}`;
   };
 
-  useEffect(() => {
+  useAdjustState([profileData], () => {
     if (profileData) {
       setImgSrc(profileData?.imgData[0]?.src);
-      // setRqstNo(profileData.rqstNo);
-      // setExecDt(profileData.execDt);
     }
-  }, [profileData]);
+  });
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

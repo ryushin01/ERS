@@ -31,10 +31,7 @@ export default function ImageWithAuth({
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!src) {
-      setObjectUrl(null);
-      return;
-    }
+    if (!src) return;
 
     let createdUrl: string | null = null;
     let isCancelled = false;
@@ -56,7 +53,7 @@ export default function ImageWithAuth({
     };
   }, [src]);
 
-  if (!objectUrl) {
+  if (!src || !objectUrl) {
     return <Image src={fallbackSrc} alt={alt} {...props} />;
   }
 
