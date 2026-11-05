@@ -1,7 +1,7 @@
 # ERS - 전자등기 관리 시스템
 
 [![CI](https://github.com/ryushin01/ERS/actions/workflows/ci.yml/badge.svg)](https://github.com/ryushin01/ERS/actions/workflows/ci.yml)
-![version](https://img.shields.io/badge/version-2.0.0-113662)
+![version](https://img.shields.io/badge/version-2.0.1-113662)
 ![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)
 
 > **ERS**는 **E**lectronic **R**egistration **S**ystem(전자등기 관리 시스템)의 줄임말입니다.
@@ -71,7 +71,7 @@
 | 프레임워크 | Next.js 15 (App Router), React 19, TypeScript |
 | 상태·데이터 | TanStack Query v5, jotai, axios |
 | 스타일·UI | Tailwind CSS 3, antd(파일 업로드), swiper, react-datepicker |
-| 품질 | ESLint(import 정렬), Prettier, husky + lint-staged, Vitest + React Testing Library, fast-check |
+| 품질 | ESLint(import 정렬), Prettier, husky + lint-staged, Vitest + React Testing Library, fast-check, Storybook 스토리 테스트(Vitest 브라우저 모드 + Playwright, axe 접근성 검사) |
 | 문서 | Storybook 10 (`@storybook/nextjs-vite`) |
 | 배포 | Docker(standalone), GitHub Actions |
 
@@ -122,8 +122,9 @@ pnpm run dev
 | `pnpm run format` | Prettier로 전체 파일 서식 정리 |
 | `pnpm run format:check` | 서식이 맞는지만 확인 (CI에서 실행) |
 | `pnpm run typecheck` | TypeScript 타입 검사 (`tsc --noEmit`) |
-| `pnpm test` | 단위 테스트 (Vitest) |
+| `pnpm test` | 단위 테스트 (Vitest, jsdom) |
 | `pnpm run test:watch` | 단위 테스트 감시 모드 (파일을 저장하면 다시 실행) |
+| `pnpm run test:storybook` | 스토리 테스트: 모든 스토리를 실제 브라우저(Chromium)에서 렌더링하고 접근성 검사 (처음 한 번 `pnpm exec playwright install chromium` 필요) |
 
 ### 환경 변수
 
@@ -182,6 +183,13 @@ pnpm run build-storybook
 - 스토리용 도우미는 `src/stories/helpers.tsx`에 있습니다. (상태별 목업 의뢰번호, 화면 경로 지정, 모바일 뷰포트, 실제 화면 레이아웃)
 - 데이터를 props로 받는 컴포넌트는 스토리의 `loaders`에서 앱과 같은 services 함수로 목업 데이터를 받아 전달합니다.
 - 화면 크기별 차이는 툴바의 Viewport(Mobile 375 / Tablet 1024 / Desktop 1440)로 확인합니다.
+
+### 스토리 테스트 (접근성 검사 포함)
+
+- `@storybook/addon-vitest`로 **모든 스토리가 그대로 테스트**가 됩니다. `pnpm run test:storybook`을 실행하면 Vitest 브라우저 모드(Playwright Chromium)에서 스토리를 하나씩 렌더링하고, 렌더링 오류·`play` 함수·접근성 위반(axe)을 검사합니다. Storybook 화면의 테스트 위젯에서도 실행할 수 있습니다.
+- 접근성 위반은 경고가 아니라 **실패**로 처리합니다(`.storybook/preview.tsx`의 `a11y: { test: "error" }`). 새 컴포넌트나 색상을 추가할 때 명암 대비(4.5:1)·라벨·ARIA 역할이 맞지 않으면 CI에서 막힙니다.
+- 설정: `vitest.config.mts`의 `storybook` 프로젝트, `.storybook/vitest.setup.ts`
+- 커밋 전 검사에서는 빠른 단위 테스트(`unit` 프로젝트)만 실행하고, 스토리 테스트는 CI에서 실행합니다.
 
 ### 배포와 바로 가기 버튼
 
@@ -273,6 +281,9 @@ pnpm run build-storybook
 
 ### 코드 규칙
 
+- 화면 크기 구분은 `useResponsive`를 사용합니다. `matchMedia`를 `useSyncExternalStore`로 읽기 때문에 브라우저에서 새로 그리는 화면은 첫 렌더링부터 맞는 레이아웃이 나옵니다. (첫 진입 시 서버 렌더링 결과는 PC 기준이며, 하이드레이션 직후 바뀝니다)
+- 접근성: 탭은 `TabGroup`(WAI-ARIA 탭 패턴, ←/→/Home/End 이동), 여러 버튼 중 하나를 고르는 그룹은 `ButtonGroup`(`aria-pressed`)을 사용합니다. 보이는 라벨이 없는 `Select`·`InputField`는 `ariaLabel`을 지정합니다.
+
 - 여러 CSS 파일에서 `@apply`로 쓰는 공통 클래스(`_flex-center`)는 `tailwind.config.ts`의 플러그인에 정의합니다. `globals.css`의 `@layer`에 두면 그 파일이 먼저 처리될 때만 다른 파일에서 `@apply`가 동작합니다.
 - 금액 입력은 `utils/amountUtil`로 처리합니다: 원 단위 정수만(부호·소수점·문자 무시), 최대 15자리, 0원은 제출 불가. 저장 요청 버튼은 `useSubmitLock`으로 중복 제출을 막습니다.
 - 저장 요청은 보낼 데이터를 `mutate(데이터)`로 직접 넘깁니다. (상태를 바꾼 직후 `mutate()`를 호출하고 `mutationFn`이 상태를 읽으면, 실행 시점에 따라 이전 값이 전송될 수 있음)
@@ -285,12 +296,13 @@ pnpm run build-storybook
 
 | 종류 | 위치 | 내용 |
 |---|---|---|
-| 단위 | `utils`, `hooks`, `stores`, `components/button`, `components/modal`, `components/login` | 유틸 함수, 커스텀 훅, 토스트, Button, 모달 접근성, Storybook 바로 가기(전환 후 이동·중복 클릭·동작 줄이기·새 탭) |
+| 단위 | `utils`, `hooks`, `stores`, `components/button`, `components/modal`, `components/login` | 유틸 함수, 커스텀 훅(화면 크기 판단은 첫 렌더링부터 맞는지 포함), 토스트, Button, 모달 접근성, Storybook 바로 가기(전환 후 이동·중복 클릭·동작 줄이기·새 탭) |
 | 라우팅 | `middleware.test.ts` | 사용자 유형별 접근 경로 리다이렉트, Storybook 경로 통과 |
 | API 요청 | `services/services.test.ts` | services가 만드는 요청(메서드·주소·쿼리·본문). 검색어에 `&`·`#` 같은 문자가 있어도 그대로 전달되는지 |
 | 데모 데이터 | `mocks/data.test.ts`, `mocks/adapter.test.ts` | 목업 데이터가 업무 규칙과 맞는지, 목업 API의 응답·상태 변경 |
 | 화면 통합 | `components/**/Main.test.tsx` | 화면을 실제 데이터 흐름(TanStack Query → services → 목업 API)으로 렌더링해 목록·건수가 데이터와 같은지 |
 | 폼 → 요청 내용 | `CreateForm`·`DetailForm`·`DesktopFileUploader`·`RegistrationInformation`·`ReasonModals`(반려·진행취소) 테스트 | 폼에 입력하고 제출했을 때 서버로 가는 요청(JSON·첨부 파일)이 입력값과 정확히 같은지, 연속 클릭에도 한 번만 전송되는지 |
+| 스토리 | 모든 `*.stories.tsx` (`pnpm run test:storybook`) | 스토리 252개를 실제 브라우저에서 렌더링, 접근성 위반(axe) 0건 |
 | 속성 기반 | `utils/amountUtil.test.ts`, `utils/dateUtil.test.ts` | [fast-check](https://fast-check.dev)로 임의 입력 수천 건을 생성해 금액·날짜 변환 규칙이 항상 지켜지는지 (예: 금액 표시 → 숫자 변환 시 원래 값, 모든 시간대에서 같은 날짜) |
 
 - 화면 통합 테스트는 `src/test/renderWithProviders.tsx`(QueryClient·jotai Provider, PC 화면 `matchMedia`)를 쓰고, `next/navigation`은 테스트 파일에서 `vi.mock`으로 대신합니다.
@@ -308,7 +320,7 @@ pnpm run build-storybook
 
 | 작업 | 내용 |
 |---|---|
-| Lint · Typecheck · Test · Build | `.nvmrc`의 Node 22와 `packageManager`의 pnpm으로 lint, 서식 검사, 타입 검사, 단위 테스트, 빌드(Storybook 포함) |
+| Lint · Typecheck · Test · Storybook test · Build | `.nvmrc`의 Node 22와 `packageManager`의 pnpm으로 lint, 서식 검사, 타입 검사, 단위 테스트, 스토리 테스트(Chromium, 접근성 검사), 빌드(Storybook 포함) |
 | Docker image | 운영용 Dockerfile로 이미지를 빌드하고, 컨테이너를 실행해 3000번 포트의 앱과 `/storybook/index.html` 응답 확인 |
 
 ### Docker
@@ -374,6 +386,7 @@ docker compose -f docker/production/docker-compose.yml up --build
 
 | 버전     | 날짜         | 내용                                                           | 비고            |
 |--------|------------|--------------------------------------------------------------|---------------|
+| v2.0.1 | 2026.11.5. | - 접근성 개선: 탭(WAI-ARIA 탭 패턴·키보드 이동), 조회 기간 버튼(`aria-pressed`), 셀렉트·주소 입력칸 이름, 업로드 영역 버튼 중첩 제거, 명암 대비(오류 빨강·보완필요 노랑·회색 버튼·배지·모바일 메뉴 등)<br>- 스토리 테스트 도입(Vitest 브라우저 모드 + Playwright): 모든 스토리 렌더링·접근성 검사, CI에 추가<br>- 화면 크기 판단(`useResponsive`)을 `useSyncExternalStore`로 변경해 모바일에서 PC 레이아웃이 먼저 그려지던 깜빡임 수정, react-responsive 제거<br>- 의존성 업데이트(같은 메이저 안): React 19.3, TanStack Query 5.104, antd 5.29, jotai 2.20, react-datepicker 8.10, date-fns 4.4 등 | 메이저 업그레이드 없음 |
 | v2.0.0 | 2026.11.4. | **포트폴리오 데모 공개**<br>- 코드 정리(타입·버그·Lint), 미사용 코드·의존성 정리, 중복 컴포넌트 통합<br>- 포트폴리오 데모 모드·목업 데이터, 관리자 데모 데이터, 데모 로그인 유형 선택<br>- 공개용 정보 정리<br>- import 순서 자동화, 커밋 전 검사(husky), CI(GitHub Actions)<br>- Vitest 단위·통합·속성 기반 테스트<br>- 보안 취약점 해결(Next.js 15.5, axios, swiper 등)<br>**Storybook·브랜딩**<br>- Storybook 10 도입, 모든 컴포넌트 스토리 작성<br>- Storybook을 앱과 함께 `/storybook`으로 배포, 로그인 화면에 바로 가기 버튼과 전환 애니메이션 추가<br>- ERS 로고(심볼·헤더 로고·파비콘·앱 아이콘) 교체 | 보안 패치 외 라이브러리 버전 변경 없음 (Storybook 신규 추가) |
 | v1.0.1 | 2025.5.14. | - 파비콘, 앱 로고 교체                                               | N/A           |
 | v1.0.0 | 2025.4.11. | - 프로덕션 레벨 배포                                                 | N/A           |
