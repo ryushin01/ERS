@@ -83,6 +83,12 @@ export const LA_PATH = `/${LA}`;
 // Storybook (컴포넌트 문서). 빌드 결과물(public/storybook)을 앱과 함께 정적 파일로 배포합니다.
 export const STORYBOOK_PATH = "/storybook";
 
-// Storybook 첫 화면. 다른 주소에 배포한 Storybook을 쓰려면 NEXT_PUBLIC_STORYBOOK_URL로 지정합니다.
+// Storybook 소개 문서. 경로까지 지정해야 Storybook이 기록(history)을 더 쌓지 않아 뒤로 가기 한 번에 돌아옵니다.
+const STORYBOOK_INTRO = `${STORYBOOK_PATH}/index.html?path=/docs/소개--docs`;
+
+// Storybook 바로 가기 주소
+// - 다른 주소에 배포한 Storybook을 쓰려면 NEXT_PUBLIC_STORYBOOK_URL로 지정합니다.
+// - 개발 서버(pnpm dev)에는 빌드 결과물이 없으므로 Storybook 개발 서버(pnpm storybook)로 연결합니다.
 export const STORYBOOK_URL =
-  process.env.NEXT_PUBLIC_STORYBOOK_URL ?? `${STORYBOOK_PATH}/index.html`;
+  process.env.NEXT_PUBLIC_STORYBOOK_URL ??
+  (process.env.NODE_ENV === "development" ? "http://localhost:6006" : STORYBOOK_INTRO);

@@ -12,11 +12,7 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs-vite",
     options: {},
   },
-  staticDirs: [
-    { from: "../public/icons", to: "/icons" },
-    { from: "../public/images", to: "/images" },
-    { from: "../public/logo.svg", to: "/favicon.svg" },
-  ],
+  staticDirs: [{ from: "../public/logo.svg", to: "/favicon.svg" }],
   core: {
     disableTelemetry: true,
   },

@@ -21,6 +21,22 @@ if (typeof document !== "undefined" && !document.getElementById("portal")) {
   document.body.appendChild(portal);
 }
 
+/** JSDoc에서 설명만 남깁니다. (@description 내용은 유지, 그 외 태그와 그 이어지는 줄은 제거) */
+function cleanJsDoc(description = "") {
+  const kept: string[] = [];
+  let isKeeping = true;
+  for (const line of description.split("\n")) {
+    const tag = line.trim().match(/^@(\w+)\s*(.*)$/);
+    if (tag) {
+      isKeeping = tag[1] === "description";
+      if (isKeeping) kept.push(tag[2].replace(/^-\s*/, ""));
+    } else if (isKeeping) {
+      kept.push(line.trim().replace(/^-\s*/, ""));
+    }
+  }
+  return kept.join("\n").trim() || null;
+}
+
 type AuthParameter = "financial" | "admin" | undefined;
 
 const AUTH_BY_TYPE = {
@@ -66,6 +82,11 @@ const preview: Preview = {
   decorators: [withProviders],
   parameters: {
     nextjs: { appDirectory: true },
+    docs: {
+      // 컴포넌트 주석의 @name·@version·@author·@property 태그는 문서에 그대로 나오면 읽기 어려우므로 설명만 표시합니다.
+      extractComponentDescription: (component: { __docgenInfo?: { description?: string } }) =>
+        cleanJsDoc(component?.__docgenInfo?.description),
+    },
     layout: "padded",
     controls: {
       matchers: { color: /(background|color)$/i, date: /Date$/i },
