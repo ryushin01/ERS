@@ -116,10 +116,10 @@ export default function Accordion({
               className={`_title ${isUrgent ? "flex gap-x-[6px] text-ers-secondary-red-50" : ""}`}
             >
               {!isDesktop && isUrgent && (
-                <Image src={AlertTriangleIcon14} alt="긴급점검 아이콘" width={14} height={14} />
+                <Image src={AlertTriangleIcon14} alt="긴급" width={14} height={14} />
               )}
               {isDesktop && isUrgent && (
-                <Image src={AlertTriangleIcon20} alt="긴급점검 아이콘" width={20} height={20} />
+                <Image src={AlertTriangleIcon20} alt="긴급" width={20} height={20} />
               )}
               {title}
             </Typography>
@@ -141,12 +141,7 @@ export default function Accordion({
           </span>
 
           <span className="_accordion-toggle-icon">
-            <Image
-              src={isOpen ? UpArrowIcon : DownArrowIcon}
-              width={20}
-              height={20}
-              alt={isOpen ? "열림 아이콘" : "닫힘 아이콘"}
-            />
+            <Image src={isOpen ? UpArrowIcon : DownArrowIcon} width={20} height={20} alt="" />
           </span>
         </span>
       </button>

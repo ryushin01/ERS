@@ -214,7 +214,7 @@ export default function DrawerContent({
           shape="outline"
           size="sm"
           color="grayscale"
-          icon={<Image src={LogoutIcon} alt="로그아웃 아이콘" width={14} height={14} />}
+          icon={<Image src={LogoutIcon} alt="" width={14} height={14} />}
           iconPosition="right"
           onClick={handleLogout}
         >

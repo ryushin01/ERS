@@ -39,7 +39,7 @@ export default function Announcement({ data }: NoticeListProps) {
               <th>
                 <span className="_table-content-wrapper">
                   {item.emcyYn === true ? (
-                    <Image src={AlertTriangleIcon20} alt="긴급점검 아이콘" width={20} height={20} />
+                    <Image src={AlertTriangleIcon20} alt="긴급" width={20} height={20} />
                   ) : null}
                   <Typography kind={isDesktop ? "title-medium" : "body-medium"}>
                     {!!item.boardTitles ? item.boardTitles : "-"}

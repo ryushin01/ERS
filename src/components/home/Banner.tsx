@@ -61,7 +61,7 @@ export default function Banner({ name, totalcount, inprogress, application }: Ba
           className={`_todays-counts  after:absolute after:top-0 after:left-0 after:w-full after:h-full after:rounded-2xl after:bg-ers-grayscale-100 after:opacity-10`}
         >
           <div className="_todays-image">
-            <Image src={FileAttachmentIcon} width={32} height={32} alt="문서 아이콘" />
+            <Image src={FileAttachmentIcon} width={32} height={32} alt="" />
           </div>
           <div className="_content-text">
             <Typography kind={isDesktop ? "title-medium" : "title-small"}>
@@ -79,7 +79,7 @@ export default function Banner({ name, totalcount, inprogress, application }: Ba
         >
           <div className="_each-wrapper">
             <div className="_notice-image">
-              <Image src={AlertCircleIcon} width={32} height={32} alt="알림 아이콘" />
+              <Image src={AlertCircleIcon} width={32} height={32} alt="" />
             </div>
             <div className="_content-text">
               <Typography kind={isDesktop ? "title-medium" : "title-small"}>진행중</Typography>
@@ -91,7 +91,7 @@ export default function Banner({ name, totalcount, inprogress, application }: Ba
           </div>
           <div className="_each-wrapper">
             <div className="_check-image">
-              <Image src={CheckCircleIcon} width={32} height={32} alt="체크 아이콘" />
+              <Image src={CheckCircleIcon} width={32} height={32} alt="" />
             </div>
             <div className="_content-text">
               <Typography kind={isDesktop ? "title-medium" : "title-small"}>접수완료</Typography>

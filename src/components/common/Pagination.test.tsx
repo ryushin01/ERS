@@ -18,7 +18,7 @@ function Harness({ total = 240, limit = 10, pageCount = 10 }) {
 }
 
 const button = (alt: RegExp) => screen.getByRole("img", { name: alt }).closest("button")!;
-const FIRST = /첫번째페이지/;
+const FIRST = /첫 페이지/;
 const PREV = /이전/;
 const NEXT = /다음/;
 const LAST = /마지막/;

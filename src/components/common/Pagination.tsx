@@ -101,12 +101,7 @@ export default function Pagination({
               }}
               disabled={page === 1}
             >
-              <Image
-                src={LeftArrowDoubleIcon}
-                width={20}
-                height={20}
-                alt={"첫번째페이지 호출 아이콘"}
-              />
+              <Image src={LeftArrowDoubleIcon} width={20} height={20} alt="첫 페이지" />
             </button>
             <button
               className="_pagination-button"
@@ -115,7 +110,7 @@ export default function Pagination({
               }}
               disabled={page === 1}
             >
-              <Image src={LeftArrowIcon} width={20} height={20} alt={"이전페이지 호출 아이콘"} />
+              <Image src={LeftArrowIcon} width={20} height={20} alt="이전 페이지" />
             </button>
             {reArray.slice(blockArea, pageLimit + blockArea).map((n) => (
               <button
@@ -134,7 +129,7 @@ export default function Pagination({
               }}
               disabled={page === allPageNum}
             >
-              <Image src={RightIcon} width={20} height={20} alt={"다음페이지 호출 아이콘"} />
+              <Image src={RightIcon} width={20} height={20} alt="다음 페이지" />
             </button>
             <button
               className="_pagination-button"
@@ -143,12 +138,7 @@ export default function Pagination({
               }}
               disabled={page === allPageNum}
             >
-              <Image
-                src={RightArrowDoubleIcon}
-                width={20}
-                height={20}
-                alt={"마지막페이지 호출 아이콘"}
-              />
+              <Image src={RightArrowDoubleIcon} width={20} height={20} alt="마지막 페이지" />
             </button>
           </div>
         </div>

@@ -48,7 +48,7 @@ export default function Contents({ isDesktop, getRegiListData, getNoticeListData
               shape="none"
               size="sm"
               color="grayscale"
-              icon={<Image src={NarrowRightIcon.src} alt="더보기 화살표" width={20} height={20} />}
+              icon={<Image src={NarrowRightIcon.src} alt="" width={20} height={20} />}
               iconPosition="right"
               onClick={() => router.push(FI_STATUS_INQUIRY)}
             >
@@ -75,7 +75,7 @@ export default function Contents({ isDesktop, getRegiListData, getNoticeListData
               shape="none"
               size="sm"
               color="grayscale"
-              icon={<Image src={NarrowRightIcon.src} alt="더보기 화살표" width={20} height={20} />}
+              icon={<Image src={NarrowRightIcon.src} alt="" width={20} height={20} />}
               iconPosition="right"
               onClick={() => router.push(FI_NOTICE)}
             >

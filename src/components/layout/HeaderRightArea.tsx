@@ -188,7 +188,7 @@ export default function HeaderRightArea() {
                 icon={
                   <Image
                     src={isDropdownOpen ? UpArrowIcon : DownArrowIcon}
-                    alt={isDropdownOpen ? "위 화살표 아이콘" : "아래 화살표 아이콘"}
+                    alt=""
                     width={32}
                     height={32}
                   />
@@ -211,7 +211,7 @@ export default function HeaderRightArea() {
                   shape="outline"
                   size="sm"
                   color="grayscale"
-                  icon={<Image src={LogoutIcon} alt="로그아웃 아이콘" width={14} height={14} />}
+                  icon={<Image src={LogoutIcon} alt="" width={14} height={14} />}
                   iconPosition="right"
                   onClick={handleLogout}
                 >

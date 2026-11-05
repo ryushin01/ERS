@@ -7,7 +7,7 @@ export default function Loading() {
   return (
     <>
       <div>
-        <Image src={AlertCircleIcon} alt="공지 아이콘" width={80} height={80} />
+        <Image src={AlertCircleIcon} alt="" width={80} height={80} />
       </div>
       <div>
         <Typography kind="headline-large">&quot;현재 페이지는 </Typography>

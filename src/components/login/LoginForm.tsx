@@ -209,7 +209,7 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
           placeholder={ID_INPUT.placeHolder}
           inputMessage={ID_INPUT.labelText}
           errorMessage={ID_INPUT.errorText}
-          icon={<Image src={ID_INPUT.icon} alt="유저 아이콘" width={20} height={20} />}
+          icon={<Image src={ID_INPUT.icon} alt="" width={20} height={20} />}
           iconPosition="left"
           isError={idError}
           onFocus={() => setIdError(false)}
@@ -223,7 +223,7 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
           placeholder={PASSWORD_INPUT.placeHolder}
           inputMessage={PASSWORD_INPUT.labelText}
           errorMessage={PASSWORD_INPUT.errorText}
-          icon={<Image src={PASSWORD_INPUT.icon} alt="자물쇠 아이콘" width={20} height={20} />}
+          icon={<Image src={PASSWORD_INPUT.icon} alt="" width={20} height={20} />}
           iconPosition="left"
           isError={pwdError}
           onFocus={() => setPwdError(false)}

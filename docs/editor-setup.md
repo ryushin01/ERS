@@ -2,7 +2,7 @@
 
 > 커밋할 때 lint-staged가 자동으로 정리하므로, 아래 IDE 설정은 저장할 때도 바로 맞추고 싶을 때만 켜면 됩니다. IDE는 프로젝트의 Prettier 패키지(`node_modules/prettier`)와 설정 파일을 쓰도록 지정하세요. import 순서는 ESLint가 정렬합니다.
 
-### ![My Skills](https://skillicons.dev/icons?i=idea)
+### ![IntelliJ IDEA](https://skillicons.dev/icons?i=idea)
 
 > ***ESLint***
 >
@@ -25,7 +25,7 @@
 >
 > IntelliJ - 커밋 탭 - 커밋 및 푸시 버튼 우측의 커밋 옵션 표시 - `TODO 확인` 체크 비활성화
 
-### ![My Skills](https://skillicons.dev/icons?i=vscode)
+### ![VS Code](https://skillicons.dev/icons?i=vscode)
 
 > ***ESLint***
 >

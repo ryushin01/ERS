@@ -1,7 +1,7 @@
 # ERS - 전자등기 관리 시스템
 
 [![CI](https://github.com/ryushin01/ERS/actions/workflows/ci.yml/badge.svg)](https://github.com/ryushin01/ERS/actions/workflows/ci.yml)
-![version](https://img.shields.io/badge/version-2.0.7-113662)
+![version](https://img.shields.io/badge/version-2.0.8-113662)
 ![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)
 
 금융기관·관리자용 부동산 전자등기 관리 웹 애플리케이션의 프론트엔드입니다. **ERS**는 **E**lectronic **R**egistration **S**ystem의 줄임말입니다.
@@ -56,7 +56,7 @@
 
 ## 기술 스택
 
-![My Skills](https://skillicons.dev/icons?i=react,nextjs,tailwind,js,ts,pnpm,docker,vitest,storybook)
+![React, Next.js, Tailwind CSS, JavaScript, TypeScript, pnpm, Docker, Vitest](https://skillicons.dev/icons?i=react,nextjs,tailwind,js,ts,pnpm,docker,vitest)
 
 | 구분 | 사용 기술 |
 |---|---|
@@ -126,7 +126,7 @@ src/
 
 ## 향후 과제
 
-![My Skills](https://skillicons.dev/icons?i=regex,sass)
+![정규식, Sass](https://skillicons.dev/icons?i=regex,sass)
 
 **기능**
 

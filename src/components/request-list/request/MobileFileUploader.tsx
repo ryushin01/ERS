@@ -458,7 +458,7 @@ export default function MobileFileUploader({
                   onClick={backToList}
                   className="_back-button"
                 >
-                  <Image src={BackIcon} alt="카메라 끄기 아이콘" width={24} height={24} />
+                  <Image src={BackIcon} alt="" width={24} height={24} />
                 </button>
 
                 {isCameraOpen && (
@@ -487,7 +487,7 @@ export default function MobileFileUploader({
                 {isPreviewOpen && (
                   <Image
                     src={tempImageList[tempImageList.length - 1].src!}
-                    alt="임시 이미지"
+                    alt="촬영한 사진 미리보기"
                     width={50}
                     height={50}
                   />
@@ -497,7 +497,7 @@ export default function MobileFileUploader({
               {isCameraOpen && (
                 <div className="_camera-button-wrap">
                   <button type="button" aria-label="사진 촬영" onClick={takePicture}>
-                    <Image src={CameraIcon} alt="사진 촬영 카메라 아이콘" width={48} height={48} />
+                    <Image src={CameraIcon} alt="" width={48} height={48} />
                   </button>
                 </div>
               )}

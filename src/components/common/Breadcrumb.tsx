@@ -56,7 +56,7 @@ export default function Breadcrumb() {
         return (
           <li key={path}>
             <Link href={pathArray.length - 1 !== index ? `/${location}` : ""}>
-              <Image src={RightArrowIcon} alt="우측 화살표 아이콘" width={14} height={14} />
+              <Image src={RightArrowIcon} alt="" width={14} height={14} />
               <Typography kind="body-medium">
                 {isPathUnder(pathname, AD_PATH) ? AD_PATH_LIST[path] : FI_PATH_LIST[path]}
               </Typography>

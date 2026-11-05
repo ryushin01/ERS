@@ -378,7 +378,7 @@ export default function RegistrationInformation({
               shape="solid"
               size="sm"
               color="main60"
-              icon={<Image src={PlusIcon} alt="더하기 아이콘" width={14} height={14} />}
+              icon={<Image src={PlusIcon} alt="" width={14} height={14} />}
               iconPosition="right"
               onClick={handleFileButtonClick}
             >
@@ -401,8 +401,12 @@ export default function RegistrationInformation({
               {fileList?.map((file) => {
                 return (
                   <li key={file.uid} className="_flex-center gap-x-[6px]">
-                    <button type="button" onClick={() => handleFileRemove(`${file.uid}`)}>
-                      <Image src={CancelIcon} alt="개별 삭제 아이콘" width={18} height={18} />
+                    <button
+                      type="button"
+                      aria-label={`${file.attcFilNm} 삭제`}
+                      onClick={() => handleFileRemove(`${file.uid}`)}
+                    >
+                      <Image src={CancelIcon} alt="" width={18} height={18} />
                     </button>
                     <Typography kind="title-small">{file.attcFilNm} </Typography>
                   </li>

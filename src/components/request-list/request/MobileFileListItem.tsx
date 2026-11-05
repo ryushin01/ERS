@@ -65,7 +65,7 @@ export default function MobileFileListItem({
               className="_delete-single-file-button"
             >
               <span>
-                <Image src={CancelWhiteIcon} alt="단일 이미지 삭제 아이콘" width={14} height={14} />
+                <Image src={CancelWhiteIcon} alt="" width={14} height={14} />
               </span>
             </button>
           </li>

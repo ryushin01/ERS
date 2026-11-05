@@ -52,12 +52,7 @@ export default function Radio({
         disabled={disabled}
         onChange={onChange}
       />
-      <Image
-        src={checked ? RadioCheckedIcon : RadioUncheckedIcon}
-        alt={checked ? "선택 아이콘" : "선택 해제 아이콘"}
-        width={20}
-        height={20}
-      />
+      <Image src={checked ? RadioCheckedIcon : RadioUncheckedIcon} alt="" width={20} height={20} />
       <Typography kind={isDesktop ? "title-small" : "body-medium"}>{labelText}</Typography>
     </label>
   );

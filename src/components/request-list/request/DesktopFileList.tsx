@@ -44,12 +44,7 @@ export default function DesktopFileList({ fileList, handleRemove }: DesktopFileL
                     className="_delete-single-file-button"
                   >
                     <span>
-                      <Image
-                        src={CancelIcon}
-                        alt="단일 이미지 삭제 아이콘"
-                        width={18}
-                        height={18}
-                      />
+                      <Image src={CancelIcon} alt="" width={18} height={18} />
                     </span>
                   </button>
 

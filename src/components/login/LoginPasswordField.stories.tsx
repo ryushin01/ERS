@@ -17,7 +17,7 @@ const meta = {
     name: "pwd",
     defaultValue: "",
     placeholder: "비밀번호를 입력해 주세요",
-    icon: <Image src={LockIcon} alt="자물쇠 아이콘" width={20} height={20} />,
+    icon: <Image src={LockIcon} alt="" width={20} height={20} />,
     iconPosition: "left",
     inputSize: "lg",
     onFocus: fn(),

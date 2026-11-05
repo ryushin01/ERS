@@ -83,7 +83,7 @@ describe("MobileFileUploader", () => {
 
     await userEvent.click(screen.getByRole("button", { name: /사진 촬영/ }));
 
-    await waitFor(() => expect(screen.queryByAltText("로딩 스피너")).not.toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByAltText("로딩 중")).not.toBeInTheDocument());
     expect(screen.queryByRole("button", { name: "카메라 끄기" })).not.toBeInTheDocument();
   });
 

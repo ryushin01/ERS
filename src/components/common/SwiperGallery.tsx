@@ -71,7 +71,7 @@ export default function SwiperGallery({
                   className="absolute top-0 right-0 rounded bg-ers-grayscale-0/30"
                   onClick={onDelete}
                 >
-                  <Image src={CancelIcon} alt="이미지 개별 삭제 아이콘" width={36} height={36} />
+                  <Image src={CancelIcon} alt="이미지 삭제" width={36} height={36} />
                 </button>
               )}
             </SwiperSlide>
@@ -79,10 +79,10 @@ export default function SwiperGallery({
         </Swiper>
 
         <button type="button" className="_btn-prev" aria-label="이전 슬라이드 보기">
-          <Image src={LeftArrowIcon} alt="좌측 화살표 아이콘" width={24} height={24} />
+          <Image src={LeftArrowIcon} alt="" width={24} height={24} />
         </button>
         <button type="button" className="_btn-next" aria-label="다음 슬라이드 보기">
-          <Image src={RightArrowIcon} alt="우측 화살표 아이콘" width={24} height={24} />
+          <Image src={RightArrowIcon} alt="" width={24} height={24} />
         </button>
       </div>
     </>

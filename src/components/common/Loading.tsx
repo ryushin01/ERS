@@ -9,7 +9,7 @@ export default function Loading() {
     <div className="_spinner-wrapper">
       <div className="_spinner-backdrop"></div>
       <div className="_spinner-container">
-        <Image src={Spinner} alt="로딩 스피너" width={64} height={64} className="_spinner" />
+        <Image src={Spinner} alt="로딩 중" width={64} height={64} className="_spinner" />
       </div>
     </div>
   );

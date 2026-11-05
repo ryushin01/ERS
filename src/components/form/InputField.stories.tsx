@@ -45,7 +45,7 @@ export const WithIcon: Story = {
   args: {
     labelText: "",
     htmlFor: "",
-    icon: <Image src={UserIcon} alt="유저 아이콘" width={20} height={20} />,
+    icon: <Image src={UserIcon} alt="" width={20} height={20} />,
     iconPosition: "left",
     inputSize: "lg",
   },
@@ -58,7 +58,7 @@ export const Password: Story = {
     name: "pwd",
     labelText: "비밀번호",
     placeholder: "비밀번호를 입력해 주세요",
-    icon: <Image src={LockIcon} alt="자물쇠 아이콘" width={20} height={20} />,
+    icon: <Image src={LockIcon} alt="" width={20} height={20} />,
     iconPosition: "left",
   },
 };

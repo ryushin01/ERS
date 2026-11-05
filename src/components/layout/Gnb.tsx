@@ -28,12 +28,12 @@ export default function Gnb() {
 
           return (
             <li key={id} className={isSelected ? "_selected" : undefined}>
-              <Link href={path}>
+              <Link href={path} aria-current={isSelected ? "page" : undefined}>
                 <span className="_menu-item-inner-wrapper">
                   {defaultIcon && selectedIcon && (
                     <Image
                       src={isDesktop ? (isSelected ? selectedIcon! : defaultIcon!) : selectedIcon!}
-                      alt={`${name} 메뉴 ${isSelected ? "선택" : "선택 해제"}`}
+                      alt=""
                       width={24}
                       height={24}
                     />

@@ -38,7 +38,7 @@ export default function Checkbox({ name, labelText, checked, disabled, onChange 
       />
       <Image
         src={checked ? CheckboxCheckedIcon : CheckboxUncheckedIcon}
-        alt={checked ? "선택 아이콘" : "선택 해제 아이콘"}
+        alt=""
         width={20}
         height={20}
       />
