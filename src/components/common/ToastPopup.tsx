@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useAtomValue } from "jotai";
 
+import { useIsClient } from "@hooks";
 import { toastState } from "@stores";
 
 /**
@@ -17,11 +17,7 @@ import { toastState } from "@stores";
 export default function ToastPopup() {
   const toastObject = useAtomValue(toastState);
   const msgs = toastObject.message.split("\n");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useIsClient();
 
   if (!mounted) return null; // 서버에서는 렌더링하지 않음
 

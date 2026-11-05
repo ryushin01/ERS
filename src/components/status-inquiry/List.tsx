@@ -11,6 +11,7 @@ import {
   PAGE_LIMIT_ADMIN,
   PAGE_LIMIT_MOBILE,
 } from "@constants/page";
+import { useAdjustState } from "@hooks";
 import { getStasusListData } from "@services/statusInquiry";
 import { toastState } from "@stores";
 import { ResponsiveType } from "@types";
@@ -47,13 +48,15 @@ export default function List({ isDesktop }: ResponsiveType) {
   }); // 필터 상태 관리
   const [data, setData] = useState([]); // 테이블 데이터
   const [total, setTotal] = useState(0); // 전체 데이터 개수
-  const [pageLimit, setPageLimit] = useState(0);
+  const pageLimit = isDesktop ? PAGE_LIMIT_ADMIN : PAGE_LIMIT_MOBILE;
 
   //헤더 의뢰번호 검색 후 처리
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedRqstNo = sessionStorage.getItem("bank-rqstno");
       if (storedRqstNo) {
+        // sessionStorage는 브라우저에만 있어 하이드레이션 뒤에 읽어야 합니다.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setRqstNo(storedRqstNo); // ✅ null이 아닐 때만 설정
         setFilters((prev) => ({ ...prev, rqstNo: storedRqstNo }));
       }
@@ -86,11 +89,15 @@ export default function List({ isDesktop }: ResponsiveType) {
     enabled: !!page && pageLimit > 0,
   });
 
+  // 새 페이지를 불러오는 동안에도 앞의 결과를 보여 주도록 상태로 둡니다.
+  useAdjustState([statusListData], () => {
+    if (!statusListData) return;
+    setData(statusListData.rgstrList || []); // data set
+    setTotal(statusListData.totalElements || 0); //total set
+  });
+
   useEffect(() => {
     if (statusListData) {
-      setData(statusListData.rgstrList || []); // data set
-      setTotal(statusListData.totalElements || 0); //total set
-
       //등기의뢰번호 및 검색일자 조회 시 데이터 없을 경우 처리
       if (
         (!!filters.rqstNo ||
@@ -111,13 +118,7 @@ export default function List({ isDesktop }: ResponsiveType) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusListData]);
 
-  useEffect(() => {
-    setPageLimit(isDesktop ? PAGE_LIMIT_ADMIN : PAGE_LIMIT_MOBILE);
-  }, [isDesktop]);
-
-  useEffect(() => {
-    setPage(1);
-  }, [filters]);
+  useAdjustState([filters], () => setPage(1));
 
   return (
     <>

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, Dispatch, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { Button, ButtonGroup } from "@components/button";
@@ -9,7 +9,7 @@ import { Form, InputField, Select } from "@components/form";
 import { filters } from "@components/status-inquiry/List";
 import { PERIOD_OPTION } from "@constants/option";
 import { PERIOD_LIST } from "@constants/period";
-import { useDatePicker } from "@hooks";
+import { useAdjustState, useDatePicker } from "@hooks";
 import { getStatusCdData } from "@services/statusInquiry";
 import { getCodeList } from "@utils/codeUtil";
 import { getDateString } from "@utils/dateUtil";
@@ -49,14 +49,14 @@ export default function FilterTable({ isDesktop, setFilters, rqstNo }: definePro
 
   const STATUS_OPTION = [{ value: "", label: "전체" }, ...getCodeList(data)];
 
-  useEffect(() => {
+  useAdjustState([rqstNo], () => {
     if (rqstNo) {
       setForm((prevForm) => ({
         ...prevForm,
         rqstNo: rqstNo,
       }));
     }
-  }, [rqstNo]);
+  });
 
   /**
    * 버튼 그룹 내 index를 받아 선택 유무를 배열로 저장하고 index에 따라 다른 파라미터로 데이터 페칭하는 함수

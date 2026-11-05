@@ -48,6 +48,8 @@ export default function LoginForm({ isDesktop }: ResponsiveType) {
   useEffect(() => {
     const getUserId = localStorage.getItem("userId");
     if (getUserId) {
+      // localStorage는 브라우저에만 있어 하이드레이션 뒤에 읽어야 합니다.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setForm({ id: getUserId, pwd: "", membGbCd: "00" });
       setIsChecked(true);
     }

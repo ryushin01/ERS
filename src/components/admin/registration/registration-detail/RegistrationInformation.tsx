@@ -10,6 +10,7 @@ import { Loading, Typography } from "@components/common";
 import { Form, InputField, Label, Select, TextArea } from "@components/form";
 import { JUDT_COURT_CD, PROC_STAT_CD, REGR_CD } from "@constants/code";
 import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE, FILE_MAXIMUM_SIZE_STRING } from "@constants/file";
+import { useAdjustState } from "@hooks";
 import { PlusIcon } from "@icons14";
 import { CancelIcon } from "@icons18";
 import { getCommonCodeList } from "@services/common";
@@ -89,14 +90,15 @@ export default function RegistrationInformation({
     });
 
   /* 관할법원 코드리스트 세팅 */
-  useEffect(() => {
+  useAdjustState([judtCourtCodeData], () => {
     if (!!judtCourtCodeData) {
       setJudtCourtCodeList(getCodeList(judtCourtCodeData));
     }
-  }, [judtCourtCodeData]);
+  });
 
   /* 등기소 코드리스트 세팅 */
-  useEffect(() => {
+  // 등기소 코드 데이터 수신 시점에만 초기 목록을 구성합니다. (관할법원 변경 시 필터링은 별도 처리)
+  useAdjustState([registryOfficeCodeData], () => {
     if (!!registryOfficeCodeData) {
       setRegistryOfficeCodeList(getCodeList(registryOfficeCodeData));
     }
@@ -108,9 +110,7 @@ export default function RegistrationInformation({
 
       setRegistryOfficeCodeList(newCodeList);
     }
-    // 등기소 코드 데이터 수신 시점에만 초기 목록을 구성합니다. (관할법원 변경 시 필터링은 별도 처리)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [registryOfficeCodeData]);
+  });
 
   /* 관할법원 변경시 등기소 코드리스트 변경 */
   const handleJudtCourtChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -259,7 +259,7 @@ export default function RegistrationInformation({
 
   // 기 등록한 정보를 받으면 폼에 채움.
   // 응답이 늦거나 창으로 돌아와 다시 조회해도 사용자가 이미 입력한 값과 새로 고른 파일은 지우지 않음
-  useEffect(() => {
+  useAdjustState([data], () => {
     setSelectJudtCourt((prev) => prev || data?.judtCourtCd);
     setSelectRegistryOffice((prev) => prev || data?.regrCd);
     setAcceptNo((prev) => prev || data?.acptNo);
@@ -275,7 +275,7 @@ export default function RegistrationInformation({
       file: undefined,
     }));
     setFileList((prev) => [...savedFiles, ...prev.filter((file) => file.file)]);
-  }, [data]);
+  });
 
   //첨부파일 추가 시 개수 및 용량 체크
   useEffect(() => {

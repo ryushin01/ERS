@@ -18,7 +18,14 @@ import {
 } from "@constants/information";
 import { LAND_LOT_OPTION } from "@constants/option";
 import { AD_ASSIGN } from "@constants/path";
-import { useDatePicker, useDisclosure, useRadio, useSubmitLock } from "@hooks";
+import {
+  useAdjustState,
+  useDatePicker,
+  useDisclosure,
+  useIsClient,
+  useRadio,
+  useSubmitLock,
+} from "@hooks";
 import {
   getUnqRgsrtNo,
   patchAccignmentForm,
@@ -110,19 +117,16 @@ export default function Table({
     bldg: "",
     unit: "",
   });
-  const [isClient, setIsClient] = useState(false);
+  const isClient = useIsClient();
 
   /* 고유번호 리셋 오류로 requstNo props가 바뀔때마다 고유번호 리셋 */
-  useEffect(() => {
+  useAdjustState([requstNo], () => {
     if (requstNo) {
       setUnqRgstrNo("");
     }
-  }, [requstNo]);
+  });
 
   /* client 사이드인지 체크 */
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const {
     isOpen: isSupplementRequestModalOpen,
@@ -508,11 +512,11 @@ export default function Table({
   };
 
   /* 등기고유번호 조회 완료시 setUnqRgstrNo 데이터 set */
-  useEffect(() => {
+  useAdjustState([unqRgstrNoData, unqRgstrNoDataLoading], () => {
     if (unqRgstrNoData && !unqRgstrNoDataLoading) {
       setUnqRgstrNo(unqRgstrNoData.data);
     }
-  }, [unqRgstrNoData, unqRgstrNoDataLoading]);
+  });
 
   /* ---- 등기 고유 번호 조회 끝 ---- */
 

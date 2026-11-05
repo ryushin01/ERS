@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSetAtom } from "jotai";
 
 import { Button } from "@components/button";
 import RegistrationDataView from "@components/registration/RegistrationDataView";
 import { PROC_STAT_CD } from "@constants/code";
+import { useAdjustState } from "@hooks";
 import { getRegistrationInfoData, patchRegistrationHold } from "@services/request";
 import { toastState } from "@stores";
 import { ResponsiveType } from "@types";
@@ -57,7 +58,7 @@ export default function RegistrationDataDetail({
     setIsHoldDisabled(true);
   };
 
-  useEffect(() => {
+  useAdjustState([data], () => {
     /*
     진행보류 버튼 비활성화 조건 
     1. 대출실행일 기준 D-day 부터 비활성화 
@@ -69,7 +70,7 @@ export default function RegistrationDataDetail({
     } else if (data?.statCd === PROC_STAT_CD.HOLD || data?.statCd === PROC_STAT_CD.CANCEL) {
       setIsHoldDisabled(true);
     }
-  }, [data]);
+  });
 
   return (
     <RegistrationDataView

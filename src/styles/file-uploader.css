@@ -133,12 +133,6 @@
 ._mobile-file-uploader-wrapper {
     @apply mb-[10px];
 
-    label:not[_take-picture-button] {
-        span {
-            @apply text-2xl leading-[34px] font-semibold;
-        }
-    }
-
     ._mobile-file-list {
         @apply grid grid-cols-3 gap-4 -mx-4 py-6 px-4 bg-ers-grayscale-0 border-t border-b border-ers-grayscale-40;
 

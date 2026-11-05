@@ -10,6 +10,7 @@ import { Select } from "@components/form";
 import { Grid, GridItem } from "@components/layout";
 import { NUMERIC_SORT_OPTION, PERIOD_SORT_OPTION } from "@constants/option";
 import { PAGE_COUNT_PC } from "@constants/page";
+import { useAdjustState } from "@hooks";
 import { getRegistrationListData } from "@services/registrationManagement";
 import { toastState } from "@stores";
 import { ResponsiveType } from "@types";
@@ -84,15 +85,15 @@ export default function List({
     enabled: !!page,
   });
 
-  useEffect(() => {
-    setPage(1);
-  }, [tabSelection, filters, selectedNumeric]);
+  useAdjustState([tabSelection, filters, selectedNumeric], () => setPage(1));
 
   //헤더 의뢰번호 검색 후 처리
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedRqstNo = sessionStorage.getItem("admin-rqstno");
       if (storedRqstNo) {
+        // sessionStorage는 브라우저에만 있어 하이드레이션 뒤에 읽어야 합니다.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setFilters((prev) => ({ ...prev, rqstNo: storedRqstNo }));
       }
     }

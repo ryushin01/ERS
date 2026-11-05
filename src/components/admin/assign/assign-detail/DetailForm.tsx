@@ -8,7 +8,7 @@ import { Loading } from "@components/common";
 import { Grid, GridItem } from "@components/layout";
 import { ATTC_FIL_CD, REALE_CD } from "@constants/code";
 import { FILE_MAXIMUM_NUMBER, FILE_MAXIMUM_SIZE } from "@constants/file";
-import { useFileUpload } from "@hooks";
+import { useAdjustState, useFileUpload } from "@hooks";
 import { getSupplimentData } from "@services/adminAssign";
 import { getMemberListData } from "@services/assignDetail";
 import { getCommonCodeList } from "@services/common";
@@ -60,12 +60,12 @@ export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
   });
 
   /* 배정등록 상세정보 데이터 set 해주기 */
-  useEffect(() => {
+  useAdjustState([spplData], () => {
     setData((prev) => {
       const isSame = JSON.stringify(prev) === JSON.stringify(spplData);
       return isSame ? prev : spplData;
     });
-  }, [spplData]);
+  });
 
   /* 부동산구분코드 조회 api */
   const { data: realeCdData } = useQuery({
@@ -75,11 +75,11 @@ export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
     enabled: true,
   });
   /* 부동산구분코드 데이터 set 해주기 */
-  useEffect(() => {
+  useAdjustState([realeCdData], () => {
     if (realeCdData?.data?.commCodeList) {
       setRealeCd(realeCdData.data.commCodeList);
     }
-  }, [realeCdData]);
+  });
 
   /* 회원 목록 조회 api */
   const {
@@ -93,13 +93,13 @@ export default function CreateForm({ isDesktop, rqstNo }: DefineProps) {
   });
 
   /* 회원 목록 데이터 set 해주기 */
-  useEffect(() => {
+  useAdjustState([memberListData], () => {
     if (Array.isArray(memberListData)) {
       setMembList(memberListData);
     } else {
       setMembList([]); // 만약 배열이 아니라면 빈 배열로 초기화
     }
-  }, [memberListData]);
+  });
 
   /* 등기자료 이미지 정보 조회 */
   const { data: imageData, isLoading: imageLoading } = useQuery({

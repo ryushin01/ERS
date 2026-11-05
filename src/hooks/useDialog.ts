@@ -46,7 +46,9 @@ export default function useDialog(dialogRef: RefObject<HTMLElement | null>, onCl
   const portal = document.getElementById("portal");
   // 렌더링마다 새로 만들어지는 onClose가 바뀌어도 이펙트(포커스 이동 등)를 다시 실행하지 않도록 ref로 보관
   const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  });
 
   useEffect(() => {
     const dialog = dialogRef.current;

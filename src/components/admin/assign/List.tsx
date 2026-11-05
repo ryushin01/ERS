@@ -8,7 +8,7 @@ import { Loading, Pagination } from "@components/common";
 import { Select } from "@components/form";
 import { Grid, GridItem } from "@components/layout";
 import { NUMERIC_SORT_OPTION, PERIOD_SORT_OPTION } from "@constants/option";
-import { useResponsive } from "@hooks";
+import { useAdjustState, useResponsive } from "@hooks";
 import { getSupplimentListData } from "@services/adminAssign";
 import { toastState } from "@stores";
 
@@ -33,9 +33,7 @@ export default function List({ tabIndex, searchRqstNo, unMatchData }: ListProps)
   const [total, setTotal] = useState<number>(0); // 전체 데이터 개수
 
   /* 1. 탭인덱스가 바뀌면 페이지는 무조건 1로 세팅 */
-  useEffect(() => {
-    setPage(1);
-  }, [tabIndex, searchRqstNo, selectedNumeric]);
+  useAdjustState([tabIndex, searchRqstNo, selectedNumeric], () => setPage(1));
 
   /* 2. 조회 조건(page, tabIndex, searchRqstNo, selectedPeriod, selectedNumeric)은 queryKey에 포함되어 있어 변경 시 자동으로 재조회됩니다. */
 
@@ -63,17 +61,20 @@ export default function List({ tabIndex, searchRqstNo, unMatchData }: ListProps)
   });
 
   /* 4. api 조회 완료시 데이터 셋 */
+  // 새 페이지를 불러오는 동안에도 앞의 결과를 보여 주도록 상태로 둡니다.
+  useAdjustState([spplListData], () => {
+    if (!spplListData) return;
+    setData(spplListData.mtchList || []); // data set
+    setTotal(spplListData.totalElements || 0); //total set
+    setUnMatchCount(spplListData.unMtchCnt || 0); //unmatch set
+  });
+
   useEffect(() => {
-    if (spplListData) {
-      if (!!searchRqstNo && spplListData.totalElements === 0) {
-        openToast({
-          message: "일치하는 검색결과가 없습니다",
-          position: isDesktop ? "top" : "bottom",
-        });
-      }
-      setData(spplListData?.mtchList || []); // data set
-      setTotal(spplListData?.totalElements || 0); //total set
-      setUnMatchCount(spplListData?.unMtchCnt || 0); //unmatch set
+    if (spplListData && !!searchRqstNo && spplListData.totalElements === 0) {
+      openToast({
+        message: "일치하는 검색결과가 없습니다",
+        position: isDesktop ? "top" : "bottom",
+      });
     }
     // 아래 값이 바뀔 때만 실행하도록 의도된 이펙트입니다. (그 외 값은 실행 시점의 최신 값을 읽기만 함)
     // eslint-disable-next-line react-hooks/exhaustive-deps
