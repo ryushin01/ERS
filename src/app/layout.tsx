@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 
 import Provider from "@components/common/Provider";
-import StaticRouteGuard from "@components/common/StaticRouteGuard";
 import ToastPopup from "@components/common/ToastPopup";
 import { DESCRIPTION, FAVICON, OG_IMAGE, SITE_URL, TITLE } from "@constants/metadata";
 
@@ -43,24 +42,15 @@ export default function RootLayout({
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"
         />
-        <link rel="manifest" href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/manifest.json`} />
-        <link
-          rel="apple-touch-icon"
-          sizes="192x192"
-          href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo/logo-192x192.png`}
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="512x512"
-          href={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo/logo-512x512.png`}
-        />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/images/logo/logo-192x192.png" />
+        <link rel="apple-touch-icon" sizes="512x512" href="/images/logo/logo-512x512.png" />
       </head>
       <body>
         <Provider>
           <div id="app">{children}</div>
           <ToastPopup />
           <div id="portal" />
-          {process.env.NEXT_PUBLIC_STATIC_EXPORT === "1" && <StaticRouteGuard />}
         </Provider>
       </body>
     </html>

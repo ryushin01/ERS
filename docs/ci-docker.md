@@ -36,11 +36,3 @@ docker compose -f docker/production/docker-compose.yml up --build
 
 > 베이스 이미지는 `node:22-alpine`입니다(`.nvmrc`와 같은 Node 22 LTS).
 > Dockerfile은 빌드 시 `.env.development` / `.env.production`을 복사하므로, Docker로 빌드하려면 해당 파일을 먼저 만들어야 합니다(데모 모드는 빈 파일이면 됩니다). 컨테이너는 standalone 빌드 결과물을 `node server.js`로 실행합니다.
-
-## GitHub Pages 데모
-
-`main`에 머지하면 `.github/workflows/pages.yml`이 정적 데모를 GitHub Pages에 올립니다. `STATIC_EXPORT=1`로 빌드하면 저장소 하위 경로(`/ERS`)를 쓰는 정적 내보내기가 됩니다.
-
-- 미들웨어와 리다이렉트가 돌지 않으므로 같은 규칙(`resolveRouteRedirect`)을 브라우저에서 적용합니다(`StaticRouteGuard`). 데모의 접근 제어는 화면 이동만 막습니다.
-- 상세 페이지 주소는 빌드할 때 만듭니다. 새 의뢰 번호까지 포함해 `DEMO-002430`부터 64개입니다.
-- CSS의 절대 경로는 빌드 뒤 `scripts/prefix-css-urls.mjs`로 고칩니다.

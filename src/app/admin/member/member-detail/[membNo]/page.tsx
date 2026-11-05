@@ -9,10 +9,6 @@ export const metadata: Metadata = {
   description: AD_MEMBER_DETAIL_METADATA.DESCRIPTION,
 };
 
-export function generateStaticParams() {
-  return ["DEMO", "DEMO2", "LAW1", "LAW2"].map((membNo) => ({ membNo }));
-}
-
 export default async function Detail() {
   return (
     <CommonLayout>
