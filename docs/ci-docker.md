@@ -43,4 +43,4 @@ docker compose -f docker/production/docker-compose.yml up --build
 
 - 미들웨어와 리다이렉트가 돌지 않으므로 같은 규칙(`resolveRouteRedirect`)을 브라우저에서 적용합니다(`StaticRouteGuard`). 데모의 접근 제어는 화면 이동만 막습니다.
 - 상세 페이지 주소는 빌드할 때 만듭니다. 새 의뢰 번호까지 포함해 `DEMO-002430`부터 64개입니다.
-- CSS의 절대 경로는 빌드 뒤 `scripts/prefix-css-urls.mjs`로 고칩니다.
+- CSS와 `manifest.json`의 절대 경로는 빌드 뒤 `scripts/prefix-css-urls.mjs`로 고칩니다.

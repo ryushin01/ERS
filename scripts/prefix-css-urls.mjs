@@ -1,4 +1,4 @@
-// 정적 배포용 CSS의 절대 경로(url(/icons/...))에 저장소 하위 경로를 붙인다. CSS의 url()은 Next가 바꿔 주지 않는다.
+// 정적 배포 결과물의 절대 경로에 저장소 하위 경로를 붙인다. CSS의 url()과 manifest는 Next가 바꿔 주지 않는다.
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
@@ -20,3 +20,12 @@ const walk = (folder) => {
 };
 walk(dir);
 console.log(`CSS ${changed}개의 경로를 고쳤습니다.`);
+
+// 앱 설치 정보(manifest)의 시작 주소와 아이콘도 하위 경로를 가리키게 한다.
+const manifestPath = path.join(dir, "manifest.json");
+const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+const prefix = (url) => (url.startsWith("/") ? `${basePath}${url}` : url);
+if (manifest.start_url) manifest.start_url = prefix(manifest.start_url);
+if (manifest.scope) manifest.scope = prefix(manifest.scope);
+for (const icon of manifest.icons ?? []) icon.src = prefix(icon.src);
+writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));

@@ -63,11 +63,11 @@
 | 구분 | 사용 기술 |
 |---|---|
 | 프레임워크 | Next.js 15 (App Router), React 19, TypeScript |
-| 상태·데이터 | TanStack Query v5, jotai, axios |
+| 상태·데이터 | TanStack Query v5, jotai, axios, js-cookie |
 | 스타일·UI | Tailwind CSS 3, antd(파일 업로드), swiper, react-datepicker |
 | 품질 | ESLint(import 정렬), Prettier, husky + lint-staged, Vitest + React Testing Library, fast-check, Storybook 스토리 테스트(Vitest 브라우저 모드 + Playwright, axe 접근성 검사), E2E 테스트(Playwright) |
 | 문서 | Storybook 10 (`@storybook/nextjs-vite`) |
-| 배포 | Docker(standalone), GitHub Actions |
+| 배포 | GitHub Pages(데모), Docker(standalone), GitHub Actions |
 
 ## 시작하기
 
