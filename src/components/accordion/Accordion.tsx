@@ -93,7 +93,12 @@ export default function Accordion({
 
   return (
     <div className={`_accordion ${isOpen ? "_open" : ""}`}>
-      <button type="button" className="_accordion-trigger" onClick={() => setIsOpen(!isOpen)}>
+      <button
+        type="button"
+        className="_accordion-trigger"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <span className={isDesktop ? "_accordion-text" : "_mobile-accordion-texts"}>
           <span className="_top-titles">
             <Typography
