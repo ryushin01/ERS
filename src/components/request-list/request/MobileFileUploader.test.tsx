@@ -25,13 +25,22 @@ vi.mock("next/navigation", () => ({
 }));
 
 let shots = 0;
+let cameraDenied = false;
 
 vi.mock("react-webcam", () => ({
-  default: forwardRef(function Webcam({ onUserMedia }: { onUserMedia?: () => void }, ref) {
+  default: forwardRef(function Webcam(
+    { onUserMedia, onUserMediaError }: { onUserMedia?: () => void; onUserMediaError?: () => void },
+    ref,
+  ) {
     useImperativeHandle(ref, () => ({
       getScreenshot: () => `data:image/jpeg;base64,${btoa("x".repeat(++shots))}`,
     }));
-    useEffect(() => onUserMedia?.(), [onUserMedia]);
+    // 실제 라이브러리처럼 마운트할 때 한 번만 결과를 알림
+    useEffect(() => {
+      if (cameraDenied) onUserMediaError?.();
+      else onUserMedia?.();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return null;
   }),
 }));
@@ -43,6 +52,7 @@ beforeEach(() => {
   sessionStorage.clear();
   mockDesktopMatchMedia();
   shots = 0;
+  cameraDenied = false;
   requests = [];
   axiosBasicInstance.defaults.adapter = (config) => {
     requests.push(config);
@@ -55,8 +65,10 @@ afterEach(() => {
 });
 
 const takeAndUpload = async () => {
-  await userEvent.click(screen.getByRole("button", { name: /^사진 촬영 더하기 아이콘/ }));
-  await userEvent.click(await screen.findByRole("button", { name: "사진 촬영" }));
+  await userEvent.click(screen.getByRole("button", { name: /사진 촬영/ }));
+  // 카메라 화면이 열리면 같은 이름의 버튼이 둘이 되므로, 마지막(셔터)을 누름
+  await screen.findByRole("button", { name: "카메라 끄기" });
+  await userEvent.click(screen.getAllByRole("button", { name: "사진 촬영" }).at(-1)!);
   await userEvent.click(await screen.findByRole("button", { name: "사진 업로드하기" }));
 };
 const submit = () => screen.getByRole("button", { name: /^제출하기/ });
@@ -65,6 +77,16 @@ const posted = () =>
 const postedFiles = () => (posted()[0].data as FormData).getAll("multipartFiles") as File[];
 
 describe("MobileFileUploader", () => {
+  it("카메라를 쓸 수 없으면 로딩을 끝내고 카메라 화면을 닫아 양식을 계속 쓸 수 있다", async () => {
+    cameraDenied = true;
+    renderWithProviders(<MobileFileUploader isMobile isPortrait />);
+
+    await userEvent.click(screen.getByRole("button", { name: /사진 촬영/ }));
+
+    await waitFor(() => expect(screen.queryByAltText("로딩 스피너")).not.toBeInTheDocument());
+    expect(screen.queryByRole("button", { name: "카메라 끄기" })).not.toBeInTheDocument();
+  });
+
   it("사진 없이 제출하면 요청을 보내지 않는다", async () => {
     renderWithProviders(<MobileFileUploader isMobile isPortrait />);
 

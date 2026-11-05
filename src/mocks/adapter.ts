@@ -259,8 +259,8 @@ const routes: Route[] = [
       const statCd = params.get("statCd") ?? "";
       const acptNo = params.get("acptNo") ?? "";
       const dbtrNm = params.get("dbtrNm") ?? "";
-      const fromDate = params.get("fromDate") ?? "";
-      const toDate = params.get("toDate") ?? "";
+      const fromDate = toDashedDate(params.get("fromDate"));
+      const toDate = toDashedDate(params.get("toDate"));
       const dateKey = params.get("searchType") === "RQST" ? "crtDtm" : "execDt";
 
       const filtered = REGISTRATIONS.filter(
@@ -431,8 +431,8 @@ const routes: Route[] = [
     handler: (params) => {
       const tab = params.get("tabSelection") ?? "";
       const rqstNo = params.get("searchRqstNo") ?? "";
-      const fromDate = params.get("fromDate") ?? "";
-      const toDate = params.get("toDate") ?? "";
+      const fromDate = toDashedDate(params.get("fromDate"));
+      const toDate = toDashedDate(params.get("toDate"));
       const dateKey = params.get("searchType") === "RQST" ? "crtDtm" : "execDt";
       const filtered = sortBy(
         REGISTRATIONS.filter(

@@ -115,14 +115,12 @@ export default function FilterTable({ isDesktop, setFilters, rqstNo }: definePro
   const handleChangeSearchType = (e: ChangeEvent<HTMLSelectElement>) => {
     const newValue = e.target.value;
     setForm((prev) => ({ ...prev, searchType: newValue }));
-    setFilters(filters);
   };
 
   // 진행상태 업데이트
   const handleSelectedStatus = (e: ChangeEvent<HTMLSelectElement>) => {
     const newValue = e.target.value;
     setForm((prev) => ({ ...prev, statCd: newValue }));
-    setFilters(filters);
   };
 
   const formMonitoring = (e: ChangeEvent<HTMLFormElement>) => {
@@ -229,6 +227,7 @@ export default function FilterTable({ isDesktop, setFilters, rqstNo }: definePro
                 <td colSpan={2}>
                   <div className="min-w-52">
                     <InputField
+                      type="text"
                       name="rqstNo"
                       defaultValue={filters.rqstNo}
                       required={false}

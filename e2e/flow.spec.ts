@@ -203,3 +203,31 @@ test("다른 메뉴의 깊은 경로에서도 헤더 검색으로 현황조회�
   await expect(page.getByRole("main").getByText("DEMO-002400").first()).toBeVisible();
   await expect(page.getByRole("main").getByText("DEMO-002399")).toHaveCount(0);
 });
+
+test("현황조회에서 의뢰번호와 기간으로 검색한다", async ({ page }) => {
+  await login(page, "financial");
+  await page.goto("/financial/status-inquiry");
+  const main = page.getByRole("main");
+  await expect(main.getByText("DEMO-002399").first()).toBeVisible();
+
+  await main.getByPlaceholder("의뢰번호를 입력해 주세요").fill(REQUEST_NO);
+  await main.getByRole("button", { name: "검색", exact: true }).click();
+  await expect(main.getByText("DEMO-002399")).toHaveCount(0);
+  await expect(main.getByText(REQUEST_NO).first()).toBeVisible();
+
+  await main.getByRole("button", { name: "오늘", exact: true }).click();
+  await expect(main.getByText(REQUEST_NO).first()).toBeVisible();
+});
+
+test("등기관리에서 의뢰번호로 검색한다", async ({ page }) => {
+  await login(page, "admin");
+  await page.goto("/admin/registration");
+  const main = page.getByRole("main");
+  await expect(main.getByText("DEMO-002399").first()).toBeVisible();
+
+  await main.getByPlaceholder("의뢰번호를 입력해 주세요").fill(REQUEST_NO);
+  await main.getByRole("button", { name: "검색", exact: true }).click();
+
+  await expect(main.getByText("DEMO-002399")).toHaveCount(0);
+  await expect(main.getByText(REQUEST_NO).first()).toBeVisible();
+});

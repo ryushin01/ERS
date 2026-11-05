@@ -397,7 +397,7 @@ export default function MobileFileUploader({
                 }}
                 className="_take-picture-button"
               >
-                <Image src={PlusMainIcon} alt="사진 촬영 더하기 아이콘" width={20} height={20} />
+                <Image src={PlusMainIcon} alt="" width={20} height={20} />
                 <Typography kind="body-medium" isBold={true} className="text-ers-main-100">
                   사진 촬영
                 </Typography>
@@ -416,9 +416,9 @@ export default function MobileFileUploader({
           </ul>
 
           <div className="_datepicker-wrapper">
-            <Label htmlFor="desktop-execution-date" required={true} labelText="대출실행일" />
+            <Label htmlFor="mobile-execution-date" required={true} labelText="대출실행일" />
             <DatePicker
-              id="desktop-execution-date"
+              id="mobile-execution-date"
               isExcludingPast={true}
               minDate={getTodayAddDays(1)}
               {...datePickerProps}
@@ -440,7 +440,6 @@ export default function MobileFileUploader({
               shape="solid"
               size="md"
               color="main100"
-              onClick={() => handleSubmit}
               disabled={isProcessingSubmit}
             >
               제출하기
@@ -474,8 +473,10 @@ export default function MobileFileUploader({
                       videoConstraints={videoConstraints}
                       onUserMedia={() => setIsLoading(false)}
                       onUserMediaError={() => {
+                        setIsLoading(false);
+                        closeCamera();
                         openToast({
-                          message: "잠시 뒤에 다시 시도해 주세요.",
+                          message: "카메라를 사용할 수 없습니다. 카메라 권한을 확인해 주세요.",
                           position: "bottom",
                         });
                       }}

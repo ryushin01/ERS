@@ -123,11 +123,15 @@ export default function FilterTable({
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // 헤더 검색으로 채워진 번호도 포함되도록 화면에 보이는 입력칸의 값을 사용
+    const rqstNo = String(new FormData(event.currentTarget).get("rqstNo") ?? "");
+
     setFilters({
       ...filters,
       fromDate: getDateString(startDate),
       toDate: getDateString(endDate),
-      rqstNo: requestNo,
+      rqstNo,
       searchTime: new Date(),
     });
   };
@@ -153,6 +157,7 @@ export default function FilterTable({
                 <td colSpan={2}>
                   <div className="min-w-52">
                     <InputField
+                      type="text"
                       name="rqstNo"
                       defaultValue={!!requestNo ? requestNo : filters.rqstNo}
                       required={false}

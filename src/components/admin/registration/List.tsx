@@ -9,7 +9,7 @@ import { Loading, Pagination } from "@components/common";
 import { Select } from "@components/form";
 import { Grid, GridItem } from "@components/layout";
 import { NUMERIC_SORT_OPTION, PERIOD_SORT_OPTION } from "@constants/option";
-import { PAGE_COUNT_PC, PAGE_LIMIT_ADMIN } from "@constants/page";
+import { PAGE_COUNT_PC } from "@constants/page";
 import { getRegistrationListData } from "@services/registrationManagement";
 import { toastState } from "@stores";
 import { ResponsiveType } from "@types";
@@ -86,7 +86,7 @@ export default function List({
 
   useEffect(() => {
     setPage(1);
-  }, [tabSelection, filters.searchTime]);
+  }, [tabSelection, filters, selectedNumeric]);
 
   //헤더 의뢰번호 검색 후 처리
   useEffect(() => {
@@ -154,7 +154,7 @@ export default function List({
       <Pagination
         total={registrationListData?.totalElements}
         page={page}
-        limit={PAGE_LIMIT_ADMIN}
+        limit={Number(selectedNumeric)}
         pageCount={PAGE_COUNT_PC}
         setPage={setPage}
       />

@@ -35,7 +35,7 @@ export default function List({ tabIndex, searchRqstNo, unMatchData }: ListProps)
   /* 1. 탭인덱스가 바뀌면 페이지는 무조건 1로 세팅 */
   useEffect(() => {
     setPage(1);
-  }, [tabIndex, searchRqstNo]);
+  }, [tabIndex, searchRqstNo, selectedNumeric]);
 
   /* 2. 조회 조건(page, tabIndex, searchRqstNo, selectedPeriod, selectedNumeric)은 queryKey에 포함되어 있어 변경 시 자동으로 재조회됩니다. */
 

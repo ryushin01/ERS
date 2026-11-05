@@ -173,6 +173,7 @@ pnpm run dev
 | 화면 통합 | `components/**/Main.test.tsx` | 화면을 실제 데이터 흐름(TanStack Query → services → 목업 API)으로 렌더링해 목록·건수가 데이터와 같은지 |
 | 폼 → 요청 내용 | `CreateForm`·`DetailForm`·`DesktopFileUploader`·`MobileFileUploader`·`RegistrationInformation`·`ReasonModals`(반려·진행취소) 테스트 | 폼에 입력하고 제출했을 때 서버로 가는 요청(JSON·첨부 파일)이 입력값과 정확히 같은지, 연속 클릭에도 한 번만 전송되는지 |
 | 공통 동작 | `Pagination`·`TabGroup`·`LoginForm`·`HeaderRightArea`·`useFileUpload` 테스트 | 페이지 이동, 탭 키보드 조작, 로그인, 헤더 의뢰번호 검색(Enter·버튼·없는 번호), 파일 개수·용량 제한 |
+| 검색 조건 | `status-inquiry/List`·`admin/registration/FilterTable`·`admin/assign/Main` 테스트 | 의뢰번호·진행상태·접수번호·채무자·기간 검색과 초기화, 헤더 검색 후 재검색, 한 페이지 개수와 쪽수, 배정관리 탭 |
 | 스토리 | 모든 `*.stories.tsx` (`pnpm run test:storybook`) | 스토리 252개를 실제 브라우저에서 렌더링, 접근성 위반(axe) 검사 (스토리의 첫 화면 기준이라 레이아웃 잘림은 잡지 못함) |
 | E2E | `e2e/` (`pnpm run test:e2e`) | 아래 [E2E 테스트](#e2e-테스트) 참고 |
 | 속성 기반 | `utils/amountUtil.test.ts`, `utils/dateUtil.test.ts` | [fast-check](https://fast-check.dev)로 임의 입력 수천 건을 생성해 금액·날짜 변환 규칙이 항상 지켜지는지 (예: 금액 표시 → 숫자 변환 시 원래 값, 모든 시간대에서 같은 날짜) |
@@ -196,7 +197,7 @@ pnpm run test:e2e
 | `e2e/layout.spec.ts` | 폭 320~1920px 8단계에서 가로 넘침, 잘린 버튼·입력칸, 사라진 입력칸, 줄바꿈된 탭, 잘못된 요소 중첩, 잘린 표 글자(항목 이름은 375px 이상, 값은 1024px 이상), 모바일 헤더 로고 |
 | `e2e/accessibility.spec.ts` | PC·태블릿·모바일 전 화면의 접근성(axe), 콘솔 오류, 요청 실패, 깨진 이미지. 모달·달력·계정 메뉴·드로어를 연 상태와 아코디언 열림 상태 |
 | `e2e/keyboard.spec.ts` | 본문 바로가기, Tab 이동 시 초점 표시, 계정 메뉴·드로어 Esc 닫기와 초점 복귀, 의뢰번호 입력 |
-| `e2e/flow.spec.ts` | 사용자 유형을 넘나드는 업무 흐름: 보완요청, 신규 의뢰 → 배정, 보완 후 재제출, 접수 → 승인 → 금융기관 반영, 헤더 의뢰번호 검색 |
+| `e2e/flow.spec.ts` | 사용자 유형을 넘나드는 업무 흐름: 보완요청, 신규 의뢰 → 배정, 보완 후 재제출, 접수 → 승인 → 금융기관 반영, 헤더 의뢰번호 검색, 현황조회·등기관리 검색 |
 | `e2e/storybook.spec.ts` | Storybook 바로 가기 전환·도착 애니메이션, 뒤로 가기, 로그인 상태 접근, 동작 줄이기 설정 |
 
 - 화면을 추가하면 `e2e/helpers.ts`의 `PAGES`에 경로를 추가합니다.

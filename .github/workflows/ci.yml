@@ -15,13 +15,13 @@ jobs:
     name: Lint · Typecheck · Test · Storybook test · Build · E2E
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # pnpm 버전은 package.json의 packageManager를 따름
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6.1.0
 
       # Node 버전은 .nvmrc를 따름 (Docker 이미지와 같은 Node 22)
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -39,7 +39,7 @@ jobs:
       # 프로덕션 빌드를 실행해 화면 폭별 잘림·넘침, 실제 화면 접근성, Storybook 전환 흐름을 검사
       - run: pnpm test:e2e
       # 실패하면 스크린샷·기록을 내려받아 확인
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-report
@@ -52,7 +52,7 @@ jobs:
     name: Docker image (production)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Dockerfile이 .env.production을 복사하므로 빈 파일을 만듦 (데모 모드는 환경 변수 없이 동작)
       - run: touch .env.production

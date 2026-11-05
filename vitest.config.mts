@@ -30,6 +30,8 @@ export default defineConfig({
         plugins: [tsconfigPaths(), react()],
         test: {
           name: "unit",
+          // 커버리지 측정 중에는 큰 화면 통합 테스트가 기본값 5초를 넘길 수 있음
+          testTimeout: 15000,
           environment: "jsdom",
           setupFiles: ["./vitest.setup.ts"],
           include: ["src/**/*.test.{ts,tsx}"],
