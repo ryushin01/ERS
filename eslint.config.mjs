@@ -1,14 +1,7 @@
-import { FlatCompat } from "@eslint/eslintrc";
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
+import prettier from "eslint-config-prettier";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
 
 /**
  * 내부 모듈 alias (tsconfig.json의 paths).
@@ -45,7 +38,19 @@ const eslintConfig = [
       "playwright-report/**",
     ],
   },
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...nextCoreWebVitals,
+  ...nextTypescript,
+  {
+    // Next.js 16과 함께 들어온 React Compiler 대비 규칙입니다. 기존 코드에 42건이 있습니다.
+    // 상태 로직을 고치는 일이라 업그레이드와 나눠 따로 처리합니다.
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/immutability": "off",
+      "react-hooks/refs": "off",
+      "react-hooks/purity": "off",
+      "@next/next/no-location-assign-relative-destination": "off",
+    },
+  },
   {
     // import 순서 자동 정렬. `pnpm lint:fix`로 자동 수정되고, 커밋할 때 lint-staged가 실행합니다.
     // 순서: react → next → 외부 패키지 → 내부 alias → 상대경로 → import type → 사이드 이펙트(CSS 등)
@@ -71,7 +76,7 @@ const eslintConfig = [
     },
   },
   // 서식 관련 ESLint 규칙을 끄는 설정이라 항상 마지막에 둡니다.
-  ...compat.extends("prettier"),
+  prettier,
 ];
 
 export default eslintConfig;

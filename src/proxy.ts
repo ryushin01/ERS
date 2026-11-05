@@ -15,11 +15,11 @@ import { isPathUnder } from "@utils/pathUtil";
 import type { NextRequest } from "next/server";
 
 /**
- * @name middleware
+ * @name proxy
  * @version 1.0.0
  * @author 류창선 <ryushin0167@gmail.com>
  */
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const membGbCd = request.cookies.get("membGbCd");
   const isLogin: boolean = !!membGbCd?.value;
