@@ -11,7 +11,7 @@ import { vi } from "vitest";
  * - next/navigation은 각 테스트 파일에서 vi.mock으로 대신합니다.
  */
 
-/** PC(1440px) 화면처럼 동작하는 matchMedia (react-responsive용) */
+/** PC(1440px) 화면처럼 동작하는 matchMedia (useResponsive용) */
 export function mockDesktopMatchMedia() {
   vi.stubGlobal(
     "matchMedia",

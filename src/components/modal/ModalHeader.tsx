@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { Typography } from "@components/common";
+import { useResponsive } from "@hooks";
 import { CancelIcon } from "@icons36";
 
 type ModalHeaderProps = {
@@ -19,18 +20,14 @@ type ModalHeaderProps = {
  * @property {function} onClose     - 모달 닫기 기능
  */
 export default function ModalHeader({ title, titleId, onClose }: ModalHeaderProps) {
-  let isMobile;
-
-  if (typeof window !== "undefined") {
-    isMobile = sessionStorage.getItem("isMobile");
-  }
+  const { isMobile } = useResponsive();
 
   return (
     <div className="_modal-header">
       <Typography
         as="h2"
         id={titleId}
-        kind={!!isMobile ? "title-medium" : "headline-small"}
+        kind={isMobile ? "title-medium" : "headline-small"}
         isBold={true}
       >
         {title}

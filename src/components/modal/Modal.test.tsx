@@ -3,11 +3,15 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { mockDesktopMatchMedia } from "@/test/renderWithProviders";
+
 import Modal from "./Modal";
 
 /* 실제 화면처럼 페이지 영역과 모달 포털(#portal)을 나란히 둠 */
 beforeEach(() => {
   document.body.innerHTML = '<div id="app"></div><div id="portal"></div>';
+  // 모달 제목 크기를 화면 크기(useResponsive)로 정하므로 PC 화면 기준 matchMedia를 채움
+  mockDesktopMatchMedia();
 });
 
 const renderInApp = (ui: React.ReactElement) =>
