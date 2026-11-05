@@ -4,6 +4,8 @@ out/
 node_modules/
 next-env.d.ts
 coverage/
+test-results/
+playwright-report/
 public/storybook/
 storybook-static/
 

@@ -71,7 +71,7 @@
 | 프레임워크 | Next.js 15 (App Router), React 19, TypeScript |
 | 상태·데이터 | TanStack Query v5, jotai, axios |
 | 스타일·UI | Tailwind CSS 3, antd(파일 업로드), swiper, react-datepicker |
-| 품질 | ESLint(import 정렬), Prettier, husky + lint-staged, Vitest + React Testing Library, fast-check, Storybook 스토리 테스트(Vitest 브라우저 모드 + Playwright, axe 접근성 검사) |
+| 품질 | ESLint(import 정렬), Prettier, husky + lint-staged, Vitest + React Testing Library, fast-check, Storybook 스토리 테스트(Vitest 브라우저 모드 + Playwright, axe 접근성 검사), E2E 테스트(Playwright) |
 | 문서 | Storybook 10 (`@storybook/nextjs-vite`) |
 | 배포 | Docker(standalone), GitHub Actions |
 
@@ -124,6 +124,7 @@ pnpm run dev
 | `pnpm run typecheck` | TypeScript 타입 검사 (`tsc --noEmit`) |
 | `pnpm test` | 단위 테스트 (Vitest, jsdom) |
 | `pnpm run test:watch` | 단위 테스트 감시 모드 (파일을 저장하면 다시 실행) |
+| `pnpm run test:e2e` | E2E 테스트: 프로덕션 빌드를 실행해 실제 화면을 검사 (먼저 `pnpm run build` 필요, 처음 한 번 `pnpm exec playwright install chromium` 필요) |
 | `pnpm run test:storybook` | 스토리 테스트: 모든 스토리를 실제 브라우저(Chromium)에서 렌더링하고 접근성 검사 (처음 한 번 `pnpm exec playwright install chromium` 필요) |
 
 ### 환경 변수
@@ -215,6 +216,7 @@ pnpm run build-storybook
 ├── 🗂️ .github/workflows                      // CI (lint·타입 검사·테스트·빌드, Docker 이미지 빌드)
 ├── 🗂️ .storybook                             // Storybook 설정 (main, preview, 도착 애니메이션)
 ├── 🗂️ docker                                 // 개발·운영 Dockerfile, docker-compose
+├── 🗂️ e2e                                    // E2E 테스트 (실제 화면의 레이아웃·접근성·Storybook 흐름)
 ├── 🗂️ public
 │ ├── 🗂️ icons                                // svg 아이콘 (logo: 헤더 로고)
 │ ├── 🗂️ images                               // 이미지 파일 (logo: 앱 아이콘 PNG)
@@ -304,12 +306,32 @@ pnpm run build-storybook
 | 화면 통합 | `components/**/Main.test.tsx` | 화면을 실제 데이터 흐름(TanStack Query → services → 목업 API)으로 렌더링해 목록·건수가 데이터와 같은지 |
 | 폼 → 요청 내용 | `CreateForm`·`DetailForm`·`DesktopFileUploader`·`RegistrationInformation`·`ReasonModals`(반려·진행취소) 테스트 | 폼에 입력하고 제출했을 때 서버로 가는 요청(JSON·첨부 파일)이 입력값과 정확히 같은지, 연속 클릭에도 한 번만 전송되는지 |
 | 스토리 | 모든 `*.stories.tsx` (`pnpm run test:storybook`) | 스토리 252개를 실제 브라우저에서 렌더링, 접근성 위반(axe) 검사 (스토리의 첫 화면 기준이라 레이아웃 잘림은 잡지 못함) |
+| E2E | `e2e/` (`pnpm run test:e2e`) | 아래 [E2E 테스트](#e2e-테스트) 참고 |
 | 속성 기반 | `utils/amountUtil.test.ts`, `utils/dateUtil.test.ts` | [fast-check](https://fast-check.dev)로 임의 입력 수천 건을 생성해 금액·날짜 변환 규칙이 항상 지켜지는지 (예: 금액 표시 → 숫자 변환 시 원래 값, 모든 시간대에서 같은 날짜) |
 
 - 화면 통합 테스트는 `src/test/renderWithProviders.tsx`(QueryClient·jotai Provider, PC 화면 `matchMedia`)를 쓰고, `next/navigation`은 테스트 파일에서 `vi.mock`으로 대신합니다.
 - tsconfig의 alias를 그대로 쓸 수 있습니다(`vite-tsconfig-paths`).
 - 서버 코드(`middleware.ts` 등)를 테스트할 때는 파일 맨 위에 `// @vitest-environment node`를 적습니다.
 - 테스트는 실행하는 PC의 시간대와 상관없이 같은 결과가 나오도록 작성합니다. 날짜 유틸은 테스트 안에서 여러 시간대(`process.env.TZ`)로 바꿔 가며 확인합니다.
+
+### E2E 테스트
+
+스토리는 컴포넌트를 따로 렌더링하므로 실제 화면의 잘림·넘침을 잡지 못합니다. E2E 테스트는 프로덕션 빌드를 실행해 **실제 화면**을 Playwright(Chromium)로 검사합니다.
+
+```bash
+pnpm run build
+pnpm run test:e2e
+```
+
+| 파일 | 내용 |
+|---|---|
+| `e2e/layout.spec.ts` | 폭 320~1920px 8단계에서 가로 넘침, 잘린 버튼·입력칸, 줄바꿈된 탭, 잘린 표 글자(항목 이름은 375px 이상, 값은 1024px 이상), 모바일 헤더 로고 |
+| `e2e/accessibility.spec.ts` | PC·태블릿·모바일 전 화면의 접근성(axe), 콘솔 오류, 요청 실패, 깨진 이미지. 모달·달력·계정 메뉴·드로어를 연 상태와 아코디언 열림 상태 |
+| `e2e/storybook.spec.ts` | Storybook 바로 가기 전환·도착 애니메이션, 뒤로 가기, 로그인 상태 접근, 동작 줄이기 설정 |
+
+- 화면을 추가하면 `e2e/helpers.ts`의 `PAGES`에 경로를 추가합니다.
+- 서버는 테스트가 자동으로 띄웁니다(4100번 포트). 코드를 바꾼 뒤에는 다시 빌드해야 반영됩니다.
+- `pnpm run dev`와 같은 `.next` 폴더를 쓰므로, 개발 서버를 켠 채로 빌드하거나 E2E를 돌리지 않습니다.
 
 ***
 
@@ -321,7 +343,7 @@ pnpm run build-storybook
 
 | 작업 | 내용 |
 |---|---|
-| Lint · Typecheck · Test · Storybook test · Build | `.nvmrc`의 Node 22와 `packageManager`의 pnpm으로 lint, 서식 검사, 타입 검사, 단위 테스트, 스토리 테스트(Chromium, 접근성 검사), 빌드(Storybook 포함) |
+| Lint · Typecheck · Test · Storybook test · Build · E2E | `.nvmrc`의 Node 22와 `packageManager`의 pnpm으로 lint, 서식 검사, 타입 검사, 단위 테스트, 스토리 테스트(Chromium, 접근성 검사), 빌드(Storybook 포함), E2E 테스트. E2E가 실패하면 스크린샷과 기록을 아티팩트로 올립니다. |
 | Docker image | 운영용 Dockerfile로 이미지를 빌드하고, 컨테이너를 실행해 3000번 포트의 앱과 `/storybook/index.html` 응답 확인 |
 
 ### 의존성 자동 업데이트 (Dependabot)

@@ -40,6 +40,8 @@ const eslintConfig = [
       "next-env.d.ts",
       "public/storybook/**",
       "storybook-static/**",
+      "test-results/**",
+      "playwright-report/**",
     ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),

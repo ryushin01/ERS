@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   check:
-    name: Lint · Typecheck · Test · Storybook test · Build
+    name: Lint · Typecheck · Test · Storybook test · Build · E2E
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,6 +36,17 @@ jobs:
       - run: pnpm test:storybook
       # 데모 모드(기본값)로 빌드하므로 API 주소 환경 변수는 필요 없음
       - run: pnpm build
+      # 프로덕션 빌드를 실행해 화면 폭별 잘림·넘침, 실제 화면 접근성, Storybook 전환 흐름을 검사
+      - run: pnpm test:e2e
+      # 실패하면 스크린샷·기록을 내려받아 확인
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
 
   docker:
     name: Docker image (production)
