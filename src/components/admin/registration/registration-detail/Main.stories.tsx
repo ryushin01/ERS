@@ -14,7 +14,7 @@ const rqstNo = rqstNoByStatus(PROC_STAT_CD.COMPLET);
 
 /** 등기관리 상세: 의뢰 정보, 문서, 진행 이력, 접수정보 등록 */
 const meta = {
-  title: "Admin/RegistrationDetail/Main",
+  title: "Pages/Admin/RegistrationDetail/Main",
   component: Main,
   tags: ["autodocs"],
   parameters: {

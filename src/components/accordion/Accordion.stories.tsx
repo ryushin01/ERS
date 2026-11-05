@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 공지사항 한 건. 제목을 누르면 내용과 첨부파일이 펼쳐집니다. */
 const meta = {
-  title: "Accordion/Accordion",
+  title: "Components/Content/Accordion",
   component: Accordion,
   tags: ["autodocs"],
   parameters: { auth: "financial" },

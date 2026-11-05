@@ -9,7 +9,7 @@ const requestNo = rqstNoByStatus(PROC_STAT_CD.REVIEWING);
 
 /** 등기접수증 승인 화면의 본문 (이미지 + 정보 표) */
 const meta = {
-  title: "Admin/RegistrationAcceptance/List",
+  title: "Pages/Admin/RegistrationAcceptance/List",
   component: List,
   tags: ["autodocs"],
   parameters: {

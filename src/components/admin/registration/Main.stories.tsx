@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 관리자 등기관리: 진행상태별 탭과 건수, 기간 검색, 결과 표 */
 const meta = {
-  title: "Admin/Registration/Main",
+  title: "Pages/Admin/Registration/Main",
   component: Main,
   tags: ["autodocs"],
   parameters: {

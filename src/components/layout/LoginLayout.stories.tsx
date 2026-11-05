@@ -9,7 +9,7 @@ import "@styles/login.css";
 
 /** 로그인 화면의 틀: 헤더(로고) + 가운데 카드 */
 const meta = {
-  title: "Layout/LoginLayout",
+  title: "Patterns/Layout/LoginLayout",
   component: LoginLayout,
   tags: ["autodocs"],
   parameters: {

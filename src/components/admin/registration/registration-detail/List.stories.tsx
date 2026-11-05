@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 등기관리 상세 본문: 의뢰 정보, 등기자료·등기접수증, 진행 이력, 상태별 처리 버튼 */
 const meta = {
-  title: "Admin/RegistrationDetail/List",
+  title: "Pages/Admin/RegistrationDetail/List",
   component: List,
   tags: ["autodocs"],
   parameters: {

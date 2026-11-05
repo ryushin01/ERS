@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 의뢰번호·첨부파일 코드로 등기자료 이미지를 조회해 슬라이드로 보여 줍니다. (데모 목업 API) */
 const meta = {
-  title: "Common/ResponsiveSwiper",
+  title: "Components/Content/ResponsiveSwiper",
   component: ResponsiveSwiper,
   tags: ["autodocs"],
   parameters: { auth: "financial" },

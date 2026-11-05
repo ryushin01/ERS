@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 그리드 한 칸. 화면 크기별 차지할 칸 수(1~12)를 지정합니다. */
 const meta = {
-  title: "Layout/GridItem",
+  title: "Components/Layout/GridItem",
   component: GridItem,
   tags: ["autodocs"],
   args: { mobile: 12, tablet: 6, desktop: 4 },

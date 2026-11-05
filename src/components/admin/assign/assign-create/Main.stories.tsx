@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 전자등기 신규 등록 화면 (등기자료 업로드 + 의뢰 정보 입력) */
 const meta = {
-  title: "Admin/AssignCreate/Main",
+  title: "Pages/Admin/AssignCreate/Main",
   component: Main,
   tags: ["autodocs"],
   parameters: {

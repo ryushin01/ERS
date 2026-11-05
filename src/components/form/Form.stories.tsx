@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** form + fieldset + legend 구조를 만드는 래퍼. legend는 기본으로 화면에서 숨깁니다. */
 const meta = {
-  title: "Form/Form",
+  title: "Components/Inputs/Form",
   component: Form,
   tags: ["autodocs"],
   args: { legendText: "의뢰번호 검색", isHiddenLegend: false, onSubmit: fn() },

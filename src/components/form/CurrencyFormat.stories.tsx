@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 금액 입력칸. 원 단위 정수만 받고 천 단위 쉼표를 붙입니다. (utils/amountUtil) */
 const meta = {
-  title: "Form/CurrencyFormat",
+  title: "Components/Inputs/CurrencyFormat",
   component: CurrencyFormat,
   tags: ["autodocs"],
   args: {

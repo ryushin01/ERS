@@ -14,7 +14,7 @@ const image = (page: number) =>
  * 서버 이미지(source: "api")와 새로 추가한 이미지(source: "prop")를 함께 보여 주며, 새 이미지만 삭제할 수 있습니다.
  */
 const meta = {
-  title: "Admin/AssignDetail/ResponsiveSwiper",
+  title: "Pages/Admin/AssignDetail/ResponsiveSwiper",
   component: ResponsiveSwiper,
   tags: ["autodocs"],
   args: {

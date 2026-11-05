@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** PC 헤더의 계정 메뉴(비밀번호 변경·로그아웃·이용 문의) */
 const meta = {
-  title: "Common/AccountLayer",
+  title: "Patterns/Layout/AccountLayer",
   component: AccountLayer,
   tags: ["autodocs"],
   parameters: { auth: "financial", docs: { story: { inline: false, height: "520px" } } },

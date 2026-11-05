@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 탭 하나의 의뢰 목록 (조회 + 표 + 페이지 이동) */
 const meta = {
-  title: "Financial/RequestList/List",
+  title: "Pages/Financial/RequestList/List",
   component: List,
   tags: ["autodocs"],
   parameters: { auth: "financial", ...routeParameters("/financial/request-list") },

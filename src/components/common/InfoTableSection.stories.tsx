@@ -6,7 +6,7 @@ import "@styles/responsive-table.css";
 
 /** 등기자료·등기접수증 팝업에서 쓰는 "제목 + 항목/값" 표 */
 const meta = {
-  title: "Common/InfoTableSection",
+  title: "Components/Content/InfoTableSection",
   component: InfoTableSection,
   tags: ["autodocs"],
   args: {

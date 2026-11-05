@@ -8,7 +8,7 @@ import Radio from "./Radio";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 const meta = {
-  title: "Form/Radio",
+  title: "Components/Inputs/Radio",
   component: Radio,
   tags: ["autodocs"],
   args: { name: "membGbCd", value: "00", labelText: "금융기관", checked: true, onChange: fn() },

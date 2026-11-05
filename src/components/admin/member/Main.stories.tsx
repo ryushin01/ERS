@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 회원관리 (미구현: 서비스 준비 중 안내) */
 const meta = {
-  title: "Admin/Member/Main",
+  title: "Pages/Admin/Member/Main",
   component: Main,
   tags: ["autodocs"],
   parameters: {

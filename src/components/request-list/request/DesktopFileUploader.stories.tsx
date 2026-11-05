@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** PC 업로드: 파일을 끌어다 놓거나 선택하고, 목록·용량을 확인한 뒤 의뢰합니다. */
 const meta = {
-  title: "Financial/Request/DesktopFileUploader",
+  title: "Pages/Financial/Request/DesktopFileUploader",
   component: DesktopFileUploader,
   tags: ["autodocs"],
   parameters: { auth: "financial", ...routeParameters("/financial/request-list/request") },

@@ -11,7 +11,7 @@ import "@styles/drawer.css";
 
 /** 프로필, 비밀번호 변경(모달), 로그아웃 영역. 드로어와 PC 계정 메뉴에서 함께 사용합니다. */
 const meta = {
-  title: "Drawer/DrawerContent",
+  title: "Components/Overlays/DrawerContent",
   component: DrawerContent,
   tags: ["autodocs"],
   parameters: { auth: "financial", docs: { story: { inline: false, height: "640px" } } },

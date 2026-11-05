@@ -5,7 +5,7 @@ import Frame from "./Frame";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 const meta = {
-  title: "Common/Frame",
+  title: "Components/Content/Frame",
   component: Frame,
   tags: ["autodocs"],
   args: { aspectRatio: "video", children: null },

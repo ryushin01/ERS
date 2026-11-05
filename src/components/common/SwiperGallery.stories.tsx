@@ -17,7 +17,7 @@ const slides = [1, 2, 3, 4].map((page) => ({
 }));
 
 const meta = {
-  title: "Common/SwiperGallery",
+  title: "Components/Content/SwiperGallery",
   component: SwiperGallery,
   tags: ["autodocs"],
   args: { slides, paginationType: "fraction" },

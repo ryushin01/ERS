@@ -13,7 +13,7 @@ const IMAGES = [1, 2, 3].map(
 
 /** 신규 등록 시 업로드한 이미지 미리보기 (개별 삭제 가능) */
 const meta = {
-  title: "Admin/AssignCreate/ResponsiveSwiper",
+  title: "Pages/Admin/AssignCreate/ResponsiveSwiper",
   component: ResponsiveSwiper,
   tags: ["autodocs"],
   args: { imageList: IMAGES, handleFileDelete: () => {} },

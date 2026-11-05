@@ -12,7 +12,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 전자등기 의뢰: PC는 드래그 앤 드롭 업로드, 모바일은 사진 촬영·앨범 선택 */
 const meta = {
-  title: "Financial/Request/Main",
+  title: "Pages/Financial/Request/Main",
   component: Main,
   tags: ["autodocs"],
   parameters: {

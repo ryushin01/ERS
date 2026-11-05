@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 없는 주소로 들어왔을 때의 404 화면 */
 const meta = {
-  title: "Error/NotFound",
+  title: "Patterns/Error/NotFound",
   component: NotFound,
   tags: ["autodocs"],
   parameters: { layout: "fullscreen", ...routeParameters("/not-exist") },

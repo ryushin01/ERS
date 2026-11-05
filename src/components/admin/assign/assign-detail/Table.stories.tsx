@@ -12,7 +12,7 @@ const rqstNo = rqstNoByStatus(PROC_STAT_CD.REQUEST);
 
 /** 배정 화면의 의뢰 정보 표: 정보 수정, 법무대리인 지정, 보완요청·진행취소·배정 버튼 */
 const meta = {
-  title: "Admin/AssignDetail/Table",
+  title: "Pages/Admin/AssignDetail/Table",
   component: Table,
   tags: ["autodocs"],
   parameters: {

@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 금융기관 공지사항 화면 (목록 + 페이지 이동) */
 const meta = {
-  title: "Financial/Notice/Main",
+  title: "Pages/Financial/Notice/Main",
   component: Main,
   tags: ["autodocs"],
   parameters: {

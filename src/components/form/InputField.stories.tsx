@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 라벨·아이콘·안내/오류 메시지를 함께 쓰는 입력칸 */
 const meta = {
-  title: "Form/InputField",
+  title: "Components/Inputs/InputField",
   component: InputField,
   tags: ["autodocs"],
   args: {

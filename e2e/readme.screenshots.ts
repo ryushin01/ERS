@@ -61,7 +61,7 @@ test.describe("PC", () => {
   });
 
   test("Storybook", async ({ page }) => {
-    await page.goto("/storybook/index.html?path=/story/financial-home-main--desktop");
+    await page.goto("/storybook/index.html?path=/story/pages-financial-home-main--desktop");
     await expect(
       page.frameLocator("#storybook-preview-iframe").getByText("좋은 하루 보내세요!"),
     ).toBeVisible({ timeout: 30_000 });

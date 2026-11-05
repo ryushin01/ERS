@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 로그인 후 화면의 공통 틀: 헤더 + 메뉴(GNB) + 본문 + 푸터 */
 const meta = {
-  title: "Layout/CommonLayout",
+  title: "Patterns/Layout/CommonLayout",
   component: CommonLayout,
   tags: ["autodocs"],
   parameters: {

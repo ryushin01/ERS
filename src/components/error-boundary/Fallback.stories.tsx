@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** react-error-boundary의 FallbackComponent. 오류 안내(Error)에 초기화 함수를 연결합니다. */
 const meta = {
-  title: "Error/Fallback",
+  title: "Patterns/Error/Fallback",
   component: Fallback,
   tags: ["autodocs"],
   parameters: { layout: "fullscreen", ...routeParameters("/financial/home") },

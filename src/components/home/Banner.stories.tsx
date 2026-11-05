@@ -8,7 +8,7 @@ import "@styles/home.css";
 
 /** 인사말과 오늘 실행·진행중·접수완료 건수, 전자등기 의뢰 바로가기 */
 const meta = {
-  title: "Financial/Home/Banner",
+  title: "Pages/Financial/Home/Banner",
   component: Banner,
   tags: ["autodocs"],
   parameters: routeParameters("/financial/home"),

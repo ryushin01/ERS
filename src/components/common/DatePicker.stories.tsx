@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import "@styles/datepicker.css";
 
 const meta = {
-  title: "Common/DatePicker",
+  title: "Components/Inputs/DatePicker",
   component: DatePicker,
   tags: ["autodocs"],
   args: { id: "date-picker", startDate: null, handleDatePicker: fn() },

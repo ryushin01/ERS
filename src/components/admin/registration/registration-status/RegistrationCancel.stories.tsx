@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 진행취소 사유 선택 ("기타"는 직접 입력) */
 const meta = {
-  title: "Admin/RegistrationStatus/RegistrationCancel",
+  title: "Pages/Admin/RegistrationStatus/RegistrationCancel",
   component: RegistrationCancel,
   tags: ["autodocs"],
   parameters: { auth: "admin", ...routeParameters("/admin/registration/registration-detail") },

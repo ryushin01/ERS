@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
  * 모바일에서는 메뉴 버튼으로 드로어를 엽니다.
  */
 const meta = {
-  title: "Layout/HeaderRightArea",
+  title: "Patterns/Layout/HeaderRightArea",
   component: HeaderRightArea,
   tags: ["autodocs"],
   parameters: { docs: { story: { inline: false, height: "560px" } } },

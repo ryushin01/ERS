@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 글자 수를 함께 표시하는 여러 줄 입력칸 (처리 사유 등) */
 const meta = {
-  title: "Form/TextArea",
+  title: "Components/Inputs/TextArea",
   component: TextArea,
   tags: ["autodocs"],
   args: {

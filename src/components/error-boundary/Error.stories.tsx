@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 화면에서 오류가 났을 때 보여 주는 안내 (다시 시도·홈으로 이동) */
 const meta = {
-  title: "Error/Error",
+  title: "Patterns/Error/Error",
   component: Error,
   tags: ["autodocs"],
   parameters: { layout: "fullscreen", ...routeParameters("/financial/home") },

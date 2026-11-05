@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 의뢰번호·진행상태·접수번호·채무자·기간으로 검색하는 조건 표 */
 const meta = {
-  title: "Financial/StatusInquiry/FilterTable",
+  title: "Pages/Financial/StatusInquiry/FilterTable",
   component: FilterTable,
   tags: ["autodocs"],
   parameters: { auth: "financial" },

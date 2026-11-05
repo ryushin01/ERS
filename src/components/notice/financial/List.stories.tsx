@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 공지사항 아코디언 목록 */
 const meta = {
-  title: "Financial/Notice/List",
+  title: "Pages/Financial/Notice/List",
   component: List,
   tags: ["autodocs"],
   parameters: { auth: "financial" },

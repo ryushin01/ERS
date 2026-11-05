@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
  * 받지 못하면 기본 프로필 이미지(fallbackSrc)를 보여 줍니다.
  */
 const meta = {
-  title: "Common/ImageWithAuth",
+  title: "Components/Content/ImageWithAuth",
   component: ImageWithAuth,
   tags: ["autodocs"],
   args: { src: "/not-found-image", alt: "프로필 이미지", width: 64, height: 64 },

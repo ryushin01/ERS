@@ -8,7 +8,7 @@ import "@styles/modal.css";
 
 /** 모달 제목과 닫기 버튼 */
 const meta = {
-  title: "Modal/ModalHeader",
+  title: "Components/Overlays/ModalHeader",
   component: ModalHeader,
   tags: ["autodocs"],
   args: { title: "등기접수증", titleId: "modal-title", onClose: fn() },

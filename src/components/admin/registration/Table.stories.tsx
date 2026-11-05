@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 등기관리 결과 표. 등기자료·등기접수증 버튼, 행 클릭 시 상세·승인 화면으로 이동 */
 const meta = {
-  title: "Admin/Registration/Table",
+  title: "Pages/Admin/Registration/Table",
   component: Table,
   tags: ["autodocs"],
   parameters: { auth: "admin", ...routeParameters("/admin/registration") },

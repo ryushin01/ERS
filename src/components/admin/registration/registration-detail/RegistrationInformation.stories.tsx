@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 접수정보 등록 팝업: 관할법원·등기소·접수번호·접수일 입력과 등기접수증 업로드 */
 const meta = {
-  title: "Admin/RegistrationDetail/RegistrationInformation",
+  title: "Pages/Admin/RegistrationDetail/RegistrationInformation",
   component: RegistrationInformation,
   tags: ["autodocs"],
   parameters: {

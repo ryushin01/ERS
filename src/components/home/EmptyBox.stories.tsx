@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 홈 표에 데이터가 없을 때의 안내 */
 const meta = {
-  title: "Financial/Home/EmptyBox",
+  title: "Pages/Financial/Home/EmptyBox",
   component: EmptyBox,
   tags: ["autodocs"],
   args: { element: "등록된 공지사항이 없습니다." },

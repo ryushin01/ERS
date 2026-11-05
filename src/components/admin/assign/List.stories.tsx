@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 배정관리 탭 하나의 목록 (정렬·개수 선택 + 표 + 페이지 이동) */
 const meta = {
-  title: "Admin/Assign/List",
+  title: "Pages/Admin/Assign/List",
   component: List,
   tags: ["autodocs"],
   parameters: { auth: "admin", ...routeParameters("/admin/assign") },

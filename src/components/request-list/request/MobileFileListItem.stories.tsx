@@ -17,7 +17,7 @@ const IMAGES: FileProps[] = [1, 2, 3].map((page) => ({
 
 /** 모바일 업로드 미리보기 썸네일 (삭제 버튼 포함) */
 const meta = {
-  title: "Financial/Request/MobileFileListItem",
+  title: "Pages/Financial/Request/MobileFileListItem",
   component: MobileFileListItem,
   tags: ["autodocs"],
   args: {

@@ -8,7 +8,7 @@ import "@styles/login.css";
 
 /** 제목 + 로그인 폼 + 이용 문의 안내 */
 const meta = {
-  title: "Login/LoginSection",
+  title: "Patterns/Login/LoginSection",
   component: LoginSection,
   tags: ["autodocs"],
   parameters: routeParameters("/"),

@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /** 등기접수증 팝업의 정보 영역 (금융기관) */
 const meta = {
-  title: "Financial/StatusInquiry/RegistrationReceiptDetail",
+  title: "Pages/Financial/StatusInquiry/RegistrationReceiptDetail",
   component: RegistrationReceiptDetail,
   tags: ["autodocs"],
   parameters: { auth: "financial" },

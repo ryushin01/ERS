@@ -12,7 +12,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
  * ToastPopup은 앱 루트(그리고 Storybook 공통 데코레이터)에 한 번만 둡니다.
  */
 const meta = {
-  title: "Common/ToastPopup",
+  title: "Components/Feedback/ToastPopup",
   component: ToastPopup,
   tags: ["autodocs"],
   parameters: { docs: { story: { inline: false, height: "360px" } } },

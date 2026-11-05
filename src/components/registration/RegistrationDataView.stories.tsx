@@ -10,7 +10,7 @@ const requestNo = rqstNoByStatus(PROC_STAT_CD.COMPLET);
 
 /** 등기자료 상세 표시 영역 (금융기관·관리자 공통). 데이터는 상위에서 조회해 전달합니다. */
 const meta = {
-  title: "Registration/RegistrationDataView",
+  title: "Patterns/Registration/RegistrationDataView",
   component: RegistrationDataView,
   tags: ["autodocs"],
   loaders: [async () => ({ detail: (await getRegistrationData(requestNo)).data?.data })],
