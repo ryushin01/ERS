@@ -403,7 +403,12 @@ export default function List({ requestNo, isDesktop }: RegistrationDetailProps &
         >
           문서 정보
         </Typography>
-        <div className="_responsive-table-inner-wrapper _has-thead">
+        <div
+          className="_responsive-table-inner-wrapper _has-thead"
+          role="region"
+          aria-label="문서 정보 표"
+          tabIndex={0}
+        >
           <table className="_responsive-table">
             <caption className="_hidden-table-caption">문서 표</caption>
             <thead>
@@ -490,7 +495,12 @@ export default function List({ requestNo, isDesktop }: RegistrationDetailProps &
           진행 이력
         </Typography>
         {/* NOTE: 진행 이력 테이블은 상위 래퍼에 _progress-history 클래스 추가 필요  */}
-        <div className="_responsive-table-inner-wrapper _has-thead _progress-history">
+        <div
+          className="_responsive-table-inner-wrapper _has-thead _progress-history"
+          role="region"
+          aria-label="진행 이력 표"
+          tabIndex={0}
+        >
           <table className="_responsive-table">
             <caption className="_hidden-table-caption">진행 이력 표</caption>
             <thead>
@@ -549,7 +559,7 @@ export default function List({ requestNo, isDesktop }: RegistrationDetailProps &
         </div>
       </section>
 
-      <div className="flex justify-end mt-[60px] [&>button]:w-[16%]">
+      <div className="flex justify-end mt-[60px] [&>button]:w-[120px] md:[&>button]:w-[16%]">
         <Button shape="solid" size="md" color="grayscale" onClick={openCancelProgressModal}>
           진행취소
         </Button>

@@ -266,7 +266,7 @@ export default function FilterTable({ isDesktop, setFilters, rqstNo }: definePro
                     name="acptNo"
                     defaultValue={filters.acptNo}
                     required={false}
-                    placeholder={"접수번호를 입력해 주세요"}
+                    placeholder={"접수번호 입력"}
                     isError={false}
                     inputSize="sm"
                   />
@@ -294,7 +294,7 @@ export default function FilterTable({ isDesktop, setFilters, rqstNo }: definePro
                     isError={false}
                   />
                 </th>
-                <td colSpan={3}>
+                <td colSpan={4}>
                   <span className="_datepicker-and-button-group-wrapper">
                     <DatePicker
                       id="execution-date"
@@ -324,14 +324,12 @@ export default function FilterTable({ isDesktop, setFilters, rqstNo }: definePro
                     name="dbtrNm"
                     defaultValue={filters.dbtrNm}
                     required={false}
-                    placeholder={"채무자를 입력해 주세요"}
+                    placeholder={"채무자 입력"}
                     isError={false}
                     inputSize="sm"
                   />
                 </td>
-                <td colSpan={2} className="_hidden-in-mobile">
-                  &nbsp;
-                </td>
+                <td className="_hidden-in-mobile">&nbsp;</td>
               </tr>
             </tbody>
           </table>

@@ -91,7 +91,7 @@ export default function Table({
   return (
     <>
       {registrationDetailLoading && patchRegistrationApprovalLoading && <Loading />}
-      <div className="pl-10">
+      <div className="md:pl-10">
         {/* 담보목적물 주소 */}
         <section className="_section">
           <Typography as="h2" kind="title-medium" isBold={true} className="_title">
@@ -163,18 +163,19 @@ export default function Table({
                       의뢰번호
                     </Typography>
                   </th>
-                  <td>
+                  <td colSpan={5}>
                     <Typography kind="body-large">{requestNo}</Typography>
                   </td>
+                </tr>
+                <tr>
                   <th>
                     <Typography kind="body-large" isBold={true}>
                       채무자
                     </Typography>
                   </th>
-                  <td>
+                  <td colSpan={5}>
                     <Typography kind="body-large">{data?.dbtrNm || "-"}</Typography>
                   </td>
-                  <td colSpan={2}></td>
                 </tr>
                 <tr>
                   <th>
@@ -217,10 +218,9 @@ export default function Table({
                       관할법원
                     </Typography>
                   </th>
-                  <td>
+                  <td colSpan={5}>
                     <Typography kind="body-large">{data?.judtCourtNm || "-"}</Typography>
                   </td>
-                  <td colSpan={4}></td>
                 </tr>
                 <tr>
                   <th>

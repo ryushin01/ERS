@@ -162,7 +162,7 @@ export default function FilterTable({
                     />
                   </div>
                 </td>
-                <td colSpan={5}></td>
+                <td colSpan={5} className="_hidden-in-mobile"></td>
               </tr>
               <tr>
                 <th>
@@ -179,7 +179,7 @@ export default function FilterTable({
                     className={isDesktop ? "title-small" : "body-medium"}
                   />
                 </th>
-                <td colSpan={3}>
+                <td colSpan={7}>
                   <span className="_datepicker-and-button-group-wrapper">
                     <DatePicker
                       id="execution-date"
@@ -198,7 +198,6 @@ export default function FilterTable({
                     />
                   </span>
                 </td>
-                <td colSpan={4}></td>
               </tr>
             </tbody>
           </table>

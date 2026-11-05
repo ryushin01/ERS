@@ -697,7 +697,7 @@ export default function Table({
   return (
     <>
       {unqRgstrNoDataLoading && <Loading />}
-      <div className="pl-10">
+      <div className="md:pl-10">
         <div className="_responsive-table-inner-wrapper _no-thead _admin">
           <table className="_responsive-table">
             <caption className="_hidden-table-caption">전자등기 배정 표</caption>
@@ -723,13 +723,16 @@ export default function Table({
                 <th>
                   <Typography kind="title-small">채권자</Typography>
                 </th>
-                <td colSpan={2}>
+                <td colSpan={3}>
                   <Typography kind="title-small">{data?.bndNm}</Typography>
                 </td>
+                <td colSpan={2}></td>
+              </tr>
+              <tr>
                 <th>
                   <Label htmlFor="dbtr-nm" required={true} labelText="채무자" />
                 </th>
-                <td colSpan={2}>
+                <td colSpan={3}>
                   <InputField
                     name="dbtrNm"
                     defaultValue={dbtrNM}
@@ -741,6 +744,7 @@ export default function Table({
                     isError={isDbtrNMError}
                   />
                 </td>
+                <td colSpan={2}></td>
               </tr>
               <tr>
                 <th>
@@ -782,7 +786,7 @@ export default function Table({
                           주소 검색
                         </Button>
                       </span>
-                      <span className="flex items-center gap-x-2 mb-2 w-[500px] [&>span:first-child]:min-w-24">
+                      <span className="flex items-center gap-x-2 mb-2 w-full max-w-[500px] [&>span:first-child]:min-w-24 [&>div]:min-w-0">
                         <Typography kind="body-medium" className="text-ers-grayscale-80">
                           지번 주소
                         </Typography>
@@ -798,7 +802,7 @@ export default function Table({
                           readOnly={true}
                         />
                       </span>
-                      <span className="flex items-center gap-x-2 mb-2 w-[500px] [&>span:first-child]:min-w-24">
+                      <span className="flex items-center gap-x-2 mb-2 w-full max-w-[500px] [&>span:first-child]:min-w-24 [&>div]:min-w-0">
                         <Typography kind="body-medium" className="text-ers-grayscale-80">
                           도로명 주소
                         </Typography>
@@ -814,11 +818,11 @@ export default function Table({
                           readOnly={true}
                         />
                       </span>
-                      <span className="flex items-center gap-x-2 mb-2 [&>span:first-child]:min-w-24">
+                      <span className="flex items-center gap-x-2 mb-2 flex-wrap [&>span:first-child]:min-w-24">
                         <Typography kind="body-medium" className="text-ers-grayscale-80">
                           상세 주소
                         </Typography>
-                        <ul className="flex gap-x-4 text-sm">
+                        <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm whitespace-nowrap">
                           {LAND_LOT_OPTION.map((auth) => {
                             const { id, name, value, labelText, disabled } = auth;
 
@@ -906,7 +910,7 @@ export default function Table({
                 <th>
                   <Label htmlFor="bnd-max-amt" required={true} labelText="채권최고액" />
                 </th>
-                <td colSpan={2}>
+                <td colSpan={3}>
                   <CurrencyFormat
                     id="bnd-max-amt"
                     name="price"
@@ -917,7 +921,7 @@ export default function Table({
                     isError={isPricesError}
                   />
                 </td>
-                <td colSpan={3}></td>
+                <td colSpan={2}></td>
               </tr>
               <tr>
                 <th>

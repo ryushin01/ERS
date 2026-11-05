@@ -30,8 +30,8 @@ export default function Header() {
     <header className="_header">
       <div className="_header-inner-wrap">
         <h1 className={pathname === "/" ? "_login" : ""}>
-          <Link href={homePath}>
-            <Image src={ErsLogo} alt="전자등기 관리 시스템 로고" fill />
+          <Link href={homePath} className="relative block w-full h-full">
+            <Image src={ErsLogo} alt="전자등기 관리 시스템 로고" fill priority />
           </Link>
         </h1>
 

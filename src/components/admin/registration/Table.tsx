@@ -66,7 +66,13 @@ export default function Table({ data, isDesktop }: RegistrationListDataProps & R
 
   return (
     <>
-      <div className="_responsive-table-inner-wrapper _has-thead">
+      {/* 좁은 화면에서 가로로 스크롤되므로 키보드로도 스크롤할 수 있게 포커스를 받음 */}
+      <div
+        className="_responsive-table-inner-wrapper _has-thead"
+        role="region"
+        aria-label="등기관리 표"
+        tabIndex={0}
+      >
         <table className="_responsive-table _col-9-type">
           <caption className="_hidden-table-caption">등기관리 표</caption>
           <thead>

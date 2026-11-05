@@ -2,14 +2,16 @@
     @apply w-full py-3;
 
     ._tab-list {
-        @apply flex items-center justify-around;
+        @apply flex items-center justify-around overflow-x-auto;
+        /* 탭이 많아 화면을 넘으면 글자를 세로로 쌓지 않고 가로로 스크롤 */
+        scrollbar-width: none;
 
         ._tab-list-wrap {
-            @apply relative w-full;
+            @apply relative grow shrink-0 basis-auto;
         }
 
         ._tab-trigger {
-            @apply _flex-center gap-[10px] w-full py-3;
+            @apply _flex-center gap-[10px] w-full px-3 py-3 whitespace-nowrap;
 
             &:hover {
                 @apply bg-ers-grayscale-10 text-ers-main-100;

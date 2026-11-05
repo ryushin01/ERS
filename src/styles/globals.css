@@ -18,6 +18,11 @@
         @apply text-ers-grayscale-100;
     }
 
+    /* fieldset의 기본 최소 폭(내용 크기) 때문에 좁은 화면에서 페이지가 가로로 넘치는 것을 방지 */
+    fieldset {
+        min-width: 0;
+    }
+
     a[href=""] {
         @apply pointer-events-none;
     }
@@ -52,7 +57,7 @@
             @apply flex justify-between items-center w-full px-[52px] transition-all;
 
             & > h1 {
-                @apply relative w-[254px] h-8;
+                @apply relative shrink-0 w-[254px] h-8;
             }
 
             ._header-right-area {
@@ -156,7 +161,7 @@
         @apply _flex-center sticky bottom-0 z-1 h-[60px] pl-[262px] bg-ers-grayscale-20;
 
         span {
-            @apply text-ers-grayscale-70;
+            @apply text-ers-grayscale-90;
         }
     }
 
@@ -202,7 +207,8 @@
                 @apply px-4;
 
                 & > h1 {
-                    @apply w-[159px] h-5;
+                    /* 로고 비율 254:32. 오른쪽 영역(50vw)과 겹치지 않는 크기 (320px 화면 기준) */
+                    @apply w-[127px] h-4;
 
                     &._login {
                         @apply w-[191px] h-6;
@@ -210,7 +216,7 @@
                 }
 
                 ._header-right-area {
-                    @apply flex justify-end gap-x-3 w-[50vw];
+                    @apply flex flex-1 justify-end gap-x-3 min-w-0 ml-3;
 
                     form {
                         @apply w-auto mr-0;
