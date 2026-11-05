@@ -106,7 +106,7 @@ export default function HeaderRightArea() {
     } else if (movePath === AD_REGISTRATION) {
       sessionStorage.setItem("admin-rqstno", searchRqstNo);
     }
-    window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${movePath}`;
+    window.location.href = `${movePath}`;
   };
 
   useEffect(() => {

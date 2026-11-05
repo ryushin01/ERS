@@ -459,8 +459,3 @@ export const createRegistration = (
   REGISTRATIONS.unshift(registration);
   return registration;
 };
-
-/** 데모 의뢰번호. 새 의뢰를 등록하면 다음 번호가 생기므로 여유 있게 미리 만든다(정적 배포용). */
-export function demoRequestNumbers(): string[] {
-  return Array.from({ length: 64 }, (_, i) => `DEMO-${String(2430 - i).padStart(6, "0")}`);
-}
