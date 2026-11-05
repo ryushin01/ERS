@@ -206,3 +206,11 @@ pnpm run test:e2e
 - README의 스크린샷은 `pnpm run screenshots`로 다시 찍습니다. 먼저 `pnpm run build`가 필요하고, 결과는 `docs/images`에 저장됩니다. 평소 E2E에는 포함되지 않습니다. README의 이미지 목록이 스크립트(`e2e/readme.screenshots.ts`)와 다르면 실패합니다.
 - 서버는 테스트가 자동으로 띄웁니다(4100번 포트). 코드를 바꾼 뒤에는 다시 빌드해야 반영됩니다.
 - `pnpm run dev`와 같은 `.next` 폴더를 쓰므로, 개발 서버를 켠 채로 빌드하거나 E2E를 돌리지 않습니다.
+
+## 접근성 미확인 항목
+
+자동 검사와 코드 점검만 했으며, 다음은 아직 확인하지 못했습니다.
+
+- 스크린 리더(VoiceOver, NVDA 등) 실사용 점검
+- KWCAG 6.1.3 조작 가능: 공식 기준 수치와 대조 필요 (현재 표 안 링크 높이 19px, 라디오 20px)
+- KWCAG 33개 항목 전체 수동 점검

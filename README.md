@@ -123,17 +123,3 @@ src/
 | [CI · Docker](docs/ci-docker.md) | GitHub Actions, Dependabot, Docker |
 | [에디터 설정](docs/editor-setup.md) | IntelliJ, VS Code |
 | [버전 기록](CHANGELOG.md) | 버전별 변경 내용 |
-
-## 향후 과제
-
-![정규식, Sass](https://skillicons.dev/icons?i=regex,sass)
-
-**기능**
-
-- 법무대리인 화면, 관리자 회원관리·공지관리 구현
-
-**접근성**
-
-- 스크린 리더(VoiceOver, NVDA 등) 실사용 점검. 자동 검사와 코드 점검만 했습니다.
-- KWCAG 6.1.3 조작 가능: 공식 기준 수치와 대조 필요 (현재 표 안 링크 높이 19px, 라디오 20px)
-- KWCAG 33개 항목 전체 수동 점검
