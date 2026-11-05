@@ -1,7 +1,7 @@
 # ERS - 전자등기 관리 시스템
 
 [![CI](https://github.com/ryushin01/ERS/actions/workflows/ci.yml/badge.svg)](https://github.com/ryushin01/ERS/actions/workflows/ci.yml)
-![version](https://img.shields.io/badge/version-2.0.1-113662)
+![version](https://img.shields.io/badge/version-2.0.2-113662)
 ![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)
 
 > **ERS**는 **E**lectronic **R**egistration **S**ystem(전자등기 관리 시스템)의 줄임말입니다.
@@ -135,7 +135,7 @@ pnpm run dev
 | `NEXT_PUBLIC_ADMIN_URI` | 관리자 API 서버 주소 (실제 모드) | - |
 | `NEXT_PUBLIC_API_URI` | 외부 API 주소 (실제 모드) | - |
 | `NEXT_PUBLIC_SITE_URL` | 배포 주소. 링크 공유 미리보기(OG) 이미지의 절대 URL에 사용 | `http://localhost:4000` |
-| `NEXT_PUBLIC_STORYBOOK_URL` | 로그인 화면 **Storybook 바로 가기** 버튼의 이동 주소. Storybook을 다른 주소에 배포했을 때 지정 | `/storybook/index.html` |
+| `NEXT_PUBLIC_STORYBOOK_URL` | 로그인 화면 **Storybook 바로 가기** 버튼의 이동 주소. Storybook을 다른 주소에 배포했을 때 지정 | 빌드: `/storybook` 소개 문서, 개발 서버: `http://localhost:6006` |
 
 실제 모드에서는 `.env.local`(로컬) 또는 `.env.development` / `.env.production`(Docker 빌드)에 값을 설정합니다. `.env*` 파일은 저장소에 포함하지 않습니다.
 
@@ -179,7 +179,8 @@ pnpm run build-storybook
 
 - 공통 설정은 `.storybook/`에 있습니다.
   - `preview.tsx`: 앱 루트 레이아웃과 같은 환경(QueryClient, jotai, 토스트, `#portal`)을 스토리마다 새로 만듭니다. `parameters.auth`(`"financial"` | `"admin"`)를 지정하면 데모 사용자로 로그인한 상태가 됩니다.
-  - `main.ts`: 스토리 위치, 애드온(Docs, Accessibility), 정적 파일 경로
+  - `main.ts`: 스토리 위치, 애드온(Docs, Accessibility, Vitest), 파비콘 경로 (`public`은 프레임워크가 자동으로 복사)
+- 첫 화면은 소개 문서(`src/stories/Introduction.mdx`)입니다. 컴포넌트 주석은 `@description` 내용만 문서에 표시합니다.
 - 스토리용 도우미는 `src/stories/helpers.tsx`에 있습니다. (상태별 목업 의뢰번호, 화면 경로 지정, 모바일 뷰포트, 실제 화면 레이아웃)
 - 데이터를 props로 받는 컴포넌트는 스토리의 `loaders`에서 앱과 같은 services 함수로 목업 데이터를 받아 전달합니다.
 - 화면 크기별 차이는 툴바의 Viewport(Mobile 375 / Tablet 1024 / Desktop 1440)로 확인합니다.
@@ -196,7 +197,7 @@ pnpm run build-storybook
 - `pnpm run build`가 Storybook을 `public/storybook`에 먼저 빌드하므로, **앱을 배포하면 Storybook도 같은 주소의 `/storybook`으로 함께 배포**됩니다. (Docker 이미지·CI 빌드 포함)
   - `/storybook`으로 들어오면 `/storybook/index.html`로 이동합니다(`next.config.ts`). 로그인 여부와 상관없이 볼 수 있도록 미들웨어에서 제외합니다.
   - 빌드 결과물은 저장소에 포함하지 않습니다(`.gitignore`).
-  - `pnpm run dev`에서 버튼을 확인하려면 `pnpm run build-storybook`을 한 번 실행해 두거나, `NEXT_PUBLIC_STORYBOOK_URL=http://localhost:6006`으로 Storybook 개발 서버를 연결합니다.
+  - `pnpm run dev`에서는 버튼이 Storybook 개발 서버(`http://localhost:6006`)로 연결됩니다. `pnpm run storybook`을 함께 실행해 두세요. (도착 애니메이션은 같은 주소로 배포했을 때만 나옵니다)
 - 로그인 화면의 **Storybook 바로 가기**(`src/components/login/StorybookLink.tsx`)를 누르면 다음 순서로 화면이 바뀝니다. (약 1.4초)
   1. 버튼 위치에서 남색 원이 화면 전체로 펼쳐집니다.
   2. 흩어져 있던 컴포넌트 조각 12개가 날아와 격자로 맞춰집니다. (흰 조각 3개와 노란 원은 로고의 "E"와 도장)
@@ -302,7 +303,7 @@ pnpm run build-storybook
 | 데모 데이터 | `mocks/data.test.ts`, `mocks/adapter.test.ts` | 목업 데이터가 업무 규칙과 맞는지, 목업 API의 응답·상태 변경 |
 | 화면 통합 | `components/**/Main.test.tsx` | 화면을 실제 데이터 흐름(TanStack Query → services → 목업 API)으로 렌더링해 목록·건수가 데이터와 같은지 |
 | 폼 → 요청 내용 | `CreateForm`·`DetailForm`·`DesktopFileUploader`·`RegistrationInformation`·`ReasonModals`(반려·진행취소) 테스트 | 폼에 입력하고 제출했을 때 서버로 가는 요청(JSON·첨부 파일)이 입력값과 정확히 같은지, 연속 클릭에도 한 번만 전송되는지 |
-| 스토리 | 모든 `*.stories.tsx` (`pnpm run test:storybook`) | 스토리 252개를 실제 브라우저에서 렌더링, 접근성 위반(axe) 0건 |
+| 스토리 | 모든 `*.stories.tsx` (`pnpm run test:storybook`) | 스토리 252개를 실제 브라우저에서 렌더링, 접근성 위반(axe) 검사 (스토리의 첫 화면 기준이라 레이아웃 잘림은 잡지 못함) |
 | 속성 기반 | `utils/amountUtil.test.ts`, `utils/dateUtil.test.ts` | [fast-check](https://fast-check.dev)로 임의 입력 수천 건을 생성해 금액·날짜 변환 규칙이 항상 지켜지는지 (예: 금액 표시 → 숫자 변환 시 원래 값, 모든 시간대에서 같은 날짜) |
 
 - 화면 통합 테스트는 `src/test/renderWithProviders.tsx`(QueryClient·jotai Provider, PC 화면 `matchMedia`)를 쓰고, `next/navigation`은 테스트 파일에서 `vi.mock`으로 대신합니다.
@@ -401,6 +402,7 @@ docker compose -f docker/production/docker-compose.yml up --build
 
 | 버전     | 날짜         | 내용                                                           | 비고            |
 |--------|------------|--------------------------------------------------------------|---------------|
+| v2.0.2 | 2026.11.5. | - 모바일 의뢰 수정에서 이미지 삭제 시 엉뚱한 파일이 지워지던 버그 수정<br>- PC 1440px·모바일 화면 잘림과 넘침 수정(필터·표·탭·헤더·주소 입력칸)<br>- 접근성 개선: 아코디언 열림 상태, 화면 확대 제한 해제, 푸터 대비<br>- Storybook 소개 문서, 뒤로 가기 개선, 문서 주석 정리, 개발 서버 연결<br>- 공유 이미지에 새 로고 추가, TypeScript 5.7 고정 | 메이저 업그레이드 없음 |
 | v2.0.1 | 2026.11.5. | - 접근성 개선: 탭(WAI-ARIA 탭 패턴·키보드 이동), 조회 기간 버튼(`aria-pressed`), 셀렉트·주소 입력칸 이름, 업로드 영역 버튼 중첩 제거, 명암 대비(오류 빨강·보완필요 노랑·회색 버튼·배지·모바일 메뉴 등)<br>- 스토리 테스트 도입(Vitest 브라우저 모드 + Playwright): 모든 스토리 렌더링·접근성 검사, CI에 추가<br>- 화면 크기 판단(`useResponsive`)을 `useSyncExternalStore`로 변경해 모바일에서 PC 레이아웃이 먼저 그려지던 깜빡임 수정, react-responsive 제거<br>- 의존성 업데이트(같은 메이저 안): React 19.3, TanStack Query 5.104, antd 5.29, jotai 2.20, react-datepicker 8.10, date-fns 4.4 등 | 메이저 업그레이드 없음 |
 | v2.0.0 | 2026.11.4. | **포트폴리오 데모 공개**<br>- 코드 정리(타입·버그·Lint), 미사용 코드·의존성 정리, 중복 컴포넌트 통합<br>- 포트폴리오 데모 모드·목업 데이터, 관리자 데모 데이터, 데모 로그인 유형 선택<br>- 공개용 정보 정리<br>- import 순서 자동화, 커밋 전 검사(husky), CI(GitHub Actions)<br>- Vitest 단위·통합·속성 기반 테스트<br>- 보안 취약점 해결(Next.js 15.5, axios, swiper 등)<br>**Storybook·브랜딩**<br>- Storybook 10 도입, 모든 컴포넌트 스토리 작성<br>- Storybook을 앱과 함께 `/storybook`으로 배포, 로그인 화면에 바로 가기 버튼과 전환 애니메이션 추가<br>- ERS 로고(심볼·헤더 로고·파비콘·앱 아이콘) 교체 | 보안 패치 외 라이브러리 버전 변경 없음 (Storybook 신규 추가) |
 | v1.0.1 | 2025.5.14. | - 파비콘, 앱 로고 교체                                               | N/A           |
